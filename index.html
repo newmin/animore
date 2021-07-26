@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ani-More</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="logo">
+    <h1 class="logo__text">Ani-More</h1>
+    <img class="logo__img" src="img/logo.png" alt="">
+  </header>
+
+  <nav class="nav">
+    <div class="nav__category">
+      <span class="nav__category-icon"> <i class="fas fa-bars"></i> </span>
+      <span class="nav__category-text">전체 카테고리</span>
+    </div>
+       <ul class="nav_list">
+         <li><input type="button" value="건강정보"></li>
+         <li><input type="button" value="게시판">
+           <ul class="nav_list_board">
+             <li>Q&A</li>
+             <li>자유게시판</li>
+             <li>벼룩시장</li>
+             <li>내새끼 보세요</li>
+            </ul>
+          </li>
+          <li><input type="button" value="회원가입"></li>
+          <li><input type="button" value="로그인"></li>
+        </ul>
+      </nav>
+      <!-- 검색 -->
+      <div class="search">
+        <input type="text" class="search__input">
+        <span class="search__icon"><i class="fas fa-search"></i></span>
+      </div>
+
+      <!-- 업체 카테고리 -->
+      <div class="container bcategory">
+        <div class="bcategory__btn bcategory__hospital">  <i class="fas fa-pills"></i><span>병원</span></div>
+        <div class="bcategory__btn bcategory__parmarcy">  <i class="fas fa-pills"></i><span>약국</span></div>
+        <div class="bcategory__btn bcategory__training">  <i class="fas fa-pills"></i><span>훈련소</span></div>
+        <div class="bcategory__btn bcategory__food">      <i class="fas fa-pills"></i><span>식당ㆍ카페</span></div>
+        <div class="bcategory__btn bcategory__playground"><i class="fas fa-pills"></i><span>놀이터</span></div>
+        <div class="bcategory__btn bcategory__hotel">     <i class="fas fa-pills"></i><span>호텔</span></div>
+        <div class="bcategory__btn bcategory__hairshop">  <i class="fas fa-pills"></i><span>미용실</span></div>
+        <div class="bcategory__btn bcategory__shop">      <i class="fas fa-pills"></i><span>용품점</span></div>
+        <div class="bcategory__btn bcategory__kinder">    <i class="fas fa-pills"></i><span>유치원</span></div>
+        <div class="bcategory__btn bcategory__etc">       <i class="fas fa-pills"></i><span>etc</span></div>
+      </div>
+
+      <!-- 메뉴바 -->
+
+        <aside class="container menubar">
+          <ul class="menubar__menu">
+            <li><input type="button" value="Q&A"></li>
+            <li><input type="button" value="자유게시판"></li>
+            <li><input type="button" value="벼룩시장"></li>
+            <li><input type="button" value="내새끼보세요"></li>
+          </ul>
+        </aside>
+
+<!-- 베스트 게시글 -->
+<div class="container board_best_container">
+  <div class="board_best">
+    <div class="board_best_content">
+      <div class="board_best_title">title</div>
+      <div class="board_best_text">text</div>
+      <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
+    </div>
+    <div class="good_container">
+      <div class="good_icon"> <i class="fas fa-heart"></i> </div>
+      <div class="good_text">좋아요</div>
+      <div class="good_count">100</div>
+    </div>
+  </div>
+  <div class="board_best">
+    <div class="board_best_content">
+      <div class="board_best_title">title</div>
+      <div class="board_best_text">text</div>
+      <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
+    </div>
+    <div class="good_container">
+      <div class="good_icon"> <i class="fas fa-heart"></i> </div>
+      <div class="good_text">좋아요</div>
+      <div class="good_count">100</div>
+    </div>
+  </div>
+  <div class="board_best">
+    <div class="board_best_content">
+      <div class="board_best_title">title</div>
+      <div class="board_best_text">text</div>
+      <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
+    </div>
+    <div class="good_container">
+      <div class="good_icon"> <i class="far fa-heart"></i> </div>
+      <div class="good_text">좋아요</div>
+      <div class="good_count">100</div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css">
+</body>
+</html>
