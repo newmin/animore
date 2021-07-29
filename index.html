@@ -10,109 +10,104 @@
 </head>
 
 <body>
-
-  <header class="logo">
-    <h1 class="logo__text">Ani-More</h1>
-    <img class="logo__img" src="img/logo.png" alt="">
+  <header> 
+    <!-- TODO 템플릿 -->
   </header>
 
-  <nav class="nav">
-    <div class="nav__column">
-      <i class="fas fa-bars"></i>
-      <span>전체 카테고리</span>
+  <main class="main">
+  
+    <br><br>
+    <button><a href="login.html">로그인폼</a></button>
+    <button><a href="template.html">헤더/푸터 템플릿</a></button>
+    <br><br>
+
+    <!-- 업체 카테고리 -->
+    <div class="bcategory">
+      <div class="bcategory__btn bcategory__hospital"> <i class="fas fa-pills"></i><span>병원</span></div>
+      <div class="bcategory__btn bcategory__parmarcy"> <i class="fas fa-pills"></i><span>약국</span></div>
+      <div class="bcategory__btn bcategory__training"> <i class="fas fa-pills"></i><span>훈련소</span></div>
+      <div class="bcategory__btn bcategory__food"> <i class="fas fa-pills"></i><span>식당ㆍ카페</span></div>
+      <div class="bcategory__btn bcategory__playground"><i class="fas fa-pills"></i><span>놀이터</span></div>
+      <div class="bcategory__btn bcategory__hotel"> <i class="fas fa-pills"></i><span>호텔</span></div>
+      <div class="bcategory__btn bcategory__hairshop"> <i class="fas fa-pills"></i><span>미용실</span></div>
+      <div class="bcategory__btn bcategory__shop"> <i class="fas fa-pills"></i><span>용품점</span></div>
+      <div class="bcategory__btn bcategory__kinder"> <i class="fas fa-pills"></i><span>유치원</span></div>
+      <div class="bcategory__btn bcategory__etc"> <i class="fas fa-pills"></i><span>etc</span></div>
     </div>
-    <div class="nav__column">
-      <ul class="nav__btn">
-        <li><a href="#">건강정보</a></li>
-        <li><a href="#">게시판</a>
-          <ul class="nav__board">
-            <li><a href="#">Q&A</a></li>
-            <li><a href="#">자유게시판</a></li>
-            <li><a href="#">벼룩시장</a></li>
-            <li><a href="#">내새끼보세요</a></li>
-          </ul>
-        </li>
-        <li><a href="#">회원가입</a></li>
-        <li><a href="#">로그인</a></li>
+    
+    <!-- 메뉴바 -->
+    
+    <aside class="menubar">
+      <ul class="menubar__menu">
+        <li><input type="button" value="Q&A"></li>
+        <li><input type="button" value="자유게시판"></li>
+        <li><input type="button" value="벼룩시장"></li>
+        <li><input type="button" value="내새끼보세요"></li>
       </ul>
-      <!-- <input class="nav__btn" type="button" value="건강정보">
-        <input class="nav__btn" type="button" value="게시판">
-        <input class="nav__btn" type="button" value="회원가입">
-        <input class="nav__btn" type="button" value="로그인"> -->
-  </nav>
-  </div>
-  <!-- 검색 -->
-  <div class="container search">
-    <input class="search__input" type="text" >
-    <span class="search__icon"><i class="fas fa-search"></i></span>
-  </div>
+    </aside>
+    
+    <!-- 베스트 게시글 -->
 
-  <!-- 업체 카테고리 -->
-  <div class="container bcategory">
-    <div class="bcategory__btn bcategory__hospital"> <i class="fas fa-pills"></i><span>병원</span></div>
-    <div class="bcategory__btn bcategory__parmarcy"> <i class="fas fa-pills"></i><span>약국</span></div>
-    <div class="bcategory__btn bcategory__training"> <i class="fas fa-pills"></i><span>훈련소</span></div>
-    <div class="bcategory__btn bcategory__food"> <i class="fas fa-pills"></i><span>식당ㆍ카페</span></div>
-    <div class="bcategory__btn bcategory__playground"><i class="fas fa-pills"></i><span>놀이터</span></div>
-    <div class="bcategory__btn bcategory__hotel"> <i class="fas fa-pills"></i><span>호텔</span></div>
-    <div class="bcategory__btn bcategory__hairshop"> <i class="fas fa-pills"></i><span>미용실</span></div>
-    <div class="bcategory__btn bcategory__shop"> <i class="fas fa-pills"></i><span>용품점</span></div>
-    <div class="bcategory__btn bcategory__kinder"> <i class="fas fa-pills"></i><span>유치원</span></div>
-    <div class="bcategory__btn bcategory__etc"> <i class="fas fa-pills"></i><span>etc</span></div>
-  </div>
 
-  <!-- 메뉴바 -->
+    <div class="board-best">
+      
 
-  <aside class="container menubar">
-    <ul class="menubar__menu">
-      <li><input type="button" value="Q&A"></li>
-      <li><input type="button" value="자유게시판"></li>
-      <li><input type="button" value="벼룩시장"></li>
-      <li><input type="button" value="내새끼보세요"></li>
-    </ul>
-  </aside>
-
-  <!-- 베스트 게시글 -->
-  <div class="container board_best_container">
-    <div class="board_best">
-      <div class="board_best_content">
-        <div class="board_best_title">title</div>
-        <div class="board_best_text">text</div>
-        <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="fas fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
       </div>
-      <div class="good_container">
-        <div class="good_icon"> <i class="fas fa-heart"></i> </div>
-        <div class="good_text">좋아요</div>
-        <div class="good_count">100</div>
+
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="fas fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
       </div>
-    </div>
-    <div class="board_best">
-      <div class="board_best_content">
-        <div class="board_best_title">title</div>
-        <div class="board_best_text">text</div>
-        <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
-      </div>
-      <div class="good_container">
-        <div class="good_icon"> <i class="fas fa-heart"></i> </div>
-        <div class="good_text">좋아요</div>
-        <div class="good_count">100</div>
+
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="far fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
       </div>
     </div>
-    <div class="board_best">
-      <div class="board_best_content">
-        <div class="board_best_title">title</div>
-        <div class="board_best_text">text</div>
-        <div class="board_best_img"><img src="https://picsum.photos/id/1/200/200" alt=""></div>
-      </div>
-      <div class="good_container">
-        <div class="good_icon"> <i class="far fa-heart"></i> </div>
-        <div class="good_text">좋아요</div>
-        <div class="good_count">100</div>
-      </div>
-    </div>
-  </div>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css">
-</body>
+  </main>
+    
+  <footer>
+    <!-- TODO 템플릿 -->
+  </footer>
 
-</html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css">
+  </body>
+  
+  </html>

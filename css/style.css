@@ -4,8 +4,11 @@
 @import "components/logo.css";
 @import "components/nav.css";
 @import "components/serach.css";
+@import "components/toggleBtn.css";
+@import "components/template.css";
 /* 스크린 */
 @import "screen/intro.css";
+@import "screen/login.css";
 
 /* 글씨체 정해둔거 있음. 사용한 굵기 600 400 */
 body {
@@ -13,9 +16,9 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.container {
-  width: 50%;
-  margin: auto;
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F8F8F8;
 }
-
-
