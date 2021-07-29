@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template-main::main(~{::main})}">
 
 <head>
   <meta charset="UTF-8">
@@ -10,16 +12,15 @@
 </head>
 
 <body>
-  <header> 
-    <!-- TODO 템플릿 -->
-  </header>
 
   <main class="main">
-  
-    <br><br>
-    <button><a href="login.html">로그인폼</a></button>
-    <button><a href="template.html">헤더/푸터 템플릿</a></button>
-    <br><br>
+
+    <div>
+      <button><a href="template-main.html">헤더메인페이지</a></button>
+      <button><a href="template-sub.html">헤더그외페이지</a></button>
+      <button><a href="login.html">로그인</a></button>
+      <button><a href="joinForm.html">회원가입</a></button>
+    </div>
 
     <!-- 업체 카테고리 -->
     <div class="bcategory">
@@ -103,11 +104,6 @@
 
   </main>
     
-  <footer>
-    <!-- TODO 템플릿 -->
-  </footer>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css">
   </body>
   
   </html>

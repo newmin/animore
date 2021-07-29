@@ -1,9 +1,12 @@
+@charset "UTF-8";
+
 .nav {
   background-color: var(--primary);
   color: var(--primary-text);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom : 30px;
 }
 .nav__column {
   display: flex;
@@ -57,4 +60,8 @@
   position: absolute;
   top: 30px;
   left: 0px;
+}
+
+.nav-sub{
+  margin-bottom: 80px;
 }

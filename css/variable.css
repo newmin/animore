@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 :root{
   --primary : #9AABB9;
   --primary-light : #CBDDEB;
@@ -9,4 +11,7 @@
   --secondary-dark : #AF846C;
   --secondary-text : #000000;
 
+  --nav-height : 30px;
+
+  --form-size : 400px;
 }

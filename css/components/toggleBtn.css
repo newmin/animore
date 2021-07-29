@@ -1,4 +1,6 @@
-    /* The switch - the box around the slider */
+@charset "UTF-8";   
+   
+   /* The switch - the box around the slider */
     .switch {
       position: relative;
       display: inline-block;

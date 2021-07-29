@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 .bcategory {
   display: grid;
   grid-template-rows: repeat(2, 200px);
@@ -16,6 +18,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 /* 메뉴바 */
