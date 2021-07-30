@@ -1,0 +1,221 @@
+/* 게시판 카테고리 */
+/* @font-face {
+    font-family: 'BBTreeGB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+    font-family: BBTreeGB;
+} */
+:root{
+    --primary : #9AABB9;
+    --primary-light : #CBDDEB;
+    --primary-dark : #6C7C89;
+    --primary-text : #193446;
+  
+    --secondary : #E2B49A;
+    --secondary-light : #FFE6CB;
+    --secondary-dark : #AF846C;
+    --secondary-text : #000000;
+  
+  }
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+  .logo__text{
+    font-size: 50px;
+    font-weight: 600;
+  }
+  
+  .logo__img{
+    width: 50px;
+    height: 50px;
+  }
+  .nav {
+    background-color: var(--primary);
+    color: var(--primary-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav__column {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 20px;
+    height: 30px;
+  }
+  .nav__column:first-child {
+    cursor: pointer;
+  }
+  .nav__column:first-child:hover {
+    /* TODO  카테고리리스트 출력 */
+    transform: translateY(30px);
+  }
+  .nav__column i {
+    margin-right: 10px;
+  }
+  
+  .nav__btn {
+    display: flex;
+  }
+  .nav__btn > li {
+    width: 80px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    background-color: var(--primary-dark);
+    margin-left: 30px;
+    cursor: pointer;
+    position: relative;
+  }
+  .nav__board {
+    display: none;
+    border: 3px solid var(--primary-dark);
+  }
+  .nav__board li {
+    width: 110px;
+    border: 1px dotted var(--primary-dark);
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .nav__btn li:hover {
+    text-decoration: underline;
+  }
+  
+  .nav__btn li:nth-child(2):hover .nav__board {
+    display: block;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+  }
+
+
+  /* ------------------------------------------------ */
+
+
+.b_category a:link{
+    text-decoration: none;
+    color: black;
+}
+.b_category a:visited{
+    color: black
+    text-decoration: none;
+}
+.b_category ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    list-style: none;
+}
+.b_category ul li{
+   margin-left: 10px;
+}
+.b_category ul li:hover{
+    cursor: pointer;
+    font-weight: bold;
+    background-color: var(--secondary-light);
+    color: var(--secondary-text);
+    border-radius: 30px;
+}
+.b_container{
+    width: 1100px;
+    margin: auto;
+}
+.b_container a:visited{
+    color: black;
+}
+.b_container_list{
+    width: 100%;
+    /* margin: 10px 100px; */
+    /* margin: auto; */
+    text-align: center;
+}
+.b_container_num{
+    width: 50px;
+    border: 1px solid black;
+}
+.b_container_category{
+    width: 100px; 
+    border: 1px solid black;
+}
+.b_container_category_select{
+    width: 100px; height: 26px;
+}
+.b_container_category_select:hover{
+    cursor: pointer;
+}
+.b_container_title{
+    border: 1px solid black;
+}
+.b_container_writer{
+    width: 100px;
+    border: 1px solid black;
+}
+.b_container_hits{
+    width: 50px;
+    border: 1px solid black;
+}
+.b_container_hearthits{
+    width: 50px;
+    border: 1px solid black;
+}
+.b_btn{
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   /* align-items: stretch; */
+}
+.b_btn button:hover{
+    cursor: pointer;
+}
+.b_search{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.b_search_select{
+    height: 24px;
+}
+.b_search_select:hover{
+    cursor: pointer;
+}
+.b_search input{
+    padding: 0;
+    height: 20px;
+}
+.b_search button{
+    padding: 0;
+    height: 24px;
+    width: 50px;
+}
+.b_search button:hover{
+    cursor: pointer;
+}
+
+/* 갤러리형식게시판 */
+.b_galary_wrap{
+  display: grid;
+  grid-template-columns: repeat(4,200px);
+  grid-template-rows: repeat(2,220px);
+  /* gap: 20px; */
+  justify-content: space-between;
+}
+.b_galary_img img{
+  border-radius: 10%;
+}
+.b_galary_title{
+  text-align: center;
+  margin: 0;
+}
+
+
+
+
+
