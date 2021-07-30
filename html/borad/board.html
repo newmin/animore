@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{templateSub::main(~{::main})}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{templateSub::main(~{::main})}">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +8,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
   <!-- 헤더 임시 삽입 -->
@@ -43,22 +43,21 @@
   </div>
 
 
-<main class="main">
+  <main class="main">
 
-  <div class="board">
-    
-    <div>
-      <ul class="board__category">
-        <!-- TODO href -->
-        <li><a href="#" th:href="">Q&A</a></li>
-        <li><a href="#" th:href="">벼룩시장</a></li>
-        <li><a href="#" th:href="">자유게시판</a></li>
-        <li><a href="#" th:href="">내새끼보세요</a></li>
-      </ul>
-    </div>
+    <div class="board">
 
-    <!-- 게시판유형은 그리드로..하는게낫겟지? -->
-    <div class="board__container">
+      <div>
+        <ul class="board__category">
+          <!-- TODO href -->
+          <li><a href="#" th:href="">Q&A</a></li>
+          <li><a href="#" th:href="">벼룩시장</a></li>
+          <li><a href="#" th:href="">자유게시판</a></li>
+          <li><a href="#" th:href="">내새끼보세요</a></li>
+        </ul>
+      </div>
+
+      <!-- 게시판유형은 그리드로..하는게낫겟지? -->
 
       <table class="board__table">
         <tr>
@@ -92,21 +91,22 @@
       </div>
 
       <div class="board__search">
-          <select name="search" id="" class="board__search_select">
-            <option value="">제목</option>
-            <option value="">작성자명</option>
-            <option value="">내용</option>
-          </select>
-          <input type="text" name="" id="">
-          <button type="button" >검색</button>
+        <select name="search" id="" class="board__search_select">
+          <option value="">제목</option>
+          <option value="">작성자명</option>
+          <option value="">내용</option>
+        </select>
+        <input type="text" name="" id="">
+        <button type="button">검색</button>
       </div>
 
       <div class="borad__pageBtn">
-        
+
       </div>
 
-  </div>
-    
+    </div>
+
   </main>
 </body>
+
 </html>

@@ -11,16 +11,20 @@
 </head>
 <main class="main">
 
-  <body>
-    <div class="b_category">
-      <ul>
-        <li><a href="#">Q&A</a></li>
-        <li><a href="#">벼룩시장</a></li>
-        <li><a href="#">자유게시판</a></li>
-        <li><a href="#">내새끼보세요</a></li>
+  <div class="board">
+    
+    <div>
+      <ul class="board__category">
+        <!-- TODO href -->
+        <li><a href="#" th:href="">Q&A</a></li>
+        <li><a href="#" th:href="">벼룩시장</a></li>
+        <li><a href="#" th:href="">자유게시판</a></li>
+        <li><a href="#" th:href="">내새끼보세요</a></li>
       </ul>
     </div>
-    <div class="b_galary_wrap b_container">
+
+
+    <div class="b_galary_wrap">
       <div class="b_galary_post">
         <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""></a></div>
         <p class="b_galary_title">글제목</p>
@@ -54,26 +58,28 @@
       <p class="b_galary_title">글제목</p>
     </div>
   </div>
-  <div class="b_container">
     
-    <div class="b_btn" >
-      <button type="button">내글보기</button><button type="button">글쓰기</button>
+    <div class="borad__btns">
+      <button class="borad__btn" type="button">내글보기</button>
+      <button class="borad__btn" type="button">글쓰기</button>
     </div>
-    <div class="b_search">
-      <div>
-        <select name="search" id="" class="b_search_select">
+
+    <div class="board__search">
+        <select name="search" id="" class="board__search_select">
           <option value="">제목</option>
           <option value="">작성자명</option>
           <option value="">내용</option>
         </select>
-      </div>
-      <div><input type="text" name="" id=""></div>
-      <div><button type="button">검색</button></div>
+        <input type="text" name="" id="">
+        <button type="button" >검색</button>
     </div>
-    <div class="b_pageBtn">
+
+    <div class="borad__pageBtn">
       
     </div>
-  </div>
+
+</div>
+  
 </main>
 </body>
 
