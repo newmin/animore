@@ -2,8 +2,6 @@
 
 @import "reset.css";
 @import "variable.css";
-/* 폰트 */
-@import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");
 
 /* 컴포넌트 */
 @import "components/logo.css";
@@ -15,7 +13,12 @@
 @import "screen/intro.css";
 @import "screen/login.css";
 @import "screen/joinForm.css";
+@import "screen/findIdPW.css";
+@import "screen/mypage.css";
+@import "screen/board.css";
 
+/* 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");
 @font-face {
   font-family: 'RIDIBatang';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
@@ -28,6 +31,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 
 
 /* 글씨체 정해둔거 있음. 사용한 굵기 600 400 */
