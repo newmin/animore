@@ -8,7 +8,7 @@
 body{
     font-family: BBTreeGB;
 } */
-:root{
+/* :root{
     --primary : #9AABB9;
     --primary-light : #CBDDEB;
     --primary-dark : #6C7C89;
@@ -19,7 +19,7 @@ body{
     --secondary-dark : #AF846C;
     --secondary-text : #000000;
   
-  }
+  } */
 .logo{
     display: flex;
     justify-content: center;
@@ -100,111 +100,119 @@ body{
   /* ------------------------------------------------ */
 
 
-.b_category a:link{
+.board__category a:link{
     text-decoration: none;
     color: black;
 }
-.b_category a:visited{
-    color: black
+.board__category a:visited{
+    color: black;
     text-decoration: none;
 }
-.b_category ul{
+.board__category {
     display: flex;
-    flex-direction: row;
-    justify-content: left;
-    list-style: none;
 }
-.b_category ul li{
-   margin-left: 10px;
+.board__category li{
+   margin-left: 20px;
+   margin-bottom: 10px;
+   cursor: pointer;
 }
-.b_category ul li:hover{
-    cursor: pointer;
+.board__category li:hover{
     font-weight: bold;
     background-color: var(--secondary-light);
     color: var(--secondary-text);
     border-radius: 30px;
 }
-.b_container{
+
+.board {
     width: 1100px;
-    margin: auto;
 }
-.b_container a:visited{
+/*TODO a visted 읽은글을 검은색 표시하기 위함인지, 방문뒤에도 색 유지하기 위함인지 */
+/* 유지하기 위함이면 reset에서 공통설정해놔서 없애도 됨 */
+.board a:visited{
     color: black;
 }
-.b_container_list{
+.board__table {
     width: 100%;
-    /* margin: 10px 100px; */
-    /* margin: auto; */
     text-align: center;
 }
-.b_container_num{
-    width: 50px;
-    border: 1px solid black;
+.board__cell{
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
-.b_container_category{
-    width: 100px; 
-    border: 1px solid black;
+
+.board__table th:first-child,
+.board__table th:nth-child(5),
+.board__table th:last-child {
+  width: 50px;
 }
-.b_container_category_select{
-    width: 100px; height: 26px;
+
+.board__table th:nth-child(2),
+.board__table th:nth-child(4){
+  width: 100px;
 }
-.b_container_category_select:hover{
-    cursor: pointer;
+
+.board__table__select {
+  width: inherit;
+  height: 26px;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;  
+  font-family: inherit;
+  font-size: inherit;
+  /* text-align: center; */
 }
-.b_container_title{
-    border: 1px solid black;
-}
-.b_container_writer{
-    width: 100px;
-    border: 1px solid black;
-}
-.b_container_hits{
-    width: 50px;
-    border: 1px solid black;
-}
-.b_container_hearthits{
-    width: 50px;
-    border: 1px solid black;
-}
-.b_btn{
+
+.borad__btns{
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   /* align-items: stretch; */
+   margin: 25px 0;
 }
-.b_btn button:hover{
-    cursor: pointer;
+
+.borad__btn {
+  width: ;
+  padding: ;
+  background-color: ;
+  font-size: ;
+  cursor: pointer;  
 }
-.b_search{
+
+.board__search {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-.b_search_select{
-    height: 24px;
-}
-.b_search_select:hover{
-    cursor: pointer;
-}
-.b_search input{
-    padding: 0;
-    height: 20px;
-}
-.b_search button{
-    padding: 0;
-    height: 24px;
-    width: 50px;
-}
-.b_search button:hover{
+    align-items: center;
+    height: 25px;
+  }
+
+  .board__search_select{
+    height: inherit;
+    box-sizing: border-box;
     cursor: pointer;
 }
 
-/* 갤러리형식게시판 */
+.board__search input{
+    height: inherit;
+    box-sizing: border-box;
+    margin: 0 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  .board__search input:focus{
+    border: 1px solid rgba(0, 0, 0, 1);
+    outline: none;
+  }
+  
+  .board__search button{
+    width: 50px;
+    height: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* 갤러리 형식게시판 */
 .b_galary_wrap{
   display: grid;
   grid-template-columns: repeat(4,200px);
   grid-template-rows: repeat(2,220px);
-  /* gap: 20px; */
   justify-content: space-between;
 }
 .b_galary_img img{
@@ -212,7 +220,6 @@ body{
 }
 .b_galary_title{
   text-align: center;
-  margin: 0;
 }
 
 
