@@ -13,7 +13,7 @@
 
 .joinform__input{
 	width: var(--form-size);
-	padding: 10px;
+	padding: var(--input-padding);
 	box-sizing: border-box;
 	border: 1px solid rgba(0, 0, 0, 0.4);
 	border-radius: 5px;
