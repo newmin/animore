@@ -7,41 +7,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="logo">
-    <a href="/main">
+    <a href="/html/index.html" th:href="/main">
       <h1 class="logo__text">Ani-More</h1>
-      <img class="logo__img" src="img/logo.png" alt="">
+      <img class="logo__img" src="/img/logo.png" alt="">
     </a>
   </header>
 
-  <nav class="nav nav-sub">
+  <nav class="nav">
     <div class="nav__column">
       <i class="fas fa-bars"></i>
       <span>전체 카테고리</span>
-		  <!-- 검색 -->
-		  <div class="search">
-		    <input class="search__input search__input--sm" type="text" >
-		    <span class="search__icon search__icon--sm"><i class="fas fa-search"></i></span>
-		  </div>
     </div>
     <div class="nav__column">
       <ul class="nav__btn">
-        <li><a href="#">건강정보</a></li>
-        <li><a href="#">게시판</a>
+        <!-- TODO 게시판 링크 -->
+        <li><a href="#" th:href="">건강정보</a></li>
+        <li><a href="#" th:href="">게시판</a>
           <ul class="nav__board">
-            <li><a href="#">Q&A</a></li>
-            <li><a href="#">자유게시판</a></li>
-            <li><a href="#">벼룩시장</a></li>
-            <li><a href="#">내새끼보세요</a></li>
+            <li><a href="#" th:href="">Q&A</a></li>
+            <li><a href="#" th:href="">자유게시판</a></li>
+            <li><a href="#" th:href="">벼룩시장</a></li>
+            <li><a href="#" th:href="">내새끼보세요</a></li>
           </ul>
         </li>
-        <li><a href="/join">회원가입</a></li>
-        <li><a href="/login">로그인</a></li>
+        <li><a href="/html/member/joinForm.html" th:href="/join">회원가입</a></li>
+        <li><a href="/html/member/login.html" th:href="/login">로그인</a></li>
       </ul>
   </nav>
+  </div>
+  <!-- 검색 -->
+  <div class="search">
+    <input class="search__input" type="text" >
+    <span class="search__icon"><i class="fas fa-search"></i></span>
   </div>
 
   <main th:replace=${content}></main>
