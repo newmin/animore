@@ -1,0 +1,107 @@
+@charset "utf-8";
+.container{
+  width: 70%;
+  margin: auto;
+}
+
+.main_container{
+  margin-top: 50px;
+  min-width: 650px; max-width: 800px;
+}
+
+.main_profile_container{
+  display:flex;
+  align-items: center;
+  margin: auto;
+  height: 150px;
+  min-width: 650px; max-width: 800px;
+  background-color: #eee;
+}
+
+.main_profile_profileimg{
+  height: 100px; width: 100px;
+  margin-left: 50px;
+  background-color: #eee;
+}
+.main_profile_profileimg img{
+  height: 100%; width: 100%;
+}
+
+.main_profile_nickname{
+  font-size: 30px;
+  margin-left: 100px;
+}
+
+.main_profile_usertypeicon{
+  height: 50px; width: 50px;
+  margin-left: 10px;
+}
+.main_profile_usertypeicon img{
+  height: 100%; width: 100%;
+  background-color: #eee;
+}
+
+.main_profile_mileage{
+  margin-left: 50px;
+  font-size: 20px;
+}
+
+.main_container2{
+  display: grid;
+  margin: 30px auto 0 auto;
+  grid-template-columns: minmax(170px, 200px) minmax(450px, 568px);
+  justify-content: center;
+  gap: 30px;
+}
+
+/* 마이페이지 메뉴 */
+.main_aside_title{
+  margin-left: 15px;
+  margin-top: 0;
+}
+.main_aside_menu{
+  font-size: 16px;
+}
+.main_aside_container ul{
+ list-style: none;
+ padding: 0;
+}
+.main_aside_menu li{
+  box-sizing: border-box;
+  margin-top: -1px;
+  padding: 11px 10px;
+  border: 1px solid #ddd;
+}
+.main_aside_menu li a{
+  color: #000;
+  text-decoration: none;
+}
+.main_aside_menu li a:hover{
+  color: cornflowerblue;
+  /* font-weight: bold; */
+}
+.main_aside_menu li.main_aside_menu_highlight a{
+  /* font-weight: bold; */
+  color: cornflowerblue;
+}
+
+
+/* 마이페이지 본문 제목 */
+.main_content_title{
+  margin-top: 6px;
+  margin-left: 6px;
+}
+.main_content_container hr{
+  background-color: #ddd;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  margin-bottom: 6px;
+}
+
+/* 모바일(여유되면) */
+@media screen and (max-width: 767px) {
+  
+
+
+
+}

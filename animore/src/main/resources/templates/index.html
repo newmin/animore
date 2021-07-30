@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template-main::main(~{::main})}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ani-More</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <main class="main">
+
+	<button><a href="/mypage">마이페이지</a></button>
+
+    <!-- 업체 카테고리 -->
+    <div class="bcategory">
+      <div class="bcategory__btn bcategory__hospital"> <i class="far fa-hospital"></i><span>병원</span></div>
+      <div class="bcategory__btn bcategory__parmarcy"> <i class="fas fa-pills"></i><span>약국</span></div>
+      <div class="bcategory__btn bcategory__training"> <i class="fas fa-dog"></i>훈련소</span></div>
+      <div class="bcategory__btn bcategory__food"> <i class="fas fa-pills"></i><span>식당ㆍ카페</span></div>
+      <div class="bcategory__btn bcategory__playground"><i class="fas fa-pills"></i><span>놀이터</span></div>
+      <div class="bcategory__btn bcategory__hotel"> <i class="fas fa-hotel"></i><span>호텔</span></div>
+      <div class="bcategory__btn bcategory__hairshop"> <i class="fas fa-cut"></i><span>미용실</span></div>
+      <div class="bcategory__btn bcategory__shop"> <i class="fas fa-bone"></i><span>용품점</span></div>
+      <div class="bcategory__btn bcategory__kinder"> <i class="fas fa-pills"></i><span>유치원</span></div>
+      <div class="bcategory__btn bcategory__etc"> <i class="fas fa-pills"></i><span>etc</span></div>
+    </div>
+    
+    <!-- 메뉴바 -->
+    
+    <aside class="menubar">
+      <ul class="menubar__menu">
+        <li><input type="button" value="Q&A"></li>
+        <li><input type="button" value="자유게시판"></li>
+        <li><input type="button" value="벼룩시장"></li>
+        <li><input type="button" value="내새끼보세요"></li>
+      </ul>
+    </aside>
+    
+    <!-- 베스트 게시글 -->
+
+
+    <div class="board-best">
+      
+
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="fas fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
+      </div>
+
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="fas fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
+      </div>
+
+      <div class="board-best__row">
+        <div class="board-best__content">
+          <div>
+            <h1 class="board-best__title">title</h1>
+            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+          </div>
+          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+        </div>
+        <hr>
+        <div class="good">
+          <i class="far fa-heart"></i>
+          <span>좋아요</span>
+          <span>100</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+    
+  </body>
+  
+  </html>

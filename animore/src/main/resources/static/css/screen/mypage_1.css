@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.main_content ul{
+  display: flex;
+  justify-content:space-evenly;
+  margin: 0; padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+
+.main_content ul li input{
+  display: none;
+}
+.main_content ul li input[type="checkbox"] + label:hover{
+  cursor: pointer;
+}
+.main_content ul li input[type="checkbox"]:checked + label{
+  font-weight: bold;
+  color: cornflowerblue;
+}
