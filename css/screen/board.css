@@ -110,3 +110,70 @@
 .b_galary_title {
   text-align: center;
 }
+
+/* 건강정보게시판 */
+.health_btns{
+  display: flex;
+  justify-content: space-around
+}
+.health_disease_btn, .health_act_btn{
+  width: 500px;
+  height: 100px;
+  background-color: var(--primary-light);
+  border: none;
+  border-radius: 15px;;
+  font-size: 1.3em;
+}
+.health_disease_btn:hover{
+  cursor: pointer;
+  font-weight: bold;
+  
+}
+.health_act_btn:hover{
+ cursor: pointer;
+ font-weight: bold;
+}
+
+/* 건강정보게시판 검색창 */
+.health__search{
+ display: flex;
+ justify-content: center;
+ padding-top: 15px;
+}
+.health__search_select{
+  width: 150px;
+  height: 40px;
+  padding-left: 10px;
+}
+.health__search_input{
+  width: 400px;
+  margin-left: 5px;
+}
+.health__search_btn{
+  width: 80px;
+  margin-left: 5px;
+  background-color: var(--primary);
+  border: none;
+}
+/* 건강정보게시판 게시글목록 */
+
+.health_board_container{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-light);
+  height: 80px;
+  margin-top: 10px;
+  border-radius: 15px;
+}
+.health_board_title{
+  height: 20px;
+  margin: 5px;
+}
+.health_board_content{
+ margin: 5px;
+}
+.health_board_writer{
+  height: 20px;
+ margin: 5px;
+
+}
