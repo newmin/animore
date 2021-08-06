@@ -16,4 +16,3 @@ public enum Gender {
 	public String getDecode() {
 		return decode;
 	}
-}
