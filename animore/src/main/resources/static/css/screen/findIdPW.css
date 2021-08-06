@@ -1,0 +1,53 @@
+.findId{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.findId__form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start ;
+}
+
+.findId__title{
+  font-size: 50px;
+  font-weight: 600;
+  margin: 100px 0;
+}
+
+.findId__text{
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.findId__input{
+  padding: var(--input-padding);
+  width: var(--form-size);
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.findId__input:focus{
+  outline: none;
+  border: 2px solid var(--primary-dark);
+  box-sizing: border-box;
+}
+
+.findId__btn{
+  width: var(--form-size);
+  padding: var(--input-padding);
+  box-sizing: border-box;
+  background-color: var(--primary);
+  color: var(--primary-text);
+  border: none;
+  margin: 50px 0;
+  font-size: 25px;
+  font-weight: 400;
+  border-radius: 5px;
+  cursor: pointer;
+}
