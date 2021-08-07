@@ -2,10 +2,19 @@ package com.proj.animore.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import com.proj.animore.dto.MemberDTO;
 
+import lombok.RequiredArgsConstructor;
+
+@Repository
+@RequiredArgsConstructor
 public class MemberDAOImpl implements MemberDAO {
 
+	private final JdbcTemplate jt;
+	
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		// TODO Auto-generated method stub
