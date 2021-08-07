@@ -22,7 +22,7 @@ create table member(
   gender char(3) not null,
   address varchar2(150) not null,
   birth date not null,
-  mtype varchar2(1) not null check(mtype='N' or mtype='P' or mtype='B'),
+  mtype varchar2(1) not null check(mtype='N' or mtype='S'),
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp DEFAULT systimestamp,
   image blob,
