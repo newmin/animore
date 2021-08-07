@@ -21,7 +21,7 @@ public class MemberController {
 	}
 
 	/**
-	 * 회원가입폼
+	 * 회원가입양식
 	 * @param mtype
 	 * @param model
 	 * @return
