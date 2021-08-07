@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateMain::main(~{::main})}">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회원가입</title>
+<script defer></script>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+	<main class="main">
+
+		<button><a href="/member/join/일반">일반회원</a></button>
+		<button><a href="/member/join/특수">특수회원</a></button>
+
+	</main>
+</body>
+</html>
