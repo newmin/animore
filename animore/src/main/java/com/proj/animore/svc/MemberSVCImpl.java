@@ -2,11 +2,14 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dto.MemberDTO;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class MemberSVCImpl implements MemberSVC {
 	
