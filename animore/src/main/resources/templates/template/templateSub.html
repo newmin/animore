@@ -11,7 +11,7 @@
 </head>
 <body>
   <header class="logo">
-    <a href="/index.html" th:href="/main">
+    <a href="/index.html" th:href="@{/}">
       <h1 class="logo__text">Ani-More</h1>
       <img class="logo__img" src="/img/logo.png" alt="">
     </a>
@@ -39,8 +39,8 @@
             <li><a href="#">내새끼보세요</a></li>
           </ul>
         </li>
-        <li><a href="/member/joinForm.html" th:href="/join">회원가입</a></li>
-        <li><a href="/member/login.html" th:href="/login">로그인</a></li>
+        <li><a href="/member/joinForm.html" th:href="@{/join}">회원가입</a></li>
+        <li><a href="/member/login.html" th:href="@{/login}">로그인</a></li>
       </ul>
   </nav>
   </div>

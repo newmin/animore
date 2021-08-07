@@ -37,5 +37,5 @@ public class JoinMemberForm {
   // @NotBlank
   private String email;
   // @NotBlank
-  private String address; 
+  private String address;
 }
