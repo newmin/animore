@@ -40,7 +40,6 @@ public class MemberController {
 		return "/member/joinForm";
 	}
 	
-
 	@PostMapping("/join")
 	public String join() {
 //		TODO DTO받아서 SVC실행
