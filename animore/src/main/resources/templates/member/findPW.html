@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{templateSub::main(~{::main})}">
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>비밀번호 찾기</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="shortcut icon" href="/img/favicon(1).ico" type="image/x-icon">
+  <script defer></script>
+  <title>비밀번호 찾기</title>
 </head>
 <!-- TODO 위에 파비콘 -->
 <body>

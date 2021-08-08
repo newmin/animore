@@ -41,6 +41,9 @@ body {
     font-family: RIDIBatang;
     font-family: BBTreeGB;
     background-color: #F8F8F8;
+    
+    /* position sticky 적용 */
+    overflow-y:scroll;
 }
 
 .main{

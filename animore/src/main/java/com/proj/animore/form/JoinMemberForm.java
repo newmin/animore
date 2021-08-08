@@ -25,6 +25,7 @@ public class JoinMemberForm {
   // TODO private 프로필사진타입 image;
   @NotBlank
   // 이름도 글자수제한 둬야할까요?
+//  				-> DB에서 varchar2(9) = 글자수 3자 제한 이런식으로 생각하시면 될 것 같아요
   private String name;
   // @NotBlank
   // @Past
