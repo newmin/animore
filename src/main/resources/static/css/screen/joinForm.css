@@ -9,10 +9,16 @@
 
 .joinform>li{
 	margin-bottom: 15px;
+	font-size: 20px;
+	display : flex;
+	flex-direction : column;
+	align-items : flex-start;
+	width: var(--form-size);
 }
 
+
 .joinform__input{
-	width: var(--form-size);
+	width : 100%;
 	padding: var(--input-padding);
 	box-sizing: border-box;
 	border: 1px solid rgba(0, 0, 0, 0.4);
@@ -22,11 +28,10 @@
 .joinform__input--sm{
 	width: 310px;
 }
-.li_label{
-	font-size: 20px;
-}
+
 .joinform__input[type="radio"]{
 	width : 30px;
+	margin-top: 5px;
 }
 
 

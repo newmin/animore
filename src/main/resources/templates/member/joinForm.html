@@ -19,6 +19,7 @@
 				<input type="hidden" name="mtype" th:value="${mtype}"/>
 				
 				<!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
+				<!-- 페이지새로고침 or 주소창 바로 입력해서 양식 접속할 경우의 대처방안? -->
 				<h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
 				<h1 th:if="${mtype} == 'S'">특수회원가입양식</h1>
 				
@@ -32,8 +33,8 @@
 					<li><div class="li_label"><label for="image">프로필사진</label></div>																			<input class="joinform__input" type="file" name="image" id="image" /></li>
 					<li><div class="li_label"><label for="name">이름</label> <span class="essential">*</span></div>										<input class="joinform__input" type="text" name="name" id="name" /></li>
 					<li><div class="li_label"><label for="birth">생년월일</label> <span class="essential">*</span></div>								<input class="joinform__input" type="date" name="birth" id="birth" /></li>
-					<li><div class="li_label"><label for="gender">성별</label> <span class="essential">*</span></div>									<label for="gender">남자</label><input class="joinform__input" type="radio" name="gender" id="male" value="M"/>
-        <label for="gender">여자</label><input class="joinform__input" type="radio" name="gender" id="female" value="F" /></li>
+					<li><div class="li_label"><label for="gender">성별</label> <span class="essential">*</span></div>									<div><label for="gender">남자</label><input class="joinform__input" type="radio" name="gender" id="male" value="M"/>
+        																																																									<label for="gender">여자</label><input class="joinform__input" type="radio" name="gender" id="female" value="F" /></div></li>
 					<li><div class="li_label"><label for="tel">휴대폰</label> <span class="essential">*</span></div>										<input class="joinform__input" type="text" name="tel" id="tel" /></li>
 					<li><div class="li_label"><label for="email">연락가능이메일</label> <span class="essential">*</span></div>					 <input class="joinform__input" type="text" name="email" id="email" /></li>
 					<li><div class="li_label"><label for="address">주소</label> <span class="essential">*</span></div>									<input class="joinform__input" type="text" name="address" id="address" /></li>
