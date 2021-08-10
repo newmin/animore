@@ -6,8 +6,6 @@ import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.proj.animore.form.Gender;
-
 import lombok.Data;
 
 @Data
