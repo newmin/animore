@@ -35,21 +35,13 @@ public class MemberDAOImpl implements MemberDAO {
 												memberDTO.getNickname(),
 												memberDTO.getMtype());
 
-			log.info(memberDTO.getId(),
-												memberDTO.getPw(),
-												memberDTO.getName(),
-												memberDTO.getBirth(),
-												memberDTO.getGender(),
-												memberDTO.getTel(),
-												memberDTO.getEmail(),
-												memberDTO.getAddress(),
-												memberDTO.getNickname(),
-												memberDTO.getMtype());
+			log.info("memberDTO : {}", memberDTO.toString());
 	}
 
 	@Override
 	public MemberDTO findMemberById(String id) {
-		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+		
 		return null;
 	}
 
