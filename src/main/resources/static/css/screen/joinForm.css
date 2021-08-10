@@ -1,98 +1,101 @@
 @charset "UTF-8";
 
-.joinform{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: var(--form-size);
-}
-
-.joinform>li{
-	margin-bottom: 15px;
-	font-size: 20px;
-	display : flex;
-	flex-direction : column;
-	align-items : flex-start;
-	width: var(--form-size);
-}
-
-
-.joinform__input{
-	width : 100%;
-	padding: var(--input-padding);
-	box-sizing: border-box;
-	border: 1px solid rgba(0, 0, 0, 0.4);
-	border-radius: 5px;
-	margin-top: 5px;
-}
-.joinform__input--sm{
-	width: 310px;
-}
-
-.joinform__input[type="radio"]{
-	width : 30px;
-	margin-top: 5px;
-}
-
-
-.bcategory-box{
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	width: var(--form-size);
-}
-.bcategory-box li{
-	width: 110px;
-	font-size: 17px;
-}
-
 .joinform__title{
 	font-size: 22px;
 	font-weight: 400;
 	margin-top: 20px;
 }
 
-
-
-/* 병원태그 선택 */
-#h_tags{
-	display: none;
-}
-#h_tags.active{
-	display: block;
+.joinform{
+display: flex;
+flex-direction: column;
+align-items: center;
+width: var(--form-size);
 }
 
-.joinform__inputBox{
-	width: 400px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.joinform>li{
+margin-bottom: 15px;
+font-size: 20px;
+display : flex;
+flex-direction : column;
+align-items : flex-start;
+width: var(--form-size);
 }
 
-.joinform__btns{
-	width: var(--form-size);
-	display: flex;
-	justify-content: space-between;
-	margin-top: 30px;
+
+.joinform__input{
+width : 100%;
+padding: var(--input-padding);
+box-sizing: border-box;
+border: 1px solid rgba(0, 0, 0, 0.4);
+border-radius: 5px;
+margin-top: 5px;
+}
+.joinform__input--sm{
+width: 310px;
+}
+
+.joinform__input[type="radio"]{
+width : 30px;
+}
+.joinform__input[name="tel"]{
+width : 130px;
+
+}
+
+
+.joinform__row{
+width: 400px;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+gap : 5px;
+}
+
+.joinform__required-mark{
+color: red;
 }
 
 .joinform__btn{
-	width: 80px;
-	height: 36px;
-	box-sizing: border-box;
-	background-color: #3498DB;
-	border: none;
-	border-radius: 5px;
-	color: white;
-	margin-top: 5px;
+width: 80px;
+height: 36px;
+box-sizing: border-box;
+background-color: #3498DB;
+border: none;
+border-radius: 5px;
+color: white;
+margin-top: 5px;
+margin-left : 5px;
+}
+
+.joinform__btns{
+width: var(--form-size);
+display: flex;
+justify-content: space-between;
+margin-top: 30px;
 }
 
 .joinform__btn--big{
-	width: 180px;
-	font-size: 20px;
-	border-radius: 5px;
+width: 180px;
+font-size: 20px;
+border-radius: 5px;
 }
 
-.essential{
-	color: red;
+.bcategory-box{
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+width: var(--form-size);
+}
+.bcategory-box li{
+width: 110px;
+font-size: 17px;
+}
+
+/* 병원태그 선택 */
+#h_tags{
+display: none;
+}
+#h_tags.active{
+display: block;
 }
