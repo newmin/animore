@@ -27,12 +27,13 @@
 				
 				<ul class="joinform">
 					<li> <div><label for="id">아이디</label><span class="essential">*</span></div>			  	<div class="joinform__inputBox"><input class="joinform__input joinform__input--sm" type="text" name="id" id="id" placeholder="Ex.) petlove1@animore.com"/> <input class="joinform__btn" type="button" value="중복확인"></div></li>
-					<li> <div class="li_label"><label for="pw">비밀번호</label><span class="essential">*</span></div> 									<input class="joinform__input" type="text" name="pw" id="pw" /> </li>
-					<li><div class="li_label"><label for="pw2">비밀번호재확인</label>	<span class="essential">*</span></div>						 <input class="joinform__input" type="text" name="pw2" id="pw2" /></li>
+					<li> <div class="li_label"><label for="pw">비밀번호</label><span class="essential">*</span></div> 									<input class="joinform__input" type="password" name="pw" id="pw" /> </li>
+					<li><div class="li_label"><label for="pw2">비밀번호재확인</label>	<span class="essential">*</span></div>						 <input class="joinform__input" type="password" name="pw2" id="pw2" /></li>
 					<li><div class="li_label"><label for="image">프로필사진</label></div>																			<input class="joinform__input" type="file" name="image" id="image" /></li>
 					<li><div class="li_label"><label for="name">이름</label> <span class="essential">*</span></div>										<input class="joinform__input" type="text" name="name" id="name" /></li>
-					<li><div class="li_label"><label for="birth">생년월일</label> <span class="essential">*</span></div>								<input class="joinform__input" type="text" name="birth" id="birth" /></li>
-					<li><div class="li_label"><label for="gender">성별</label> <span class="essential">*</span></div>									<input class="joinform__input" type="text" name="gender" id="gender" /></li>
+					<li><div class="li_label"><label for="birth">생년월일</label> <span class="essential">*</span></div>								<input class="joinform__input" type="date" name="birth" id="birth" /></li>
+					<li><div class="li_label"><label for="gender">성별</label> <span class="essential">*</span></div>									<label for="gender">남자</label><input class="joinform__input" type="radio" name="gender" id="male" value="M"/>
+        <label for="gender">여자</label><input class="joinform__input" type="radio" name="gender" id="female" value="F" /></li>
 					<li><div class="li_label"><label for="tel">휴대폰</label> <span class="essential">*</span></div>										<input class="joinform__input" type="text" name="tel" id="tel" /></li>
 					<li><div class="li_label"><label for="email">연락가능이메일</label> <span class="essential">*</span></div>					 <input class="joinform__input" type="text" name="email" id="email" /></li>
 					<li><div class="li_label"><label for="address">주소</label> <span class="essential">*</span></div>									<input class="joinform__input" type="text" name="address" id="address" /></li>

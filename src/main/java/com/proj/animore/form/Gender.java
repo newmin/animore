@@ -1,7 +1,7 @@
 package com.proj.animore.form;
 
 public enum Gender {
-	MALE("남자"),FEMALE("여자");
+	M("남"),F("여");
 
 	private final String decode;
 	

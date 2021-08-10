@@ -1,6 +1,10 @@
 package com.proj.animore.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.proj.animore.form.Gender;
 
@@ -10,12 +14,15 @@ import lombok.Data;
 public class MemberDTO {
   private String id;
   private String pw;
-  private String pw2;
+//  private String pw2;
   // TODO private 프로필사진타입 image;
   private String name;
   private String nickname;
-  private Date birth;
-  private Gender gender;
+  @DateTimeFormat(pattern ="yyyy-MM-dd")
+  @Past
+  private LocalDate birth;
+  private String gender;
+  //TODO
   private String tel;
   private String email;
   private String address;

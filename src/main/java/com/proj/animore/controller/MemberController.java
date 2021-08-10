@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.svc.MemberSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -50,8 +51,8 @@ public class MemberController {
 	}
 	
 	@PostMapping("/join")
-	public String join() {
-//		TODO DTO받아서 SVC실행
+	public String join(MemberDTO memberDTO) {
+		memberSVC.joinMember(memberDTO);
 		return "redirect:/";
 	}
 	

@@ -25,6 +25,10 @@
 .li_label{
 	font-size: 20px;
 }
+.joinform__input[type="radio"]{
+	width : 30px;
+}
+
 
 .bcategory-box{
 	display: flex;
