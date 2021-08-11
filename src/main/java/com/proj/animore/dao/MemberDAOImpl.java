@@ -142,6 +142,7 @@ StringBuffer sql = new StringBuffer();
 		sql.append("where id = ? ");
 		sql.append("      name= ? ");
 		sql.append("      email= ? ");
+//		ㅋㅌㅌㅌㅋㅌ
 		
 		return null;
 	}
