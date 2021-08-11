@@ -22,7 +22,7 @@ public interface MemberDAO {
 	List<MemberDTO> list();
 	
 	//로그인
-	MemberDTO findByIdPw(String id, String pw);
+	MemberDTO loginMember(String id, String pw);
 	
 	//아이디찾기
 	String findId(String name, String email);

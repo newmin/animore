@@ -107,16 +107,6 @@ public class MemberDAOImpl implements MemberDAO {
 		return list;
 	}
 
-	@Override
-	public MemberDTO findByIdPw(String id, String pw) {
-		StringBuffer sql = new StringBuffer();
-		
-		sql.append("select id, pw ");
-		sql.append("from member ");
-		sql.append("where name = ? ");
-		sql.append("      email= ? ");
-		return null;
-	}
 
 	@Override 
 	//TODO 파라미터가 memberDTO(or name,email만의 폼)가 되고 getter로 가져오기?
@@ -144,6 +134,12 @@ StringBuffer sql = new StringBuffer();
 		sql.append("      email= ? ");
 //		ㅋㅌㅌㅌㅋㅌ
 		
+		return null;
+	}
+
+	@Override
+	public MemberDTO loginMember(String id, String pw) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
