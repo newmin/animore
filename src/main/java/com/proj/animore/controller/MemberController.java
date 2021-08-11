@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.svc.MemberSVC;
@@ -55,9 +56,15 @@ public class MemberController {
 		return "member/joinForm";
 	}
 	
-	@PostMapping("/join")
+	@PostMapping("/join/N")
 	public String join(MemberDTO memberDTO) {
 		memberSVC.joinMember(memberDTO);
+		return "redirect:/";
+	}
+	
+	@PostMapping("/join/S")
+	public String join2(MemberDTO memberDTO, BusinessDTO businessDTO) {
+		memberSVC.joinMember(memberDTO, businessDTO);
 		return "redirect:/";
 	}
 	

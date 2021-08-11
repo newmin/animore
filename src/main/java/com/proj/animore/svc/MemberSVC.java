@@ -2,12 +2,14 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 
 public interface MemberSVC {
 
 	//회원가입
 	void joinMember(MemberDTO memberDTO);
+	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO);
 	
 	//내정보 조회
 	MemberDTO findMemberById(String id);

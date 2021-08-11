@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
+import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -14,10 +16,17 @@ import lombok.RequiredArgsConstructor;
 public class MemberSVCImpl implements MemberSVC {
 	
 	private final MemberDAO memberDAO;
+	private final BusinessDAO businessDAO;
 
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		memberDAO.joinMember(memberDTO);
+	}
+	@Override
+	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO) {
+		memberDAO.joinMember(memberDTO);
+		businessDAO.joinBusi(businessDTO);
+	
 	}
 
 	@Override

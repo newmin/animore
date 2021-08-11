@@ -15,7 +15,7 @@
 		<main class="main">
 
 			<!-- TODO 회원가입 완료시, 메인화면? 회원가입완료페이지? -->
-			<form action="/index.html" th:action="@{/member/join}" th:method="post" th:object="${joinMemberForm}">
+			<form action="/index.html" th:action="@{|/member/join/${mtype}|}" th:method="post" th:object="${joinMemberForm}">
 				<input type="hidden" name="mtype" th:value="${mtype}"/>
 				
 				<!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
@@ -112,7 +112,7 @@
 						<li><div class="joinform__row"><label for="bname">업체명</label></div>								<input class="joinform__input" type="text" name="bname" id="bname" /></li>
 						<li><div class="joinform__row"><label for="baddress">업체주소</label></div>						<input class="joinform__input" type="text" name="baddress" id="baddress" /></li>
 						<li><div class="joinform__row"><label for="btell">업체연락처</label></div>							<input class="joinform__input" type="text" name="btell" id="btell" /></li>
-						<li><div class="joinform__row"><label for="otime">영업시간</label></div>							<input class="joinform__input" type="text" name="otime" id="otime" /></li>
+						<li><div class="joinform__row"><label for="otime">영업시간</label></div>							<input class="joinform__input" type="text" name="openhours" id="openhours" /></li>
 						<li>
 							<p>업체 카테고리 선택</p>
 							
