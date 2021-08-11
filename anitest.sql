@@ -120,7 +120,7 @@ create table business(
   bid varchar2(40) not null,
   bname varchar2(30) not null,
   baddress varchar2 (150) not null,
-  btell varchar2(13) not null,
+  btel varchar2(13) not null,
   nightcare char(1) check(nightcare = 'Y' or nightcare ='N'),
   rareani char(1) check(rareani = 'Y' or rareani ='N'),
   visitcare char(1) check(visitcare = 'Y' or visitcare ='N'),
