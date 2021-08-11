@@ -126,6 +126,7 @@ create table business(
   visitcare char(1) check(visitcare = 'Y' or visitcare ='N'),
   holidayopen char(1) check(holidayopen = 'Y' or holidayopen ='N'),
   dental char(1) check(dental = 'Y' or dental ='N'),
+  openhours clob
   constraint BUSINESS_BNUM_PK primary key(bnum)
   ,constraint business_id_FK foreign key(bid) 
                                  references member(id)
