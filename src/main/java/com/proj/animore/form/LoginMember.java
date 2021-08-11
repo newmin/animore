@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class LoginMember {
 	private String id;
+	private String pw;
 	private String nickname;
 	private String mtype;
 }
