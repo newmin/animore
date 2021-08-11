@@ -15,7 +15,7 @@
 		<main class="main">
 
 			<!-- TODO 회원가입 완료시, 메인화면? 회원가입완료페이지? -->
-			<form action="/index.html" th:action="@{/member/join}" method="post">
+			<form action="/index.html" th:action="@{/member/join}" th:method="post" th:object="${joinMemberForm}">
 				<input type="hidden" name="mtype" th:value="${mtype}"/>
 				
 				<!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
@@ -29,29 +29,29 @@
     <li>
       <div class="joinform__row"><label for="id">아이디</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
-        <input class="joinform__input joinform__input--sm" type="text" th:field="id" placeholder="Ex.) petlove1@animore.com" required/>
+        <input class="joinform__input joinform__input--sm" type="text" th:field="*{id}" placeholder="Ex.) petlove1@animore.com" required/>
         <button class="joinform__btn">중복확인</button>
       </div>
     </li>
     <li>
       <div class="joinform__row"><label for="pw">비밀번호</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input class="joinform__input" type="password" th:field="pw" required/></div>
+      <div class="joinform__row"><input class="joinform__input" type="password" th:field="*{pw}" required/></div>
     </li>
     <li>
       <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="text" class="joinform__input" th:field="pw2" required><p class="error__pwCheck"><!--TODO 비번불일치 오류메시지 출력--></p></div>
+      <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" required><p class="error__pwCheck"><!--TODO 비번불일치 오류메시지 출력--></p></div>
     </li>
     <li>
       <div class="joinform__row"><label for="image">프로필사진</label></div>
-      <div class="joinform__row"><input type="file" class="joinform__input" th:field="image"></div>
+      <div class="joinform__row"><input type="file" class="joinform__input" id="image" name="image"></div>
     </li>
     <li>
       <div class="joinform__row"><label for="name">이름</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="text" class="joinform__input" th:field="name" required></div>
+      <div class="joinform__row"><input type="text" class="joinform__input" th:field="*{name}" required></div>
     </li>
     <li>
       <div class="joinform__row"><label for="birth">생년월일</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="date" class="joinform__input" th:field="birth" required></div>
+      <div class="joinform__row"><input type="date" class="joinform__input" th:field="*{birth}" required></div>
     </li>
     <li>
       <div class="joinform__row"><label for="gender">성별</label><span class="joinform__required-mark">*</span></div>
@@ -70,16 +70,16 @@
     </li>
     <li>
       <div class="joinform__row"><label for="email">연락가능 이메일</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="email" class="joinform__input" th:field="email" required></div>
+      <div class="joinform__row"><input type="email" class="joinform__input" th:field="*{email}" required></div>
     </li>
     <li>
       <div class="joinform__row"><label for="address">주소</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="text" class="joinform__input" th:field="address" required></div>
+      <div class="joinform__row"><input type="text" class="joinform__input" th:field="*{address}" required></div>
     </li>
     <li>
       <div class="joinform__row"><label for="nickname">별칭</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
-        <input type="text" class="joinform__input joinform__input--sm"  th:field="nickname" required>
+        <input type="text" class="joinform__input joinform__input--sm"  th:field="*{nickname}" required>
         <button class="joinform__btn">중복확인</button>
       </div>
     </li>
