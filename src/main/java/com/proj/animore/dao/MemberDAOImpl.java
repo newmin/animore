@@ -2,6 +2,7 @@ package com.proj.animore.dao;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -42,43 +43,106 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO findMemberById(String id) {
 		StringBuffer sql = new StringBuffer();
 		
-		return null;
+		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname ");
+		sql.append("from member ");
+		sql.append("where id= ? ");
+
+		MemberDTO memberDTO = jdbcTemplate.queryForObject(sql.toString(), 
+																	new BeanPropertyRowMapper<>(MemberDTO.class),
+																	id);
+		return memberDTO;
 	}
 
 	@Override
 	public MemberDTO modifyMember(String id, MemberDTO memberDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("update member ");
+		sql.append("set pw = ? ");
+		sql.append("    name = ? ");
+		sql.append("    birth = ? ");
+		sql.append("    gender = ? ");
+		sql.append("    tel = ? ");
+		sql.append("    email = ? ");
+		sql.append("    address = ? ");
+		sql.append("    nickname = ? ");
+		sql.append("where id = ? ");
+
+		jdbcTemplate.update(sql.toString(),
+												memberDTO.getPw(),
+												memberDTO.getName(),
+												memberDTO.getBirth(),
+												memberDTO.getGender(),
+												memberDTO.getTel(),
+												memberDTO.getEmail(),
+												memberDTO.getAddress(),
+												memberDTO.getNickname(),
+												id);
+		
+		return findMemberById(id);
 
 	}
 
 	@Override
 	public void deleteMember(String id) {
-		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("delete from member ");
+		sql.append("where id = ? ");
+		
+		jdbcTemplate.update(sql.toString(),
+												id);
 
 	}
 
 	@Override
 	public List<MemberDTO> list() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname ");
+		sql.append("from member ");
+		
+		List<MemberDTO> list = jdbcTemplate.query(sql.toString(),
+																							new BeanPropertyRowMapper<>(MemberDTO.class));
+		return list;
 	}
 
 	@Override
 	public MemberDTO findByIdPw(String id, String pw) {
-		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select id, pw ");
+		sql.append("from member ");
+		sql.append("where name = ? ");
+		sql.append("      email= ? ");
 		return null;
 	}
 
-	@Override
+	@Override 
+	//TODO 파라미터가 memberDTO(or name,email만의 폼)가 되고 getter로 가져오기?
 	public String findId(String name, String email) {
-		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select id ");
+		sql.append("from member ");
+		sql.append("where name = ? ");
+		sql.append("      email= ? ");
+		
+		 jdbcTemplate.update(sql.toString(),
+												name, email);
 		return null;
 	}
 
 	@Override
 	public String findPw(String id, String name, String email) {
-		// TODO Auto-generated method stub
+StringBuffer sql = new StringBuffer();
+		
+		sql.append("select pw ");
+		sql.append("from member ");
+		sql.append("where id = ? ");
+		sql.append("      name= ? ");
+		sql.append("      email= ? ");
+		
 		return null;
 	}
 
