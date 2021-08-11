@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
+/**
+ * 쿠키에 들어갈 정보
+ * @author mypc
+ *
+ */
 @Data
 @Getter
 @AllArgsConstructor
 public class LoginMember {
 	private String id;
-	private String pw;
 	private String nickname;
 	private String mtype;
 }
