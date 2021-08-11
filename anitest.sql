@@ -1,3 +1,13 @@
+//계정생성
+DROP USER c##animore CASCADE;
+CREATE USER c##animore IDENTIFIED BY animore1234 DEFAULT TABLESPACE users TEMPORARY
+TABLESPACE temp PROFILE DEFAULT;
+GRANT CONNECT, RESOURCE TO c##animore;
+GRANT CREATE VIEW, CREATE SYNONYM TO c##animore;
+GRANT UNLIMITED TABLESPACE TO c##animore;
+ALTER USER c##animore ACCOUNT UNLOCK;
+
+//테이블 및 시퀀스 생성
 drop table coupon;
 drop table profession;
 drop table Myani;
