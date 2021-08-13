@@ -182,7 +182,7 @@ create table review(
 );
 
 --즐겨찾기
-create table mylist(
+create table favorite(
   id varchar2(40),
   bnum number(10),
   mnum number(10),
