@@ -50,7 +50,7 @@ create table board(
                         (bcategory='Q'or bcategory='F'
                         or bcategory='M' or bcategory='P'),
   btitle varchar2(150) not null,
-  bid varchar2(40) not null,
+  id varchar2(40) not null,
   bcdate timestamp DEFAULT systimestamp not null,
   budate timestamp DEFAULT systimestamp,
   bhit number(5) DEFAULT 0 not null,
@@ -59,7 +59,7 @@ create table board(
   bcontent clob not null,
   bgroup number(5),
   constraint BOARD_BNUM_PK primary key(bnum)
-  ,constraint board_id_FK foreign key(bid) 
+  ,constraint board_id_FK foreign key(id) 
                                  references member(id) 
 );
 
@@ -67,7 +67,7 @@ create table board(
 create table rboard(
   rnum number(10),
   bnum number(10) not null,
-  rid varchar2(40) not null,
+  id varchar2(40) not null,
   rcdate timestamp DEFAULT systimestamp not null,
   rudate timestamp DEFAULT systimestamp,
   rcontent varchar2(600) not null,
@@ -78,7 +78,7 @@ create table rboard(
   ,constraint rboard_bnum_FK foreign key(bnum) 
                                  references board(bnum)
                                  ON DELETE CASCADE
-  ,constraint rboard_id_FK foreign key(rid) 
+  ,constraint rboard_id_FK foreign key(id) 
                                  references member(id)
 );
 
@@ -88,27 +88,27 @@ create table hboard(
   hcategory varchar2(12) not null check(hcategory='질병사전' 
                               or hcategory='행동사전'),
   btitle varchar2(150) not null,
-  bid varchar2(40) not null,
+  id varchar2(40) not null,
   bcdate timestamp DEFAULT systimestamp not null,
   budate timestamp DEFAULT systimestamp,
   bhit number(5) DEFAULT 0 not null,
   bgood number(5) DEFAULT 0 not null,
   bcontent clob not null,
   constraint HBOARD_BNUM_PK primary key(bnum)
-  ,constraint hboard_id_FK foreign key(bid) 
+  ,constraint hboard_id_FK foreign key(id) 
                                  references member(id)
 );
 
 --좋아요게시글
 create table goodboard(
   gnum number(10),
-  gid varchar2(40) not null,
-  gbnum number(10) not null,
+  id varchar2(40) not null,
+  bnum number(10) not null,
   constraint GOODBOARD_gnum_PK primary key(gnum)
-  ,constraint goodboard_id_FK foreign key(gid) 
+  ,constraint goodboard_id_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE
-  ,constraint goodboard_bnum_FK foreign key(gbnum) 
+  ,constraint goodboard_bnum_FK foreign key(bnum) 
                                  references board(bnum)
                                  ON DELETE CASCADE
 );
@@ -117,7 +117,7 @@ create table goodboard(
 create table business(
   bnum number(10),
   bbnum varchar2(20),
-  bid varchar2(40) not null,
+  id varchar2(40) not null,
   bname varchar2(30) not null,
   baddress varchar2 (150) not null,
   btel varchar2(13) not null,
@@ -126,9 +126,9 @@ create table business(
   visitcare char(1) check(visitcare = 'Y' or visitcare ='N'),
   holidayopen char(1) check(holidayopen = 'Y' or holidayopen ='N'),
   dental char(1) check(dental = 'Y' or dental ='N'),
-  openhours clob
+  openhours clob,
   constraint BUSINESS_BNUM_PK primary key(bnum)
-  ,constraint business_id_FK foreign key(bid) 
+  ,constraint business_id_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE
 );
@@ -136,11 +136,11 @@ create table business(
 --전문가
 create table profession(
   pnum number(10),
-  pid varchar2(40),
+  id varchar2(40),
   licenseno varchar2(20) not null,
 
   constraint PROFESSION_PNUM_PK primary key(pnum)
-  ,constraint profession_pid_FK foreign key(pid) 
+  ,constraint profession_pid_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE
 );
@@ -170,38 +170,38 @@ create table review(
   bnum number(10) not null,
   rscore number(1,1) not null,
   rcontent clob not null,
-  rvid varchar2(40) not null,
+  id varchar2(40) not null,
   rvcdate timestamp DEFAULT systimestamp not null,
   rvudate timestamp DEFAULT systimestamp,
   constraint REVIEW_RNUM_PK primary key(rnum)
   ,constraint review_bnum_FK foreign key(bnum) 
                                  references business(bnum)
                                  ON DELETE CASCADE
-  ,constraint review_id_FK foreign key(rvid) 
+  ,constraint review_id_FK foreign key(id) 
                                  references member(id)
 );
 
 --즐겨찾기
 create table mylist(
-  mid varchar2(40),
-  mbnum number(10),
+  id varchar2(40),
+  bnum number(10),
   mnum number(10),
   constraint MYLIST_mnum_PK primary key(mnum)
-  ,constraint mylist_id_FK foreign key(mid) 
+  ,constraint mylist_id_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE
-  ,constraint mylist_bnum_FK foreign key(mbnum)
+  ,constraint mylist_bnum_FK foreign key(bnum)
                                  references business(bnum)
                                  ON DELETE CASCADE
 );
 
 --키우는 동물
 create table myani(
-  MID varchar2(40),
+  ID varchar2(40),
   ANIMAL varchar(30),
   MNUM number(10),
   constraint myani_MNUM_PK primary key(MNUM)
-  ,constraint myani_id_FK foreign key(MID) 
+  ,constraint myani_id_FK foreign key(ID) 
                                  references member(id)
                                  ON DELETE CASCADE
 );
@@ -209,11 +209,11 @@ create table myani(
 --쿠폰
 create table coupon(
   cnum number(10),
-  cid varchar2(40),
+  id varchar2(40),
   price number(5),
   cflag char(1) DEFAULT 'Y' check(cflag = 'Y' or cflag ='N')
   ,constraint coupon_PK primary key(cnum)
-  ,constraint coupon_FK foreign key(cid)
+  ,constraint coupon_FK foreign key(id)
                               references member(id)
                               ON DELETE CASCADE
 );
