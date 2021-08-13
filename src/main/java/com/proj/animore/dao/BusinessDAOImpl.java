@@ -21,11 +21,11 @@ public class BusinessDAOImpl implements BusinessDAO {
 	public void joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("insert into business(bnum, bbnum, bid, bname, baddress, btel, openhours) values(business_bnum_seq.nextval,?,?,?,?,?,?) ");
+		sql.append("insert into business(bnum, bbnum, id, bname, baddress, btel, openhours) values(business_bnum_seq.nextval,?,?,?,?,?,?) ");
 		
 		jdbcTemplate.update(sql.toString(),
 												businessDTO.getBbnum(),
-												businessDTO.getBid(),
+												businessDTO.getId(),
 												businessDTO.getBname(),
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),

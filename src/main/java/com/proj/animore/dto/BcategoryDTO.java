@@ -3,7 +3,7 @@ package com.proj.animore.dto;
 import lombok.Data;
 
 @Data
-public class Bcategory {
+public class BcategoryDTO {
 
 String bnum;
 String bhospital;
