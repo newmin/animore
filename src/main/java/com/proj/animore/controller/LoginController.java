@@ -53,6 +53,8 @@ public class LoginController {
 			Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		log.info("loginForm:{}", loginForm);
+		log.info("bindingResult:{}",bindingResult);
+		log.info("model:{}",model);
 		
 		MemberDTO memberDTO = memberSVC.findByIdPw(loginForm.getId(), loginForm.getPw());
 		
