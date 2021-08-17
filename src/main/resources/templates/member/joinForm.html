@@ -53,6 +53,7 @@
       <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" th:errorclass="field-error" required><p class="error__pw2"></p></div>
 	  <p th:if="${#fields.hasErrors('pw2')}" th:errors="*{pw2}">Incorrect date</p>
+	  <p class="pwChk-msg"></p>
       <!--  <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>-->
       <!--  <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" th:errorclass="field-error" required><p class="error__pw2"></p></div>-->
     	<!-- <p th:errors="*{pw2}" th:errorclass="field-msg">비밀번호오류</p> -->
