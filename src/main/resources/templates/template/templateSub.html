@@ -20,15 +20,20 @@
   </header>
 
   <nav class="nav nav-sub">
+    
     <div class="nav__column">
       <i class="fas fa-bars"></i>
       <span>전체 카테고리</span>
+    </div>
+
+    <div class="nav__column">
 		  <!-- 검색 -->
 		  <div class="search">
 		    <input class="search__input search__input--sm" type="text" >
 		    <span class="search__icon search__icon--sm"><i class="fas fa-search"></i></span>
 		  </div>
     </div>
+
     <div class="nav__column">
       <ul class="nav__btn">
         <!-- TODO href th:href -->
@@ -41,8 +46,11 @@
             <li><a href="#">내새끼보세요</a></li>
           </ul>
         </li>
-        <li><a href="/member/joinForm.html" th:href="@{/member/join}">회원가입</a></li>
-        <li><a href="/member/login.html" th:href="@{/login}">로그인</a></li>
+        <li th:if="${session.loginMember == null}"><a href="/member/join">회원가입</a></li>
+        <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
+            <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="/member/mypage/mypageFavorites">내정보</a></li>
+        <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('S')}"><a href="/member/mypage/mypageBReview">내정보</a></li>
+        <li th:if="${session.loginMember != null}"><a href="/logout">로그아웃</a></li>
       </ul>
   </nav>
   </div>

@@ -1,5 +1,7 @@
 package com.proj.animore.dto;
 
+
+
 import java.time.LocalDate;
 
 import javax.validation.constraints.Past;
@@ -12,7 +14,7 @@ import lombok.Data;
 public class MemberDTO {
   private String id;
   private String pw;
-//  private String pw2;
+  private String pw2;
   // TODO private 프로필사진타입 image;
   private String name;
   private String nickname;

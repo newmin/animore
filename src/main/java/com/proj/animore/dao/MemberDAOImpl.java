@@ -132,15 +132,23 @@ StringBuffer sql = new StringBuffer();
 		sql.append("where id = ? ");
 		sql.append("      name= ? ");
 		sql.append("      email= ? ");
-//		ㅋㅌㅌㅌㅋㅌ
+
 		
 		return null;
 	}
 
 	@Override
-	public MemberDTO loginMember(String id, String pw) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	   public MemberDTO findByIdPw(String id, String pw) {
 
+	      StringBuffer sql = new StringBuffer();
+
+	      sql.append("select id, mtype, nickname ");
+	      sql.append("from member ");
+	      sql.append("where id = ? ");
+	      sql.append("  and pw= ? ");
+	      
+	     MemberDTO memberDTO = jdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(MemberDTO.class),id,pw);
+	      return memberDTO;
+
+}
 }

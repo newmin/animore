@@ -10,22 +10,34 @@
 <script src="/js/joinForm.js" defer></script>
 <title>회원가입</title>
 </head>
+<style>
+  	.field-msg{
+  		color:#f00;
+  		font-weight:bold;
+  		font-size:0.8em;
+  	}
+  	.field-error{
+			border:1px solid red;
+			outline:1px solid red;
+  	}
+  	
+</style>
 <body>
 
-		<main class="main">
+      <main class="main">
 
-			<!-- TODO 회원가입 완료시, 메인화면? 회원가입완료페이지? -->
-			<form action="/index.html" th:action="@{|/member/join/${mtype}|}" th:method="post" th:object="${joinMemberForm}">
-				<input type="hidden" name="mtype" th:value="${mtype}"/>
-				
-				<!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
-				<h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
-				<h1 th:if="${mtype} == 'S'">특수회원가입양식</h1>
-				
-				<h3 class="joinform__title">공통정보</h3>
-				<hr>
-				
-				<ul class="joinform">
+         <!-- TODO 회원가입 완료시, 메인화면? 회원가입완료페이지? -->
+         <form action="/index.html" th:action="@{|/member/join/${mtype}|}" th:method="post" th:object="${joinMemberForm}">
+            <input type="hidden" name="mtype" th:value="${mtype}"/>
+            
+            <!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
+            <h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
+            <h1 th:if="${mtype} == 'S'">특수회원가입양식</h1>
+            
+            <h3 class="joinform__title">공통정보</h3>
+            <hr>
+            
+            <ul class="joinform">
     <li>
       <div class="joinform__row"><label for="id">아이디</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
@@ -39,7 +51,12 @@
     </li>
     <li>
       <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" required><p class="error__pwCheck"><!--TODO 비번불일치 오류메시지 출력--></p></div>
+      <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" th:errorclass="field-error" required><p class="error__pw2"></p></div>
+	  <p th:if="${#fields.hasErrors('pw2')}" th:errors="*{pw2}">Incorrect date</p>
+	  <p class="pwChk-msg"></p>
+      <!--  <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>-->
+      <!--  <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" th:errorclass="field-error" required><p class="error__pw2"></p></div>-->
+    	<!-- <p th:errors="*{pw2}" th:errorclass="field-msg">비밀번호오류</p> -->
     </li>
     <li>
       <div class="joinform__row"><label for="image">프로필사진</label></div>
@@ -62,7 +79,7 @@
     <li>
       <div class="joinform__row"><label for="tel">연락처</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
-      	<!--TODO 연락처 3칸으로 나누고 db에 하나로 저장하는 방법 확인하기 -->
+         <!--TODO 연락처 3칸으로 나누고 db에 하나로 저장하는 방법 확인하기 -->
         <input type="text" class="joinform__input joinform__input--sm" name="tel" required>
         <input type="text" class="joinform__input joinform__input--sm" name="tel" required>
         <input type="text" class="joinform__input joinform__input--sm" name="tel" required>
@@ -84,91 +101,91 @@
       </div>
     </li>
   </ul>
-				
-				<div th:if="${mtype} == 'N'">
-				<!-- 일반회원전용정보 -->
-					<h3 class="joinform__title">일반회원전용정보</h3>
-					<hr>
-					<ul class="joinform">
-						<li><div class="joinform__row"><label for="animal">키우는동물</label></div>						<input class="joinform__input" type="text" name="animal" id="animal" /></li>
-					</ul>
-				<!-- 일반회원전용정보 끝 -->
-				</div>
-				
-				<div th:if="${mtype} == 'S'">
-				<!-- 특수회원전용정보 -->
-					<h3 class="joinform__title">특수회원전용정보</h3>
-					<hr>
-					<h3 class="joinform__title">자격증정보</h3>
-					<ul class="joinform">
-						<li><div class="joinform__row"><label for="licenseno">자격증번호</label></div>					<input class="joinform__input" type="text" name="licenseno" id="licenseno" /></li>
-						<li><div class="joinform__row"><label for="image">자격증사진</label></div>							<input class="joinform__input" type="file" name="image" id="image" /></li>
-					</ul>
-					
-					<h3 class="joinform__title">사업자정보</h3>
-					<hr>
-					<ul class="joinform">
-						<li><div class="joinform__row"><label for="bbnum">사업자번호</label></div>							<input class="joinform__input" type="text" name="bbnum" id="bbnum" /></li>
-						<li><div class="joinform__row"><label for="bname">업체명</label></div>								<input class="joinform__input" type="text" name="bname" id="bname" /></li>
-						<li><div class="joinform__row"><label for="baddress">업체주소</label></div>						<input class="joinform__input" type="text" name="baddress" id="baddress" /></li>
-						<li><div class="joinform__row"><label for="btell">업체연락처</label></div>							<input class="joinform__input" type="text" name="btell" id="btell" /></li>
-						<li><div class="joinform__row"><label for="otime">영업시간</label></div>							<input class="joinform__input" type="text" name="openhours" id="openhours" /></li>
-						<li>
-							<p>업체 카테고리 선택</p>
-							
-							<!-- 셀렉트박스 사용시 -->
-							<!--
-								<select name="bcategory" id="bcategory">
-									<option>--선택--</option>
-									<option value="bhospital">병원</option>
-									<option value="bpharmacy">약국</option>
-									<option value="bhotel">호텔</option>
-									<option value="bkindergarden">유치원</option>
-									<option value="bfood">식당ㆍ카페</option>
-									<option value="btraining">훈련소</option>
-									<option value="bshop">용품점</option>
-									<option value="bplayground">놀이터</option>
-									<option value="bhairshop">미용실</option>
-									<option value="betc">기타</option>
-								</select>
-							-->
-							
-							<!-- 체크박스 사용시 -->
-							<ul class="bcategory-box">
-								<li><input type="checkbox" name="bhospital" id="bhospital" value="bhospital"><label for="bhospital">병원</label></li>
-								<li><input type="checkbox" name="bpharmacy" id="bpharmacy" value="bpharmacy"><label for="bpharmacy">약국</label></li>
-								<li><input type="checkbox" name="bhotel" id="bhotel" value="bhotel"><label for="bhotel">호텔</label></li>
-								<li><input type="checkbox" name="bkindergarden" id="bkindergarden" value="bkindergarden"><label for="bkindergarden">유치원</label></li>
-								<li><input type="checkbox" name="bfood" id="bfood" value="bfood"><label for="bfood">식당ㆍ카페</label></li>
-								<li><input type="checkbox" name="btraining" id="btraining" value="btraining"><label for="btraining">훈련소</label></li>
-								<li><input type="checkbox" name="bshop" id="bshop" value="bshop"><label for="bshop">용품점</label></li>
-								<li><input type="checkbox" name="bplayground" id="bplayground" value="bplayground"><label for="bplayground">놀이터</label></li>
-								<li><input type="checkbox" name="bhairshop" id="bhairshop" value="bhairshop"><label for="bhairshop">미용실</label></li>
-								<li><input type="checkbox" name="betc" id="betc" value="betc"><label for="betc">기타</label></li>
-							</ul>
-							
-							<!-- 병원 업체카테고리 체크시에만 나타나는 병원태그 선택란 -->
-							<div id="h_tags">
-								<p>병원태그 선택</p>
-								<input type="checkbox" name="nightcare" id="nightcare" value="nightcare" disabled><label for="nightcare">야간진료</label>
-								<input type="checkbox" name="rareani" id="rareani" value="rareani" disabled><label for="rareani">희귀동물</label>
-								<input type="checkbox" name="visitcare" id="visitcare" value="visitcare" disabled><label for="visitcare">방문진료</label>
-								<input type="checkbox" name="holidayopen" id="holidayopen" value="holidayopen" disabled><label for="holidayopen">공휴일진료</label>
-								<input type="checkbox" name="dental" id="dental" value="dental" disabled><label for="dental">치과진료</label>
-							</div>
-							
-						</li>
-					</ul>
-				<!-- 특수회원전용정보 끝 -->
-				</div>
-				
-				<!-- 버튼 -->
-				<div class="joinform__btns">
-					<input class="joinform__btn joinform__btn--big" id='joinBtn' type='submit' value="회원가입"></input>
-					<input class="joinform__btn joinform__btn--big" id='homeBtn' type='button' value="홈으로"></input>
-				</div>
-				
-			</form>
-		</main>
+            
+            <div th:if="${mtype} == 'N'">
+            <!-- 일반회원전용정보 -->
+               <h3 class="joinform__title">일반회원전용정보</h3>
+               <hr>
+               <ul class="joinform">
+                  <li><div class="joinform__row"><label for="animal">키우는동물</label></div>                  <input class="joinform__input" type="text" name="animal" id="animal" /></li>
+               </ul>
+            <!-- 일반회원전용정보 끝 -->
+            </div>
+            
+            <div th:if="${mtype} == 'S'">
+            <!-- 특수회원전용정보 -->
+               <h3 class="joinform__title">특수회원전용정보</h3>
+               <hr>
+               <h3 class="joinform__title">자격증정보</h3>
+               <ul class="joinform">
+                  <li><div class="joinform__row"><label for="licenseno">자격증번호</label></div>               <input class="joinform__input" type="text" name="licenseno" id="licenseno" /></li>
+                  <li><div class="joinform__row"><label for="image">자격증사진</label></div>                     <input class="joinform__input" type="file" name="image" id="image" /></li>
+               </ul>
+               
+               <h3 class="joinform__title">사업자정보</h3>
+               <hr>
+               <ul class="joinform">
+                  <li><div class="joinform__row"><label for="bbnum">사업자번호</label></div>                     <input class="joinform__input" type="text" name="bbnum" id="bbnum" /></li>
+                  <li><div class="joinform__row"><label for="bname">업체명</label></div>                        <input class="joinform__input" type="text" name="bname" id="bname" /></li>
+                  <li><div class="joinform__row"><label for="baddress">업체주소</label></div>                  <input class="joinform__input" type="text" name="baddress" id="baddress" /></li>
+                  <li><div class="joinform__row"><label for="btel">업체연락처</label></div>                     <input class="joinform__input" type="text" name="btel" id="btel" /></li>
+                  <li><div class="joinform__row"><label for="otime">영업시간</label></div>                     <input class="joinform__input" type="text" name="openhours" id="openhours" /></li>
+                  <li>
+                     <p>업체 카테고리 선택</p>
+                     
+                     <!-- 셀렉트박스 사용시 -->
+                     <!--
+                        <select name="bcategory" id="bcategory">
+                           <option>--선택--</option>
+                           <option value="bhospital">병원</option>
+                           <option value="bpharmacy">약국</option>
+                           <option value="bhotel">호텔</option>
+                           <option value="bkindergarden">유치원</option>
+                           <option value="bfood">식당ㆍ카페</option>
+                           <option value="btraining">훈련소</option>
+                           <option value="bshop">용품점</option>
+                           <option value="bplayground">놀이터</option>
+                           <option value="bhairshop">미용실</option>
+                           <option value="betc">기타</option>
+                        </select>
+                     -->
+                     
+                     <!-- 체크박스 사용시 -->
+                     <ul class="bcategory-box">
+                        <li><input type="checkbox" name="bhospital" id="bhospital" value="Y"><label for="bhospital">병원</label></li>
+                        <li><input type="checkbox" name="bpharmacy" id="bpharmacy" value="Y"><label for="bpharmacy">약국</label></li>
+                        <li><input type="checkbox" name="bhotel" id="bhotel" value="Y"><label for="bhotel">호텔</label></li>
+                        <li><input type="checkbox" name="bkindergarden" id="bkindergarden" value="Y"><label for="bkindergarden">유치원</label></li>
+                        <li><input type="checkbox" name="bfood" id="bfood" value="Y"><label for="bfood">식당ㆍ카페</label></li>
+                        <li><input type="checkbox" name="btraining" id="btraining" value="Y"><label for="btraining">훈련소</label></li>
+                        <li><input type="checkbox" name="bshop" id="bshop" value="Y"><label for="bshop">용품점</label></li>
+                        <li><input type="checkbox" name="bplayground" id="bplayground" value="Y"><label for="bplayground">놀이터</label></li>
+                        <li><input type="checkbox" name="bhairshop" id="bhairshop" value="Y"><label for="bhairshop">미용실</label></li>
+                        <li><input type="checkbox" name="betc" id="betc" value="Y"><label for="betc">기타</label></li>
+                     </ul>
+                     
+                     <!-- 병원 업체카테고리 체크시에만 나타나는 병원태그 선택란 -->
+                     <div id="h_tags">
+                        <p>병원태그 선택</p>
+                        <input type="checkbox" name="nightcare" id="nightcare" value="Y" disabled><label for="nightcare">야간진료</label>
+                        <input type="checkbox" name="rareani" id="rareani" value="Y" disabled><label for="rareani">희귀동물</label>
+                        <input type="checkbox" name="visitcare" id="visitcare" value="Y" disabled><label for="visitcare">방문진료</label>
+                        <input type="checkbox" name="holidayopen" id="holidayopen" value="Y" disabled><label for="holidayopen">공휴일진료</label>
+                        <input type="checkbox" name="dental" id="dental" value="Y" disabled><label for="dental">치과진료</label>
+                     </div>
+                     
+                  </li>
+               </ul>
+            <!-- 특수회원전용정보 끝 -->
+            </div>
+            
+            <!-- 버튼 -->
+            <div class="joinform__btns">
+               <input class="joinform__btn joinform__btn--big" id='joinBtn' type='submit' value="회원가입"></input>
+               <input class="joinform__btn joinform__btn--big" id='homeBtn' type='button' value="홈으로"></input>
+            </div>
+            
+         </form>
+      </main>
 </body>
 </html>

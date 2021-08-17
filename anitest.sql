@@ -1,4 +1,4 @@
-//계정생성
+--계정생성
 DROP USER c##animore CASCADE;
 CREATE USER c##animore IDENTIFIED BY animore1234 DEFAULT TABLESPACE users TEMPORARY
 TABLESPACE temp PROFILE DEFAULT;
@@ -7,7 +7,7 @@ GRANT CREATE VIEW, CREATE SYNONYM TO c##animore;
 GRANT UNLIMITED TABLESPACE TO c##animore;
 ALTER USER c##animore ACCOUNT UNLOCK;
 
-//테이블 및 시퀀스 생성
+--테이블 및 시퀀스 생성
 drop table coupon;
 drop table profession;
 drop table Myani;
@@ -246,44 +246,44 @@ CREATE SEQUENCE coupon_cnum_seq INCREMENT BY 1 START WITH 1;
 
 
 
-select * from member;
-select * from business;
-select * from bcategory;
-select * from myani;
-select * from profession;
+-- select * from member;
+-- select * from business;
+-- select * from bcategory;
+-- select * from myani;
+-- select * from profession;
 
-rollback;
-
-
---일반회원 가입쿼리
-insert all
-into MEMBER(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE)
-  values ('test2@test.com','zxc123!@','010-1234-1234','petlove1@kh.com','홍길동','반려부자','남','울산','20001010','N')
-into myani(MNUM,MID,ANIMAL) values(myani_mnum_seq.nextval,'test2@test.com','고양이')
-  select * from dual;
-
---사업자회원 가입쿼리
-insert all
-into MEMBER(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE)
-  values ('test2@test.com','zxc123!@','010-1234-1234','petlove1@kh.com','홍길동','반려부자','남','울산','20001010','B')
-into BUSINESS(BNUM, BBNUM, BID, BNAME, BADDRESS, BTELL)
-  values(business_bnum_seq.nextval,112,'test2@test.com','업체명1','업체주소1','010-1111-2222')
-into BCATEGORY(BNUM, BPHARMACY) values(business_bnum_seq.currval,'Y')
-select * from dual;
+-- rollback;
 
 
+-- --일반회원 가입쿼리
+-- insert all
+-- into MEMBER(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE)
+--   values ('test2@test.com','zxc123!@','010-1234-1234','petlove1@kh.com','홍길동','반려부자','남','울산','20001010','N')
+-- into myani(MNUM,MID,ANIMAL) values(myani_mnum_seq.nextval,'test2@test.com','고양이')
+--   select * from dual;
 
-update MEMBER
-set PW='12341',TEL='010-1111-1111',EMAIL='test2@googo.com',NAME='홍수정',NICKNAME='수정별명1',GENDER='여',ADDRESS='울산수정',BIRTH='20001231'
-where id='test2@test.com';
+-- --사업자회원 가입쿼리
+-- insert all
+-- into MEMBER(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE)
+--   values ('test2@test.com','zxc123!@','010-1234-1234','petlove1@kh.com','홍길동','반려부자','남','울산','20001010','B')
+-- into BUSINESS(BNUM, BBNUM, BID, BNAME, BADDRESS, BTELL)
+--   values(business_bnum_seq.nextval,112,'test2@test.com','업체명1','업체주소1','010-1111-2222')
+-- into BCATEGORY(BNUM, BPHARMACY) values(business_bnum_seq.currval,'Y')
+-- select * from dual;
 
 
 
-delete from member
-where id='test2@test.com';
+-- update MEMBER
+-- set PW='12341',TEL='010-1111-1111',EMAIL='test2@googo.com',NAME='홍수정',NICKNAME='수정별명1',GENDER='여',ADDRESS='울산수정',BIRTH='20001231'
+-- where id='test2@test.com';
 
-select * from member;
 
-select id,nickname,mtype from member
-		where id='test3@test.com'
-    and pw='1234';
+
+-- delete from member
+-- where id='test2@test.com';
+
+-- select * from member;
+
+-- select id,nickname,mtype from member
+-- 		where id='test3@test.com'
+--     and pw='1234';

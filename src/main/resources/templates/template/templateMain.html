@@ -30,14 +30,17 @@
         <li><a href="#">건강정보</a></li>
         <li><a href="#">게시판</a>
           <ul class="nav__board">
-            <li><a href="#">Q&A</a></li>
+            <li><a href="/board">Q&A</a></li>
             <li><a href="#">자유게시판</a></li>
             <li><a href="#">벼룩시장</a></li>
             <li><a href="#">내새끼보세요</a></li>
           </ul>
         </li>
-        <li><a href="/member/joinForm.html" th:href="@{/member/join}">회원가입</a></li>
-        <li><a href="/member/login.html" th:href="@{/login}">로그인</a></li>
+        <li th:if="${session.loginMember == null}"><a href="/member/join">회원가입</a></li>
+        <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
+            <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="/member/mypage/mypageFavorites">내정보</a></li>
+        <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('S')}"><a href="/member/mypage/mypageBReview">내정보</a></li>
+        <li th:if="${session.loginMember != null}"><a href="/logout">로그아웃</a></li>
       </ul>
   </nav>
   </div>
