@@ -17,6 +17,7 @@
   padding: 0 30px;
   font-size: 20px;
   height: 30px;
+  width : 33.33%;
 }
 .nav__column:first-child {
   cursor: pointer;
@@ -24,6 +25,14 @@
 .nav__column:first-child:hover {
   /* TODO  카테고리리스트 출력 */
   transform: translateY(30px);
+}
+.nav__column:nth-child(2){
+	display : flex;
+	justify-content: center;
+}
+.nav__column:last-child {
+	display : flex;
+	justify-content: flex-end;
 }
 .nav__column i {
   margin-right: 10px;
