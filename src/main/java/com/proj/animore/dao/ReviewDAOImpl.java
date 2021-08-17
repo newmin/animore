@@ -18,7 +18,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	private final JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<ReviewForm> registReview(@PathVariable int bnum, @PathVariable String id, ReviewForm reviewForm) {
+	public List<ReviewForm> registReview(int bnum, String id, ReviewForm reviewForm) {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into review(rnum,bnum,rcontent,rscore,id,rvcdate) values(?,?,?,?) ");
@@ -49,7 +49,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> allReview(@PathVariable int bnum) {
+	public List<ReviewForm> allReview(int bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO id,별칭 둘다 유니크 속성인데 review에는 id말고 별칭을 저장하는 안건.
 		// 리뷰목록이 뜰때는 아이디가 아닌 별칭이 표시되는 만큼, 별칭을 저장하는 것이 불러오기 좋다고 생각.
@@ -74,7 +74,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> myReview(@PathVariable String id) {
+	public List<ReviewForm> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select id,recontent,rscore,rvcdate ");
 		sql.append("  from review ");
@@ -92,7 +92,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> updateReview(@PathVariable int bnum, @PathVariable String id, ReviewForm reviewForm) {
+	public List<ReviewForm> updateReview(int bnum, String id, ReviewForm reviewForm) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
@@ -117,7 +117,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> removeReview(@PathVariable int bnum, @PathVariable String id) {
+	public List<ReviewForm> removeReview(int bnum, String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from review ");
 		sql.append(" where bnum = ? ");

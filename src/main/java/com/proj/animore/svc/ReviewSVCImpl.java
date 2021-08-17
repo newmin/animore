@@ -15,27 +15,27 @@ public class ReviewSVCImpl implements ReviewSVC {
 	private final ReviewDAO reviewDAO;
 	
 	@Override
-	public List<ReviewForm> registReview(@PathVariable int bnum, @PathVariable String id, ReviewForm reviewForm) {
+	public List<ReviewForm> registReview(int bnum, String id, ReviewForm reviewForm) {
 		return reviewDAO.registReview(bnum, id, reviewForm);
 	}
 
 	@Override
-	public List<ReviewForm> allReview(@PathVariable int bnum) {
+	public List<ReviewForm> allReview(int bnum) {
 		return reviewDAO.allReview(bnum);
 	}
 
 	@Override
-	public List<ReviewForm> myReview(@PathVariable String id) {
+	public List<ReviewForm> myReview(String id) {
 		return reviewDAO.myReview(id);
 	}
 
 	@Override
-	public List<ReviewForm> updateReview(@PathVariable int bnum, @PathVariable String id, ReviewForm reviewForm) {
+	public List<ReviewForm> updateReview(int bnum, String id, ReviewForm reviewForm) {
 		return reviewDAO.updateReview(bnum, id, reviewForm);
 	}
 
 	@Override
-	public List<ReviewForm> removeReview(@PathVariable int bnum, @PathVariable String id) {
+	public List<ReviewForm> removeReview(int bnum, String id) {
 		return reviewDAO.removeReview(bnum, id);
 	}
 
