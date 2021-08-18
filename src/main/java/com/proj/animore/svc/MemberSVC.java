@@ -4,12 +4,15 @@ import java.util.List;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.ProfessionDTO;
 
 public interface MemberSVC {
 
 	//회원가입
 	void joinMember(MemberDTO memberDTO);
 	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO);
+	//TODO 전문가가입
+	void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO);
 	
 	//내정보 조회
 	MemberDTO findMemberById(String id);

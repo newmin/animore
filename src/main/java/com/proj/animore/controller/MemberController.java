@@ -81,7 +81,7 @@ public class MemberController {
 	   memberSVC.joinMember(memberDTO);
 	   return "redirect:/";
    }
-   
+   //TODO 전문가 회원가입
    @PostMapping("/join/S")
    public String join2(MemberDTO memberDTO, BusinessDTO businessDTO) {
       memberSVC.joinMember(memberDTO, businessDTO);

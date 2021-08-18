@@ -8,6 +8,7 @@ import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.ProfessionDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,12 @@ public class MemberSVCImpl implements MemberSVC {
 		memberDAO.joinMember(memberDTO);
 		businessDAO.joinBusi(businessDTO);
 	
+	}
+	//TODO 전문가 회원가입
+	@Override
+	public void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
