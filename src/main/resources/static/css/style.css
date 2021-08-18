@@ -17,6 +17,7 @@
 @import "screen/mypage.css";
 @import "screen/board.css";
 @import "screen/joinSelectMtype.css";
+@import "screen/inquireBusiDetail.css";
 
 /* 폰트 */
 @import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");
