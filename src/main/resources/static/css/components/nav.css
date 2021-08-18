@@ -21,10 +21,20 @@
 }
 .nav__column:first-child {
   cursor: pointer;
+  position: relative;
 }
-.nav__column:first-child:hover {
-  /* TODO  카테고리리스트 출력 */
-  transform: translateY(30px);
+.nav__busi-category{
+	display : none;
+}
+
+.nav__column:first-child:hover .nav__busi-category{
+  display : flex;
+  flex-direction : column;
+  gap : 10px;
+  margin-top : 10px;
+  position : absolute;
+  left : 30px;
+  top : var(--nav-height);
 }
 .nav__column:nth-child(2){
 	display : flex;
@@ -70,7 +80,7 @@
 .nav__btn li:nth-child(2):hover .nav__board {
   display: block;
   position: absolute;
-  top: 30px;
+  top: var(--nav-height);
   left: 0px;
 }
 
