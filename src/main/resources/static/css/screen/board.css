@@ -34,15 +34,18 @@
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
+
+.board__table th:nth-child(3) {
+  width: 15%;
+}
 .board__table th:first-child,
-.board__table th:nth-child(5),
-.board__table th:last-child {
-  width: 50px;
+.board__table th:nth-child(4),
+.board__table th:last-child{
+	width: 5%;
 }
 
-.board__table th:nth-child(2),
-.board__table th:nth-child(4) {
-  width: 100px;
+.board__table th:nth-child(2) {
+  width: 70%;
 }
 
 .board__table__select {

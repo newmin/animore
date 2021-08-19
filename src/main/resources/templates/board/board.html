@@ -19,7 +19,6 @@
 
       <div>
         <ul class="board__category">
-          <!-- TODO href -->
           <li><a href="/board/Q" >Q&A</a></li>
           <li><a href="/board/M" >벼룩시장</a></li>
           <li><a href="/board/F" >자유게시판</a></li>
@@ -32,15 +31,6 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <!-- TODO 동물선택 카테고리 없애는거 어떤지? 읽어올때 못읽어올거같음 -->
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
@@ -48,7 +38,6 @@
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
           <td class="board__cell board__title" ><a href="/board/detail" th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</a></td>
           <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
@@ -80,26 +69,17 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
-        <tr>
-          <td class="board__cell board__num">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
-          <td class="board__cell board__title"><a href="#">강아지 옷 팔아요!</a></td>
-          <td class="board__cell board__writer"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits">30</td>
-          <td class="board__cell board__hearthits">10</td>
+        <tr th:each="boardForm :${boardForm}">
+          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
+          <td class="board__cell board__title" ><a href="/board/detail" th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
+          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
 
@@ -128,26 +108,17 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
-        <tr>
-          <td class="board__cell board__num">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
-          <td class="board__cell board__title"><a href="#">이구아나 입양예정인데...</a></td>
-          <td class="board__cell board__writer"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits">30</td>
-          <td class="board__cell board__hearthits">10</td>
+        <tr th:each="boardForm :${boardForm}">
+          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
+          <td class="board__cell board__title" ><a href="/board/detail" th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
+          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
 
