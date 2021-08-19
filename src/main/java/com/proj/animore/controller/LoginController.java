@@ -34,7 +34,12 @@ public class LoginController {
 	 * @return
 	 */
 	@GetMapping("/login")
-	public String loginForm(@ModelAttribute LoginForm loginForm) {
+	public String loginForm(@ModelAttribute LoginForm loginForm, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+
+		// 로그인한 상태(세션있음)로 회원가입유형선택 페이지 요청시 메인페이지로 보냄
+		if (session != null)	return "redirect:/";		
+		
 		return "/member/login";
 	}
 	
