@@ -118,7 +118,7 @@ public class BoardDAOImpl implements BoardDAO {
 	//게시글전체목록(by bcategory)
 	@Override
 	public List<BoardDTO> list(String bcategory) {
-		String sql ="select bnum,bhit,bgood,btitle,id,bcdate,bcategory,bcontent from board where bcategory=?";
+		String sql ="select bnum,bhit,bgood,btitle,id,bcdate,bcategory,breply,bcontent from board where bcategory=?";
 		List<BoardDTO> boardDTO = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardDTO.class),
 										bcategory);

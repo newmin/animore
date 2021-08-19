@@ -12,6 +12,6 @@ public class BoardDTO {
 	private int bhit;
 	private int bgood;
 	private int breply;
-	private int bcontent;
+	private String bcontent;
 	private int bgroup;
 }
