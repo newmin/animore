@@ -222,34 +222,34 @@ DROP SEQUENCE profession_pnum_seq;
 DROP SEQUENCE coupon_cnum_seq;
 
 --시퀀스 생성
-CREATE SEQUENCE BOARD_BNUM_SEQ INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE rboard_rnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE goodboard_gnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE hboard_bnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE business_bnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE review_rnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE mylist_mnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE myani_mnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE profession_pnum_seq INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE coupon_cnum_seq INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE BOARD_BNUM_SEQ;
+CREATE SEQUENCE rboard_rnum_seq;
+CREATE SEQUENCE goodboard_gnum_seq;
+CREATE SEQUENCE hboard_bnum_seq;
+CREATE SEQUENCE business_bnum_seq;
+CREATE SEQUENCE review_rnum_seq;
+CREATE SEQUENCE mylist_mnum_seq;
+CREATE SEQUENCE myani_mnum_seq;
+CREATE SEQUENCE profession_pnum_seq;
+CREATE SEQUENCE coupon_cnum_seq;
 
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('nomal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N');
 
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
 
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
 values(BUSINESS_BNUM_SEQ.nextval,'사업자번호','special@zxc.com','물어!','코드도 깨끄시','333-3333-3333','Y','Y','Y','Y','Y');
 
-insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'좋아좋아','nomal@zxc.com');
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'좋아좋아','normal@zxc.com');
 
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','nomal@zxc.com','필요없어');
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','nomal@zxc.com','제시');
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'F','애니모어 힘내요','nomal@zxc.com','ㅈㄱㄴ');
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'P','세계관 최강 귀요미들','nomal@zxc.com','이거 보여주려고 어그로 끌었다');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','normal@zxc.com','필요없어');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','normal@zxc.com','제시');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'F','애니모어 힘내요','normal@zxc.com','ㅈㄱㄴ');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'P','세계관 최강 귀요미들','normal@zxc.com','이거 보여주려고 어그로 끌었다');
 
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,1,'nomal@zxc.com','뭔데',1,1);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,2,'nomal@zxc.com','님선',1,1);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,3,'nomal@zxc.com','ㅍㅇㅌ',1,1);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,4,'nomal@zxc.com','가슴이 웅장해진다',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1);
 
 commit;
