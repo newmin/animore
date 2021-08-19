@@ -93,6 +93,4 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getOpenhours());
 		
 	}
-	
-	
 }
