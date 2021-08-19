@@ -100,4 +100,23 @@ public class MemberController {
 	public String mypage() {
 		return "mypage/mypage";
 	}
+	
+	/**
+	 * 아이디찾기양식
+	 * @return
+	 */
+	@GetMapping("/findId")
+	public String findId() {
+		return "member/findIdForm";
+	}
+	
+	/**
+	 * 비밀번호찾기양식
+	 * @return
+	 */
+	@GetMapping("/findPW")
+	public String findPW() {
+		return "member/findPWForm";
+	}
+	
 }
