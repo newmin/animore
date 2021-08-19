@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BusinessDAOImpl implements BusinessDAO {
 
 	private final JdbcTemplate jdbcTemplate;
-	//¾÷Ã¼µî·Ï
+	//ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½
 	@Override
 	public void joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
@@ -33,13 +33,13 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getOpenhours());
 		
 	}
-	//¾÷Ã¼Ã£±â
+	//ï¿½ï¿½Ã¼Ã£ï¿½ï¿½
 	@Override
 	public BusinessDTO findBusiByBbnum(String bnum) {
 		StringBuffer sql = new StringBuffer();
-		//sql¹®
-		sql.append("select bunm,bname,");
-		sql.append("from business");
+		//sqlï¿½ï¿½
+		sql.append("select bnum,bname");
+		sql.append(" from business ");
 		sql.append("where bnum = ? ");
 		BusinessDTO businessDTO = jdbcTemplate.queryForObject(sql.toString(),
 				new BeanPropertyRowMapper<>(BusinessDTO.class),
@@ -78,7 +78,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	//¾÷Ã¼Ãß°¡
+	//ï¿½ï¿½Ã¼ï¿½ß°ï¿½
 	public void addBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		
