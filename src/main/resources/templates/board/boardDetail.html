@@ -32,22 +32,21 @@
        <div class="boardForm__infoContainer">
         <img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg">
         <div class="boardForm__info">
-            <div class="boardForm__Nickname">닉네임</div>
+            <span class="boardForm__Nickname" th:text="${post.id}">닉네임</span>
             <div class="boardForm__info2">
-                <div class="boardForm__Hits">조회수</div>
-                <div class="boardForm__likeHits">좋아요</div>
-                <div class="boardForm__cdate">작성시간</div>
+                <div class="boardForm__Hits"><span>조회수</span><span th:text="${post.bhit}"></span></div>
+                <div class="boardForm__reply"><span>댓글수</span><span th:text="${post.breply}"></span></div>
+                <div class="boardForm__cdate"><span>작성시간</span><span th:text="${post.bcdate}"></span></div>
             </div>
         </div>
        </div>
-       <div class="boardForm__contents">게시글내용</div>
+       <div class="boardForm__contents"><p th:text="${post.bcontent}"></p></div>
        <div class="boardForm__likeContainer">
            <div class="boardForm__likewrap">
                <div class="boardForm__likeText">좋아요</div>
-               <!-- TODO 좋아요 아이콘 toggle하기 -->
                <div class="boardForm__likeIcon"><i class="fa-heart far"></i></div>
            </div>
-           <div class="boardForm__likeHits">좋아요 수</div>
+           <div class="boardForm__likeHits" th:text="${post.bgood}">좋아요 수</div>
        </div>
        <div class="">댓글</div>
        <div class="boardForm__replyContainer">

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BoardDTO;
+import com.proj.animore.vo.PostVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,16 +37,16 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	//게시글조회
 	@Override
-	public BoardDTO findBoardByBnum(int bnum) {
+	public PostVO findBoardByBnum(int bnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("select btitle,id,bcdate,bhit,bgood,breply,bcontent ");
 		sql.append("from board ");
 		sql.append("where bnum=? ");
 		
-		BoardDTO boardDTO = jt.queryForObject(sql.toString(), 
-											new BeanPropertyRowMapper<>(BoardDTO.class),
+		PostVO postVO = jt.queryForObject(sql.toString(), 
+											new BeanPropertyRowMapper<>(PostVO.class),
 											bnum);
-		return boardDTO;
+		return postVO;
 	}
 	//게시글검색(by id)
 	@Override
@@ -106,7 +107,9 @@ public class BoardDAOImpl implements BoardDAO {
 								boardDTO.getBtitle(),
 								boardDTO.getBcontent(),
 								bnum);
-		return findBoardByBnum(bnum);
+//		return findBoardByBnum(bnum);
+		//findBoardByBnum(bnum)의 타입이 달라지며 오류발생
+		return null;
 	}
 	//게시글삭제
 	@Override

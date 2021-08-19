@@ -3,6 +3,7 @@ package com.proj.animore.dao;
 import java.util.List;
 
 import com.proj.animore.dto.BoardDTO;
+import com.proj.animore.vo.PostVO;
 
 public interface BoardDAO {
 
@@ -10,7 +11,7 @@ public interface BoardDAO {
 	void addBoard(BoardDTO boardDTO);
 	
 	//게시글 조회(by bnum)
-	BoardDTO findBoardByBnum(int bnum);
+	PostVO findBoardByBnum(int bnum);
 	
 	//게시글 조회(by id)
 	List<BoardDTO> findBoardById(String id);
