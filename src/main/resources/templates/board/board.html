@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
-			xmlns:th="http://www.thymeleaf.org"
-			th:replace="~{template/templateSub::main(~{::title},~{::main},~{::script})}">
+         xmlns:th="http://www.thymeleaf.org"
+         th:replace="~{template/templateSub::main(~{::title},~{::main},~{::script})}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +27,7 @@
       </div>
 
       <!-- Q&A -->
-	<div th:if="${bcategory} =='Q'">
+   <div th:if="${bcategory} =='Q'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -38,7 +38,7 @@
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__title" ><a href="/board/{bnum}"><span th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</span></a></td>
+          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
           <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
@@ -63,7 +63,7 @@
       <div class="borad__pageBtn">
 
       </div>
-	</div>
+   </div>
       <!-- 벼룩시장 -->
       <div th:if="${bcategory} =='M'">
       <table class="board__table">
@@ -76,7 +76,7 @@
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__title" ><a href="/board/detail" th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</a></td>
+          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
           <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
@@ -101,10 +101,10 @@
       <div class="borad__pageBtn">
 
       </div>
-	</div>
-	
+   </div>
+   
       <!-- 자유게시판 -->
-	<div th:if="${bcategory} =='F'">
+   <div th:if="${bcategory} =='F'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -115,7 +115,7 @@
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__title" ><a href="/board/{bnum}" th:text="${boardForm.btitle}">강아지가 설사를해요!!!!</a></td>
+         <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
           <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
@@ -145,10 +145,10 @@
     </div>
 
     <!-- 내새끼보세요 -->
-	<div th:if="${bcategory} =='P'">
+   <div th:if="${bcategory} =='P'">
     <div class="b_galarywrap">
         <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
+          <div class="b_galary_img"><a href="|/board/${boardForm.bcategory}/${boardForm.bnum}|"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
         </div>
         <div class="b_galary_post">
           <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>

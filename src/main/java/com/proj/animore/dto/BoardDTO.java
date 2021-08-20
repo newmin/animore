@@ -1,11 +1,13 @@
 package com.proj.animore.dto;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
 public class BoardDTO {
-
-	private int bnum;
+	
+	private Integer bnum;
 	private String bcategory;
 	private String btitle;
 	private String id;
@@ -14,4 +16,6 @@ public class BoardDTO {
 	private int breply;
 	private String bcontent;
 	private int bgroup;
+  private LocalDate bcdate;
+  private LocalDate budate;
 }

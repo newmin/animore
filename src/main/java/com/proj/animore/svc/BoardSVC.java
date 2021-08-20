@@ -3,14 +3,13 @@ package com.proj.animore.svc;
 import java.util.List;
 
 import com.proj.animore.dto.BoardDTO;
-import com.proj.animore.vo.PostVO;
 
 public interface BoardSVC {
 	//게시글 등록
 	void addBoard(BoardDTO boardDTO);
 	
 	//게시글 조회(by bnum)
-	PostVO findBoardByBnum(int bnum);
+	BoardDTO findBoardByBnum(Integer bnum);
 	
 	//게시글 조회(by id)
 	List<BoardDTO> findBoardById(String id);

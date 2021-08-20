@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.BoardDAO;
 import com.proj.animore.dto.BoardDTO;
-import com.proj.animore.vo.PostVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +23,7 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시글조회
 	@Override
-	public PostVO findBoardByBnum(int bnum) {
+	public BoardDTO findBoardByBnum(Integer bnum) {
 		return boardDAO.findBoardByBnum(bnum);
 		
 	}

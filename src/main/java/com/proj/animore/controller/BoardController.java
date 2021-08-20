@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.form.BoardForm;
 import com.proj.animore.svc.BoardSVC;
-import com.proj.animore.vo.PostVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,12 +40,15 @@ public class BoardController {
 	}
 	
 	//게시글 조회
-	@GetMapping("/{bnum}")
-	public String post(@PathVariable int bnum,
+	@GetMapping("/post/{bnum}")
+	public String post(@PathVariable Integer bnum,
 										Model model) {
-		PostVO postVO = boardSVC.findBoardByBnum(bnum);
-		model.addAttribute("post",postVO);
+	
+		BoardDTO boardDTO = boardSVC.findBoardByBnum(bnum);
+		model.addAttribute("post",boardDTO);
 
+		log.info("BoardDTO:{}",boardDTO);
+		
 		return "board/boardDetail";
 	}
 }
