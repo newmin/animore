@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <script defer></script>
+  <script src="/js/board.js" defer></script>
   <title>글목록</title>
 </head>
 
@@ -46,8 +46,8 @@
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -84,8 +84,8 @@
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -123,8 +123,8 @@
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -147,34 +147,15 @@
     <!-- 내새끼보세요 -->
    <div th:if="${bcategory} =='P'">
     <div class="b_galarywrap">
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="|/board/${boardForm.bcategory}/${boardForm.bnum}|"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
+        <div class="b_galary_post" th:each="boardForm :${boardForm}">
+          <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
+          <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title" th:text="${boardForm.btitle}">글제목</p></a></div>
         </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>  
+        
       </div>
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+        <button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
       
       <div class="board__search">

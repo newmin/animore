@@ -27,7 +27,6 @@ public class BoardDAOImpl implements BoardDAO {
 		jt.update(sql.toString(),
 					boardDTO.getBcategory(),
 					boardDTO.getBtitle(),
-					boardDTO.getBtitle(),
 					boardDTO.getId(),
 					boardDTO.getBcontent());
 		

@@ -6,9 +6,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer></script>
 <title>게시글작성</title>
 </head>
 <body>
-<h3>게시글작성</h3>
+<main class="main ">
+	<div class="addPost__container">
+    <select name="bcategory" id="bcategory" class="addPost__selectbox">
+      <option value="" selected>게시판명</option>
+      <option value="Q">Q&A</option>
+      <option value="F">자유게시판</option>
+      <option value="M">벼룩시장</option>
+      <option value="P">자유게시판</option>
+    </select>
+    <input class="addPost__title" type="text" name="btitle" id="btitle" placeholder="제목을 입력하세요.">
+    <div class="addPost__icons">
+      <a><i class="far fa-image"></i></a>
+      <a><i class="fab fa-youtube"></i></a>
+      <a><i class="fas fa-link"></i></a>
+    </div>
+      <textarea class="addPost__content" name="" id="" cols="60" rows="10"></textarea>
+    <div class="addPost__btns">
+      <button>취소</button>
+      <button>등록</button>
+    </div>
+    </div>
+</main>
 </body>
 </html>
