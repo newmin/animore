@@ -51,12 +51,12 @@
        <div class="">댓글</div>
        <div class="boardForm__replyContainer">
            <div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>
-            <div class="boardForm__replyTextContainer">
-            	<div th:each="reply :${reply}">
-                <div class="boardForm__ReplyNickname">닉네임</div>
+           <div class="boardForm__replyTextContainer">
+           		<div th:each="reply : ${reply}">
+                <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
                 <div class="boardForm__ReplyContent" th:text="${reply.rcontent}">댓글내용</div>
                 <div class="boardForm__Replywrap">
-                    <div class="boardForm__Replycdate">작성일자</div>
+                    <div class="boardForm__Replycdate" th:text="${reply.rcdate}">작성일자</div>
                     <button class="boardForm__ReplyReBtn">답글쓰기</button>
                 </div>
             	</div>

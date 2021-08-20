@@ -3,6 +3,7 @@ package com.proj.animore.dao;
 import java.util.List;
 
 import com.proj.animore.dto.RboardDTO;
+import com.proj.animore.dto.RboardListReqDTO;
 
 public interface RboardDAO {
 
@@ -13,7 +14,7 @@ public interface RboardDAO {
 	 * @param rboardDTO
 	 * @return
 	 */
-	List<RboardDTO> register(int bnum, String id, RboardDTO rboardDTO);
+	List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO);
 
 	/**
 	 * 댓글수정처리
@@ -22,21 +23,21 @@ public interface RboardDAO {
 	 * @param rboardDTO
 	 * @return
 	 */
-	List<RboardDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO);
+	List<RboardListReqDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO);
 
 	/**
 	 * 댓글조회 by 댓글번호
 	 */
-	RboardDTO findbyRnum(int rnum);
+	RboardListReqDTO findbyRnum(int rnum);
 
 	/**
 	 * 댓글삭제처리 by 댓글번호, 사용자id
 	 */
-	List<RboardDTO> del(int bnum, int rnum, String id);
+	List<RboardListReqDTO> del(int bnum, int rnum, String id);
 
 	/**
 	 * 댓글목록조회 by 게시글번호
 	 */
-	List<RboardDTO> all(int bnum);
+	List<RboardListReqDTO> all(int bnum);
 	
 }

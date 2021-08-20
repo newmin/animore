@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.RboardDTO;
+import com.proj.animore.dto.RboardListReqDTO;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
 import com.proj.animore.form.Result;
@@ -56,7 +56,7 @@ public class RboardController {
 		BeanUtils.copyProperties(rar,rboardDTO);
 		
 		//저장하고 결과 리턴으로 받음 (댓글정보)
-  	List<RboardDTO> savedRboardDTO = rboardSVC.register(bnum, id, rboardDTO);
+  	List<RboardListReqDTO> savedRboardDTO = rboardSVC.register(bnum, id, rboardDTO);
   	
   	//TODO 결과 Result객체에 담아서 리턴할지 컬렉션 그대로 리턴할지 정해야됨
   	Result result = new Result("00","성공",savedRboardDTO);
@@ -94,7 +94,7 @@ public class RboardController {
 		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rmr,rboardDTO);
-		List<RboardDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
+		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
 		
 		Result result = new Result();
 		if (modifiedRboardDTO == null) {
@@ -118,7 +118,7 @@ public class RboardController {
 			@PathVariable int rnum,
 			@PathVariable String id) {
 
-		List<RboardDTO> delResult = rboardSVC.del(bnum, rnum, id);
+		List<RboardListReqDTO> delResult = rboardSVC.del(bnum, rnum, id);
 		Result result = new Result();
 		if (delResult.size() == 0) {
 			result.setRtcd("01");
@@ -134,7 +134,7 @@ public class RboardController {
 	@ResponseBody
 	@GetMapping("/{bnum}")
 	public Result all(@PathVariable int bnum) {
-		List<RboardDTO> list = rboardSVC.all(bnum);
+		List<RboardListReqDTO> list = rboardSVC.all(bnum);
 		Result result = new Result();
 		if (list.size() == 0) {
 			result.setRtcd("01");

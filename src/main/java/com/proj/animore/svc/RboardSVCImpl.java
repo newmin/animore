@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.RboardDAO;
 import com.proj.animore.dto.RboardDTO;
+import com.proj.animore.dto.RboardListReqDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +24,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 * @return
 	 */
 	@Override
-	public List<RboardDTO> register(int bnum, String id, RboardDTO rboardDTO) {
+	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
 		return rboardDAO.register(bnum, id, rboardDTO);
 	}
 
@@ -35,7 +36,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 * @return
 	 */
 	@Override
-	public List<RboardDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO) {
+	public List<RboardListReqDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO) {
 		return rboardDAO.modify(bnum, rnum, id, rboardDTO);
 	}
 	
@@ -43,7 +44,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 * 댓글조회 by 댓글번호
 	 */
 	@Override
-	public RboardDTO findByRnum(int rnum) {
+	public RboardListReqDTO findByRnum(int rnum) {
 		return rboardDAO.findbyRnum(rnum);
 	}
 	
@@ -51,7 +52,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 * 댓글삭제 by 댓글번호, 사용자id
 	 */
 	@Override
-	public List<RboardDTO> del(int bnum, int rnum, String id) {
+	public List<RboardListReqDTO> del(int bnum, int rnum, String id) {
 		return rboardDAO.del(bnum, rnum, id);
 	}
 
@@ -59,7 +60,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 * 댓글목록조회 by 게시글번호
 	 */
 	@Override
-	public List<RboardDTO> all(int bnum) {
+	public List<RboardListReqDTO> all(int bnum) {
 		return rboardDAO.all(bnum);
 	}
 	

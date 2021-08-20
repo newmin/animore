@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dto.RboardDTO;
+import com.proj.animore.dto.RboardListReqDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RboardDAOImpl implements RboardDAO{
@@ -22,7 +25,7 @@ public class RboardDAOImpl implements RboardDAO{
 	 */
 	@Transactional
 	@Override
-	public List<RboardDTO> register(int bnum, String id, RboardDTO rboardDTO) {
+	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
 		
 //		시퀀스번호 따기
 		String sql = "select rboard_rnum_seq.nextval from dual";
@@ -46,7 +49,7 @@ public class RboardDAOImpl implements RboardDAO{
 //		RboardDTO retDTO = findbyRnum(seq);
 		
 		//댓글단 게시글의 댓글목록 갱신.=> 댓글목록 리턴
-		List<RboardDTO> list = all(bnum);
+		List<RboardListReqDTO> list = all(bnum);
 //		입력했던 댓글정보 리턴
 		return list;
 	}
@@ -56,23 +59,23 @@ public class RboardDAOImpl implements RboardDAO{
 	 * 댓글수정 클릭시 해당댓글정보 전달하려면 필요
 	 */
 	@Override
-	public RboardDTO findbyRnum(int rnum) {
+	public RboardListReqDTO findbyRnum(int rnum) {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("select rnum,bnum,id,rcontent,rgroup,rstep from rboard ");
 		sql.append("where rnum=?");
 		
-		RboardDTO rboardDTO =
-				jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(RboardDTO.class), rnum);
+		RboardListReqDTO rboardListReqDTO =
+				jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), rnum);
 		
-		return rboardDTO;
+		return rboardListReqDTO;
 	}
 
 	/**
 	 * 댓글수정처리
 	 */
 	@Override
-	public List<RboardDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO) {
+	public List<RboardListReqDTO> modify(int bnum, int rnum, String id, RboardDTO rboardDTO) {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("update rboard ");
@@ -85,7 +88,7 @@ public class RboardDAOImpl implements RboardDAO{
 										rboardDTO.getRcontent(), bnum, rnum, id);
 		
 		//수정후 댓글목록 갱신
-		List<RboardDTO> list = all(bnum);
+		List<RboardListReqDTO> list = all(bnum);
 		return list;
 	}
 
@@ -93,7 +96,7 @@ public class RboardDAOImpl implements RboardDAO{
 	 * 댓글삭제처리
 	 */
 	@Override
-	public List<RboardDTO> del(int bnum, int rnum, String id) {
+	public List<RboardListReqDTO> del(int bnum, int rnum, String id) {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from rboard ");
@@ -103,20 +106,25 @@ public class RboardDAOImpl implements RboardDAO{
 		int result = 
 				jt.update(sql.toString(), rnum, id);
 		
-		List<RboardDTO> list = all(bnum);
+		List<RboardListReqDTO> list = all(bnum);
 		return list;
 	}
 
+	/**
+	 * 댓글목록
+	 */
 	@Override
-	public List<RboardDTO> all(int bnum) {
-		
+	public List<RboardListReqDTO> all(int bnum) {
+		log.info(String.valueOf(bnum));
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rnum,id,rcontent,rgroup,rstep from rboard ");
-		sql.append("where bnum=?");
+		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rcdate,t2.rgood ");
+		sql.append(" from member t1, rboard t2 ");
+		sql.append(" where t1.id=t2.id ");
+		sql.append(" and bnum=? ");
 		
-		List<RboardDTO> list =
-				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardDTO.class), bnum);
-		
+		List<RboardListReqDTO> list =
+				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);
+		log.info(list.toString());
 		return list;
 	}
 
