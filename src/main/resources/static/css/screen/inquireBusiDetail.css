@@ -2,32 +2,25 @@
 
   
 
-  /* Set gray background color and 100% height */
-  .sidenav {
-    padding-top: 20px;
-    background-color: #f1f1f1;
-    height: 1250px;
-    width: 33%;
-  }
-  
 
- 
-  /* On small screens, set height to 'auto' for sidenav and grid */
-  @media screen and (max-width: auto) {
-    .sidenav {
-      height: auto;
-      
-    }
-    .row.content {height:auto;} 
+
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: auto) {
+  .sidenav {
+    height: auto;
+    
   }
-  
-  
-  
-  
-  
-  /*별점*/
-  .rating .rate_radio + label {
-    position: relative;
+  .row.content {height:auto;} 
+}
+
+
+
+
+
+/*별점*/
+.rating .rate_radio + label {
+  position: relative;
     display: inline-block;
     margin-left: -4px;
     z-index: 10;
@@ -38,31 +31,31 @@
     background-size: 60px 60px;
     cursor: pointer;
     background-color: #f0f0f0;
-}
-.rating .rate_radio:checked + label {
+  }
+  .rating .rate_radio:checked + label {
     background-color: #ff8;
-}
-.well{
-  size: 150px;
-}
-
-
-
-/*별점2*/
-.wrap{
+  }
+  .well{
+    size: 150px;
+  }
+  
+  
+  
+  /*별점2*/
+  .wrap{
     max-width: 1200px;
     background-color: #fff;
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-
-}
-.reviewform textarea{
+    
+  }
+  .reviewform textarea{
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-}
-.rating .rate_radio {
+  }
+  .rating .rate_radio {
     position: relative;
     display: inline-block;
     z-index: 20;
@@ -73,8 +66,8 @@
     cursor: pointer;
     vertical-align: top;
     display: none;
-}
-.rating .rate_radio + label {
+  }
+  .rating .rate_radio + label {
     position: relative;
     display: inline-block;
     margin-left: -4px;
@@ -86,12 +79,12 @@
     background-size: 60px 60px;
     cursor: pointer;
     background-color: #f0f0f0;
-}
-.rating .rate_radio:checked + label {
+  }
+  .rating .rate_radio:checked + label {
     background-color: #ff8;
-}
-
-.warning_msg {
+  }
+  
+  .warning_msg {
     display: none;
     position: relative;
     text-align: center;
@@ -102,23 +95,76 @@
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
-}
+  }
+  
+  
+  /* 업체정보 + 지도 */
+  .busi-detail{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: var(--inquireBusi-width);
+  }
+  .busi-detail__info-list{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    gap: 8px;
+  }
 
-.review{
+  .busi-detail__info-list li{
+    background-color: white;
+    width: 350px;
+    height: 40px;
+  }
+  
+  /* 지도 */
+  /* Set gray background color and 100% height */
+  .sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    width: 400px;
+    height: 500px;
+  }
 
+
+
+
+  /* 리뷰 */
+  .review{
+    display: flex;
+    flex-direction: column;
+  gap: 5px;
 }
 .review__row{
+  width: var(--inquireBusi-width);
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 5px 0px;
 }
+
 .review__column:first-child{
-  width: 10%;
+  width: 80px;
+  display: flex;
+  justify-content: center;
 }
+.review__column:nth-child(2){
+  width: 570px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .review__profile{
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 .review__column:last-child{
-  width: 30%;
+  width: 200px;
 }
