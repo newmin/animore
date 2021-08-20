@@ -1,0 +1,151 @@
+package com.proj.animore.controller;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.proj.animore.dto.RboardDTO;
+import com.proj.animore.form.RboardAddReq;
+import com.proj.animore.form.RboardModiReq;
+import com.proj.animore.form.Result;
+import com.proj.animore.svc.RboardSVC;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 댓글CRUD 관련 컨트롤러
+ * 
+ * @author hjlee0820
+ */
+@Slf4j
+@Controller
+@RequestMapping("/rboard")
+@RequiredArgsConstructor
+public class RboardController {
+
+	private final RboardSVC rboardSVC;
+	
+//댓글등록처리   post
+	@ResponseBody
+	@PostMapping("/{bnum}/{id}")
+	public Result register(
+			@PathVariable int bnum,
+			@PathVariable String id,
+			@RequestBody RboardAddReq rar) {
+		// rnum : 시퀀스
+		// bnum : 게시글번호
+		// rgroup : 댓글그룹
+		// 댓글단계 : 부모댓글(댓글그룹)의 댓글단계 +1 해줘야함
+		// Content : 댓글내용
+
+		//우선 할것 : 요청받기, 데이터 옮겨담기, 저장하기
+		//나중에 덧붙일것 : 결과 리턴받아서 보여주기, 무결성검사, 등등
+		
+		RboardDTO rboardDTO = new RboardDTO();
+		BeanUtils.copyProperties(rar,rboardDTO);
+		
+		//저장하고 결과 리턴으로 받음 (댓글정보)
+  	List<RboardDTO> savedRboardDTO = rboardSVC.register(bnum, id, rboardDTO);
+  	
+  	//TODO 결과 Result객체에 담아서 리턴할지 컬렉션 그대로 리턴할지 정해야됨
+  	Result result = new Result("00","성공",savedRboardDTO);
+  	return result;
+	}
+
+////댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
+//	@ResponseBody
+//	@RequestMapping(value="/{rnum}", method=RequestMethod.OPTIONS)
+//	public Result findById(@PathVariable String rnum) {
+//
+//		RboardDTO rboardDTO = rboardSVC.findByRnum(rnum);
+//		Result result = new Result();
+//		if (rboardDTO == null) {
+//			result.setRtcd("01");
+//			result.setRtmsg("존재하는 댓글이 없습니다.");
+//			result.setData(rboardDTO);
+//		} else {
+//			result.setRtcd("00");
+//			result.setRtmsg("성공");
+//			result.setData(rboardDTO);
+//		}
+//		return result;
+//	}
+	
+//댓글수정처리 patch
+	@ResponseBody
+	@PatchMapping("/{bnum}/{rnum}/{id}")
+	public Result modify(
+			@PathVariable int bnum,
+			@PathVariable int rnum,
+			@PathVariable String id,			
+			@RequestBody RboardModiReq rmr) {
+		//rcontent
+		
+		RboardDTO rboardDTO = new RboardDTO();
+		BeanUtils.copyProperties(rmr,rboardDTO);
+		List<RboardDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
+		
+		Result result = new Result();
+		if (modifiedRboardDTO == null) {
+			result.setRtcd("01");
+			result.setRtmsg("존재하는 댓글이 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(modifiedRboardDTO);
+		}
+		
+		return result;
+	}
+
+// 엑셀파일에 삭제시 댓글번호 필요하다고 적어야함
+// 댓글삭제처리 delete
+	@ResponseBody
+	@DeleteMapping("/{bnum}/{rnum}/{id}")
+	public Result del(
+			@PathVariable int bnum,
+			@PathVariable int rnum,
+			@PathVariable String id) {
+
+		List<RboardDTO> delResult = rboardSVC.del(bnum, rnum, id);
+		Result result = new Result();
+		if (delResult.size() == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("삭제하고자 하는 댓글이 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+		}
+		return result;
+	}
+
+	// 댓글목록조회 by 게시글
+	@ResponseBody
+	@GetMapping("/{bnum}")
+	public Result all(@PathVariable int bnum) {
+		List<RboardDTO> list = rboardSVC.all(bnum);
+		Result result = new Result();
+		if (list.size() == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("댓글 정보가 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(list);
+		}
+
+		return result;
+	}
+
+}
