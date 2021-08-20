@@ -1,6 +1,7 @@
 package com.proj.animore.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -16,6 +17,6 @@ public class BoardDTO {
 	private int breply;
 	private String bcontent;
 	private int bgroup;
-  private LocalDate bcdate;
-  private LocalDate budate;
+  private LocalDateTime bcdate;
+  private LocalDateTime budate;
 }

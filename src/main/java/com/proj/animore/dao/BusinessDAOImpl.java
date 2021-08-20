@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BusinessDAOImpl implements BusinessDAO {
 
 	private final JdbcTemplate jdbcTemplate;
-	//��ü���
+	//업체가입
 	@Override
 	public void joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
@@ -33,7 +33,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getOpenhours());
 		
 	}
-	//��üã��
+	//업체조회
 	@Override
 	public BusinessDTO findBusiByBbnum(String bnum) {
 		StringBuffer sql = new StringBuffer();
@@ -49,6 +49,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		return businessDTO;
 	}
 
+	//업체정보수정
 	@Override
 	public BusinessDTO modifyBusi(String bnum, BusinessDTO businessDTO) {
 		StringBuilder sql = new StringBuilder();
@@ -56,7 +57,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("   set bname = ?, ");
 		sql.append("       baddress = ?, ");
 		sql.append("       btel = ? ");
-		sql.append(" where bnm = ? ");
+		sql.append(" where bnum = ? ");
 		
 		jdbcTemplate.update(
 				sql.toString(), 
@@ -67,18 +68,23 @@ public class BusinessDAOImpl implements BusinessDAO {
 		return findBusiByBbnum(bnum);
 	}
 
+	//업체정보 삭제
 	@Override
 	public void deleteBusi(String bnum) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	//업체목록 조회
 	@Override
 	public List<BusinessDTO> list() {
-		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer();
+
+		
+		
 		return null;
 	}
-	//��ü�߰�
+	//업체추가등록
 	public void addBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		

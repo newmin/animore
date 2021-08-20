@@ -59,4 +59,11 @@ public class BoardController {
 		
 		return "board/boardDetail";
 	}
+	
+	//게시글 작성화면 출력
+	@GetMapping("/add")
+	public String addPost() {
+		
+		return "board/addBoardForm";
+	}
 }

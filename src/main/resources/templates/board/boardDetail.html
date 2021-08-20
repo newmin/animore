@@ -7,11 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/board.js" defer></script>
+  <script src="/js/boardDetail.js" defer></script>
 <title>게시글</title>
 </head>
 <body>
-    <main class="main">
+    <main class="main" th:object="${post}">
     	<div class="boardForm">
         <div class="boardForm__btns">
             <button class="boardForm__listBtn">목록</button>
@@ -19,7 +19,7 @@
             <button class="boardForm__delBtn">삭제</button>
         </div>
         <div class="boardForm__titleContainer">
-            <div class="boardForm__title" th:text="${post.btitle}">제목명</div>
+            <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 공지등록버튼 물어보고 추가하기 ,프로필사진 클래스명 같은걸로 통일해도..?-->
                    <div class="boardForm__noticebox">
                    <p>공지등록</p>
@@ -34,19 +34,19 @@
         <div class="boardForm__info">
             <span class="boardForm__Nickname" th:text="${post.id}">닉네임</span>
             <div class="boardForm__info2">
-                <div class="boardForm__Hits"><span>조회수</span><span th:text="${post.bhit}"></span></div>
-                <div class="boardForm__reply"><span>댓글수</span><span th:text="${post.breply}"></span></div>
-                <div class="boardForm__cdate"><span>작성시간</span><span th:text="${post.bcdate}"></span></div>
+                <div class="boardForm__Hits"><span>조회수</span><span th:text="*{bhit}"></span></div>
+                <div class="boardForm__reply"><span>댓글수</span><span th:text="*{breply}"></span></div>
+                <div class="boardForm__cdate"><span>작성시간</span><span th:text="*{bcdate}"></span></div>
             </div>
         </div>
        </div>
-       <div class="boardForm__contents"><p th:text="${post.bcontent}"></p></div>
+       <div class="boardForm__contents"><p th:text="*{bcontent}"></p></div>
        <div class="boardForm__likeContainer">
            <div class="boardForm__likewrap">
                <div class="boardForm__likeText">좋아요</div>
                <div class="boardForm__likeIcon"><i class="fa-heart far"></i></div>
            </div>
-           <div class="boardForm__likeHits" th:text="${post.bgood}">좋아요 수</div>
+           <div class="boardForm__likeHits" th:text="*{bgood}">좋아요 수</div>
        </div>
        <div class="">댓글</div>
        <div class="boardForm__replyContainer">
