@@ -1,7 +1,11 @@
-const $heart = document.querySelector('.boardForm__likeIcon i');
-
-$heart.addEventListener('click',e=>{
-    $heart.classList.toggle('toggleColorChange');
-    $heart.classList.toggle('far');
-    $heart.classList.toggle('fas');
-});
+/**
+ * 
+ */
+ 
+    const $addPostBtns = document.querySelectorAll('.boardForm__addBtn');
+    for(let i=0; i<$addPostBtns.length; i++){
+        $addPostBtns[i].addEventListener('click',e=>{
+            location.href="/board/add";
+            console.log('클릭! ');
+        });
+    }
