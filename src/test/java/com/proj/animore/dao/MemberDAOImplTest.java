@@ -1,4 +1,4 @@
-package com.proj.animore;
+package com.proj.animore.dao;
 
 import java.time.LocalDate;
 
