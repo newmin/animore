@@ -10,11 +10,10 @@ public class BusinessDTO {
 	private String bname;
 	private String baddress;
 	private String btel;
-	private String nitghtcare;
+	private String openhours;
+	private String nightcare;
 	private String rareani;
 	private String visitcare;
 	private String holidayopen;
-	private String dental;
-	private String openhours;
-	
+	private String dental;	
 }

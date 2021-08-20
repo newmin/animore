@@ -7,9 +7,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom : 30px;
-  /* position sticky 적용 */
   position:sticky;
   top:0px;
+  z-index: 200;
 }
 .nav__column {
   display: flex;
