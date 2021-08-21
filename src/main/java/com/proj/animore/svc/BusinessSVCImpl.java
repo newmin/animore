@@ -2,11 +2,14 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dto.BusinessLoadDTO;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class BusinessSVCImpl implements BusinessSVC {
 
