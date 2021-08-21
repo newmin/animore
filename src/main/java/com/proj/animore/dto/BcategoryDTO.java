@@ -5,17 +5,16 @@ import lombok.Data;
 @Data
 public class BcategoryDTO {
 
-String bnum;
-String bhospital;
-String bpharmacy;
-String bhotel;
-String bkindergarden;
-String bfood;
-String btraining;
-String bshop;
-String bplayground;
-String bhairshop;
-String betc;
-
+    private String bnum;
+    private String bhospital;
+    private String bpharmacy;
+    private String bhotel;
+    private String bkindergarden;
+    private String bfood;
+    private String btraining;
+    private String bshop;
+    private String bplayground;
+    private String bhairshop;
+    private String betc;
 
 }

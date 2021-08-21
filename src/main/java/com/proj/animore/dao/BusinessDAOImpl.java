@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BusinessDTO;
+import com.proj.animore.dto.BusinessLoadDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,12 +78,19 @@ public class BusinessDAOImpl implements BusinessDAO {
 
 	//업체목록 조회
 	@Override
-	public List<BusinessDTO> list() {
+	public List<BusinessLoadDTO> list(String bcategory) {
 		StringBuffer sql = new StringBuffer();
 
+		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL ");
+		sql.append("from business b, bcategory c ");
+		sql.append("where b.bnum=c.bnum ");
+		sql.append("and c.? = 'Y' ");
 		
+		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
+					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
+					   bcategory);
 		
-		return null;
+		return list;
 	}
 	//업체추가등록
 	public void addBusi(BusinessDTO businessDTO) {

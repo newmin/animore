@@ -1,22 +1,29 @@
 package com.proj.animore.controller;
 
-import com.proj.animore.dto.BusinessDTO;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.svc.BusinessSVC;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@RequiredArgsConstructor
 @Slf4j
 @Controller
 public class MainController {
 
+	private final BusinessSVC businessSVC;
+	
 	@GetMapping("/{bcategory}")
-	public String list(@ModelAttribute BusinessDTO businessDTO,@PathVariable String bcategory){
-		// 업체카테고리가 busiDTO에는 포함 안되어있음. 사장id(fk)로 조인해서 찾아야함.
-		//		public String list(@ModelAttribute BusinessDTO businessDTO,@PathVariable String bcategory){
+	public String list(@PathVariable String bcategory,Model model){
+		List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
+		model.addAttribute("busiList", list);
 		return "map/busiList";
 	}
 
