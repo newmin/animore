@@ -17,7 +17,7 @@ const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent');
 const addBtn = document.querySelector('button.boardForm__AddReplyBtn');
 
 /* 답댓글은 등록 메소드 따로 만드는게 나을듯? */
-/* 댓글등록처리 */
+/* 신듀댓글등록 */
 const addBtn_f = e =>{
 	console.log('addBtn_f');
 	
@@ -55,6 +55,8 @@ const addBtn_f = e =>{
 				      html += `</div>`;
 				  });
 				document.querySelector('.boardForm__replyListWrap').innerHTML = html;
+				
+				$rcontent.value="";
 			}else{
 				throw new Error(res.rtmsg);
 			}
