@@ -26,6 +26,9 @@ public class RboardDAOImpl implements RboardDAO{
 	@Transactional
 	@Override
 	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
+//		임시로 세팅한거
+		rboardDTO.setRgroup("1");
+		rboardDTO.setRstep("1");
 		
 //		시퀀스번호 따기
 		String sql = "select rboard_rnum_seq.nextval from dual";

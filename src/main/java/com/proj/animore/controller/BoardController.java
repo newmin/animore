@@ -45,8 +45,7 @@ public class BoardController {
 	//게시글 조회
 	@GetMapping("/post/{bnum}")
 	public String post(@PathVariable Integer bnum,
-										Model model,
-										Model reply) {
+										Model model) {
 		
 		BoardDTO boardDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardDTO);

@@ -8,11 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="/css/style.css">
   <script src="/js/boardDetail.js" defer></script>
+  <script src="/js/api/rboard.js" defer></script>
+  <script src="/js/api/ajaxCall.js"></script>
 <title>게시글</title>
 </head>
 <body>
     <main class="main" th:object="${post}">
-    	<div class="boardForm">
+    	<div class="boardForm" th:data-bnum="*{bnum}">
         <div class="boardForm__btns">
             <button class="boardForm__listBtn">목록</button>
             <button class="boardForm__modifyBtn">수정</button>
@@ -49,9 +51,10 @@
            <div class="boardForm__likeHits" th:text="*{bgood}">좋아요 수</div>
        </div>
        <div class="">댓글</div>
-       <div class="boardForm__replyContainer" th:each="reply : ${reply}">
+       <div class="boardForm__replyListWrap">
+     		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
            <div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>
-           <div class="boardForm__replyTextContainer">
+           <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
                 <div class="boardForm__ReplyContent" th:text="${reply.rcontent}">댓글내용</div>
@@ -61,11 +64,12 @@
                 </div>
             	</div>
             </div>
+          </div>
         </div>
         <form class="boardForm__AddReplyContainer">
 
                 <textarea class="boardForm__AddReplyContent"name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea>    
-            <button class="boardForm__AddReplyBtn">등록</button>
+            <button class="boardForm__AddReplyBtn" type="button">등록</button>
 
         </form>
         <div class="boardForm__btns boardForm__underBtns">

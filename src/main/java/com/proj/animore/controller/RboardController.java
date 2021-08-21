@@ -2,8 +2,12 @@ package com.proj.animore.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.RboardDTO;
 import com.proj.animore.dto.RboardListReqDTO;
+import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
 import com.proj.animore.form.Result;
@@ -42,7 +47,8 @@ public class RboardController {
 	public Result register(
 			@PathVariable int bnum,
 			@PathVariable String id,
-			@RequestBody RboardAddReq rar) {
+			@RequestBody RboardAddReq rar,
+			HttpServletRequest request) {
 		// rnum : 시퀀스
 		// bnum : 게시글번호
 		// rgroup : 댓글그룹
@@ -51,15 +57,19 @@ public class RboardController {
 
 		//우선 할것 : 요청받기, 데이터 옮겨담기, 저장하기
 		//나중에 덧붙일것 : 결과 리턴받아서 보여주기, 무결성검사, 등등
-		
+		//요청의 세션 받기
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
+
+
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rar,rboardDTO);
 		
 		//저장하고 결과 리턴으로 받음 (댓글정보)
-  	List<RboardListReqDTO> savedRboardDTO = rboardSVC.register(bnum, id, rboardDTO);
+  	List<RboardListReqDTO> replyList = rboardSVC.register(bnum, loginMemberId, rboardDTO);
   	
-  	//TODO 결과 Result객체에 담아서 리턴할지 컬렉션 그대로 리턴할지 정해야됨
-  	Result result = new Result("00","성공",savedRboardDTO);
+  	Result result = new Result("00","성공",replyList);
   	return result;
 	}
 
