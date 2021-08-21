@@ -3,6 +3,7 @@ package com.proj.animore.dao;
 import java.util.List;
 
 import com.proj.animore.dto.BusinessDTO;
+import com.proj.animore.dto.BusinessLoadDTO;
 
 public interface BusinessDAO {
 
@@ -20,5 +21,5 @@ public interface BusinessDAO {
 	
 	//업체전체목록
 	//TODO 업체카테고리받기 / 텍스트검색으로 출력
-	public List<BusinessDTO> list();
+	public List<BusinessLoadDTO> list(String bcategory);
 }

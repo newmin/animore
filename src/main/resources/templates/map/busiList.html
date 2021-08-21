@@ -49,7 +49,7 @@
             </select>
           </li>
           <!-- 리스트 -->
-          <li class="busi-list__row" th:each="businessDTO : ${businessDTO}">
+          <li class="busi-list__row" th:each="busiList : ${busiList}">
             <span class="busi-list__bname" th:text="*{bname}">임시 업체명</span>
             <span class="busi-list__column busi-list__distance">3cm</span>
             <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
