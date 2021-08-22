@@ -15,14 +15,14 @@
 
     <main class="main">
 
-    <div class="board" th:object="${boardForm}">
+    <div class="board">
 
       <div>
-        <ul class="board__category">
-          <li><a href="/board/Q" >Q&A</a></li>
-          <li><a href="/board/M" >벼룩시장</a></li>
-          <li><a href="/board/F" >자유게시판</a></li>
-          <li><a href="/board/P" >내새끼보세요</a></li>
+        <ul class="board__categorys">
+          <li><a href="/board/Q" class="board__category board__selectCategory" id="category_Q" >Q&A</a></li>
+          <li><a href="/board/M" class="board__category" id="category_M">벼룩시장</a></li>
+          <li><a href="/board/F" class="board__category" id="category_F">자유게시판</a></li>
+          <li><a href="/board/P" class="board__category" id="category_P">내새끼보세요</a></li>
         </ul>
       </div>
 
