@@ -22,6 +22,9 @@ public class MainController {
 	
 	@GetMapping("/{bcategory}")
 	public String list(@PathVariable String bcategory,Model model){
+		
+		 if(bcategory.equals("hospital"))   bcategory="hospital";
+		
 		List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
 		model.addAttribute("busiList", list);
 		return "map/busiList";
