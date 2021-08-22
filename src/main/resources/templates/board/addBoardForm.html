@@ -12,13 +12,13 @@
 </head>
 <body>
 <main class="main ">
+	<form action="" th:action="@{|/board/add|}"  th:method="post" th:object="${BoardForm}">
 	<div class="addPost__container">
     <select name="bcategory" id="bcategory" class="addPost__selectbox">
       <option value="" selected>게시판명</option>
-      <option value="Q">Q&A</option>
-      <option value="F">자유게시판</option>
-      <option value="M">벼룩시장</option>
-      <option value="P">자유게시판</option>
+	<option th:each="ele : ${bcategory}"
+			th:value="${ele.code}" th:text="${ele.decode}">
+	</option>
     </select>
     <input class="addPost__title" type="text" name="btitle" id="btitle" placeholder="제목을 입력하세요.">
     <div class="addPost__icons">
@@ -26,12 +26,13 @@
       <a><i class="fab fa-youtube"></i></a>
       <a><i class="fas fa-link"></i></a>
     </div>
-      <textarea class="addPost__content" name="" id="" cols="60" rows="10"></textarea>
+      <textarea class="addPost__content" name="bcontent" id="bcontent" cols="60" rows="10"></textarea>
     <div class="addPost__btns">
-      <button>취소</button>
-      <button>등록</button>
+      <button type="button">취소</button>
+      <button type="submit">등록</button>
     </div>
     </div>
+    </form>
 </main>
 </body>
 </html>
