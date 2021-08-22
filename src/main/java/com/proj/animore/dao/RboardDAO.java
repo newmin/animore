@@ -27,8 +27,9 @@ public interface RboardDAO {
 
 	/**
 	 * 댓글조회 by 댓글번호
+	 * @param rnum 
 	 */
-	RboardListReqDTO findbyRnum(int rnum);
+	RboardListReqDTO findbyRnum(int bnum, int rnum);
 
 	/**
 	 * 댓글삭제처리 by 댓글번호, 사용자id

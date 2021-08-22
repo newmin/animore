@@ -59,14 +59,16 @@ public class RboardDAOImpl implements RboardDAO{
 
 	/**
 	 * 댓글조회 by 댓글번호
-	 * 댓글수정 클릭시 해당댓글정보 전달하려면 필요
+	 * 댓글수정 클릭시 해당댓글정보 전달
 	 */
 	@Override
-	public RboardListReqDTO findbyRnum(int rnum) {
+	public RboardListReqDTO findbyRnum(int bnum, int rnum) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rnum,bnum,id,rcontent,rgroup,rstep from rboard ");
-		sql.append("where rnum=?");
+		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rcdate,t2.rgood ");
+		sql.append(" from member t1, rboard t2 ");
+		sql.append(" where t1.id=t2.id ");
+		sql.append(" and rnum=? ");
 		
 		RboardListReqDTO rboardListReqDTO =
 				jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), rnum);

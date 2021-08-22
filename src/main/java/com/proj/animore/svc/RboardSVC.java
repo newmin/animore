@@ -27,8 +27,9 @@ public interface RboardSVC {
 
 	/**
 	 * 댓글조회 by 댓글번호
+	 * @param rnum2 
 	 */
-	RboardListReqDTO findByRnum(int rnum);
+	RboardListReqDTO findByRnum(int bnum, int rnum);
 
 	/**
 	 * 댓글삭제 by 댓글번호, 사용자id

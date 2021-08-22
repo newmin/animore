@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -47,7 +47,7 @@ public class RboardController {
 	public Result register(
 			@PathVariable int bnum,
 			@PathVariable String id,
-			@RequestBody RboardAddReq rar,
+			@Valid @RequestBody RboardAddReq rar,
 			HttpServletRequest request) {
 		// rnum : 시퀀스
 		// bnum : 게시글번호
@@ -59,6 +59,14 @@ public class RboardController {
 		//나중에 덧붙일것 : 결과 리턴받아서 보여주기, 무결성검사, 등등
 		//요청의 세션 받기
 		HttpSession session = request.getSession(false);
+		
+		Result result;
+		//로그인 하지 않고 요청했다면
+		if(session == null) {
+			result = new Result("01","댓글입력을 위해 로그인이 필요합니다.",null);
+			return result;
+		}
+		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
 
@@ -66,31 +74,34 @@ public class RboardController {
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rar,rboardDTO);
 		
-		//저장하고 결과 리턴으로 받음 (댓글정보)
+		//저장하고 댓글목록 갱신하기 위해 리스트에 담음
   	List<RboardListReqDTO> replyList = rboardSVC.register(bnum, loginMemberId, rboardDTO);
   	
-  	Result result = new Result("00","성공",replyList);
+  	result = new Result("00","성공",replyList);
   	return result;
 	}
 
-////댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
-//	@ResponseBody
-//	@RequestMapping(value="/{rnum}", method=RequestMethod.OPTIONS)
-//	public Result findById(@PathVariable String rnum) {
+//댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
 //
-//		RboardDTO rboardDTO = rboardSVC.findByRnum(rnum);
-//		Result result = new Result();
-//		if (rboardDTO == null) {
-//			result.setRtcd("01");
-//			result.setRtmsg("존재하는 댓글이 없습니다.");
-//			result.setData(rboardDTO);
-//		} else {
-//			result.setRtcd("00");
-//			result.setRtmsg("성공");
-//			result.setData(rboardDTO);
-//		}
-//		return result;
-//	}
+	@ResponseBody
+	@GetMapping("/{bnum}/{rnum}")
+	public Result findByRnum(
+			@PathVariable int bnum,
+			@PathVariable int rnum) {
+		
+		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
+		Result result = new Result();
+		if (rboardReqDTO == null) {
+			result.setRtcd("01");
+			result.setRtmsg("존재하는 댓글이 없습니다.");
+			result.setData(rboardReqDTO);
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(rboardReqDTO);
+		}
+		return result;
+	}
 	
 //댓글수정처리 patch
 	@ResponseBody

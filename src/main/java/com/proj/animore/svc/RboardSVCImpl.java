@@ -44,8 +44,8 @@ public class RboardSVCImpl implements RboardSVC {
 	 * 댓글조회 by 댓글번호
 	 */
 	@Override
-	public RboardListReqDTO findByRnum(int rnum) {
-		return rboardDAO.findbyRnum(rnum);
+	public RboardListReqDTO findByRnum(int bnum, int rnum) {
+		return rboardDAO.findbyRnum(bnum, rnum);
 	}
 	
 	/**
