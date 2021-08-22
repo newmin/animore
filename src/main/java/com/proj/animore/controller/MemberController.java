@@ -60,8 +60,9 @@ public class MemberController {
 		if (session != null)	return "redirect:/";
 
 		// 회원유형 선택화면에서 회원유형값{mtype} 받아서 조인폼으로 넘겨주게 됨.
-		// joinForm에서 th:if문을 사용하여 회원유형값이 N이면 일반회원 가입양식,
-		// 회원유형값이 S이면 특수회원 가입양식이 보여짐.
+		// joinForm에서 th:if문을 사용하여
+		// 회원유형값이 N이면 일반회원 가입양식,
+		// 회원유형값이 S이면 특수회원 가입양식이 보여지도록 함.
 		if (mtype.equals("normal"))		mtype = "N";
 		if (mtype.equals("special"))	mtype = "S";
 
