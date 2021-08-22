@@ -16,7 +16,7 @@
 	<div class="addPost__container">
     <select name="bcategory" id="bcategory" class="addPost__selectbox">
       <option value="" selected>게시판명</option>
-	<option th:each="ele : ${bcategory}"
+	<option th:each="ele : ${bcategoryCode}"
 			th:value="${ele.code}" th:text="${ele.decode}">
 	</option>
     </select>

@@ -31,15 +31,17 @@ public class BoardController {
 	private final RboardSVC rboardSVC;
 	
 	//TODO 게시글 등록시 카테고리 읽어오려면 만들어야하는 코드인데 활성화하면 게시글목록이 안나옴...
-//	@ModelAttribute("bcategory")
-//	public List<Code> bcategory(){
-//		List<Code> list = new ArrayList<>();
-//		list.add(new Code("Q","Q&A"));
-//		list.add(new Code("F","자유게시판"));
-//		list.add(new Code("M","벼룩시장"));
-//		list.add(new Code("P","내새끼 보세요"));
-//		return list;
-//	}
+	// -> 임시로 여기랑 addBordForm.html 파일 해당부분 bcategoryCode로 바꿔놓고 th:each 작동되는것 확인했습니다.
+	// 		정확한 문법을 아는 건 아닌데 게시글 목록출력 매핑이 /{bcategory}라 이름이 겹쳐서 안되는 것 같네요
+	@ModelAttribute("bcategoryCode")
+	public List<Code> bcategory(){
+		List<Code> list = new ArrayList<>();
+		list.add(new Code("Q","Q&A"));
+		list.add(new Code("F","자유게시판"));
+		list.add(new Code("M","벼룩시장"));
+		list.add(new Code("P","내새끼 보세요"));
+		return list;
+	}
 	
 	//게시글 목록출력
 	@GetMapping("/{bcategory}")
@@ -89,5 +91,5 @@ public class BoardController {
 		return "redirect :/";
 		
 	}
-	}
+}
 
