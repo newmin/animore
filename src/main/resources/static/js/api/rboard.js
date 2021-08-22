@@ -5,21 +5,28 @@
  */
 'use strict';
 
+//타게팅
 const $rTC= document.querySelector('div.boardForm__replyTextContainer');
 const $bnum= document.querySelector('div.boardForm').dataset.bnum;	//게시글번호
 const $id= document.getElementById('id');			//회원아이디
 //const $rnum= $rTC.dataset.rnum;	//댓글번호
 //const $rgroup= $rTC.dataset.rgroup;	//댓글그룹
 //const $rstep= $rTC.dataset.rstep;		//댓글단계
-const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent');
+const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent'); //댓글입력텍스트상자
 
-
+//버튼들
 const addBtn = document.querySelector('button.boardForm__AddReplyBtn');
 
 /* 답댓글은 등록 메소드 따로 만드는게 나을듯? */
 /* 신듀댓글등록 */
 const addBtn_f = e =>{
 	console.log('addBtn_f');
+	
+	//댓글입력체크
+	if($rcontent.value == null) {
+		alert("댓글 내용을 입력하세요");
+		return;
+	}
 	
 	const URL = `/rboard/${$bnum}/${$id}`;
 	const data = {
@@ -30,6 +37,8 @@ const addBtn_f = e =>{
 //								 "rgroup":$rgroup,
 //								 "rstep":$rstep
 							 };
+	
+	
 	
 	request.post(URL,data)
 		.then(res=>res.json())
@@ -42,7 +51,7 @@ const addBtn_f = e =>{
 				data.forEach(rec => {
 							html += `<div class="boardForm__replyContainer">`
 				      html += `<div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>`;
-				      html += `<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">`;
+				      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">`;
 				      html += `  <div>`;
 				      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
 				      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
@@ -64,6 +73,7 @@ const addBtn_f = e =>{
 		.catch(err=>{
 			//오류로직 처리
 			console.log(err.message);
+			alert(err.message);
 		});
 };
 
