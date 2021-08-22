@@ -22,7 +22,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void addBoard(BoardDTO boardDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" insert into board(bnum,bcategory,btitle,id,bcontent) ");
+		sql.append(" insert into board(bnum,bcategory,id,btitle,bcontent) ");
 		sql.append("   values(board_bnum_seq.nextval,?,?,?,?) ");
 		jt.update(sql.toString(),
 					boardDTO.getBcategory(),
