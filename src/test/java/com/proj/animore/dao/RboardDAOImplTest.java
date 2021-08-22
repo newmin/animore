@@ -43,7 +43,7 @@ public class RboardDAOImplTest {
 	@Disabled
 	void findbyRnum() {
 		
-		log.info("findbyRnum:{}",rdao.findbyRnum(1));
+		log.info("findbyRnum:{}",rdao.findbyRnum(1,1));
 	}
 	
 	@Test
