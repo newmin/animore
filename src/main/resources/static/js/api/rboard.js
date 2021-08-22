@@ -8,7 +8,7 @@
 //타게팅
 const $rTC= document.querySelector('div.boardForm__replyTextContainer');
 const $bnum= document.querySelector('div.boardForm').dataset.bnum;	//게시글번호
-const $id= document.getElementById('id');			//회원아이디
+const $id= document.querySelector('li[data-id]').dataset.id;			//회원아이디
 //const $rnum= $rTC.dataset.rnum;	//댓글번호
 //const $rgroup= $rTC.dataset.rgroup;	//댓글그룹
 //const $rstep= $rTC.dataset.rstep;		//댓글단계
@@ -16,6 +16,7 @@ const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent'); 
 
 //버튼들
 const addBtn = document.querySelector('button.boardForm__AddReplyBtn');
+const modiBtn = document.querySelector('button.boardForm__modiReplyBtn');
 
 /* 답댓글은 등록 메소드 따로 만드는게 나을듯? */
 /* 신듀댓글등록 */
@@ -47,22 +48,8 @@ const addBtn_f = e =>{
 				//성공로직처리
 				const data = res.data;
 				
-				let html = '';
-				data.forEach(rec => {
-							html += `<div class="boardForm__replyContainer">`
-				      html += `<div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>`;
-				      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">`;
-				      html += `  <div>`;
-				      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
-				      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
-				      html += `    <div class="boardForm__Replywrap">`;
-				      html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
-				      html += `        <button class="boardForm__ReplyReBtn">답글쓰기</button>`;
-				      html += `    </div>`;
-				      html += `  </div>`;
-				      html += `</div>`;
-				      html += `</div>`;
-				  });
+				let html = createHTML(data);
+
 				document.querySelector('.boardForm__replyListWrap').innerHTML = html;
 				
 				$rcontent.value="";
@@ -187,8 +174,30 @@ const allBtn_f = e =>{
 };
 
 addBtn.addEventListener("click",addBtn_f);
-//modiBtn.addEventListener("click",modiBtn_f);
+modiBtn.addEventListener("click",modiBtn_f);
 //findBtn.addEventListener("click",findBtn_f);
 //delBtn.addEventListener("click",delBtn_f);
 //allBtn.addEventListener("click",allBtn_f);
 //clearBtn.addEventListener("click",clearBtn_f);
+
+/* 댓글목록생성 */
+function createHTML(data){
+	let html = '';
+	data.forEach(rec => {
+					html += `<div class="boardForm__replyContainer">`
+		      html += `<div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>`;
+		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">`;
+		      html += `  <div>`;
+		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
+		      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
+		      html += `    <div class="boardForm__Replywrap">`;
+		      html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
+		      html += `        <button class="boardForm__ReplyReBtn">답글쓰기</button>`;
+	if($id == rec.id){	html += `<button class="boardForm__modiReplyBtn">댓글수정</button>`; }
+		      html += `    </div>`;
+		      html += `  </div>`;
+		      html += `</div>`;
+		      html += `</div>`;
+			});
+	return html;
+}
