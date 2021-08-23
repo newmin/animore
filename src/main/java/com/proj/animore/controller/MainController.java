@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proj.animore.dto.BusinessLoadDTO;
@@ -23,20 +24,21 @@ public class MainController {
 	@GetMapping("/{bcategory}")
 	public String list(@PathVariable String bcategory,Model model){
 		
-		 if(bcategory.equals("hospital"))   bcategory="hospital";
-		
+		model.addAttribute("businessLoadDTO",new BusinessLoadDTO()); 
 		List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
 		model.addAttribute("busiList", list);
 		return "map/busiList";
 	}
 
-	@GetMapping("/zx")
-	public String tempList() {
-		return "map/busiListTemp";
-	}
-	@GetMapping("/zxc")
-	public String inquire() {
+	@GetMapping("/inquire/{bnum}")
+	public String inquire(@PathVariable Integer bnum,
+												Model model) {
+		businessSVC.findBusiByBnum(bnum);
+		
+		
+		
 		return "map/inquireBusiDetail";
 	}
+	
 	
 }

@@ -1,8 +1,8 @@
 package com.proj.animore.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class BusinessLoadDTO {
 	private int bnum;
 	private String bname;
