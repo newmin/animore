@@ -9,9 +9,9 @@ public interface CouponDAO {
 	void addCoupon(CouponDTO couponDTO);
 	
 	//쿠폰조회
-	CouponDTO findCouponByCid(int Cnum);
+	CouponDTO findCouponByCid(int cnum);
 	
 	//쿠폰삭제(자동만료??)
-	void deleteCoupon(int Cnum);
+	void deleteCoupon(int cnum);
 	
 }

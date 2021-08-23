@@ -53,6 +53,7 @@ public class ProfessionDAOImpl implements ProfessionDAO {
 						id);
 		return findProByPnum(id);
 	}
+	
 	//전문가삭제
 	@Override
 	public void deleteProBypnum(String id) {

@@ -56,7 +56,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("   set bname = ?, ");
 		sql.append("       baddress = ?, ");
 		sql.append("       btel = ? ");
-		sql.append(" where bnm = ? ");
+		sql.append(" where bnum = ? ");
 		
 		jdbcTemplate.update(
 				sql.toString(), 
@@ -91,6 +91,5 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
-		
 	}
 }
