@@ -36,7 +36,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 	}
 	//업체조회
 	@Override
-	public BusinessDTO findBusiByBbnum(String bnum) {
+	public BusinessDTO findBusiByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		//sql��
 		sql.append("select bnum,bname");
@@ -52,7 +52,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 
 	//업체정보수정
 	@Override
-	public BusinessDTO modifyBusi(String bnum, BusinessDTO businessDTO) {
+	public BusinessDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update business ");
 		sql.append("   set bname = ?, ");
@@ -66,29 +66,30 @@ public class BusinessDAOImpl implements BusinessDAO {
 				businessDTO.getBaddress(),
 				businessDTO.getBtel()
 				);
-		return findBusiByBbnum(bnum);
+		return findBusiByBnum(bnum);
 	}
 
 	//업체정보 삭제
 	@Override
-	public void deleteBusi(String bnum) {
+	public void deleteBusi(Integer bnum) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	//업체목록 조회
 	@Override
-	public List<BusinessLoadDTO> list(String bcategory) {
+	public List<BusinessLoadDTO> busiList(String bcategory) {
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL ");
 		sql.append("from business b, bcategory c ");
 		sql.append("where b.bnum=c.bnum ");
-		sql.append("and ? = 'Y' ");
+		sql.append("and "+bcategory+" = 'Y' ");
 		
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
-					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
-					   bcategory);
+					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
+		
+		log.info(list.toString());
 		
 		return list;
 	}

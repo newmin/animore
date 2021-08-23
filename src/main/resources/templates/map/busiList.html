@@ -11,18 +11,18 @@
   <script></script>
 </head>
 <body>
-  <main class="main" th:object="${businessDTO}">
+  <main class="main">
     
     <div class="busiList-container">
       <!-- 상단 -->
       <section class="position">
         <div class="position__column">
-          <div class="position__tags">
-            <input type="checkbox" th:field="*{nightcare}"><label for="nightcare">야긴진료</label>
-            <input type="checkbox" th:field="*{visitcare}"><label for="visitcare">방문진료</label>
-            <input type="checkbox" th:field="*{dental}"><label for="dental">치과진료</label>
-            <input type="checkbox" th:field="*{holidayopen}"><label for="holidayopen">공휴일영업</label>
-            <input type="checkbox" th:field="*{rareani}"><label for="rareani">희귀동물</label>
+          <div class="position__tags" th:object="${businessLoadDTO}">
+            <input type="checkbox" th:field="*{nightcare}" th:value="Y"><label for="nightcare">야긴진료</label>
+            <input type="checkbox" th:field="*{visitcare}" th:value="Y"><label for="visitcare">방문진료</label>
+            <input type="checkbox" th:field="*{dental}" th:value="Y"><label for="dental">치과진료</label>
+            <input type="checkbox" th:field="*{holidayopen}" th:value="Y"><label for="holidayopen">공휴일영업</label>
+            <input type="checkbox" th:field="*{rareani}" th:value="Y"><label for="rareani">희귀동물</label>
           </div>
         </div>
       
@@ -50,11 +50,10 @@
           </li>
           <!-- 리스트 -->
           <li class="busi-list__row" th:each="busiList : ${busiList}">
-            <span class="busi-list__bname" th:text="*{bname}">임시 업체명</span>
+            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}"></a></span>
             <span class="busi-list__column busi-list__distance">3cm</span>
             <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
           </li>
-          <li class="busi-list__row"></li>
           <li class="busi-list__row"></li>
           <li class="busi-list__row"></li>
           <li class="busi-list__row"></li>
