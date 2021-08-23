@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko"
-			xmlns:th="http://www.thymeleaf.org"
-			th:replace="~{template/templateSub::main(~{::title},~{::main},~{::script})}">
+         xmlns:th="http://www.thymeleaf.org"
+         th:replace="~{template/templateSub::main(~{::title},~{::main},~{::script})}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <script defer></script>
+  <script src="/js/board.js" defer></script>
   <title>글목록</title>
 </head>
 
@@ -15,50 +15,39 @@
 
     <main class="main">
 
-    <div class="board" th:object="${boardForm}">
+    <div class="board">
 
       <div>
-        <ul class="board__category">
-          <!-- TODO href -->
-          <li><a href="/board/Q" >Q&A</a></li>
-          <li><a href="/board/M" >벼룩시장</a></li>
-          <li><a href="/board/F" >자유게시판</a></li>
-          <li><a href="/board/P" >내새끼보세요</a></li>
+        <ul class="board__categorys">
+          <li><a href="/board/Q" class="board__category board__selectCategory" id="category_Q" >Q&A</a></li>
+          <li><a href="/board/M" class="board__category" id="category_M">벼룩시장</a></li>
+          <li><a href="/board/F" class="board__category" id="category_F">자유게시판</a></li>
+          <li><a href="/board/P" class="board__category" id="category_P">내새끼보세요</a></li>
         </ul>
       </div>
 
       <!-- Q&A -->
-	<div th:if="${bcategory} =='Q'">
+   <div th:if="${bcategory} =='Q'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <!-- TODO 동물선택 카테고리 없애는거 어떤지? 읽어올때 못읽어올거같음 -->
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
-        <tr>
-          <td class="board__cell board__num">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
-          <td class="board__cell board__title"><a href="#">강아지가 설사를해요!!!!</a></td>
-          <td class="board__cell board__writer"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits">30</td>
-          <td class="board__cell board__hearthits">10</td>
+        <tr th:each="boardForm :${boardForm}">
+          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
+          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
+          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -74,38 +63,29 @@
       <div class="borad__pageBtn">
 
       </div>
-	</div>
+   </div>
       <!-- 벼룩시장 -->
       <div th:if="${bcategory} =='M'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
-        <tr>
-          <td class="board__cell board__num">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
-          <td class="board__cell board__title"><a href="#">강아지 옷 팔아요!</a></td>
-          <td class="board__cell board__writer"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits">30</td>
-          <td class="board__cell board__hearthits">10</td>
+        <tr th:each="boardForm :${boardForm}">
+          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
+          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
+          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -121,39 +101,30 @@
       <div class="borad__pageBtn">
 
       </div>
-	</div>
-	
+   </div>
+   
       <!-- 자유게시판 -->
-	<div th:if="${bcategory} =='F'">
+   <div th:if="${bcategory} =='F'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__anicategory">
-            <select name="animals" class="board__table__select">
-              <option value="all">카테고리</option>
-              <option value="dog">강아지</option>
-              <option value="cat">고양이</option>
-              <option value="etc">전체</option>
-            </select>
-          </th>
           <th class="board__cell board__title">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
-        <tr>
-          <td class="board__cell board__num">1</td>
-          <td class="board__cell board__ani-category">강아지</td>
-          <td class="board__cell board__title"><a href="#">이구아나 입양예정인데...</a></td>
-          <td class="board__cell board__writer"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits">30</td>
-          <td class="board__cell board__hearthits">10</td>
+        <tr th:each="boardForm :${boardForm}">
+          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
+         <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
+          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
 
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -174,36 +145,17 @@
     </div>
 
     <!-- 내새끼보세요 -->
-	<div th:if="${bcategory} =='P'">
+   <div th:if="${bcategory} =='P'">
     <div class="b_galarywrap">
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
+        <div class="b_galary_post" th:each="boardForm :${boardForm}">
+          <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
+          <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title" th:text="${boardForm.btitle}">글제목</p></a></div>
         </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>
-        <div class="b_galary_post">
-          <div class="b_galary_img"><a href="#"><img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">글제목</p></a></div>
-        </div>  
+        
       </div>
       <div class="board__btns">
-        <button class="borad__btn" type="button">내글보기</button>
-        <button class="borad__btn" type="button">글쓰기</button>
+        <button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
       </div>
       
       <div class="board__search">

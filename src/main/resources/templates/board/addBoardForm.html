@@ -6,9 +6,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer></script>
 <title>게시글작성</title>
 </head>
 <body>
-<h3>게시글작성</h3>
+<main class="main ">
+	<!-- TODO 링크에 id값 넣기 -->
+	<form action="" th:action="@{|/board/add/normal@zxc.com|}"  th:method="post" th:object="${boardForm}">
+	<div class="addPost__container">
+    <select name="bcategory"  class="addPost__selectbox">
+      <option value="" th:field="*{bcategory}" selected>게시판명</option>
+	<option th:each="ele : ${bcategoryCode}"
+			th:value="${ele.code}" th:text="${ele.decode}">
+	</option>
+    </select>
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <div class="addPost__icons">
+      <a><i class="far fa-image"></i></a>
+      <a><i class="fab fa-youtube"></i></a>
+      <a><i class="fas fa-link"></i></a>
+    </div>
+      <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
+    <div class="addPost__btns">
+      <button type="button">취소</button>
+      <button type="submit">등록</button>
+    </div>
+    </div>
+    </form>
+</main>
 </body>
 </html>

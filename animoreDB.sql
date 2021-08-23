@@ -1,0 +1,296 @@
+-- 즐겨찾기 테이블명 변경에 따른 시퀀스명 변경건. 팀원전원 해당 내용 인지 확인 후 삭제 예정.
+DROP SEQUENCE mylist_mnum_seq;
+
+--테이블 및 시퀀스 생성
+drop table coupon;
+drop table profession;
+drop table Myani;
+drop table favorite;
+drop table REVIEW;
+drop table BCATEGORY;
+drop table BUSINESS;
+drop table GOODBOARD;
+drop table HBOARD;
+drop table RBOARD;
+drop table BOARD;
+drop table member;
+
+--회원
+create table member(
+  id varchar2(40),
+  pw varchar2 (16) not null,
+  tel varchar2(13) not null,
+  email varchar2(30) not null,
+  name varchar2(30) not null,
+  nickname varchar2(30) not null,
+  gender char(3) not null,
+  address varchar2(150) not null,
+  birth date not null,
+  mtype varchar2(1) not null,
+  cdate timestamp DEFAULT systimestamp not null,
+  udate timestamp DEFAULT systimestamp,
+  image blob,
+  fsize varchar2(45),
+  ftype varchar2(50),
+  fname varchar2(150),
+  mileage number(6) DEFAULT 0 not null,
+  constraint MEMBER_ID_PK primary key(id),
+  constraint MEMBER_mtype_ck check(mtype in('N','S'))
+);
+
+--게시글
+create table board(
+  bnum number(8),
+  bcategory char(1) not null,
+  btitle varchar2(150) not null,
+  id varchar2(40) not null,
+  bcdate timestamp DEFAULT systimestamp not null,
+  budate timestamp DEFAULT systimestamp,
+  bhit number(5) DEFAULT 0 not null,
+  bgood number(5) DEFAULT 0 not null,
+  breply number(5) DEFAULT 0 not null,
+  bcontent clob not null,
+  bgroup number(5),
+  constraint BOARD_BNUM_PK primary key(bnum),
+  constraint board_id_FK foreign key(id) references member(id),
+  constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
+);
+
+--댓글
+create table rboard(
+  rnum number(10),
+  bnum number(8) not null,
+  id varchar2(40) not null,
+  rcdate timestamp DEFAULT systimestamp not null,
+  rudate timestamp DEFAULT systimestamp,
+  rcontent varchar2(600) not null,
+  rgood number(5) DEFAULT 0 not null,
+  rgroup number(5) not null,
+  rstep number(5) not null,
+  constraint RBOARD_RNUM_PK primary key(rnum),
+  constraint rboard_bnum_FK foreign key(bnum) 
+                                references board(bnum)
+                                ON DELETE CASCADE,
+  constraint rboard_id_FK foreign key(id) 
+                                references member(id)
+);
+
+--건강정보
+create table hboard(
+  bnum number(8),
+  hcategory varchar2(12) not null,
+  btitle varchar2(150) not null,
+  id varchar2(40) not null,
+  bcdate timestamp DEFAULT systimestamp not null,
+  budate timestamp DEFAULT systimestamp,
+  bhit number(5) DEFAULT 0 not null,
+  bgood number(5) DEFAULT 0 not null,
+  bcontent clob not null,
+  constraint HBOARD_BNUM_PK primary key(bnum),
+  constraint hboard_id_FK foreign key(id) references member(id),
+  constraint hboard_hcategory_ck check(hcategory in('질병사전','행동사전'))
+);
+
+--좋아요게시글
+create table goodboard(
+  gnum number(8),
+  id varchar2(40) not null,
+  bnum number(10) not null,
+  constraint GOODBOARD_gnum_PK primary key(gnum),
+  constraint goodboard_id_FK foreign key(id) 
+                                references member(id)
+                                ON DELETE CASCADE,
+  constraint goodboard_bnum_FK foreign key(bnum) 
+                                references board(bnum)
+                                ON DELETE CASCADE
+);
+
+--업체
+create table business(
+  bnum number(8),
+  bbnum varchar2(20),
+  id varchar2(40) not null,
+  bname varchar2(30) not null,
+  baddress varchar2 (150) not null,
+  btel varchar2(13) not null,
+  openhours clob,
+  nightcare char(1),
+  rareani char(1),
+  visitcare char(1),
+  holidayopen char(1),
+  dental char(1),
+  constraint BUSINESS_BNUM_PK primary key(bnum),
+  constraint business_id_FK foreign key(id) 
+                                references member(id)
+                                ON DELETE CASCADE,
+  constraint business_nightcare_ck check(nightcare in('Y','N')),
+  constraint business_rareani_ck check(rareani in('Y','N')),
+  constraint business_visitcare_ck check(visitcare in('Y','N')),
+  constraint business_holidayopen_ck check(holidayopen in('Y','N')),
+  constraint business_dental_ck check(dental in('Y','N'))
+);
+
+--전문가
+create table profession(
+  pnum number(8),
+  id varchar2(40),
+  licenseno varchar2(20) not null,
+  constraint PROFESSION_PNUM_PK primary key(pnum),
+  constraint profession_pid_FK foreign key(id) 
+                                references member(id)
+                                ON DELETE CASCADE
+);
+
+--업체카테고리
+create table bcategory(
+  bnum number(8),
+  bhospital char(1) DEFAULT 'N' not null,
+  bpharmacy char(1) DEFAULT 'N' not null,
+  bhotel char(1) DEFAULT 'N' not null,
+  bkindergarden char(1) DEFAULT 'N' not null,
+  bfood char(1) DEFAULT 'N' not null,
+  btraining char(1) DEFAULT 'N' not null,
+  bshop char(1) DEFAULT 'N' not null,
+  bplayground char(1) DEFAULT 'N' not null,
+  bhairshop char(1) DEFAULT 'N' not null,
+  betc char(1) DEFAULT 'N' not null,
+  constraint BCATEGORY_BNUM_PK primary key(bnum),
+  constraint bcategory_bnum_FK foreign key(bnum) 
+                                references business(bnum)
+                                ON DELETE CASCADE,
+  constraint dental_bhospital_ck check(bhospital in('Y','N')),
+  constraint dental_bpharmacy_ck check(bpharmacy in('Y','N')),
+  constraint dental_bhotel_ck check(bhotel in('Y','N')),
+  constraint dental_bkindergarden_ck check(bkindergarden in('Y','N')),
+  constraint dental_bfood_ck check(bfood in('Y','N')),
+  constraint dental_btraining_ck check(btraining in('Y','N')),
+  constraint dental_bshop_ck check(bshop in('Y','N')),
+  constraint dental_bplayground_ck check(bplayground in('Y','N')),
+  constraint dental_bhairshop_ck check(bhairshop in('Y','N')),
+  constraint dental_betc_ck check(betc in('Y','N'))
+);
+
+--후기
+create table review(
+  rnum number(10),
+  bnum number(8) not null,
+  rscore number(1,1) not null,
+  rcontent clob not null,
+  id varchar2(40) not null,
+  rvcdate timestamp DEFAULT systimestamp not null,
+  rvudate timestamp DEFAULT systimestamp,
+  constraint REVIEW_RNUM_PK primary key(rnum),
+  constraint review_bnum_FK foreign key(bnum) 
+                                references business(bnum)
+                                ON DELETE CASCADE,
+  constraint review_id_FK foreign key(id) 
+                                references member(id)
+);
+
+--즐겨찾기
+create table favorite(
+  id varchar2(40),
+  bnum number(10),
+  mnum number(10),
+  constraint favorite_mnum_PK primary key(mnum),
+  constraint favorite_id_FK foreign key(id) 
+                                 references member(id)
+                                 ON DELETE CASCADE,
+  constraint favorite_bnum_FK foreign key(bnum)
+                                 references business(bnum)
+                                 ON DELETE CASCADE
+);
+
+--키우는 동물
+create table myani(
+  ID varchar2(40),
+  ANIMAL varchar(30),
+  MNUM number(10),
+  constraint myani_MNUM_PK primary key(MNUM),
+  constraint myani_id_FK foreign key(ID) 
+                                 references member(id)
+                                 ON DELETE CASCADE
+);
+
+--쿠폰
+create table coupon(
+  cnum number(10),
+  id varchar2(40),
+  price number(5),
+  cflag char(1) DEFAULT 'Y',
+  constraint coupon_PK primary key(cnum),
+  constraint coupon_FK foreign key(id)
+                              references member(id)
+                              ON DELETE CASCADE,
+  constraint coupon_cflag_ck check(cflag in('Y','N'))
+);
+
+--시퀀스 삭제
+DROP SEQUENCE BOARD_BNUM_SEQ;
+DROP SEQUENCE rboard_rnum_seq;
+DROP SEQUENCE goodboard_gnum_seq;
+DROP SEQUENCE hboard_bnum_seq;
+DROP SEQUENCE business_bnum_seq;
+DROP SEQUENCE review_rnum_seq;
+DROP SEQUENCE favorite_mnum_seq;
+DROP SEQUENCE myani_mnum_seq;
+DROP SEQUENCE profession_pnum_seq;
+DROP SEQUENCE coupon_cnum_seq;
+
+--시퀀스 생성
+CREATE SEQUENCE BOARD_BNUM_SEQ;
+CREATE SEQUENCE rboard_rnum_seq;
+CREATE SEQUENCE goodboard_gnum_seq;
+CREATE SEQUENCE hboard_bnum_seq;
+CREATE SEQUENCE business_bnum_seq;
+CREATE SEQUENCE review_rnum_seq;
+CREATE SEQUENCE favorite_mnum_seq;
+CREATE SEQUENCE myani_mnum_seq;
+CREATE SEQUENCE profession_pnum_seq;
+CREATE SEQUENCE coupon_cnum_seq;
+
+-- 임시데이터 등록(각 데이터별 2개 이상)
+-- 일반회원
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N');
+-- 특수회원
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444-4444-4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');
+-- 업체
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'사업자번호','special@zxc.com','물어!','코드도 깨끄시','333-3333-3333','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','할퀴어!','갱상도 울싼시','555-5555-5555','Y','Y','Y','Y','Y');
+-- 업체별 리뷰
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'좋아좋아','normal@zxc.com');
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'별루별루','user@test.com');
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,0,'좋아좋아','normal@zxc.com');
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,0,'별루별루','user@test.com');
+-- 게시글
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','normal@zxc.com','필요없어');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','normal@zxc.com','제시요');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'F','애니모어 힘내요','normal@zxc.com','ㅈㄱㄴ');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'P','세계관 최강 귀요미들','normal@zxc.com','이거 보여주려고 어그로 끌었다');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'Q','요즘 애니모어에 벽이 느껴지지 않나요?','user@test.com','<완벽>이라는 이름의 벽이요');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'M','중고 팔아여','user@test.com','새거처럼 깨끗해여');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'F','요즘 털빠짐이 심하네요..','user@test.com','제 머리에서요ㅠㅠ');
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'P','인형에 진심인 우리애들','user@test.com','이미 인형 그 자체');
+-- 댓글
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,2,'user@test.com','10불러봅니다',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,3,'user@test.com','힘내요~',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,4,'user@test.com','그 작던 쪼꼬미들 맞냐',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,5,'normal@zxc.com','엌ㅋㅋ',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,5,'user@test.com','언제나 감사합니다',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,6,'normal@zxc.com','-판매완료-',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,6,'user@test.com','아직 안팔렸습니다. 윗댓 누구냐ㅡㅡ',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,7,'normal@zxc.com','"모"자람이 없으시네요',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1);
+insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1);
+
+commit;

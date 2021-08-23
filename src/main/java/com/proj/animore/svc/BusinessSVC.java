@@ -1,11 +1,11 @@
-package com.proj.animore.dao;
+package com.proj.animore.svc;
 
 import java.util.List;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
 
-public interface BusinessDAO {
+public interface BusinessSVC {
 
 	//업체등록
 	public void joinBusi(BusinessDTO businessDTO);

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BusinessDTO;
+import com.proj.animore.dto.BusinessLoadDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BusinessDAOImpl implements BusinessDAO {
 
 	private final JdbcTemplate jdbcTemplate;
-	//��ü���
+	//업체가입
 	@Override
 	public void joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
@@ -33,24 +34,24 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getOpenhours());
 		
 	}
-	//��üã��
+	//업체조회
 	@Override
-	public BusinessDTO findBusiByBbnum(String bnum) {
+	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		//sql��
-		sql.append("select bnum,bname");
+		sql.append("select bnum,bname,baddress,btel,openhours");
 		sql.append(" from business ");
 		sql.append("where bnum = ? ");
-		BusinessDTO businessDTO = jdbcTemplate.queryForObject(sql.toString(),
-				new BeanPropertyRowMapper<>(BusinessDTO.class),
+		BusinessLoadDTO businessLoadDTO = jdbcTemplate.queryForObject(sql.toString(),
+				new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
 				bnum);
 		
 		
-		return businessDTO;
+		return businessLoadDTO;
 	}
 
+	//업체정보수정
 	@Override
-	public BusinessDTO modifyBusi(String bnum, BusinessDTO businessDTO) {
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update business ");
 		sql.append("   set bname = ?, ");
@@ -64,21 +65,34 @@ public class BusinessDAOImpl implements BusinessDAO {
 				businessDTO.getBaddress(),
 				businessDTO.getBtel()
 				);
-		return findBusiByBbnum(bnum);
+		return findBusiByBnum(bnum);
 	}
 
+	//업체정보 삭제
 	@Override
-	public void deleteBusi(String bnum) {
+	public void deleteBusi(Integer bnum) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	//업체목록 조회
 	@Override
-	public List<BusinessDTO> list() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BusinessLoadDTO> busiList(String bcategory) {
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL ");
+		sql.append("from business b, bcategory c ");
+		sql.append("where b.bnum=c.bnum ");
+		sql.append("and "+bcategory+" = 'Y' ");
+		
+		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
+					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
+		
+		log.info(list.toString());
+		
+		return list;
 	}
-	//��ü�߰�
+	//업체추가등록
 	public void addBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		

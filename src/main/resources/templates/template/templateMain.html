@@ -12,10 +12,12 @@
   <title th:replace=${title}>페이지제목</title>
 </head>
 <body>
-  <header class="logo">
+  <header>
     <a href="/">
-      <h1 class="logo__text">Ani-More</h1>
-      <img class="logo__img" src="/img/logo.png" alt="">
+      <div class="logo">
+        <h1 class="logo__text">Ani-More</h1>
+        <img class="logo__img" src="/img/logo.png" alt="">
+      </div>
     </a>
   </header>
 
@@ -52,14 +54,14 @@
         <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
             <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="couponTEST.html">내정보</a></li>
         <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('S')}"><a href="/member/mypage/mypageBReview">내정보</a></li>
-        <li th:if="${session.loginMember != null}"><a href="/logout">로그아웃</a></li>
+        <li th:if="${session.loginMember != null}" th:data-id="${session.loginMember.id}"><a href="/logout">로그아웃</a></li>
       </ul>
   </nav>
   </div>
 
   <main th:replace=${content}></main>
 
-  <footer>
+  <footer class="footer">
     <p class="ft_name">Ani-More</p>
     <p class="ft_content">주소 : 울산광역시 남구 삼산로35번길 19 </p>
     <p class="ft_content">사업자번호 : 123-45-67890</p>
