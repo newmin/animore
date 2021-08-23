@@ -34,7 +34,7 @@
        <div class="boardForm__infoContainer">
         <img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg">
         <div class="boardForm__info">
-            <span class="boardForm__Nickname" th:text="${post.id}">닉네임</span>
+            <span class="boardForm__Nickname" th:text="*{nickname}">닉네임</span>
             <div class="boardForm__info2">
                 <div class="boardForm__Hits"><span th:text="|조회수 *{bhit}|"></span></div>
                 <div class="boardForm__reply"><span th:text="|댓글수 *{breply}|"></span></div>

@@ -12,21 +12,22 @@
 </head>
 <body>
 <main class="main ">
-	<form action="" th:action="@{|/board/add|}"  th:method="post" th:object="${BoardForm}">
+	<!-- TODO 링크에 id값 넣기 -->
+	<form action="" th:action="@{|/board/add/normal@zxc.com|}"  th:method="post" th:object="${boardForm}">
 	<div class="addPost__container">
-    <select name="bcategory" id="bcategory" class="addPost__selectbox">
-      <option value="" selected>게시판명</option>
+    <select name="bcategory"  class="addPost__selectbox">
+      <option value="" th:field="*{bcategory}" selected>게시판명</option>
 	<option th:each="ele : ${bcategoryCode}"
 			th:value="${ele.code}" th:text="${ele.decode}">
 	</option>
     </select>
-    <input class="addPost__title" type="text" name="btitle" id="btitle" placeholder="제목을 입력하세요.">
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
     <div class="addPost__icons">
       <a><i class="far fa-image"></i></a>
       <a><i class="fab fa-youtube"></i></a>
       <a><i class="fas fa-link"></i></a>
     </div>
-      <textarea class="addPost__content" name="bcontent" id="bcontent" cols="60" rows="10"></textarea>
+      <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
     <div class="addPost__btns">
       <button type="button">취소</button>
       <button type="submit">등록</button>

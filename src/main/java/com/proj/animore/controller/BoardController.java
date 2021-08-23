@@ -3,6 +3,10 @@ package com.proj.animore.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.animore.dto.BoardDTO;
+import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.RboardListReqDTO;
 import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.Code;
+import com.proj.animore.form.LoginMember;
 import com.proj.animore.svc.BoardSVC;
 import com.proj.animore.svc.RboardSVC;
 
@@ -30,9 +36,6 @@ public class BoardController {
 	private final BoardSVC boardSVC;
 	private final RboardSVC rboardSVC;
 	
-	//TODO 게시글 등록시 카테고리 읽어오려면 만들어야하는 코드인데 활성화하면 게시글목록이 안나옴...
-	// -> 임시로 여기랑 addBordForm.html 파일 해당부분 bcategoryCode로 바꿔놓고 th:each 작동되는것 확인했습니다.
-	// 		정확한 문법을 아는 건 아닌데 게시글 목록출력 매핑이 /{bcategory}라 이름이 겹쳐서 안되는 것 같네요
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
 		List<Code> list = new ArrayList<>();
@@ -52,7 +55,7 @@ public class BoardController {
 	     if(bcategory.equals("F"))   bcategory="F";
 	     if(bcategory.equals("P"))   bcategory="P";
 		
-	     List<BoardDTO> list = boardSVC.list(bcategory);
+	     List<BoardReqDTO> list = boardSVC.list(bcategory);
 	     model.addAttribute("boardForm",list);
 	     
 		return "board/board";
@@ -63,13 +66,13 @@ public class BoardController {
 	public String post(@PathVariable Integer bnum,
 										Model model) {
 		
-		BoardDTO boardDTO = boardSVC.findBoardByBnum(bnum);
-		model.addAttribute("post",boardDTO);
+		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
+		model.addAttribute("post",boardReqDTO);
 		//게시글 조회시 해당 게시글의 댓글목록도 함께 불러옴.
 		List<RboardListReqDTO> replyList = rboardSVC.all(bnum);
 		model.addAttribute("reply", replyList);
 		
-		log.info("BoardDTO:{}",boardDTO);
+
 		log.info("replyList:{}",replyList);
 		
 		return "board/boardDetail";
@@ -77,18 +80,32 @@ public class BoardController {
 	
 	//게시글 작성화면 출력
 	@GetMapping("/add")
-	public String addPost() {
+	public String addPost(@ModelAttribute BoardForm boardForm,
+						HttpServletRequest request) {
 		
+		HttpSession session = request.getSession(false);
+		if(session==null) {
+			return "/member/login";
+		}
 		return "board/addBoardForm";
 	}
 	
 	//게시글 등록처리
-	@PostMapping("/add")
-	public String addpost(@ModelAttribute BoardForm boardForm,
+	@PostMapping("/add/{id}")
+	public String addpost(@PathVariable String id,
+							@Valid @ModelAttribute BoardForm boardForm,
 							BoardDTO boardDTO,
-						BindingResult bindingResult) {
-		boardSVC.addBoard(boardDTO);
-		return "redirect :/";
+							BindingResult bindingResult,
+							HttpServletRequest request) {
+		
+//		HttpSession session = request.getSession(false);
+//		
+//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//		String loginMemberId = loginMember.getId();
+		
+		boardSVC.addBoard(id,boardDTO);
+		
+		return "redirect:/board/Q";
 		
 	}
 }

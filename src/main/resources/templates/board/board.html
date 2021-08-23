@@ -39,7 +39,7 @@
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
           <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
-          <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
@@ -77,7 +77,7 @@
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
           <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
-          <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
@@ -116,7 +116,7 @@
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
-          <td class="board__cell board__writer" th:text="${boardForm.id}"><a href="#">작성자</a></td>
+          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
