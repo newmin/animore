@@ -1,9 +1,13 @@
 package com.proj.animore.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,27 +35,43 @@ public class RboardDAOImpl implements RboardDAO{
 		rboardDTO.setRstep("1");
 		
 //		시퀀스번호 따기
-		String sql = "select rboard_rnum_seq.nextval from dual";
-		String seq = jt.queryForObject(sql, String.class);
+//		String sql = "select rboard_rnum_seq.nextval from dual";
+//		String seq = jt.queryForObject(sql, String.class);
 		
 //		입력
 		StringBuffer sql2 = new StringBuffer();
 		sql2.append("insert into rboard(rnum,bnum,id,rcontent,rgroup,rstep) ");
-		sql2.append("						values(?,?,?,?,?,?)");
+		sql2.append("						values(rboard_rnum_seq.nextval,?,?,?,?,?)");
 		
 		jt.update(sql2.toString()
-							,seq
+//							,seq
 							,bnum
 							,id
 							,rboardDTO.getRcontent()
 							,rboardDTO.getRgroup()
 							,rboardDTO.getRstep()
 						 );
+
+//		KeyHolder keyHolder = new GeneratedKeyHolder();
+//		jt.update((Connection con)-> {
+//			PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[] {"bnum"});
+//			pstmt.setInt(1, bnum);
+//			pstmt.setString(2, id);
+//			pstmt.setString(3, rboardDTO.getRcontent());
+//			pstmt.setString(4, rboardDTO.getRgroup());
+//			pstmt.setString(5, rboardDTO.getRstep());
+//			
+//			return pstmt;
+//		}, keyHolder);
 		
 ////		따놓은 시퀀스번호로 입력한 댓글정보 확인, 받기
 //		RboardDTO retDTO = findbyRnum(seq);
 		
+		
+//		log.info("keyHolder:{}",keyHolder.getKeyAs(Integer.class));
+		
 		//댓글단 게시글의 댓글목록 갱신.=> 댓글목록 리턴
+//		List<RboardListReqDTO> list = all(keyHolder.getKeyAs(Integer.class));
 		List<RboardListReqDTO> list = all(bnum);
 //		입력했던 댓글정보 리턴
 		return list;
@@ -105,11 +125,12 @@ public class RboardDAOImpl implements RboardDAO{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from rboard ");
-		sql.append("where rnum=? ");
+		sql.append("where bnum=? ");
+		sql.append("and rnum=? ");
 		sql.append("and id=?");
 		
 		int result = 
-				jt.update(sql.toString(), rnum, id);
+				jt.update(sql.toString(), bnum, rnum, id);
 		
 		List<RboardListReqDTO> list = all(bnum);
 		return list;

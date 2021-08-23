@@ -70,7 +70,6 @@ public class RboardController {
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
 
-
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rar,rboardDTO);
 		
@@ -138,15 +137,17 @@ public class RboardController {
 			@PathVariable int bnum,
 			@PathVariable int rnum,
 			@PathVariable String id) {
-
-		List<RboardListReqDTO> delResult = rboardSVC.del(bnum, rnum, id);
+		
+		List<RboardListReqDTO> list = rboardSVC.del(bnum, rnum, id);
 		Result result = new Result();
-		if (delResult.size() == 0) {
+		if (1 == 0) {
 			result.setRtcd("01");
 			result.setRtmsg("삭제하고자 하는 댓글이 없습니다.");
+			result.setData(null);
 		} else {
 			result.setRtcd("00");
 			result.setRtmsg("성공");
+			result.setData(list);
 		}
 		return result;
 	}
