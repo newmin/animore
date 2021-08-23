@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.BoardReqDTO;
@@ -95,16 +96,23 @@ public class BoardController {
 	public String addpost(@Valid @ModelAttribute BoardForm boardForm,
 							BoardDTO boardDTO,
 							BindingResult bindingResult,
-							HttpServletRequest request) {
+							HttpServletRequest request,
+							RedirectAttributes redirectAttributes) {
 		
 		HttpSession session = request.getSession(false);
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
 		
-		boardSVC.addBoard(loginMemberId,boardDTO);
+		//boardSVC.addBoard(loginMemberId,boardDTO);
+		log.info("boardForm:{}",boardForm);
+		log.info("boardDTO:{}",boardDTO);
 		
-		return "redirect:/board/Q";
+		BoardReqDTO stored = boardSVC.addBoard(loginMemberId,boardDTO);
+		
+		redirectAttributes.addAttribute("bnum",stored.getBnum());
+		
+		return "redirect:/board/boardDetail/{bnum}";
 		
 	}
 }

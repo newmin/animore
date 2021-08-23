@@ -21,7 +21,7 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	//게시글등록
 	@Override
-	public void addBoard(String id,BoardDTO boardDTO) {
+	public BoardReqDTO addBoard(String id,BoardDTO boardDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" insert into board(bnum,bcategory,id,btitle,bcontent) ");
 		sql.append("   values(board_bnum_seq.nextval,?,?,?,?) ");
@@ -32,6 +32,8 @@ public class BoardDAOImpl implements BoardDAO {
 					boardDTO.getBcontent());
 		
 		log.info("boardDTO:{}",boardDTO.toString());
+		
+		return findBoardByBnum(boardDTO.getBnum());
 		
 	}
 	//게시글조회
@@ -125,6 +127,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("  from board b, member m ");
 		sql.append("  where b.id = m.id ");
 		sql.append("   and bcategory=? ");
+		sql.append(" order by bnum ");
 		List<BoardReqDTO> list = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardReqDTO.class),
 										bcategory);

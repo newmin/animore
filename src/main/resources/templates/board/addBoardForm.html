@@ -13,7 +13,7 @@
 <body>
 <main class="main ">
 	<!-- TODO 링크에 id값 넣기 -->
-	<form action=""  th:method="post" th:object="${boardForm}">
+	<form action=""  th:method="post"  th:object="${boardForm}">
 	<div class="addPost__container">
     <select name="bcategory"  class="addPost__selectbox">
       <option value="" th:field="*{bcategory}" selected>게시판명</option>
