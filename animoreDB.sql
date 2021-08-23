@@ -35,8 +35,9 @@ create table member(
   fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
-  constraint MEMBER_mtype_ck check(mtype in('N','S'))
+  constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
 );
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
 
 --게시글
 create table board(
@@ -109,7 +110,7 @@ create table goodboard(
 create table business(
   bnum number(8),
   bbnum varchar2(20),
-  id varchar2(40) not null,
+  id varchar2(40) default 'admin@animore.com',
   bname varchar2(30) not null,
   baddress varchar2 (150) not null,
   btel varchar2(13) not null,
