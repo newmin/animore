@@ -11,10 +11,10 @@ public interface BusinessDAO {
 	public void joinBusi(BusinessDTO businessDTO);
 	
 	//업체찾기 by bnum
-	public BusinessDTO findBusiByBnum(Integer bnum);
+	public BusinessLoadDTO findBusiByBnum(Integer bnum);
 	
 	//업체수정 by bnum
-	public BusinessDTO modifyBusi(Integer bnum, BusinessDTO businessDTO);
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO);
 	
 	//업체삭제 by bnum
 	public void deleteBusi(Integer bnum);

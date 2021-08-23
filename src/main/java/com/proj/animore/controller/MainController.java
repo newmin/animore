@@ -33,9 +33,10 @@ public class MainController {
 	@GetMapping("/inquire/{bnum}")
 	public String inquire(@PathVariable Integer bnum,
 												Model model) {
-		businessSVC.findBusiByBnum(bnum);
+		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);
+		model.addAttribute("busi",businessLoadDTO);
 		
-		
+		log.info(businessLoadDTO.toString());
 		
 		return "map/inquireBusiDetail";
 	}

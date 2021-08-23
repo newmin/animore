@@ -22,11 +22,11 @@ public class BusinessSVCImpl implements BusinessSVC {
 		
 	}
 	@Override
-	public BusinessDTO findBusiByBnum(Integer bnum) {
+	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
 		return businessDAO.findBusiByBnum(bnum);
 	}
 	@Override
-	public BusinessDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
 		return businessDAO.modifyBusi(bnum, businessDTO);
 	}
 	@Override
