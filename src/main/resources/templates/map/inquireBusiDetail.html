@@ -6,13 +6,12 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script defer></script>
 <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./10-10.css"/>
-<script type="text/javascript" src="./10-10.js"></script>
+<script type="text/javascript" src="./10-10.js"></script> -->
 <script src="/js/inquireBusiDetail.js" defer></script>
 <link rel="stylesheet" href="/css/style.css">
  <!--네이버 API-->
@@ -28,10 +27,10 @@
 	
 	
 		<!--왼쪽-->
-		<div class="container-fluid text-center">    
+		<div class="container-fluid text-center" th:object="${busi}">    
 		  <!--중앙-->
 		  <div class="col-sm-8 text-left"> 
-		    <h1>울산 동물병원</h1>
+		    <h1 th:text="*{bname}">울산 동물병원</h1>
 		    <p><a href="#">병원 > 울산시</a></p>
 		    <!--임시 별점 확인-->
 		    <p style="color:sandybrown;">로그인 후 별점확인 리뷰 50</p>
@@ -46,9 +45,9 @@
 			<div class="busi-detail">
 
 				<ul class="busi-detail__info-list">
-					<li><span>주소 : </span></li>
-					<li><span>영업시간 : </span></li>
-					<li><span>연락처 : </span></li>
+					<li><span th:text="|주소 : *{baddress}|">주소 : </span></li>
+					<li><span th:text="|영업시간 : *{openhours}|">영업시간 : </span></li>
+					<li><span th:text="|연락처 : *{btel}|">연락처 : </span></li>
 					<li><span>SNS : </span></li>
 				</ul>
 
@@ -95,7 +94,7 @@
 		  
 							<hr>
 		      </section>
-		
+		</div>
 		
 		
 		      <div class="wrap">

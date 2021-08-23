@@ -36,23 +36,22 @@ public class BusinessDAOImpl implements BusinessDAO {
 	}
 	//업체조회
 	@Override
-	public BusinessDTO findBusiByBnum(Integer bnum) {
+	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		//sql��
-		sql.append("select bnum,bname");
+		sql.append("select bnum,bname,baddress,btel,openhours");
 		sql.append(" from business ");
 		sql.append("where bnum = ? ");
-		BusinessDTO businessDTO = jdbcTemplate.queryForObject(sql.toString(),
-				new BeanPropertyRowMapper<>(BusinessDTO.class),
+		BusinessLoadDTO businessLoadDTO = jdbcTemplate.queryForObject(sql.toString(),
+				new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
 				bnum);
 		
 		
-		return businessDTO;
+		return businessLoadDTO;
 	}
 
 	//업체정보수정
 	@Override
-	public BusinessDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update business ");
 		sql.append("   set bname = ?, ");
@@ -106,6 +105,5 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
-		
 	}
 }
