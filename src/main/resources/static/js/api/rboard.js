@@ -29,7 +29,7 @@ const addBtn_f = e =>{
 	console.log('addBtn_f');
 	
 	//댓글입력체크
-	if($rcontent.value == null) {
+	if(!$rcontent.value) {
 		alert("댓글 내용을 입력하세요");
 		return;
 	}
@@ -68,7 +68,7 @@ const replyReBtn_f = e =>{
 	console.log('replyReBtn_f');
 	
 	//댓글입력체크
-	if($rcontent.value == null) {
+	if(!$reRcontent.value) {
 		alert("댓글 내용을 입력하세요");
 		return;
 	}
@@ -126,8 +126,7 @@ const modiBtn_f = e =>{
 			if(res.rtcd == '00'){
 				//성공로직처리
 				const data = res.data;
-				//댓글목록갱신
-				refreshReply(data);
+				refreshReply(data);				//댓글목록갱신
 			}else{
 				throw new Error(res.rtmsg);
 			}
