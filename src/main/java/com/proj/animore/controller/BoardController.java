@@ -91,19 +91,18 @@ public class BoardController {
 	}
 	
 	//게시글 등록처리
-	@PostMapping("/add/{id}")
-	public String addpost(@PathVariable String id,
-							@Valid @ModelAttribute BoardForm boardForm,
+	@PostMapping("/add")
+	public String addpost(@Valid @ModelAttribute BoardForm boardForm,
 							BoardDTO boardDTO,
 							BindingResult bindingResult,
 							HttpServletRequest request) {
 		
-//		HttpSession session = request.getSession(false);
-//		
-//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//		String loginMemberId = loginMember.getId();
+		HttpSession session = request.getSession(false);
 		
-		boardSVC.addBoard(id,boardDTO);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
+		
+		boardSVC.addBoard(loginMemberId,boardDTO);
 		
 		return "redirect:/board/Q";
 		

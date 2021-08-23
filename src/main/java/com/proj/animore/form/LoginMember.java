@@ -10,7 +10,6 @@ import lombok.Getter;
  *
  */
 @Data
-@Getter
 @AllArgsConstructor
 public class LoginMember {
 	private String id;
