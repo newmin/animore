@@ -61,11 +61,12 @@ public class LoginController {
 		log.info("bindingResult:{}",bindingResult);
 		log.info("model:{}",model);
 		
-		MemberDTO memberDTO = memberSVC.findByIdPw(loginForm.getId(), loginForm.getPw());
-		
 		//회원정보가 없는경우
-		if(memberDTO == null) {
-			bindingResult.reject("loginChk", "아이디 또는 비밀번호가 잘못되었습니다");			
+		MemberDTO memberDTO;
+		try {
+			memberDTO = memberSVC.findByIdPw(loginForm.getId(), loginForm.getPw());			
+		}catch (Exception e){
+			bindingResult.reject("loginChk", "아이디 또는 비밀번호가 잘못되었습니다");
 			return "/member/login";
 		}
 		
