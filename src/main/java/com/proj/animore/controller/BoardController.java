@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,10 +67,15 @@ public class BoardController {
 	//게시글 조회
 	@GetMapping("/post/{bnum}")
 	public String post(@PathVariable Integer bnum,
-										Model model) {
-		
+										Model model,
+										HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session==null) {
+			return "/member/login";
+		}
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
+			
 		//게시글 조회시 해당 게시글의 댓글목록도 함께 불러옴.
 		List<RboardListReqDTO> replyList = rboardSVC.all(bnum);
 		model.addAttribute("reply", replyList);
@@ -80,7 +87,7 @@ public class BoardController {
 	}
 	
 	//게시글 작성화면 출력
-	@GetMapping("/add")
+	@GetMapping("/")
 	public String addPost(@ModelAttribute BoardForm boardForm,
 						HttpServletRequest request) {
 		
@@ -92,9 +99,8 @@ public class BoardController {
 	}
 	
 	//게시글 등록처리
-	@PostMapping("/add")
+	@PostMapping("/")
 	public String addpost(@Valid @ModelAttribute BoardForm boardForm,
-							BoardDTO boardDTO,
 							BindingResult bindingResult,
 							HttpServletRequest request,
 							RedirectAttributes redirectAttributes) {
@@ -106,14 +112,30 @@ public class BoardController {
 		
 		//boardSVC.addBoard(loginMemberId,boardDTO);
 		log.info("boardForm:{}",boardForm);
-		log.info("boardDTO:{}",boardDTO);
+		
+		BoardDTO boardDTO = new BoardDTO();
+		//boardForm 의 값이 boardDTO에 복사됨
+		BeanUtils.copyProperties(boardForm, boardDTO);
 		
 		BoardReqDTO stored = boardSVC.addBoard(loginMemberId,boardDTO);
 		
 		redirectAttributes.addAttribute("bnum",stored.getBnum());
 		
-		return "redirect:/board/boardDetail/{bnum}";
 		
+		
+		return "redirect:/board/post/{bnum}";
+		
+	}
+	
+	//게시글수정양식출력
+	@GetMapping("/modify/{bnum}")
+	public String modifyPostForm(@PathVariable Integer bnum,
+							Model model) {
+		
+		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
+		model.addAttribute("boardForm",boardReqDTO);
+		
+		return "board/modifyBoardForm";
 	}
 }
 

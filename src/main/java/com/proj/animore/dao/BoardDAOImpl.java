@@ -31,9 +31,13 @@ public class BoardDAOImpl implements BoardDAO {
 					boardDTO.getBtitle(),
 					boardDTO.getBcontent());
 		
+		StringBuffer sql2 = new StringBuffer();
+		sql2.append("select board_bnum_seq.currval from dual");
+		Integer boardSeq = jt.queryForObject(sql2.toString(), Integer.class);
+		
 		log.info("boardDTO:{}",boardDTO.toString());
 		
-		return findBoardByBnum(boardDTO.getBnum());
+		return findBoardByBnum(boardSeq);
 		
 	}
 	//게시글조회

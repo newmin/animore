@@ -13,17 +13,22 @@
 <title>게시글</title>
 </head>
 <body>
-    <main class="main" th:object="${post}">
+    <main class="main" th:object="${post}" >
     	<div class="boardForm" th:data-bnum="*{bnum}">
         <div class="boardForm__btns">
-            <button class="boardForm__listBtn">목록</button>
-            <button class="boardForm__modifyBtn">수정</button>
-            <button class="boardForm__delBtn">삭제</button>
+            <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+            <button class="boardForm__modifyBtn" 
+            		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
+            		th:data-bnum="*{bnum}">수정</button>
+            <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
+            <button class="boardForm__delBtn" th:if="${(session.loginMember != null && 
+            										session.loginMember.id.equals(post.id)) || 
+            										session.loginMember.id.equals('admin@animore.com')}">삭제</button>
         </div>
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 공지등록버튼 물어보고 추가하기 ,프로필사진 클래스명 같은걸로 통일해도..?-->
-                   <div class="boardForm__noticebox">
+                   <div class="boardForm__noticebox" th:if="${session.loginMember != null && session.loginMember.id.equals('admin@animore.com')}">
                    <p>공지등록</p>
                    <label class="switch">
             <input type="checkbox" name="autologincheck">
@@ -76,8 +81,8 @@
 
         </form>
         <div class="boardForm__btns boardForm__underBtns">
-            <button class="boardForm__listBtn">목록</button>
-            <button class="boardForm__replyReBtn">답글</button>
+            <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+            <button class="boardForm__replyReBtn" th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}">답글</button>
             <button class="boardForm__addBtn">글쓰기</button>
         </div>
         </div>
