@@ -1,6 +1,3 @@
--- 즐겨찾기 테이블명 변경에 따른 시퀀스명 변경건. 팀원전원 해당 내용 인지 확인 후 삭제 예정.
-DROP SEQUENCE mylist_mnum_seq;
-
 --테이블 및 시퀀스 생성
 drop table coupon;
 drop table profession;
