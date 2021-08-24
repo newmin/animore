@@ -6,5 +6,7 @@ import lombok.Data;
 public class ReviewForm {
 
 	private String rcontent;
-	private int rscore;
+	private Integer rscore;
+	private Integer bnum;
+	private String id;
 }

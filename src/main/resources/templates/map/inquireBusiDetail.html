@@ -30,8 +30,9 @@
 		<div class="container-fluid text-center" th:object="${busi}">    
 		  <!--중앙-->
 		  <div class="col-sm-8 text-left"> 
-		    <h1 th:text="*{bname}">울산 동물병원</h1>
-		    <p><a href="#">병원 > 울산시</a></p>
+		    <h1 th:text="*{bname}">업체명</h1>
+		    <p th:text="| > *{baddress}|">병원 > 울산시</p>
+		    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 		    <!--임시 별점 확인-->
 		    <p style="color:sandybrown;">로그인 후 별점확인 리뷰 50</p>
 		    <div>
@@ -68,28 +69,17 @@
 		      <section class="review">
 		      	<hr>
 		
-		        <div class="review__row">
+		        <div class="review__row" th:each="review :${review}">
 							<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진"></div>
 							<div class="review__column">
-								<p class="review__nickname">닉네임</p>
+								<p class="review__nickname" th:text="${review.nickname}">닉네임</p>
 								<div class="review__star-score"><i class="fas fa-star"><i class="far fa-star"></i></i></div>
 								<p class="review__date">방문일자</p>
-								<p class="review__content">Ex.) 어제 방문했어요~ 근데 후기보단 별로였어요ㅠㅠ</p>
-								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i>사장님 : 아이고~ 네임아~ 이런 리뷰 남기면 우야노~</p>
+								<p class="review__date" th:text="|작성일자 : ${review.rvcdate}|">작성일자</p>
+								<p class="review__content" th:text="${review.rcontent}">리뷰내용</p>
+								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글</span></p>
 							</div>
-							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/3/180/130" alt="리뷰첨부사진"></div>
-		        </div>
-		  
-						<div class="review__row">
-							<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/8/50/50" alt="프로필사진"></div>
-							<div class="review__column">
-								<p class="review__nickname">닉네임</p>
-								<div class="review__star-score"><i class="fas fa-star"><i class="far fa-star"></i></i></div>
-								<p class="review__date">방문일자</p>
-								<p class="review__content">Ex.) 어제 방문했어요~ 근데 후기보단 별로였어요ㅠㅠ</p>
-								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i>사장님 : 아이고~ 네임아~ 이런 리뷰 남기면 우야노~</p>
-							</div>
-							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/159/180/130" alt="리뷰첨부사진"></div>
+							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>
 		        </div>
 		  
 							<hr>
@@ -126,10 +116,10 @@
 		            </div>
 		        </form>
 		    </div>
-		      </form>
+		      
+		      
 		    </div>
-		
-		
+
 	</main>
 
 </body>

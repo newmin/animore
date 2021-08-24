@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Repository;
 
+import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.form.ReviewForm;
 
 import lombok.RequiredArgsConstructor;
@@ -13,17 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@Repository
 public class ReviewDAOImpl implements ReviewDAO {
 
 	private final JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<ReviewForm> registReview(int bnum, String id, ReviewForm reviewForm) {
+	public List<ReviewReq> registReview(Integer bnum, String id, ReviewForm reviewForm) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into review(rnum,bnum,rcontent,rscore,id,rvcdate) values(?,?,?,?) ");
+		sql.append("insert into review(rnum,bnum,rcontent,rscore,id,rvcdate) values(?,?,?,?,?,?) ");
 
-		jdbcTemplate.update(sql.toString(), 
+		jdbcTemplate.update(sql.toString(),
 							"review_rnum_seq.nextval", 
 							bnum, 
 							reviewForm.getRcontent(),
@@ -49,17 +51,18 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> allReview(int bnum) {
+	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO id,별칭 둘다 유니크 속성인데 review에는 id말고 별칭을 저장하는 안건.
 		// 리뷰목록이 뜰때는 아이디가 아닌 별칭이 표시되는 만큼, 별칭을 저장하는 것이 불러오기 좋다고 생각.
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select id,recontent,rscore,rvcdate ");
-		sql.append("  from review ");
+		sql.append("select rv.id,rv.rcontent,rscore,rvcdate,rnum ");
+		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
+		sql.append("   and rv.id=m.id ");
 
-		List<ReviewForm> list = jdbcTemplate.query(sql.toString(), 
-										   new BeanPropertyRowMapper<>(ReviewForm.class),
+		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
+										   new BeanPropertyRowMapper<>(ReviewReq.class),
 										   bnum);
 
 //		log.info("접속시간 : {}");
@@ -74,14 +77,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> myReview(String id) {
+	public List<ReviewReq> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select id,recontent,rscore,rvcdate ");
 		sql.append("  from review ");
 		sql.append(" where id = ? ");
 
-		List<ReviewForm> list = jdbcTemplate.query(sql.toString(), 
-								new BeanPropertyRowMapper<>(ReviewForm.class), 
+		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
+								new BeanPropertyRowMapper<>(ReviewReq.class), 
 								id);
 
 		//예외처리
@@ -92,7 +95,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> updateReview(int bnum, String id, ReviewForm reviewForm) {
+	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewForm reviewForm) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
@@ -117,7 +120,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public List<ReviewForm> removeReview(int bnum, String id) {
+	public List<ReviewReq> removeReview(Integer bnum, String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from review ");
 		sql.append(" where bnum = ? ");

@@ -29,7 +29,7 @@
         <div class="position__column">
           <div class="position__info">
             <p class="position__locate">내위치 : 여기는 어디~~</p>
-            <p th:text="${bcategory}" class="position__category">동물병원</p>
+            <p class="position__category" th:text="${bcategory}">업체카테고리</p>
           </div>
         </div>
         <div class="position__column"></div>
@@ -50,7 +50,8 @@
           </li>
           <!-- 리스트 -->
           <li class="busi-list__row" th:each="busiList : ${busiList}">
-            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}"></a></span>
+            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inqu/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
+            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
             <span class="busi-list__column busi-list__distance">3cm</span>
             <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
           </li>
