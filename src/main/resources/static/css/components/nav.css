@@ -10,6 +10,7 @@
   position:sticky;
   top:0px;
   z-index: 200;
+  box-shadow: 2px 2px 5px var(--primary);
 }
 .nav__column {
   display: flex;
@@ -17,7 +18,7 @@
   padding: 0 30px;
   font-size: 20px;
   height: 30px;
-  width : 33.33%;
+  width : 33%;
 }
 .nav__column:first-child {
   cursor: pointer;
@@ -98,6 +99,8 @@
   position: absolute;
   top: var(--nav-height);
   left: 0px;
+  background-color : white;
+  
 }
 
 .nav-sub{

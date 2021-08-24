@@ -19,30 +19,35 @@
   justify-content: center;
   align-items: center;
   background-color: var(--secondary);
+  background: linear-gradient(-0.125turn,var(--secondary), var(--secondary-light));
   color: var(--secondary-text);
-  font-size: 50px;
+  font-size: 45px;
   border-radius: 15px;
   cursor: pointer;
 }
-/* 메뉴바 */
-.menubar__menu {
+.busi-category__bfood{
+  letter-spacing: -4px;
+}
+/* 베스트게시글 버튼 */
+.board-best__btns {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
   width: var(--main-row-width);
   gap: 10px;
+  margin: 20px;
 }
-.menubar input {
+.board-best__btn {
   background-color: var(--primary);
   color: var(--primary-text);
-  font-size: 30px;
-  width: 200px;
+  font-size: 25px;
+  width: 200px;	
   height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
   border: none;
-  margin: 20px 0;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .board-best {
@@ -70,6 +75,7 @@
   display: flex;
   font-size: 20px;
   font-weight: 400;
+  align-items: center;
 }
 .good span{
   margin-left: 5px;

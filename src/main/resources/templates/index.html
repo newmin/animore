@@ -36,68 +36,31 @@
     </section>
     <!-- TODO 아이콘 -->
     
-    <!-- 메뉴바 -->
-    
-    <aside class="menubar">
-      <ul class="menubar__menu">
-        <li><input type="button" value="Q&A"></li>
-        <li><input type="button" value="자유게시판"></li>
-        <li><input type="button" value="벼룩시장"></li>
-        <li><input type="button" value="내새끼보세요"></li>
-      </ul>
-    </aside>
-    
     <!-- 베스트 게시글 -->
-
-
+    
+    <!-- <aside class="board-best-btns"> -->
+      <ul class="board-best__btns">
+        <li><button class="board-best__btn">Q&A</button></li>
+        <li><button class="board-best__btn">자유게시판</button></li>
+        <li><button class="board-best__btn">벼룩시장</button></li>
+        <li><button class="board-best__btn">내새끼보세요</button></li>
+      </ul>
+    <!-- </aside> -->
+    
     <section class="board-best">
       
-
-      <div class="board-best__row">
+      <div class="board-best__row" th:each="post : ${post}">
         <div class="board-best__content">
           <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+            <h1 class="board-best__title"><a href="" th:href="@{|/board/post/${post.bnum}|}" th:text="${post.btitle}">게시글 제목</a></h1>
+            <p class="board-best__text" th:text="${post.bcontent}">게시글 내용</p>
           </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
-        </div>
-        <hr>
-        <div class="good">
-          <i class="fas fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
-        </div>
-      </div>
-
-      <div class="board-best__row">
-        <div class="board-best__content">
-          <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
-          </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
-        </div>
-        <hr>
-        <div class="good">
-          <i class="fas fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
-        </div>
-      </div>
-
-      <div class="board-best__row">
-        <div class="board-best__content">
-          <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
-          </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+          <img class="board-best__img" src="https://picsum.photos/id/501/200/200" alt="">
         </div>
         <hr>
         <div class="good">
           <i class="far fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
+          <span th:text="|좋아요 ${post.bgood}|">좋아요 수</span>
         </div>
       </div>
     </section>
