@@ -126,7 +126,9 @@ const modiBtn_f = e =>{
 			if(res.rtcd == '00'){
 				//성공로직처리
 				const data = res.data;
+				$boardForm__modiReplyTextarea.remove();	//수정로직 마치고 텍스트상자 제거(없어도 될듯한데 일단 넣어봤음)
 				refreshReply(data);				//댓글목록갱신
+				
 			}else{
 				throw new Error(res.rtmsg);
 			}

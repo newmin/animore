@@ -279,6 +279,10 @@
 	cursor:pointer;
 }
 
+/* 댓글수정을 위한 textbox */
+.boardForm__hideReply{
+	display:none;
+}
 
 .toggleColorChange{
     color: red;
