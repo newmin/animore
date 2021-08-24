@@ -123,7 +123,7 @@
   
   /* 지도 */
   /* Set gray background color and 100% height */
-  .sidenav {
+  .map {
     padding-top: 20px;
     background-color: #f1f1f1;
     width: 400px;

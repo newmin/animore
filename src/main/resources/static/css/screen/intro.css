@@ -60,12 +60,13 @@
   justify-content: space-between;
 }
 .board-best__title{
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
   margin-bottom: 15px;
 }
 .board-best__text{
-  font-size: 20px;
+	font-weight: 400;
+  font-size: 18px;
 }
 .board-best__img{
   margin-left: 5px;

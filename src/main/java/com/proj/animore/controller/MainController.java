@@ -35,11 +35,9 @@ public class MainController {
 	}
 
 	//업체조회(상세보기)
-	@GetMapping("/inqu/{bnum}")
 //	@GetMapping("/{bcategory}/{bnum}")
-	public String inquire(
-												@PathVariable String bcategory,
-												@PathVariable Integer bnum,
+	@GetMapping("/inquire/{bnum}")
+	public String inquire(@PathVariable Integer bnum,
 												Model model) {
 		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);
 		model.addAttribute("busi",businessLoadDTO);

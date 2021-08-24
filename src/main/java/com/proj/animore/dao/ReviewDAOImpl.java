@@ -53,8 +53,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		// TODO id,별칭 둘다 유니크 속성인데 review에는 id말고 별칭을 저장하는 안건.
-		// 리뷰목록이 뜰때는 아이디가 아닌 별칭이 표시되는 만큼, 별칭을 저장하는 것이 불러오기 좋다고 생각.
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
 		sql.append("select rv.id,rv.rcontent,rscore,rvcdate,rnum ");
 		sql.append("  from review rv, member m ");
