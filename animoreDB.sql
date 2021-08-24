@@ -262,6 +262,10 @@ insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCA
 values(BUSINESS_BNUM_SEQ.nextval,'사업자번호','special@zxc.com','물어!','코드도 깨끄시','333-3333-3333','Y','Y','Y','Y','Y');
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
 values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','할퀴어!','갱상도 울싼시','555-5555-5555','Y','Y','Y','Y','Y');
+--업체카테고리
+insert into BCATEGORY values(1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+insert into BCATEGORY values(2,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+
 -- 업체별 리뷰
 insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'좋아좋아','normal@zxc.com');
 insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'별루별루','user@test.com');
