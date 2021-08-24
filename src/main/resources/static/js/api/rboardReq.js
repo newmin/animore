@@ -292,10 +292,12 @@ function refreshReply(data){
 	Array.from(replyReBtns).forEach(ele => {
 	  ele.addEventListener("click",replyReBtn_f);
 	});
+/*
 	modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 	Array.from(modiBtns).forEach(ele => {
 	  ele.addEventListener("click",modiBtn_f);
 	});
+*/
 	delBtns = document.querySelectorAll('button.boardForm__delReplyBtn');
 	Array.from(delBtns).forEach(ele => {
 	  ele.addEventListener("click",delBtn_f);
