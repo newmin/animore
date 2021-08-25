@@ -12,8 +12,10 @@ import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -130,12 +132,41 @@ public class BoardController {
 	//게시글수정양식출력
 	@GetMapping("/modify/{bnum}")
 	public String modifyPostForm(@PathVariable Integer bnum,
-							Model model) {
+								Model model) {
 		
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
+		BoardForm boardForm = new BoardForm();
+		
+		BeanUtils.copyProperties(boardReqDTO, boardForm);
+		
 		model.addAttribute("boardForm",boardReqDTO);
+		
 		
 		return "board/modifyBoardForm";
 	}
+	
+	//게시글 수정 처리
+	@PatchMapping("/{bnum}")
+	public String modifyPost(@PathVariable Integer bnum,
+							@ModelAttribute BoardForm boardFrom) {
+
+		BoardDTO boardDTO = new BoardDTO();
+		BeanUtils.copyProperties(boardFrom, boardDTO);
+		
+		
+		boardSVC.modifyBoard(bnum, boardDTO);
+		return "redirect:/board/post/{bnum}";
+		
+	}
+	//게시글 삭제처리
+	@GetMapping("/{bcategory}/{bnum}")
+	public String deletePost(@PathVariable String bcategory,
+							@PathVariable Integer bnum) {
+		
+		boardSVC.deleteBoard(bnum);
+		
+		return "redirect:/board/{bcategory}";
+	}
+	
 }
 

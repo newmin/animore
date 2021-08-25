@@ -24,3 +24,10 @@ $modifyBtn.addEventListener('click',e=>{
 const bnum = e.target.dataset.bnum;
 location.href =`/board/modify/${bnum}`;
 });
+
+const $delBtn = document.querySelector('.boardForm__delBtn');
+$delBtn.addEventListener('click',e=>{
+const bnum = e.target.dataset.bnum;
+const bcategory = e.target.dataset.bcategory;
+location.href =`/board/${bcategory}/${bnum}`;
+});

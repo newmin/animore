@@ -23,7 +23,9 @@
             <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
             <button class="boardForm__delBtn" th:if="${(session.loginMember != null && 
             										session.loginMember.id.equals(post.id)) || 
-            										session.loginMember.id.equals('admin@animore.com')}">삭제</button>
+            										session.loginMember.id.equals('admin@animore.com')}"
+            							th:data-bnum="*{bnum}"
+            							th:data-bcategory="*{bcategory}">삭제</button>
         </div>
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
