@@ -39,6 +39,7 @@ public class LoginController {
 
 		// 로그인한 상태(세션있음)로 로그인양식 페이지 요청시 메인페이지로 보냄
 		if (session != null)	return "redirect:/";
+
 		
 		return "/member/login";
 	}
