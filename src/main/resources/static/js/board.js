@@ -27,16 +27,16 @@
 }
   function SetMenu(){
   InitMenu(); //초기화
-   if (location.href == "http://localhost:9080/board/Q"){
+   if (location.href == "http://localhost:8081/board/Q"){
     ele_Q.classList.add('board__selectCategory');
   }
-  else if (location.href == "http://localhost:9080/board/M"){
+  else if (location.href == "http://localhost:8081/board/M"){
     ele_M.classList.add('board__selectCategory');
   }
-  else if (location.href == "http://localhost:9080/board/F"){
+  else if (location.href == "http://localhost:8081/board/F"){
     ele_F.classList.add('board__selectCategory');
   }
-   else if (location.href == "http://localhost:9080/board/P"){
+   else if (location.href == "http://localhost:8081/board/P"){
     ele_P.classList.add('board__selectCategory');
   }
 

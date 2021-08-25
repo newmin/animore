@@ -22,7 +22,7 @@
     <form class="login" method="post" action="/login" th:object=${loginForm}>
 
       <input class="login__id" type="text" th:field="*{id}" placeholder="아이디">
-      <input class="login__pwd" type="text" th:field="*{pw}" placeholder="비밀번호">
+      <input class="login__pwd" type="password" th:field="*{pw}" placeholder="비밀번호">
       <p class="login__errormsg" th:errors="*{global}"></p>
       <input class="login__btn" type="submit" value="로그인">
       
