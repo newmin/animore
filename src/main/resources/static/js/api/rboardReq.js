@@ -106,18 +106,17 @@ const replyReBtn_f = e =>{
 /* 댓글수정처리 */
 const modiBtn_f = e =>{
 	console.log('modiBtn_f');
+	const $rnum = e.target.dataset.rnum;
+	const $rcontent_modi = document.querySelector("textarea#boardForm__modiReplyTextarea");
 	
-//	const URL = `/rboard/${$bnum}/${$rnum}/${$id}`;
-//	const data = { "id":$id.value, "pw":$pw.value, "name":$name.value };
-
-	const URL = '/rboard';
+	const URL = `/rboard/${$bnum}/${$rnum}/${$id}`;
 	const data = {
 								 "rnum":$rnum,
 								 "bnum":$bnum,
 								 "id":$id,
-								 "rcontent":$rcontent.value,
-								 "rgroup":$rgroup,
-								 "rstep":$rstep
+								 "rcontent":$rcontent_modi.value,
+//								 "rgroup":$rgroup,
+//								 "rstep":$rstep
 							 };
 	
 	request.patch(URL,data)
@@ -126,7 +125,7 @@ const modiBtn_f = e =>{
 			if(res.rtcd == '00'){
 				//성공로직처리
 				const data = res.data;
-				$boardForm__modiReplyTextarea.remove();	//수정로직 마치고 텍스트상자 제거(없어도 될듯한데 일단 넣어봤음)
+				//$boardForm__modiReplyTextarea.;	//수정로직 마치고 텍스트상자 제거(없어도 될듯한데 일단 넣어봤음)
 				refreshReply(data);				//댓글목록갱신
 				
 			}else{
@@ -135,7 +134,7 @@ const modiBtn_f = e =>{
 		})
 		.catch(err=>{
 			//오류로직 처리
-			errmsg.textContent = err.message;
+			alert(err.message);
 		});
 };
 
@@ -197,10 +196,10 @@ const delBtn_f = e =>{
 			alert(err.message);
 	});
 };
-
+/*
 Array.from(modiBtns).forEach(ele => {
   ele.addEventListener("click", e=>{
-    console.log('delBtn_f');
+    console.log('modiBtn_f');
     console.log(e.parentElement);
     const $rnum=e.dataset.rnum;
     
@@ -224,7 +223,7 @@ Array.from(modiBtns).forEach(ele => {
 		});
   });
 });
-
+*/
 
 /* 댓글목록 */
 const allBtn_f = e =>{
@@ -294,12 +293,10 @@ function refreshReply(data){
 	Array.from(replyReBtns).forEach(ele => {
 	  ele.addEventListener("click",replyReBtn_f);
 	});
-/*
 	modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 	Array.from(modiBtns).forEach(ele => {
-	  ele.addEventListener("click",modiBtn_f);
+	  ele.addEventListener("click", modiTextbox_f);
 	});
-*/
 	delBtns = document.querySelectorAll('button.boardForm__delReplyBtn');
 	Array.from(delBtns).forEach(ele => {
 	  ele.addEventListener("click",delBtn_f);

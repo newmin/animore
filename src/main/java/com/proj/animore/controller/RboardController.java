@@ -111,10 +111,15 @@ public class RboardController {
 			@PathVariable String id,			
 			@RequestBody RboardModiReq rmr) {
 		//rcontent
+		log.info("modify:{}",bnum);
+		log.info("modify:{}",rnum);
+		log.info("modify:{}",id);
+		log.info("modify:{}",rmr);
 		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rmr,rboardDTO);
 		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
+		
 		
 		Result result = new Result();
 		if (modifiedRboardDTO == null) {
