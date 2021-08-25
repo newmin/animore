@@ -13,6 +13,9 @@ public interface BoardDAO {
 	//게시글 조회(by bnum)
 	BoardReqDTO findBoardByBnum(Integer bnum);
 	
+	//조회수 증가
+	void upBhit(Integer bnum);
+	
 	//게시글 조회(by id)
 	List<BoardReqDTO> findBoardById(String id);
 	

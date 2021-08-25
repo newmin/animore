@@ -75,6 +75,9 @@ public class BoardController {
 		if(session==null) {
 			return "/member/login";
 		}
+		//조회시 조회수 하나씩 증가
+		boardSVC.upBhit(bnum);
+		
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 			

@@ -55,6 +55,18 @@ public class BoardDAOImpl implements BoardDAO {
 											bnum);
 		return boardReqDTO;
 	}
+	
+	//조회수
+	@Override
+	public void upBhit(Integer bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("  set bhit=bhit+1 ");
+		sql.append("  where bnum =? ");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
 	//게시글검색(by id)
 	@Override
 	public List<BoardReqDTO> findBoardById(String id) {

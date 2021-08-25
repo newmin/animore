@@ -28,6 +28,12 @@ public class BoardSVCImpl implements BoardSVC {
 		return boardDAO.findBoardByBnum(bnum);
 		
 	}
+	//조회수
+	@Override
+	public void upBhit(Integer bnum) {
+		boardDAO.upBhit(bnum);
+		
+	}
 	//게시글검색(by id)
 	@Override
 	public List<BoardReqDTO> findBoardById(String id) {
