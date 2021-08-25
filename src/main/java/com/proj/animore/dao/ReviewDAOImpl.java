@@ -23,15 +23,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> registReview(Integer bnum, String id, ReviewForm reviewForm) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into review(rnum,bnum,rcontent,rscore,id,rvcdate) values(?,?,?,?,?,?) ");
+		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,?,?) ");
 
 		jdbcTemplate.update(sql.toString(),
-							"review_rnum_seq.nextval", 
 							bnum, 
 							reviewForm.getRcontent(),
 							reviewForm.getRscore(), 
-							id, 
-							"timestamp");
+							 //TODO 평점 구현 전 임시조치 insert 3점 하드코딩해둠
+							id);
 
 		// TODO 리뷰 작성시, 방문업체 확인 위한 영수증 등록절차?
 
@@ -54,10 +53,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select rv.id,rv.rcontent,rscore,rvcdate,rnum ");
+		sql.append("select rv.id,rv.rcontent,rscore,rvcdate,rnum,m.nickname ");
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");
+		sql.append(" order by 4 ");
 
 		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
 										   new BeanPropertyRowMapper<>(ReviewReq.class),

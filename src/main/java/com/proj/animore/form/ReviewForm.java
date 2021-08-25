@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ReviewForm {
 
+	private Integer bnum;
 	private String rcontent;
 	private Integer rscore;
-	private Integer bnum;
 	private String id;
 }

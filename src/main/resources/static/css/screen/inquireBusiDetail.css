@@ -168,3 +168,6 @@
 .review__column:last-child{
   width: 200px;
 }
+.reviewForm__checked{
+	color : yellow;
+}

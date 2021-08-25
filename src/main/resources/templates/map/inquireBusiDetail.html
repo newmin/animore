@@ -17,6 +17,8 @@
  <!--카카오 API-->
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
  <title>업체조회</title>
+ <script src="/js/inquireBusiDetail.js" defer></script>
+ <script src="/js/api/ajaxCall.js"></script>
 </head>
 <body>
 
@@ -71,7 +73,7 @@
 							<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진"></div>
 							<div class="review__column">
 								<p class="review__nickname" th:text="${review.nickname}">닉네임</p>
-								<div class="review__star-score"><i class="fas fa-star"><i class="far fa-star"></i></i></div>
+								<div class="review__star-score" th:text=${review.rscore}><i class="fas fa-star"><i class="far fa-star"></i></i></div>
 								<p class="review__date">방문일자</p>
 								<p class="review__date" th:text="|작성일자 : ${review.rvcdate}|">작성일자</p>
 								<p class="review__content" th:text="${review.rcontent}">리뷰내용</p>
@@ -86,31 +88,31 @@
 		
 		
 		      <div class="wrap">
-		        <form name="reviewform" class="reviewform" method="post" action="/save">
+		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <input type="hidden" name="rate" id="rate" value="0"/>
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
 		                <div class="warning_msg">별점을 선택해 주세요.</div>
 		                <div class="rating">
-		                    <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
-		                    <input type="checkbox" name="rating" id="rating1" value="1" class="rate_radio" title="1점">
-		                    <label for="rating1"></label>
-		                    <input type="checkbox" name="rating" id="rating2" value="2" class="rate_radio" title="2점">
-		                    <label for="rating2"></label>
-		                    <input type="checkbox" name="rating" id="rating3" value="3" class="rate_radio" title="3점" >
-		                    <label for="rating3"></label>
-		                    <input type="checkbox" name="rating" id="rating4" value="4" class="rate_radio" title="4점">
-		                    <label for="rating4"></label>
-		                    <input type="checkbox" name="rating" id="rating5" value="5" class="rate_radio" title="5점">
-		                    <label for="rating5"></label>
+		                    <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 radio 적용 -->
+		                    <input type="radio" name="rscore" id="point1" value="1" title="1점" hidden>
+		                    <label for="point1"><i class="fas fa-star reviewForm__score one"></i></label>
+		                    <input type="radio" name="rscore" id="point2" value="2" title="2점" hidden>
+		                    <label for="point2"><i class="fas fa-star reviewForm__score two"></i></label>
+		                    <input type="radio" name="rscore" id="point3" value="3" title="3점" hidden>
+		                    <label for="point3"><i class="fas fa-star reviewForm__score three"></i></label>
+		                    <input type="radio" name="rscore" id="point4" value="4" title="4점" hidden>
+		                    <label for="point4"><i class="fas fa-star reviewForm__score four"></i></label>
+		                    <input type="radio" name="rscore" id="point5" value="5" title="5점" hidden>
+		                    <label for="point5"><i class="fas fa-star reviewForm__score five"></i></label>
 		                </div>
 		            </div>
 		            <div class="review_contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
-		                <textarea rows="10" class="review_textarea"></textarea>
+		                <textarea rows="10" class="review_textarea" name="rcontent"></textarea>
 		            </div>   
 		            <div class="cmd">
-		                <input type="button" name="save" id="save" value="등록">
+		                <input type="submit" name="save" id="save" value="등록">
 		            </div>
 		        </form>
 		    </div>
