@@ -172,7 +172,7 @@ create table bcategory(
 create table review(
   rnum number(10),
   bnum number(8) not null,
-  rscore number(1,1) not null,
+  rscore number(1) not null,
   rcontent clob not null,
   id varchar2(40) not null,
   rvcdate timestamp DEFAULT systimestamp not null,

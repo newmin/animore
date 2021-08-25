@@ -23,12 +23,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> registReview(Integer bnum, String id, ReviewForm reviewForm) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,3,?) ");
+		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,?,?) ");
 
 		jdbcTemplate.update(sql.toString(),
 							bnum, 
 							reviewForm.getRcontent(),
-//							reviewForm.getRscore(), 
+							reviewForm.getRscore(), 
 							 //TODO 평점 구현 전 임시조치 insert 3점 하드코딩해둠
 							id);
 

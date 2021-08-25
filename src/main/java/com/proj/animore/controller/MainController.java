@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.ReviewReq;
@@ -66,9 +68,13 @@ public class MainController {
 		
 		return "map/inquireBusiDetail";
 	}
-	
+	//리뷰등록
+//	@ResponseBody
 	@PostMapping("/inquire/{bnum}")
-	public String addReview(@PathVariable Integer bnum, @ModelAttribute ReviewForm reviewForm, HttpServletRequest request) {
+	public String addReview(@PathVariable Integer bnum, 
+													@ModelAttribute ReviewForm reviewForm, 
+//													@RequestBody ReviewForm reviewForm, 
+													HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if(session == null) return "member/login";
 		
