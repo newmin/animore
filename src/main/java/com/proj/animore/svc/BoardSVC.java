@@ -8,7 +8,7 @@ import com.proj.animore.dto.BoardReqDTO;
 public interface BoardSVC {
 	
 	//게시글 등록
-	void addBoard(String id, BoardDTO boardDTO);
+	BoardReqDTO addBoard(String id, BoardDTO boardDTO);
 	
 	//게시글 조회(by bnum)
 	BoardReqDTO findBoardByBnum(Integer bnum);

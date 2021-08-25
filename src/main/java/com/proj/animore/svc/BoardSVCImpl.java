@@ -18,8 +18,8 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	//게시글등록
 	@Override
-	public void addBoard(String id,BoardDTO boardDTO) {
-		boardDAO.addBoard(id,boardDTO);
+	public BoardReqDTO addBoard(String id,BoardDTO boardDTO) {
+	return 	boardDAO.addBoard(id, boardDTO);
 		
 	}
 	//게시글조회
