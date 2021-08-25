@@ -86,7 +86,7 @@
 		
 		
 		      <div class="wrap">
-		        <form name="reviewform" class="reviewform" method="post" action="/save">
+		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <input type="hidden" name="rate" id="rate" value="0"/>
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
@@ -107,10 +107,10 @@
 		            </div>
 		            <div class="review_contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
-		                <textarea rows="10" class="review_textarea"></textarea>
+		                <textarea rows="10" class="review_textarea" name="rcontent"></textarea>
 		            </div>   
 		            <div class="cmd">
-		                <input type="button" name="save" id="save" value="등록">
+		                <input type="submit" name="save" id="save" value="등록">
 		            </div>
 		        </form>
 		    </div>
