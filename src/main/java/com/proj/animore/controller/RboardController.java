@@ -22,6 +22,7 @@ import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
 import com.proj.animore.form.Result;
+import com.proj.animore.svc.BoardSVC;
 import com.proj.animore.svc.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,8 @@ public class RboardController {
 		
 		//저장하고 댓글목록 갱신하기 위해 리스트에 담음
   	List<RboardListReqDTO> replyList = rboardSVC.register(bnum, loginMemberId, rboardDTO);
+  	
+  	
   	
   	result = new Result("00","성공",replyList);
   	return result;

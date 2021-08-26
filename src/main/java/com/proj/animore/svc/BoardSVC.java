@@ -33,4 +33,7 @@ public interface BoardSVC {
 	
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
+	
+	//댓글수 조회
+	Integer reqBreply(Integer bnum);
 }

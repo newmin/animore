@@ -149,5 +149,41 @@ public class BoardDAOImpl implements BoardDAO {
 										bcategory);
 		return list;
 	}
-
+	
+	//댓글수 증가
+	@Override
+	public void upRcount(Integer bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("  set breply=breply+1 ");
+		sql.append("  where bnum =? ");
+		log.info("breply+1");
+		
+		jt.update(sql.toString(),bnum);
+	
+	}
+	
+	//댓글수 감소
+	@Override
+	public void downRcount(Integer bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("  set breply=breply-1 ");
+		sql.append("  where bnum =? ");
+		log.info("breply-1");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
+	
+	@Override
+	public Integer reqBreply(Integer bnum) {
+		
+		String sql = "select breply from board where bnum=?";
+		
+		Integer breply = jt.queryForObject(sql, Integer.class, bnum);
+				
+		return breply;
+	}
+	
 }

@@ -15,7 +15,7 @@ const $bnum= document.querySelector('div.boardForm').dataset.bnum;	//게시글�
 const $id= document.querySelector('li[data-id]').dataset.id;			//회원아이디
 
 const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent'); //댓글입력텍스트상자
-
+const $boardForm__reply = document.querySelector('.boardForm__reply');
 
 //버튼들
 const addBtn = document.querySelector('button.boardForm__AddReplyBtn');	//댓글등록
@@ -287,6 +287,8 @@ function refreshReply(data){
 			});
 	document.querySelector('.boardForm__replyListWrap').innerHTML = html;
 	
+	$boardForm__reply.innerText=`댓글수 ${data.length}`;
+
 	//댓글목록 갱신하고 생긴 버튼들에 이벤트리스너 다시 달아줌
 	//대댓글달기, 수정, 삭제버튼
 	replyReBtns = document.querySelectorAll('button.boardForm__ReplyReBtn');
