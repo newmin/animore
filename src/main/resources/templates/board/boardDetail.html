@@ -22,9 +22,8 @@
             		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
             		th:data-bnum="*{bnum}">수정</button>
             <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
-            <button class="boardForm__delBtn" th:if="${(session.loginMember != null && 
-            										session.loginMember.id.equals(post.id)) || 
-            										session.loginMember.id.equals('admin@animore.com')}"
+            <button class="boardForm__delBtn" th:if="${session.loginMember != null && 
+            										session.loginMember.id.equals(post.id)}"
             							th:data-bnum="*{bnum}"
             							th:data-bcategory="*{bcategory}">삭제</button>
         </div>
@@ -45,7 +44,6 @@
             <span class="boardForm__Nickname" th:text="*{nickname}">닉네임</span>
             <div class="boardForm__info2">
                 <div class="boardForm__Hits"><span th:text="|조회수 *{bhit}|"></span></div>
-                <div class="boardForm__reply"><span th:text="|댓글수 *{breply}|"></span></div>
                 <div class="boardForm__cdate"><span th:text="|작성일 *{bcdate}|"></span></div>
             </div>
         </div>
@@ -60,7 +58,7 @@
        </div>
 
        <!-- 댓글 -->
-       <div class="">댓글</div>
+       <div class="">댓글 <span class="boardForm__reply" th:text="|댓글수 ${reply.size}|"></span></div>
        <div class="boardForm__replyListWrap">
      		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
            <div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>

@@ -80,12 +80,13 @@ public class BoardController {
 		
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
-			
+		
+		
 		//게시글 조회시 해당 게시글의 댓글목록도 함께 불러옴.
 		List<RboardListReqDTO> replyList = rboardSVC.all(bnum);
 		model.addAttribute("reply", replyList);
 		
-
+		
 		log.info("replyList:{}",replyList);
 		
 		return "board/boardDetail";

@@ -27,7 +27,7 @@ public class RboardSVCImpl implements RboardSVC {
 	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
 		return rboardDAO.register(bnum, id, rboardDTO);
 	}
-
+	
 	/**
 	 * 댓글수정처리
 	 * @param rnum
