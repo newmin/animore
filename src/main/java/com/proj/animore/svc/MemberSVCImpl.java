@@ -49,8 +49,7 @@ public class MemberSVCImpl implements MemberSVC {
 
 	@Override
 	public void deleteMember(String id) {
-		// TODO Auto-generated method stub
-
+		memberDAO.deleteMember(id);
 	}
 
 	@Override
@@ -67,14 +66,12 @@ public class MemberSVCImpl implements MemberSVC {
 
 	@Override
 	public String findId(String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDAO.findId(name, email);
 	}
 
 	@Override
 	public String findPw(String id, String name, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDAO.findPw(id, name, email);
 	}
 
 }

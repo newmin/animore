@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.proj.animore.dto.RboardDTO;
 import com.proj.animore.dto.RboardListReqDTO;
@@ -34,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author hjlee0820
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/rboard")
 @RequiredArgsConstructor
 public class RboardController {
@@ -42,7 +41,6 @@ public class RboardController {
 	private final RboardSVC rboardSVC;
 	
 //댓글등록처리   post
-	@ResponseBody
 	@PostMapping("/{bnum}/{id}")
 	public Result register(
 			@PathVariable int bnum,
@@ -82,7 +80,6 @@ public class RboardController {
 
 //댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
 //
-	@ResponseBody
 	@GetMapping("/{bnum}/{rnum}")
 	public Result findByRnum(
 			@PathVariable int bnum,
@@ -103,7 +100,6 @@ public class RboardController {
 	}
 	
 //댓글수정처리 patch
-	@ResponseBody
 	@PatchMapping("/{bnum}/{rnum}/{id}")
 	public Result modify(
 			@PathVariable int bnum,
@@ -136,7 +132,6 @@ public class RboardController {
 
 // 엑셀파일에 삭제시 댓글번호 필요하다고 적어야함
 // 댓글삭제처리 delete
-	@ResponseBody
 	@DeleteMapping("/{bnum}/{rnum}/{id}")
 	public Result del(
 			@PathVariable int bnum,
@@ -158,7 +153,6 @@ public class RboardController {
 	}
 
 	// 댓글목록조회 by 게시글
-	@ResponseBody
 	@GetMapping("/{bnum}")
 	public Result all(@PathVariable int bnum) {
 		List<RboardListReqDTO> list = rboardSVC.all(bnum);
