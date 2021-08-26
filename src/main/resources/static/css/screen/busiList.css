@@ -61,10 +61,10 @@
 
 /* 업체리스트 */
 .busi-list{
-  display: flex;
+  /* display: flex;
   flex-direction: column;
+  gap: 10px; */  
   /* justify-content: space-between; */
-  gap: 10px;  
 	overflow-x: hidden; 
 	overflow-y: scroll; 
 	height: 600px;
@@ -79,6 +79,7 @@
   padding: 0 20px;
   box-sizing: border-box;
   position: relative;
+  margin-bottom: 10px;
 }
 .busi-list__column{
   width: 33%;
