@@ -20,7 +20,7 @@
       <!-- 상단 -->
       <section class="position">
         <div class="position__column">
-          <div class="position__tags" th:object="${businessLoadDTO}">
+          <div class="position__tags" th:object="${businessLoadDTO}" th:if="${bcategory == 'bhospital'}">
             <input type="checkbox" th:field="*{nightcare}" th:value="Y"><label for="nightcare">야긴진료</label>
             <input type="checkbox" th:field="*{visitcare}" th:value="Y"><label for="visitcare">방문진료</label>
             <input type="checkbox" th:field="*{dental}" th:value="Y"><label for="dental">치과진료</label>
