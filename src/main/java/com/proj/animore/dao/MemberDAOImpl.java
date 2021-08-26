@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.FindIdForm;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -110,17 +111,21 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override 
 	//TODO 파라미터가 memberDTO(or name,email만의 폼)가 되고 getter로 가져오기?
-	public String findId(String name, String email) {
+	public FindIdForm findId(FindIdForm findIdForm) {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("select id ");
 		sql.append("from member ");
 		sql.append("where name = ? ");
-		sql.append("      email= ? ");
+		sql.append("  and email= ? ");
 		
-		 jdbcTemplate.update(sql.toString(),
-												name, email);
-		return null;
+		FindIdForm id =  jdbcTemplate.queryForObject(sql.toString(),
+												new BeanPropertyRowMapper<>(FindIdForm.class),
+												findIdForm.getName(),findIdForm.getEmail());
+		
+		log.info("form:{}",id.toString());
+		log.info("id={}",id.getId());
+		return id;
 	}
 
 	@Override

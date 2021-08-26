@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.svc.MemberSVC;
 
@@ -107,9 +108,17 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/findId")
-	public String findId() {
+	public String findIdForm(@ModelAttribute FindIdForm findIdForm) {
 		return "member/findIdForm";
 	}
+	//아이디찾기 처리
+	@PostMapping("/findId")
+	public String findId(@ModelAttribute FindIdForm findIdForm) {
+		memberSVC.findId(findIdForm);
+		log.info("아이디찾기 처리됨");
+		return "redirect:/";
+	}
+	
 	
 	/**
 	 * 비밀번호찾기양식

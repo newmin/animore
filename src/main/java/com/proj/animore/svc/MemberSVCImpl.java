@@ -9,6 +9,7 @@ import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
+import com.proj.animore.form.FindIdForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -65,8 +66,8 @@ public class MemberSVCImpl implements MemberSVC {
 	}
 
 	@Override
-	public String findId(String name, String email) {
-		return memberDAO.findId(name, email);
+	public FindIdForm findId(FindIdForm findIdForm) {
+		return memberDAO.findId(findIdForm);
 	}
 
 	@Override
