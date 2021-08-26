@@ -32,7 +32,16 @@
         <div class="position__column">
           <div class="position__info">
             <p class="position__locate">내위치 : 여기는 어디~~</p>
-            <p class="position__category" th:text="${bcategory}">업체카테고리</p>
+            <p class="position__category" th:if="${bcategory == 'bhospital'}">동물병원</p>
+            <p class="position__category" th:if="${bcategory == 'bpharmacy'}">약국</p>
+            <p class="position__category" th:if="${bcategory == 'bhotel'}">호텔</p>
+            <p class="position__category" th:if="${bcategory == 'bkindergarden'}">유치원</p>
+            <p class="position__category" th:if="${bcategory == 'bfood'}">식당ㆍ카페</p>
+            <p class="position__category" th:if="${bcategory == 'btraining'}">훈련소</p>
+            <p class="position__category" th:if="${bcategory == 'bshop'}">용품점</p>
+            <p class="position__category" th:if="${bcategory == 'bplayground'}">놀이터</p>
+            <p class="position__category" th:if="${bcategory == 'bhairshop'}">미용실</p>
+            <p class="position__category" th:if="${bcategory == 'betc'}">기타시설</p>
           </div>
         </div>
         <div class="position__column"></div>
