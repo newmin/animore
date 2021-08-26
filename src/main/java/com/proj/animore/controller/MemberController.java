@@ -1,5 +1,7 @@
 package com.proj.animore.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.FindPwForm;
+import com.proj.animore.form.FindPwResult;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.svc.MemberSVC;
 
@@ -115,9 +120,23 @@ public class MemberController {
 	 * 비밀번호찾기양식
 	 * @return
 	 */
-	@GetMapping("/findPW")
+	@GetMapping("/findPw")
 	public String findPW() {
 		return "member/findPWForm";
+	}
+	
+	/**
+	 * 비밀번호찾기처리
+	 * @param findPwForm
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/findPw")
+	public List<FindPwResult> findPw(@ModelAttribute FindPwForm findPwForm) {
+		
+		List<FindPwResult> list = memberSVC.findPw(findPwForm);
+		
+		return list;
 	}
 	
 }

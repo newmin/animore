@@ -3,6 +3,8 @@ package com.proj.animore.dao;
 import java.util.List;
 
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.FindPwForm;
+import com.proj.animore.form.FindPwResult;
 
 public interface MemberDAO {
 
@@ -28,5 +30,5 @@ public interface MemberDAO {
 	String findId(String name, String email);
 	
 	//비밀번호 찾기
-	String findPw(String id, String name, String email);
+	List<FindPwResult> findPw(FindPwForm findPwForm);
 }

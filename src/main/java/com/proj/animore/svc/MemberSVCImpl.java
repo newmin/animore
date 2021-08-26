@@ -9,6 +9,8 @@ import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
+import com.proj.animore.form.FindPwForm;
+import com.proj.animore.form.FindPwResult;
 
 import lombok.RequiredArgsConstructor;
 
@@ -70,8 +72,8 @@ public class MemberSVCImpl implements MemberSVC {
 	}
 
 	@Override
-	public String findPw(String id, String name, String email) {
-		return memberDAO.findPw(id, name, email);
+	public List<FindPwResult> findPw(FindPwForm findPwForm) {
+		return memberDAO.findPw(findPwForm);
 	}
 
 }
