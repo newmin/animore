@@ -65,5 +65,11 @@ public class BoardSVCImpl implements BoardSVC {
 	public List<BoardReqDTO> list(String bcategory) {
 		return boardDAO.list(bcategory);
 	}
+	
+	//댓글수조회
+	@Override
+	public Integer reqBreply(Integer bnum) {
+		return boardDAO.reqBreply(bnum);
+	}
 
 }

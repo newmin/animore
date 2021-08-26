@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.FindIdForm;
+import com.proj.animore.form.FindPwForm;
+import com.proj.animore.form.FindPwResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -129,17 +131,24 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public String findPw(String id, String name, String email) {
-StringBuffer sql = new StringBuffer();
+	public List<FindPwResult> findPw(FindPwForm findPwForm) {
+		StringBuffer sql = new StringBuffer();
 		
-		sql.append("select pw ");
+		sql.append("select id, pw ");
 		sql.append("from member ");
 		sql.append("where id = ? ");
-		sql.append("      name= ? ");
-		sql.append("      email= ? ");
+		sql.append("  and name= ? ");
+		sql.append("  and email= ? ");
 
+		List<FindPwResult> list = jdbcTemplate.query(sql.toString(),
+				new BeanPropertyRowMapper<>(FindPwResult.class),
+				findPwForm.getId(), findPwForm.getName(), findPwForm.getEmail());
 		
-		return null;
+		list.forEach(rec -> {
+			rec.setPw(rec.getPw().substring(0, 2)+"******");	//비밀번호 두자리만 보여주고 뒤쪽은 별표처리
+		});
+		
+		return list;
 	}
 
 	@Override
@@ -155,5 +164,6 @@ StringBuffer sql = new StringBuffer();
 	     MemberDTO memberDTO = jdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(MemberDTO.class),id,pw);
 	      return memberDTO;
 
-}
+	}
+
 }

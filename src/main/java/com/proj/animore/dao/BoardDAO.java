@@ -33,4 +33,13 @@ public interface BoardDAO {
 	
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
+	
+	//댓글수 증가
+	void upRcount(Integer bnum);
+	
+	//댓글수 감소
+	void downRcount(Integer bnum);
+	
+	//댓글수 조회
+	Integer reqBreply(Integer bnum);
 }
