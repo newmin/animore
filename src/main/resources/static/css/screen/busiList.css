@@ -63,7 +63,7 @@
 .busi-list{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 10px;  
 	overflow-x: hidden; 
 	overflow-y: scroll; 

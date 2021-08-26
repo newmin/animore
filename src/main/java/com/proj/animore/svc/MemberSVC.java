@@ -31,7 +31,7 @@ public interface MemberSVC {
 	MemberDTO findByIdPw(String id, String pw);
 	
 	//아이디찾기
-	FindIdForm findId(FindIdForm findIdForm);
+	List<FindIdForm> findId(FindIdForm findIdForm);
 	
 	//비밀번호 찾기
 	String findPw(String id, String name, String email);

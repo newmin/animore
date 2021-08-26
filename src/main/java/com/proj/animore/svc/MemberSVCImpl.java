@@ -66,7 +66,7 @@ public class MemberSVCImpl implements MemberSVC {
 	}
 
 	@Override
-	public FindIdForm findId(FindIdForm findIdForm) {
+	public List<FindIdForm> findId(FindIdForm findIdForm) {
 		return memberDAO.findId(findIdForm);
 	}
 
