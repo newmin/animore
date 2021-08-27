@@ -113,7 +113,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override 
 	//TODO 파라미터가 memberDTO(or name,email만의 폼)가 되고 getter로 가져오기?
-	public List<FindIdForm> findId(FindIdForm findIdForm) {
+	public List<String> findId(FindIdForm findIdForm) {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("select id ");
@@ -121,9 +121,11 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("where name = ? ");
 		sql.append("  and email= ? ");
 		
-		List<FindIdForm> id =  jdbcTemplate.query(sql.toString(),
-												new BeanPropertyRowMapper<>(FindIdForm.class),
-												findIdForm.getName(),findIdForm.getEmail());
+		log.info(findIdForm.toString());
+		
+		List<String> id =  jdbcTemplate.queryForList(sql.toString(),
+												String.class,
+												findIdForm.getName(),findIdForm.getEmail());	
 		
 		log.info("form:{}",id.toString());
 //		log.info("id={}",id.getId());

@@ -118,10 +118,10 @@ public class MemberController {
 	}
 	//아이디찾기 처리
 	@PostMapping("/findId")
-	public String findId(@ModelAttribute FindIdForm findIdForm) {
-		memberSVC.findId(findIdForm);
-		log.info("아이디찾기 처리됨");
-		return "redirect:/";
+	public String findId(@ModelAttribute FindIdForm findIdForm, Model model) {
+		List<String> ids = memberSVC.findId(findIdForm);
+		model.addAttribute("ids",ids);
+		return "member/findedIdResult";
 	}
 	
 	

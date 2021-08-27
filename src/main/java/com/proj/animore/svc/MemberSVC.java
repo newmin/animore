@@ -33,7 +33,7 @@ public interface MemberSVC {
 	MemberDTO findByIdPw(String id, String pw);
 	
 	//아이디찾기
-	List<FindIdForm> findId(FindIdForm findIdForm);
+	List<String> findId(FindIdForm findIdForm);
 	
 	//비밀번호 찾기
 	List<FindPwResult> findPw(FindPwForm findPwForm);
