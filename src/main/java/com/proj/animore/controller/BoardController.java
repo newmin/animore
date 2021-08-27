@@ -72,9 +72,9 @@ public class BoardController {
 										Model model,
 										HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if(session==null) {
-			return "/member/login";
-		}
+		//LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(session == null) return "redirect:/login";
+		
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
