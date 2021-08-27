@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.form.Result;
@@ -32,7 +33,8 @@ public class HomeController {
 		
 		return "index";
 	}
-	@GetMapping("main/{bcategory}")
+	@GetMapping("/main/{bcategory}")
+	@ResponseBody
 	public Result bestPost(@PathVariable String bcategory) {
 		List<BoardReqDTO> list = boardSVC.list(bcategory);
 		Result result = new Result();
@@ -46,6 +48,7 @@ public class HomeController {
 			result.setData(list);
 		}
 
+		log.info("result:{}",result);
 		return result;
 	}
 		
