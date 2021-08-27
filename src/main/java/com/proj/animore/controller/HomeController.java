@@ -22,7 +22,7 @@ public class HomeController {
 	@GetMapping("")
 	public String home(Model model) {
 		
-		 String bcategory = "P";
+		 String bcategory = "Q";
 		 List<BoardReqDTO> list = boardSVC.list(bcategory);
      model.addAttribute("post",list);
      
