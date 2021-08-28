@@ -11,7 +11,7 @@ import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
-import com.proj.animore.form.FindPwResult;
+import com.proj.animore.form.ChangePwForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -73,8 +73,13 @@ public class MemberSVCImpl implements MemberSVC {
 	}
 
 	@Override
-	public List<FindPwResult> findPw(FindPwForm findPwForm) {
+	public ChangePwForm findPw(FindPwForm findPwForm) {
 		return memberDAO.findPw(findPwForm);
 	}
 
+	@Override
+	public int changePW(ChangePwForm changePWForm) {
+		
+		return memberDAO.changePW(changePWForm);
+	}
 }
