@@ -50,6 +50,10 @@
   font-weight: 600;
 }
 
+.selectedBoard{
+	box-shadow: 0px 0px 8px 5px var(--primary-dark) inset;
+}
+
 .board-best {
   display: flex;
   flex-direction: column;
