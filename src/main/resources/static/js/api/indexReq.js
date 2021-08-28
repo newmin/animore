@@ -8,9 +8,14 @@
  
 const $bestBtns = document.querySelectorAll('.board-best__btn');
 Array.from($bestBtns).forEach(ele=>{
+
 	ele.addEventListener('click',e=>{
 		
 	console.log('allBtn_f');
+	
+	Array.from($bestBtns).forEach(btn=>{btn.classList.remove('selectedBoard');})
+	e.target.classList.add('selectedBoard');
+	
 	
 	const URL = `/main/${e.target.dataset.category}`;
 	console.log("url:",URL);
