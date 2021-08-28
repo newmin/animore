@@ -40,11 +40,12 @@
 	      </ul>
       </div>
     </div>
+     <div class="nav__column"></div>
     <div class="nav__column">
       <ul class="nav__btn">
         <!-- TODO 게시판 링크 -->
         <li><a href="#">건강정보</a></li>
-        <li><a href="#">게시판</a>
+        <li><span>게시판</span>
           <ul class="nav__board">
             <li><a href="/board/Q">Q&A</a></li>
             <li><a href="/board/F">자유게시판</a></li>
@@ -54,12 +55,12 @@
         </li>
         <li th:if="${session.loginMember == null}"><a href="/member/join">회원가입</a></li>
         <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
-            <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="couponTEST.html">내정보</a></li>
+        <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="couponTEST.html">내정보</a></li>
         <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('S')}"><a href="/member/mypage/mypageBReview">내정보</a></li>
         <li th:if="${session.loginMember != null}" th:data-id="${session.loginMember.id}"><a href="/logout">로그아웃</a></li>
       </ul>
+ 		 </div>
   </nav>
-  </div>
 
   <main th:replace=${content}></main>
 
