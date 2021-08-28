@@ -7,7 +7,7 @@ import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
-import com.proj.animore.form.FindPwResult;
+import com.proj.animore.form.ChangePwForm;
 
 public interface MemberSVC {
 
@@ -36,6 +36,9 @@ public interface MemberSVC {
 	List<String> findId(FindIdForm findIdForm);
 	
 	//비밀번호 찾기
-	List<FindPwResult> findPw(FindPwForm findPwForm);
+	ChangePwForm findPw(FindPwForm findPwForm);
+
+	//비밀번호 변경처리
+	int changePW(ChangePwForm changePWForm);
 	
 }

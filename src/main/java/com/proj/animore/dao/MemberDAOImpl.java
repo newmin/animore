@@ -7,9 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
-import com.proj.animore.form.FindPwResult;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -133,7 +133,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<FindPwResult> findPw(FindPwForm findPwForm) {
+	public ChangePwForm findPw(FindPwForm findPwForm) {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("select id, pw ");
@@ -142,15 +142,11 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("  and name= ? ");
 		sql.append("  and email= ? ");
 
-		List<FindPwResult> list = jdbcTemplate.query(sql.toString(),
-				new BeanPropertyRowMapper<>(FindPwResult.class),
+		ChangePwForm changePwForm = jdbcTemplate.queryForObject(sql.toString(),
+				new BeanPropertyRowMapper<>(ChangePwForm.class),
 				findPwForm.getId(), findPwForm.getName(), findPwForm.getEmail());
-		
-		list.forEach(rec -> {
-			rec.setPw(rec.getPw().substring(0, 2)+"******");	//비밀번호 두자리만 보여주고 뒤쪽은 별표처리
-		});
-		
-		return list;
+				
+		return changePwForm;
 	}
 
 	@Override
@@ -168,4 +164,17 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 
+	@Override
+	public int changePW(ChangePwForm changePWForm) {
+		
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("update member ");
+		sql.append("   set pw=? ");
+		sql.append(" where id=? ");
+		
+		int result = jdbcTemplate.update(sql.toString(), changePWForm.getPw(), changePWForm.getId());
+		
+		return result;
+	}
 }

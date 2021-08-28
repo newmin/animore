@@ -11,16 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
-import com.proj.animore.form.FindPwResult;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.svc.MemberSVC;
 
@@ -129,23 +130,78 @@ public class MemberController {
 	 * 비밀번호찾기양식
 	 * @return
 	 */
-	@GetMapping("/findPw")
-	public String findPW() {
+	@GetMapping("/findPW")
+	public String findPWForm(@ModelAttribute FindPwForm findPwForm) {
 		return "member/findPWForm";
 	}
 	
 	/**
-	 * 비밀번호찾기처리
+	 * 비밀번호찾기 - 아이디,이름,이메일 입력받음
 	 * @param findPwForm
 	 * @return
 	 */
-	@ResponseBody
-	@PostMapping("/findPw")
-	public List<FindPwResult> findPw(@ModelAttribute FindPwForm findPwForm) {
+	@PostMapping("/findPW")
+	public String findPW(
+			@ModelAttribute FindPwForm findPwForm,
+			RedirectAttributes redirectAttributes) {
 		
-		List<FindPwResult> list = memberSVC.findPw(findPwForm);
+		ChangePwForm changePwForm = memberSVC.findPw(findPwForm);
 		
-		return list;
+		//정보가 없으면
+		if(changePwForm == null) {
+			return "member/findPWForm";
+		}
+		
+		//정보가 DB와 일치할 경우
+		redirectAttributes.addAttribute("id", changePwForm.getId());
+		log.info(changePwForm.getId());
+		return "redirect:/member/findPW/{id}";	//비밀번호변경양식
 	}
+	
+	/**
+	 * 비밀번호변경양식
+	 * @param changePWForm
+	 * @return
+	 */
+	@GetMapping("/findPW/{id}")
+	public String changePWForm(
+			@ModelAttribute ChangePwForm changePWForm,
+			@PathVariable String id) {
+		
+		
+		return "member/changePWForm";
+	}
+	
+	/**
+	 * 비밀번호변경처리
+	 * @param changePWForm
+	 * @param id
+	 * @return
+	 */
+	@PatchMapping("/findPW/{id}")
+	public String changePW(
+			@PathVariable String id,
+			@Valid @ModelAttribute ChangePwForm changePWForm,
+			BindingResult bindingResult) {
+		
+		if(!changePWForm.getPw().equals(changePWForm.getPwChk())) {
+			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");	//TODO 비밀번호 안맞을때 메세지 뭐라고 할까
+			return "member/changePWForm";
+		}
+		
+		int result = memberSVC.changePW(changePWForm);
+		if(result == 0) {
+			return "member/changePWForm";
+		}
+		
+		return "redirect:/member/changePWSuccess";
+	}
+	@GetMapping("/changePWSuccess")
+	public String changePWSuccess() {
+		
+		return "/member/changePWSuccess";
+	}
+	
+	
 	
 }

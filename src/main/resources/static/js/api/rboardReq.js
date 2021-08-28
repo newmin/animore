@@ -252,9 +252,7 @@ addBtn.addEventListener("click",addBtn_f);
 Array.from(replyReBtns).forEach(ele => {
   ele.addEventListener("click",replyReBtn_f);
 });
-Array.from(modiBtns).forEach(ele => {
-  ele.addEventListener("click",modiBtn_f);
-});
+
 Array.from(delBtns).forEach(ele => {
   ele.addEventListener("click",delBtn_f);
 });
@@ -288,7 +286,7 @@ function refreshReply(data){
 	document.querySelector('.boardForm__replyListWrap').innerHTML = html;
 	
 	$boardForm__reply.innerText=`댓글수 ${data.length}`;
-
+	
 	//댓글목록 갱신하고 생긴 버튼들에 이벤트리스너 다시 달아줌
 	//대댓글달기, 수정, 삭제버튼
 	replyReBtns = document.querySelectorAll('button.boardForm__ReplyReBtn');
