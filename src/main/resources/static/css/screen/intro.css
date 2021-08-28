@@ -6,7 +6,7 @@
   grid-template-columns: repeat(5, 200px);
   justify-content: space-between;
   align-content: center;
-  gap: 20px;
+  /* gap: 20px; */
   padding: 80px 0;
 }
 
@@ -19,11 +19,20 @@
   justify-content: center;
   align-items: center;
   background-color: var(--secondary);
-  background: linear-gradient(-0.125turn,var(--secondary), var(--secondary-light));
+/*   background: linear-gradient(-0.125turn,var(--secondary), var(--secondary-light)); */
   color: var(--secondary-text);
   font-size: 45px;
-  border-radius: 15px;
-  cursor: pointer;
+  /* border-radius: 15px; */
+  box-sizing: border-box;
+  border: 1px solid var(--secondary-light);
+  border-collapse: collapse;
+/*   border: 1px solid rgba(226, 180, 154,0.5); */
+}
+.busi-category__btn a:hover {
+  border: 3px solid var(--secondary-dark);
+}
+.busi-category__btn a:active {
+  box-shadow: 0 0 5px 3px var(--secondary-dark) inset;
 }
 .busi-category__bfood{
   letter-spacing: -4px;
