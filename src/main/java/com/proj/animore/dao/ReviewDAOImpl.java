@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.proj.animore.dto.ReviewDTO;
 import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.form.ReviewForm;
 
@@ -19,17 +20,17 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	//리뷰등록
 	@Override
-	public List<ReviewReq> registReview(Integer bnum, String id, ReviewForm reviewForm) {
+	public List<ReviewReq> registReview(Integer bnum, String id, ReviewDTO reviewDTO) {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,?,?) ");
 
 		jdbcTemplate.update(sql.toString(),
 							bnum, 
-							reviewForm.getRcontent(),
-							reviewForm.getRscore(), 
-							 //TODO 평점 구현 전 임시조치 insert 3점 하드코딩해둠
+							reviewDTO.getRcontent(),
+							reviewDTO.getRscore(), 
 							id);
 
 		// TODO 리뷰 작성시, 방문업체 확인 위한 영수증 등록절차?
@@ -49,6 +50,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return allReview(bnum);
 	}
 
+	//업체별 리뷰조회
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
@@ -73,13 +75,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		return list;
 	}
-
+	//내리뷰조회
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select id,recontent,rscore,rvcdate ");
-		sql.append("  from review ");
-		sql.append(" where id = ? ");
+		sql.append("select rv.id,rcontent,rscore,rvcdate,rvudate,rv.bnum ");
+		sql.append("  from review rv, business b ");
+		sql.append(" where rv.bnum = b.bnum ");
+		sql.append("   and rv.id = ? ");
 
 		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
 								new BeanPropertyRowMapper<>(ReviewReq.class), 
@@ -91,9 +94,9 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		return list;
 	}
-
+	//리뷰수정
 	@Override
-	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewForm reviewForm) {
+	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewDTO reviewDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
@@ -103,8 +106,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 		sql.append("   and id =? ");
 
 		jdbcTemplate.update(sql.toString(), 
-							reviewForm.getRcontent(), 
-							reviewForm.getRscore(), 
+							reviewDTO.getRcontent(), 
+							reviewDTO.getRscore(), 
 							"timestamp", 
 							bnum, id);
 		
@@ -116,7 +119,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		return allReview(bnum);
 	}
-
+	//리뷰삭제
 	@Override
 	public List<ReviewReq> removeReview(Integer bnum, String id) {
 		StringBuffer sql = new StringBuffer();

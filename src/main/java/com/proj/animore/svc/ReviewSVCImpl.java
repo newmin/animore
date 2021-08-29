@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.ReviewDAO;
+import com.proj.animore.dto.ReviewDTO;
 import com.proj.animore.dto.ReviewReq;
-import com.proj.animore.form.ReviewForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +17,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	private final ReviewDAO reviewDAO;
 	
 	@Override
-	public List<ReviewReq> registReview(Integer bnum, String id, ReviewForm reviewForm) {
-		return reviewDAO.registReview(bnum, id, reviewForm);
+	public List<ReviewReq> registReview(Integer bnum, String id, ReviewDTO reviewDTO) {
+		return reviewDAO.registReview(bnum, id, reviewDTO);
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	}
 
 	@Override
-	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewForm reviewForm) {
-		return reviewDAO.updateReview(bnum, id, reviewForm);
+	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewDTO reviewDTO) {
+		return reviewDAO.updateReview(bnum, id, reviewDTO);
 	}
 
 	@Override
