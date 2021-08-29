@@ -5,8 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.ReviewDTO;
 import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.form.LoginMember;
+import com.proj.animore.form.Result;
 import com.proj.animore.form.ReviewForm;
 import com.proj.animore.svc.BusinessSVC;
 import com.proj.animore.svc.ReviewSVC;
@@ -45,7 +49,7 @@ public class MainController {
 		return "map/busiList";
 	}
 
-	//업체조회(상세보기)
+	//업체조회(상세보기) + 리뷰조회
 //	@GetMapping("/{bcategory}/{bnum}")
 	@GetMapping("/inquire/{bnum}")
 	public String inquire(
@@ -69,23 +73,35 @@ public class MainController {
 		return "map/inquireBusiDetail";
 	}
 	//리뷰등록
-//	@ResponseBody
+	@ResponseBody
 	@PostMapping("/inquire/{bnum}")
-	public String addReview(@PathVariable Integer bnum, 
-													@ModelAttribute ReviewForm reviewForm, 
-//													@RequestBody ReviewForm reviewForm, 
-													HttpServletRequest request) {
+	public Result addReview(@PathVariable Integer bnum, 
+//							@ModelAttribute ReviewForm reviewForm, 
+							@RequestBody ReviewForm reviewForm, 
+							HttpServletRequest request) {
+		Result result;
+		
 		HttpSession session = request.getSession(false);
-		if(session == null) return "member/login";
+		//비로그인/로그인만료 상태라면?
+		if(session == null) {
+			result = new Result("01","댓글입력을 위해 로그인이 필요합니다.",null);
+			return result;
+		}
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
 
-		log.info(reviewForm.toString());
+		//리뷰작성폼→리뷰DTO
+		ReviewDTO reviewDTO = new ReviewDTO();
+		BeanUtils.copyProperties(reviewForm,reviewDTO);
 		
-		reviewSVC.registReview(bnum, id, reviewForm);
-		return "redirect:/inquire/{bnum}";
+		List<ReviewReq> list = reviewSVC.registReview(bnum, id, reviewDTO);
+		
+		result = new Result("00","성공",list);
+	  	return result;
 	}
+	
+//	@DeleteMapping()
 	
 	
 }
