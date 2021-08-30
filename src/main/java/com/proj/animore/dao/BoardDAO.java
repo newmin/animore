@@ -34,6 +34,9 @@ public interface BoardDAO {
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
 	
+	//게시글 전체목록(좋아요순)
+	List<BoardReqDTO> bgoodList(String bcategory);
+	
 	//댓글수 증가
 	void upRcount(Integer bnum);
 	

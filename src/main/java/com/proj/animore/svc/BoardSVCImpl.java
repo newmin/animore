@@ -66,6 +66,12 @@ public class BoardSVCImpl implements BoardSVC {
 		return boardDAO.list(bcategory);
 	}
 	
+	//게시글전체목록(좋아요순나열)
+	@Override
+	public List<BoardReqDTO> bgoodList(String bcategory) {
+		return boardDAO.bgoodList(bcategory);
+	}
+	
 	//댓글수조회
 	@Override
 	public Integer reqBreply(Integer bnum) {

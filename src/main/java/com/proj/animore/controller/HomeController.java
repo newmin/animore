@@ -36,7 +36,7 @@ public class HomeController {
 	@GetMapping("/main/{bcategory}")
 	@ResponseBody
 	public Result bestPost(@PathVariable String bcategory) {
-		List<BoardReqDTO> list = boardSVC.list(bcategory);
+		List<BoardReqDTO> list = boardSVC.bgoodList(bcategory);
 		Result result = new Result();
 		log.info("bcategory{}:",bcategory);
 		if (list.size() == 0) {

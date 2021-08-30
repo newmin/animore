@@ -149,6 +149,21 @@ public class BoardDAOImpl implements BoardDAO {
 										bcategory);
 		return list;
 	}
+	//게시글전체목록 좋아요순 나열
+	@Override
+	public List<BoardReqDTO> bgoodList(String bcategory) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent ");
+		sql.append("  from board b, member m ");
+		sql.append("  where b.id = m.id ");
+		sql.append("   and bcategory=? ");
+		sql.append(" order by bgood desc ");
+		List<BoardReqDTO> list = jt.query(sql.toString(),
+										new BeanPropertyRowMapper<>(BoardReqDTO.class),
+										bcategory);
+		
+		return list;
+	}
 	
 	//댓글수 증가
 	@Override
