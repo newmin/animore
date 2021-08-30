@@ -119,6 +119,22 @@
   color: cornflowerblue;
 }
 
+/*내가쓴글*/
+.mypost__cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height:22px;
+  line-height:22px;
+  text-align: center;
+}
+
+/*.mypost__bcategory,
+.mypost__udate,
+.mypost__bhit{
+  width: 15%;
+}*/
+.mypost__btitle{
+  width: 48%;
+}
 
 
 

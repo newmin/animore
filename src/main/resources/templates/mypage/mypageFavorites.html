@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/mypage.js" defer></script>
-  <title>Document</title>
+  <script src="/js/api/ajaxCall.js"></script>
+  <title>마이페이지</title>
 </head>
 <body>
 
@@ -37,7 +38,7 @@
             <!-- TODO th:href 등록 파일명'임의'표기-->
             <li class="mypage_aside_menu_highlight"><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
             <li><a href="/mypage/mypageReview" >내가 쓴 리뷰</a></li>
-            <li><a href="/mypage/mypagePost.html" >내가 쓴 글</a></li>
+            <li><p class="mypage__mypostBtn">내가 쓴 글</p></li>
             <li><a href="/mypage/mypageReply.html" >내가 쓴 댓글</a></li>
             <li><a href="/mypage/mypageGood.html" >좋아요</a></li>
             <li><a href="/mypage/mypageCoupon.html" >내 쿠폰</a></li>
@@ -62,7 +63,6 @@
               <li><input type="checkbox" name="bhairshop" id="bhairshop"><label for="bhairshop">미용실</label></li>
               <li><input type="checkbox" name="betc" id="betc"><label for="betc">기타</label></li>
             </ul>
-          </div>
          <table class="favorite__table">
         <tr>
           <th class="favorite__cell favorite__num">번호</th>
@@ -74,6 +74,7 @@
           <td class="board__cell board__title" ><a th:href="@{|/favoriteForm/post/${favoriteForm.mnum}|}" th:text="${favoriteForm.bname}"></a></td>
         </tr>
       </table>
+          </div>
           
         </div>
       </div>
