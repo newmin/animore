@@ -17,6 +17,12 @@ public interface MemberSVC {
 	//TODO 전문가가입
 	void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO);
 	
+	//아이디 중복확인
+	boolean isExistId(String id);
+	
+	//닉네임 중복확인
+	boolean isExistNickname(String nickname);
+	
 	//내정보 조회
 	MemberDTO findMemberById(String id);
 	

@@ -21,6 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	private final JdbcTemplate jdbcTemplate;
 	
+	//회원가입
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
@@ -41,7 +42,28 @@ public class MemberDAOImpl implements MemberDAO {
 
 			log.info("memberDTO : {}", memberDTO.toString());
 	}
-
+	
+	//아이디 중복확인
+	@Override
+	public boolean isExistId(String id) {
+			boolean isExistId = false;
+			String sql = "select count(id) from member where id = ? ";
+			int cnt = jdbcTemplate.update(sql, id);
+			if(cnt >= 1) isExistId = true;
+			return isExistId;
+	}
+	
+	//닉네임 중복확인
+	@Override
+	public boolean isExistNickname(String nickname) {
+		boolean isExistNickname = false;
+		String sql = "select count(id) from member where nickname = ? ";
+		int cnt = jdbcTemplate.update(sql, nickname);
+		if(cnt >= 1) isExistNickname = true;
+		return isExistNickname;
+	}
+	
+	//내정보 조회
 	@Override
 	public MemberDTO findMemberById(String id) {
 		StringBuffer sql = new StringBuffer();
@@ -56,6 +78,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return memberDTO;
 	}
 
+	//내정보수정
 	@Override
 	public MemberDTO modifyMember(String id, MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
@@ -86,6 +109,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 
+	//회원탈퇴
 	@Override
 	public void deleteMember(String id) {
 		StringBuffer sql = new StringBuffer();
@@ -110,9 +134,8 @@ public class MemberDAOImpl implements MemberDAO {
 		return list;
 	}
 
-
+	//아이디 찾기
 	@Override 
-	//TODO 파라미터가 memberDTO(or name,email만의 폼)가 되고 getter로 가져오기?
 	public List<String> findId(FindIdForm findIdForm) {
 		StringBuffer sql = new StringBuffer();
 		
@@ -132,6 +155,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return id;
 	}
 
+	//비밀번호 찾기
 	@Override
 	public ChangePwForm findPw(FindPwForm findPwForm) {
 		StringBuffer sql = new StringBuffer();
@@ -149,6 +173,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return changePwForm;
 	}
 
+	//로그인확인
 	@Override
 	   public MemberDTO findByIdPw(String id, String pw) {
 
@@ -164,6 +189,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 
+	//비밀번호 변경
 	@Override
 	public int changePW(ChangePwForm changePWForm) {
 		
