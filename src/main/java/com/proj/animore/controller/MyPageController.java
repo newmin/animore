@@ -12,12 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-@RequestMapping("mypage")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
-
 public class MyPageController {
+	
 	@GetMapping("/mypageFavorites")
 	public String mypage() {
 		return "mypage/mypageFavorites";
 	}
 }
+
+

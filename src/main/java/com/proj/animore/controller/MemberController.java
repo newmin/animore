@@ -171,9 +171,7 @@ public class MemberController {
 		
 		return "member/changePWForm";
 	}
-	
-<<<<<<< HEAD
-=======
+
 	/**
 	 * 비밀번호변경처리
 	 * @param changePWForm
@@ -203,8 +201,7 @@ public class MemberController {
 		
 		return "/member/changePWSuccess";
 	}
-	
-	
->>>>>>> 929acea3c30d9068c434c9561d93a3d88cfe0464
+
+
 	
 }
