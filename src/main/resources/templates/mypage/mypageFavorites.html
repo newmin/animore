@@ -65,13 +65,15 @@
           </div>
          <table class="favorite__table">
         <tr>
-          <th class="favorite__cell favorite__num">번호</th>
-          <th class="favorite__cell bfavorite_title">업체명</th>
-          <th class="favorite__cell bfavorite_writer">평점</th>
+          <th class="favorite__cell favorite__mnum">번호</th>
+          <th class="favorite__cell favorite_bname">업체명</th>
+          <th class="favorite__cell favorite_score">평점</th>
         </tr>
-        <tr th:each="boardForm :${boardForm}">
-          <td class="board__cell board__num" th:text="${favorite.mnum}">1</td>
-          <td class="board__cell board__title" ><a th:href="@{|/favoriteForm/post/${favoriteForm.mnum}|}" th:text="${favoriteForm.bname}"></a></td>
+        <tr th:each="favoriteForm :${favoriteForm}">
+          <td class="favorite__cell favorite_bname" ><a th:href="@{|/favoriteForm/post/${favoriteForm.mnum}|}" th:text="${favoriteForm.bname}"></a></td>
+          <td class="favorite__cell favorite__mnum" th:text="${favorite.mnum}">1</td>
+          <td class="favorite__cell favorite_score" th:text="${favorite.score}">3</td>
+          
         </tr>
       </table>
           
