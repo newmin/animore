@@ -15,5 +15,6 @@ public class BusinessDTO {
 	private String rareani;
 	private String visitcare;
 	private String holidayopen;
-	private String dental;	
+	private String dental;
+	
 }

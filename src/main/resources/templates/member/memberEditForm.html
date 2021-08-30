@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>개인 정보 수정</title>
+</head>
+<body>
+	
+<form class="frm" th:action="@{/members/edit}" th:method="patch" th:object="${MyEditForm}" >
+	<ul>
+		<li><h3 class="title">개인정보수</h3></li>
+		<li th:errors="*{global}" th:erroeclass="field-msg">
+				<p th:each="err : ${#fields.globalErrors()}"
+									th:text="${err}">글로벌 오류 메시</li>
+									
+		<li><label for="id">아이디</label></li>
+		<li><input type="text" th:field="*{id}" readonly="readonly"/></li>
+		<li><label for="pw">비밀번호</label></li>
+		<li><input type="password" th:field="*{pw}"/></li>
+		<li th:errors="*{pw}" th:errorclass="field-msg"></li>
+		<!-- 프로필 미구현 -->
+		<!-- <li><label>프로필사진</label></li>
+		<li><input type="file" th:field="*{file}"/></li> -->
+		<li><label for="tel">전화번호</label></li>
+		<li><input type="tel" name="tel" th:field="*{tel}"/></li>
+		<li th:errors="*{tel}" th:errorclass="field-msg"></li>
+		<li><label for="nickname">닉네임</label></li>
+		<li><input type="text" th:field="*{nickname}" /></li>
+		<li th:errors="*{nickname}" th:errorclass="field-msg"></li>							
+		<li><label for="gender">성별</label></li>
+		
+	</ul>
+
+
+</form>
+</body>
+</html>
