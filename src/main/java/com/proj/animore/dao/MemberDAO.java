@@ -3,11 +3,20 @@ package com.proj.animore.dao;
 import java.util.List;
 
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.ChangePwForm;
+import com.proj.animore.form.FindIdForm;
+import com.proj.animore.form.FindPwForm;
 
 public interface MemberDAO {
 
 	//회원가입
 	void joinMember(MemberDTO memberDTO);
+	
+	//아이디 중복확인
+	boolean isExistId(String id);
+	
+	//닉네임 중복확인
+	boolean isExistNickname(String nickname);
 	
 	//내정보 조회
 	MemberDTO findMemberById(String id);
@@ -25,8 +34,11 @@ public interface MemberDAO {
 	MemberDTO findByIdPw(String id, String pw);
 	
 	//아이디찾기
-	String findId(String name, String email);
+	List<String> findId(FindIdForm findIdForm);
 	
 	//비밀번호 찾기
-	String findPw(String id, String name, String email);
+	ChangePwForm findPw(FindPwForm findPwForm);
+
+	//비밀번호변경처리
+	int changePW(ChangePwForm changePWForm);
 }

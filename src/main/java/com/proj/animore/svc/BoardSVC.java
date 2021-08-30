@@ -8,11 +8,14 @@ import com.proj.animore.dto.BoardReqDTO;
 public interface BoardSVC {
 	
 	//게시글 등록
-	void addBoard(String id, BoardDTO boardDTO);
+	BoardReqDTO addBoard(String id, BoardDTO boardDTO);
 	
 	//게시글 조회(by bnum)
 	BoardReqDTO findBoardByBnum(Integer bnum);
 	
+	//조회수 증가
+	void upBhit(Integer bnum);
+		
 	//게시글 조회(by id)
 	List<BoardReqDTO> findBoardById(String id);
 	
@@ -30,4 +33,7 @@ public interface BoardSVC {
 	
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
+	
+	//댓글수 조회
+	Integer reqBreply(Integer bnum);
 }

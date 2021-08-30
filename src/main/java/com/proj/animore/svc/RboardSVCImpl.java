@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proj.animore.dao.BoardDAO;
 import com.proj.animore.dao.RboardDAO;
 import com.proj.animore.dto.RboardDTO;
 import com.proj.animore.dto.RboardListReqDTO;
@@ -15,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class RboardSVCImpl implements RboardSVC {
 
 	private final RboardDAO rboardDAO;
-
+	private final BoardDAO boardDAO;
+	
 	/**
 	 * 댓글등록처리
 	 * @param bnum
@@ -25,9 +27,10 @@ public class RboardSVCImpl implements RboardSVC {
 	 */
 	@Override
 	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
+		boardDAO.upRcount(bnum);
 		return rboardDAO.register(bnum, id, rboardDTO);
 	}
-
+	
 	/**
 	 * 댓글수정처리
 	 * @param rnum
@@ -53,6 +56,7 @@ public class RboardSVCImpl implements RboardSVC {
 	 */
 	@Override
 	public List<RboardListReqDTO> del(int bnum, int rnum, String id) {
+		boardDAO.downRcount(bnum);
 		return rboardDAO.del(bnum, rnum, id);
 	}
 

@@ -18,14 +18,20 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	//게시글등록
 	@Override
-	public void addBoard(String id,BoardDTO boardDTO) {
-		boardDAO.addBoard(id,boardDTO);
+	public BoardReqDTO addBoard(String id,BoardDTO boardDTO) {
+	return 	boardDAO.addBoard(id, boardDTO);
 		
 	}
 	//게시글조회
 	@Override
 	public BoardReqDTO findBoardByBnum(Integer bnum) {
 		return boardDAO.findBoardByBnum(bnum);
+		
+	}
+	//조회수
+	@Override
+	public void upBhit(Integer bnum) {
+		boardDAO.upBhit(bnum);
 		
 	}
 	//게시글검색(by id)
@@ -58,6 +64,12 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public List<BoardReqDTO> list(String bcategory) {
 		return boardDAO.list(bcategory);
+	}
+	
+	//댓글수조회
+	@Override
+	public Integer reqBreply(Integer bnum) {
+		return boardDAO.reqBreply(bnum);
 	}
 
 }

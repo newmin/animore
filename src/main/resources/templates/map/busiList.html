@@ -7,8 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>업체 리스트</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <script></script>
+  <script src="/js/mapAPI.js" defer></script>
+   <!--네이버 API-->
+ <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script>
+ <!--카카오 API-->
+ <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
 </head>
 <body>
   <main class="main">
@@ -17,7 +20,7 @@
       <!-- 상단 -->
       <section class="position">
         <div class="position__column">
-          <div class="position__tags" th:object="${businessLoadDTO}">
+          <div class="position__tags" th:object="${businessLoadDTO}" th:if="${bcategory == 'bhospital'}">
             <input type="checkbox" th:field="*{nightcare}" th:value="Y"><label for="nightcare">야긴진료</label>
             <input type="checkbox" th:field="*{visitcare}" th:value="Y"><label for="visitcare">방문진료</label>
             <input type="checkbox" th:field="*{dental}" th:value="Y"><label for="dental">치과진료</label>
@@ -29,7 +32,16 @@
         <div class="position__column">
           <div class="position__info">
             <p class="position__locate">내위치 : 여기는 어디~~</p>
-            <p th:text="${bcategory}" class="position__category">동물병원</p>
+            <p class="position__category" th:if="${bcategory == 'bhospital'}">동물병원</p>
+            <p class="position__category" th:if="${bcategory == 'bpharmacy'}">약국</p>
+            <p class="position__category" th:if="${bcategory == 'bhotel'}">호텔</p>
+            <p class="position__category" th:if="${bcategory == 'bkindergarden'}">유치원</p>
+            <p class="position__category" th:if="${bcategory == 'bfood'}">식당ㆍ카페</p>
+            <p class="position__category" th:if="${bcategory == 'btraining'}">훈련소</p>
+            <p class="position__category" th:if="${bcategory == 'bshop'}">용품점</p>
+            <p class="position__category" th:if="${bcategory == 'bplayground'}">놀이터</p>
+            <p class="position__category" th:if="${bcategory == 'bhairshop'}">미용실</p>
+            <p class="position__category" th:if="${bcategory == 'betc'}">기타시설</p>
           </div>
         </div>
         <div class="position__column"></div>
@@ -38,7 +50,7 @@
       <section class="busi-infomation">
         <!-- 업체리스트 -->
         <ul class="busi-list">
-          <!-- 구분 줄 -->
+          <!-- 리스트 구분 -->
           <li class="busi-list__row">
             <p class="busi-list__column busi-list__bname">업체명</p>
             <p class="busi-list__column busi-list__distance">거리</p>
@@ -50,22 +62,21 @@
           </li>
           <!-- 리스트 -->
           <li class="busi-list__row" th:each="busiList : ${busiList}">
-            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}"></a></span>
+            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
+            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
             <span class="busi-list__column busi-list__distance">3cm</span>
             <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
           </li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
-          <li class="busi-list__row"></li>
         </ul>
       
         <!-- 지도 -->
-        <aside id="map" class="map--lg"></aside>
-      
+        <div id="map" class="map--lg">
+          <div id="menu">
+            <div><button id="currBtn">현재위치</button></div>
+            <div><input type="text" name="" id="search"><button id='searchBtn'>검색</button></div>
+          </div>
+        </div>
+
       </section>
     </div>
 

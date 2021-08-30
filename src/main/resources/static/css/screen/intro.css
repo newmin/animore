@@ -6,40 +6,61 @@
   grid-template-columns: repeat(5, 200px);
   justify-content: space-between;
   align-content: center;
-  gap: 20px;
+  /* gap: 20px; */
   padding: 80px 0;
 }
-.busi-category__btn {
-  background-color: var(--secondary);
-  color: var(--secondary-text);
-  font-size: 50px;
-  border-radius: 15px;
+
+.busi-category a{
+  display: block;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  background-color: var(--secondary);
+/*   background: linear-gradient(-0.125turn,var(--secondary), var(--secondary-light)); */
+  color: var(--secondary-text);
+  font-size: 45px;
+  /* border-radius: 15px; */
+  box-sizing: border-box;
+  border: 1px solid var(--secondary-light);
+  border-collapse: collapse;
+/*   border: 1px solid rgba(226, 180, 154,0.5); */
 }
-
-/* 메뉴바 */
-.menubar__menu {
+.busi-category__btn a:hover {
+  border: 3px solid var(--secondary-dark);
+}
+.busi-category__btn a:active {
+  box-shadow: 0 0 5px 3px var(--secondary-dark) inset;
+}
+.busi-category__bfood{
+  letter-spacing: -4px;
+}
+/* 베스트게시글 버튼 */
+.board-best__btns {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
   width: var(--main-row-width);
   gap: 10px;
+  margin: 20px;
 }
-.menubar input {
+.board-best__btn {
   background-color: var(--primary);
   color: var(--primary-text);
-  font-size: 30px;
-  width: 200px;
+  font-size: 25px;
+  width: 200px;	
   height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
   border: none;
-  margin: 20px 0;
   cursor: pointer;
+  font-weight: 600;
+}
+
+.selectedBoard{
+	box-shadow: 0px 0px 8px 5px var(--primary-dark) inset;
 }
 
 .board-best {
@@ -52,12 +73,13 @@
   justify-content: space-between;
 }
 .board-best__title{
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
   margin-bottom: 15px;
 }
 .board-best__text{
-  font-size: 20px;
+	font-weight: 400;
+  font-size: 18px;
 }
 .board-best__img{
   margin-left: 5px;
@@ -67,6 +89,7 @@
   display: flex;
   font-size: 20px;
   font-weight: 400;
+  align-items: center;
 }
 .good span{
   margin-left: 5px;

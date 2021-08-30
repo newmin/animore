@@ -6,14 +6,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/style.css">
-  <script defer></script>
+  <script src="/js/api/indexReq.js" defer></script>
+  <script src="/js/api/ajaxCall.js"></script>
   <title>Ani-More</title>
 </head>
 
 <body>
 
   <main class="main">
+  
+  <button><a href="#" th:href="@{/logout}">세션제거하기</a></button>
 
       <!-- 검색창 -->
   <div class="search">
@@ -23,81 +25,44 @@
 
     <!-- 업체 카테고리 -->
     <section class="busi-category">
-      <a href="/bhospital" th:href="@{/bhospital}"><div class="busi-category__btn busi-category__bhospital">  <i class="far fa-hospital"></i><span>병원</span></div></a>
-      <a th:href="@{/bpharmacy}"><div class="busi-category__btn busi-category__bpharmacy">  <i class="fas fa-pills"></i>   <span>약국</span></div></a>
-      <a th:href="@{/btraining}"><div class="busi-category__btn busi-category__btraining">  <i class="fas fa-dog"></i>     <span>훈련소</span></div></a>
-      <a th:href="@{/bfood}"><div class="busi-category__btn busi-category__bfood">      <i class="fas fa-pills"></i>   <span>식당ㆍ카페</span></div></a>
-      <a th:href="@{/bplayground}"><div class="busi-category__btn busi-category__bplayground"><i class="fas fa-pills"></i>   <span>놀이터</span></div></a>
-      <a th:href="@{/bhotel}"><div class="busi-category__btn busi-category__bhotel">     <i class="fas fa-hotel"></i>   <span>호텔</span></div></a>
-      <a th:href="@{/bhairshop}"><div class="busi-category__btn busi-category__bhairshop">  <i class="fas fa-cut"></i>     <span>미용실</span></div></a>
-      <a th:href="@{/bshop}"><div class="busi-category__btn busi-category__bshop">      <i class="fas fa-bone"></i>    <span>용품점</span></div></a>
-      <a th:href="@{/bkindergarden}"><div class="busi-category__btn busi-category__bkindergarden">    <i class="fas fa-pills"></i>   <span>유치원</span></div></a>
-      <a th:href="@{/betc}"><div class="busi-category__btn busi-category__betc">       <i class="fas fa-pills"></i>   <span>etc</span></div></a>
+      <div class="busi-category__btn busi-category__bhospital"><a href="/bhospital" th:href="@{/bhospital}">  <i class="far fa-hospital"></i><span>병원</span></a></div>
+      <div class="busi-category__btn busi-category__bpharmacy"><a th:href="@{/bpharmacy}">  <i class="fas fa-pills"></i>   <span>약국</span></a></div>
+      <div class="busi-category__btn busi-category__btraining"><a th:href="@{/btraining}">  <i class="fas fa-dog"></i>     <span>훈련소</span></a></div>
+      <div class="busi-category__btn busi-category__bfood"><a th:href="@{/bfood}">      <i class="fas fa-pills"></i>   <span>식당ㆍ카페</span></a></div>
+      <div class="busi-category__btn busi-category__bplayground"><a th:href="@{/bplayground}"><i class="fas fa-pills"></i>   <span>놀이터</span></a></div>
+      <div class="busi-category__btn busi-category__bhotel"><a th:href="@{/bhotel}">     <i class="fas fa-hotel"></i>   <span>호텔</span></a></div>
+      <div class="busi-category__btn busi-category__bhairshop"><a th:href="@{/bhairshop}">  <i class="fas fa-cut"></i>     <span>미용실</span></a></div>
+      <div class="busi-category__btn busi-category__bshop"><a th:href="@{/bshop}">      <i class="fas fa-bone"></i>    <span>용품점</span></a></div>
+      <div class="busi-category__btn busi-category__bkindergarden"><a th:href="@{/bkindergarden}">    <i class="fas fa-pills"></i>   <span>유치원</span></a></div>
+      <div class="busi-category__btn busi-category__betc"><a th:href="@{/betc}">       <i class="fas fa-pills"></i>   <span>etc</span></a></div>
     </section>
     <!-- TODO 아이콘 -->
     
-    <!-- 메뉴바 -->
-    
-    <aside class="menubar">
-      <ul class="menubar__menu">
-        <li><input type="button" value="Q&A"></li>
-        <li><input type="button" value="자유게시판"></li>
-        <li><input type="button" value="벼룩시장"></li>
-        <li><input type="button" value="내새끼보세요"></li>
-      </ul>
-    </aside>
-    
     <!-- 베스트 게시글 -->
-
-
+    
+    <!-- <aside class="board-best-btns"> -->
+      <ul class="board-best__btns">
+        <li><button class="board-best__btn selectedBoard" data-category ="Q">Q&A</button></li>
+        <li><button class="board-best__btn" data-category ="F">자유게시판</button></li>
+        <li><button class="board-best__btn" data-category ="M">벼룩시장</button></li>
+        <li><button class="board-best__btn" data-category ="P">내새끼보세요</button></li>
+      </ul>
+    <!-- </aside> -->
+    
     <section class="board-best">
       
-
-      <div class="board-best__row">
+      <div class="board-best__row" th:each="post : ${post}">
         <div class="board-best__content">
           <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
+            <h1 class="board-best__title"><a href="" th:href="@{|/board/post/${post.bnum}|}" th:text="${post.btitle}">게시글 제목</a></h1>
+            <p class="board-best__text" th:text="${post.bcontent}">게시글 내용</p>
           </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
-        </div>
-        <hr>
-        <div class="good">
-          <i class="fas fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
-        </div>
-      </div>
-
-      <div class="board-best__row">
-        <div class="board-best__content">
-          <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
-          </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
-        </div>
-        <hr>
-        <div class="good">
-          <i class="fas fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
-        </div>
-      </div>
-
-      <div class="board-best__row">
-        <div class="board-best__content">
-          <div>
-            <h1 class="board-best__title">title</h1>
-            <p class="board-best__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia error laboriosam soluta consequuntur, repellat amet praesentium doloremque maxime, sint alias porro expedita nam sunt pariatur? Quasi necessitatibus voluptas dolorum atque.</p>
-          </div>
-          <img class="board-best__img" src="https://picsum.photos/id/1/200/200" alt="">
+          <img class="board-best__img" src="https://picsum.photos/id/501/200/200" alt="">
         </div>
         <hr>
         <div class="good">
           <i class="far fa-heart"></i>
-          <span>좋아요</span>
-          <span>100</span>
+          <span th:text="|좋아요 ${post.bgood}|">좋아요 수</span>
         </div>
       </div>
     </section>

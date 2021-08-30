@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/api/ajaxCall.js"></script>
+  <script>
+	  let sum=5;
+		
+		const init = e => {
+		  const toLogin = setTimeout('f()', 1000);
+		}
+		
+	  function f(){
+	    document.querySelector('span.changePWSuccess__countdown').textContent = (--sum)+"초 후에 ";
+	    if(sum == 0){
+//	      clearTimeout(toLogin);
+	      location.href="/login";
+	    }
+	    const id = setTimeout('f()', 1000);
+	  }
+		window.addEventListener("DOMContentLoaded", init);
+  </script>
+  <title>비밀번호 변경</title>
+</head>
+<body>
+  
+  <main class="main">
+
+      <h1 class="findId__title">비밀번호 변경이 완료되었습니다</h1>
+      
+      <div class="findedId">
+        <p class="findedId__text"><span class="changePWSuccess__countdown">5초 후에 </span>로그인 페이지로 이동합니다.</p>
+      </div>
+
+  </main>
+
+</body>
+</html>
