@@ -133,9 +133,11 @@
   width: 15%;
 }*/
 .mypost__btitle{
-  width: 48%;
+  width: 60%;
 }
-
+.mypage__mypostBtn:hover{
+	cursor:pointer;
+}
 
 
 

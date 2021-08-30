@@ -53,7 +53,7 @@ public class APIMypgeController {
 		Result result = new Result();
 		HttpSession session = request.getSession(false);
 		if(session == null) {
-			result = new Result("01","로그인후 내정보 페이지를 이용하실 수 있습니다.",null);
+			result = new Result("01","로그인후 내정보 페이지를 이용하실 수 있습니다.",session);
 			return result;
 		}
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");

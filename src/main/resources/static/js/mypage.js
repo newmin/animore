@@ -11,6 +11,7 @@ bcategory_all.addEventListener('click',()=>{
 const $mypostBtn = document.querySelector('.mypage__mypostBtn');
 let $contents = document.querySelector('.mypage_content');
 let $titleNm = document.querySelector('.mypage_content_title');
+
 $mypostBtn.addEventListener('click',e=>{
 //alert('내글보기버튼 클릭');
 const URL =`/mypage/mypost`;
@@ -32,7 +33,7 @@ request.get(URL)
           data.forEach(post =>{
               html += `<tr class="mypost__container"> `;
               html += `    <td class="mypost__cell mypost__bcategory ">${post.bcategory}</td> `;
-              html += `    <td class="mypost__cell mypost__btitle" ><a th:href="@{|/board/post/${post.bnum}|}" >${post.btitle}</a></td> `;
+              html += `    <td class="mypost__cell mypost__btitle" ><a href="/board/post/${post.bnum}" >${post.btitle}</a></td> `;
               html += `    <td class="mypost__cell mypost__udate" >${post.bcdate}</td> `;
               html += `    <td class="mypost__cell mypost__bhit" >${post.bhit}</td> `;
               html += `</tr> `;
@@ -40,6 +41,13 @@ request.get(URL)
           html += `</table> `;
           $contents.innerHTML = html;
           $titleNm.textContent = '내가 쓴 글';
+          const $bcategorys = document.querySelectorAll('.mypost__bcategory');
+for(let i =0; i<$bcategorys.length; i++){
+  if($bcategorys[i].textContent == 'Q') $bcategorys[i].textContent = 'Q&A';
+  if($bcategorys[i].textContent == 'P') $bcategorys[i].textContent = '내새끼보세요';
+  if($bcategorys[i].textContent == 'F') $bcategorys[i].textContent = '자유게시판';
+  if($bcategorys[i].textContent == 'M') $bcategorys[i].textContent = '벼룩시장';
+};
         }else{
           throw new Error(res.rtmsg);
         }
@@ -49,3 +57,5 @@ request.get(URL)
 		console.log (err.message);
 		});
 });
+
+

@@ -35,6 +35,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql2.append("select board_bnum_seq.currval from dual");
 		Integer boardSeq = jt.queryForObject(sql2.toString(), Integer.class);
 		
+
 		log.info("boardDTO:{}",boardDTO.toString());
 		
 		return findBoardByBnum(boardSeq);
@@ -71,13 +72,15 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> findBoardById(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
 		sql.append("from board ");
 		sql.append("where id=? ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 												new BeanPropertyRowMapper<>(BoardReqDTO.class),
 												id);
+		
+		
 		return list;
 		
 	}
@@ -85,7 +88,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> findBoardByBtitle(String btitle) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
 		sql.append("from board ");
 		sql.append("where btitle like '%?%'; ");
 		
@@ -100,7 +103,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardReqDTO> findBoardByBcontent(String bcontent) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
 		sql.append("from board ");
 		sql.append("where bcontent	 like '%?%'; ");
 		
