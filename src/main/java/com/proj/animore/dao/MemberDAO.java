@@ -79,5 +79,5 @@ public interface MemberDAO {
 	 */
 	void outMember(String id, String pw);
 	
-	
+	void changePw(String id, String pw, String tmpPw);
 }
