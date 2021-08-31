@@ -26,7 +26,7 @@ public class APIMypgeController {
 
 	private final ReviewSVC reviewSVC;
 	
-	@PostMapping("/review")
+	@GetMapping("/review")
 	public Result myReview(HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);

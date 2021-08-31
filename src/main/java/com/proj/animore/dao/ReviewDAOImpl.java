@@ -79,7 +79,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rv.id,rcontent,rscore,rvcdate,rvudate,rv.bnum ");
+		sql.append("select rv.id,rcontent,rscore,rvcdate,rvudate,rv.bnum, b.bname ");
 		sql.append("  from review rv, business b ");
 		sql.append(" where rv.bnum = b.bnum ");
 		sql.append("   and rv.id = ? ");

@@ -5,16 +5,13 @@
 //리뷰페이지 
 const myReview =  document.querySelector('.mypage__myReviewBtn')
 
-function review(e){
+function review(){
   const URL = `/mypage/review`;
-	const data = {
-		  "id": $id,
-													 };
 													 	
-	request.post(URL,data)
+	request.get(URL)
 			.then(res=>res.json())
 			.then(res=>{
-					if(res.rtcd == '00'){
+					if(res.rtcd == "00"){
 							//성공로직처리
 							const data = res.data;
 							//리뷰목록갱신
@@ -26,32 +23,33 @@ function review(e){
 			.catch(err=>{
 					//오류로직 처리
 					console.log(err.message);
-					/*alert(err.message);*/
-					alert('안녕');
+					alert(err.message);
+					/*alert('안녕');*/
 			});
 }
 
-function refreshreview(data){
+function refreshReview(data){
   let html= '';
-  html += `<div class="review">`;
-  html += `  <span class="review__title">번호</span>`;
-  html += `  <span class="review__title">업체명</span>`;
-  html += `  <span class="review__title">내평점</span>`;
-  html += `  <span class="review__title">리뷰내용</span>`;
-  html += `  <span class="review__title">작성일</span>`;
-  data.array.forEach(review => {
-    html += `    <span class="review__text">번호</span>`;
-    html += `    <span th:text="${review.bname}" class="review__text">업체명</span>`;
-    html += `    <span th:text="${review.rscore}" class="review__text">내평점</span>`;
-    html += `    <span th:text="${review.rcontent}" class="review__text">리뷰내용</span>`;
-    html += `    <span th:text="${review.rvcdate}" class="review__text">작성일</span>`;
+  html += `<div class="my-review">`;
+  html += `  <span class="my-review__title">번호</span>`;
+  html += `  <span class="my-review__title">업체명</span>`;
+  html += `  <span class="my-review__title">내평점</span>`;
+  html += `  <span class="my-review__title">리뷰내용</span>`;
+  html += `  <span class="my-review__title">작성일</span>`;
+  data.forEach(review => {
+    html += `    <span class="my-review__text">번호</span>`;
+    html += `    <span class="my-review__text">${review.bname}</span>`;
+    html += `    <span class="my-review__text">${review.rscore}</span>`;
+    html += `    <span class="my-review__text">${review.rcontent}</span>`;
+    html += `    <span class="my-review__text">${review.rvcdate}</span>`;
   });
   html += `</div>`;
   
   document.querySelector('.mypage_content_container').innerHTML = html;
+
 }
 
-myReview.addEventListener('click',review(e));
+myReview.addEventListener('click',review);
 myReview.addEventListener('click',e=>{
 	console.log('클릭!')
 });
