@@ -7,5 +7,7 @@ public class FavoriteDTO {
 	private String id;
 	private int bnum;
 	private int mnum;
+	private String bname;
+	private int score;
 
 }

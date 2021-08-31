@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.form.FavoriteForm;
 
 public interface FavoriteDAO {
 	
@@ -15,7 +16,7 @@ public interface FavoriteDAO {
 	public void deleteFavorite(Integer mnum);
 	
 	//즐겨찾기 목록
-	List<FavoriteDTO> list(Integer mnum);
+	public List<FavoriteDTO> favoritelist(String id);
 	
 	
 
