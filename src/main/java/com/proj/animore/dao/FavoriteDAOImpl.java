@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.FavoriteDTO;
-import com.proj.animore.form.FavoriteForm;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,18 +43,15 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	}
 	//즐겨찾기 목록
 	@Override
-	public List<FavoriteDTO> favoritelist(String id) {
+	public List<FavoriteDTO> list(Integer mnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select f.mnum , b.bname , m.id");
-		sql.append(" from favorite f,business b ,member m " );
-		sql.append(" where f.bnum  = b.bnum  ");
-		sql.append(" and f.id = m.id" );
-		sql.append(" and m.id = ? " );
-		
-		List<FavoriteDTO> favoritelist = jdbcTemplate.query(sql.toString(),
+		sql.append("select business.bname,business.bname baddress  ");
+		sql.append(" from favorite,business " );
+		sql.append("  where  ");
+		sql.append("   and  ");
+		List<FavoriteDTO> list = jdbcTemplate.query(sql.toString(),
 										new BeanPropertyRowMapper<>(FavoriteDTO.class),
-										id);
-		log.info(favoritelist.toString());
-		return favoritelist;
+										mnum);
+		return list;
 	}
 }

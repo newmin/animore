@@ -3,7 +3,6 @@ package com.proj.animore.svc;
 import java.util.List;
 
 import com.proj.animore.dto.FavoriteDTO;
-import com.proj.animore.form.FavoriteForm;
 
 public interface FavoriteSVC {
 	
@@ -14,6 +13,5 @@ public interface FavoriteSVC {
 	void deleteBoard(int mnum);
 	
 	//즐겨찾기 목록
-	public  List<FavoriteDTO
-	> favoritelist(String id);
+	List<FavoriteDTO> list(Integer mnum);
 }
