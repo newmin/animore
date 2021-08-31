@@ -9,8 +9,7 @@ bcategory_all.addEventListener('click',()=>{
 });
 
 const $mypostBtn = document.querySelector('.mypage__mypostBtn');
-let $contents = document.querySelector('.mypage_content');
-let $titleNm = document.querySelector('.mypage_content_title');
+let $contents = document.querySelector('.mypage_content_container');
 
 $mypostBtn.addEventListener('click',e=>{
 //alert('내글보기버튼 클릭');
@@ -23,6 +22,7 @@ request.get(URL)
         if(res.rtcd == '00'){
           const data = res.data;
           let html ='';
+          html += `<h3 class='mypage_content_title'>내가 쓴 글</h3>`;
           html += `<table class="mypage__post"> `;
           html += `    <tr> `;
           html += `      <th class="mypost__cell mypost__bcategory">카테고리</th> `;
@@ -40,7 +40,6 @@ request.get(URL)
           });
           html += `</table> `;
           $contents.innerHTML = html;
-          $titleNm.textContent = '내가 쓴 글';
           const $bcategorys = document.querySelectorAll('.mypost__bcategory');
 for(let i =0; i<$bcategorys.length; i++){
   if($bcategorys[i].textContent == 'Q') $bcategorys[i].textContent = 'Q&A';
