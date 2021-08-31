@@ -11,7 +11,7 @@
   <script src="/js/api/mypageMenuAjax.js" defer></script>
   <script src="/js/api/ajaxCall.js"></script>
   <script src="/js/api/myReviewReq.js" defer></script>
-  <title>Document</title>
+  <title>마이페이지</title>
 </head>
 <body>
 
@@ -38,14 +38,14 @@
           <h2 class="mypage_aside_title">마이페이지</h2>
           <ul class="mypage_aside_menu">
             <!-- TODO th:href 등록 파일명'임의'표기-->
-            <li class="mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
-            <li class="mypage__myReviewBtn"><span>내가 쓴 리뷰</span></li>
-            <li><a href="/mypage/mypagePost.html" class="mypage__mypostBtn">내가 쓴 글</a></li>
-            <li><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
-            <li><a href="/mypage/mypageGood.html" class="mypage__myGoodBtn">좋아요</a></li>
-            <li><a href="/mypage/mypageCoupon.html" class="mypage__myCouponBtn">내 쿠폰</a></li>
-            <li><a href="/mypage/mypageModi.html" class="mypage__myInfoBtn">회원 정보 수정</a></li>
-            <li><a href="/mypage/mypageDel"  class="mypage__outBtn">회원 탈퇴</a></li>
+            <li class="mypage_aside_menu mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
+            <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
+            <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageGood.html" class="mypage__myGoodBtn">좋아요</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageCoupon.html" class="mypage__myCouponBtn">내 쿠폰</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageModi.html" class="mypage__myInfoBtn">회원 정보 수정</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageDel"  class="mypage__outBtn">회원 탈퇴</a></li>
           </ul>
         </div>
         <div class="mypage_content_container">

@@ -72,7 +72,6 @@ public class BoardController {
 										Model model,
 										HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-
 		//LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		if(session == null) return "redirect:/login";
 		
@@ -99,7 +98,8 @@ public class BoardController {
 						HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
-		if(session==null) return "redirect:/login";
+
+		if(session == null) return "redirect:/login";
 		
 		return "board/addBoardForm";
 	}
@@ -173,4 +173,3 @@ public class BoardController {
 	}
 	
 }
-
