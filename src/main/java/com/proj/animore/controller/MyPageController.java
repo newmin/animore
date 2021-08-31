@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.proj.animore.dto.FavoriteDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
+import com.proj.animore.svc.FavoriteSVC;
 import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.MypageSVC;
 
@@ -28,58 +31,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@SessionAttributes("id")
 public class MyPageController {
+	private final FavoriteSVC favoriteSVC;
 	private final MemberSVC memberSVC;
 	private final MypageSVC mypageSVC;
 	
 	@GetMapping("/mypageFavorites")
-	public String mypage() {
+	public String mypage(HttpServletRequest request,
+			Model model) {
+		
+		
+		
+		HttpSession session = request.getSession(false);
+ 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+ 		String id = loginMember.getId();
+ 		log.info(id);
+
+
+ 		List<FavoriteDTO> favoritelist = favoriteSVC.favoritelist(id);
+
+ 		model.addAttribute("FavoriteDTO",favoritelist);
+		
+
 		return "mypage/mypageFavorites";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

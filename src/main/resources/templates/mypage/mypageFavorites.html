@@ -51,7 +51,7 @@
         <div class="mypage_content_container">
           <h3 class="mypage_content_title">즐겨 찾는 업체</h3>
           <hr>
-        <div class="mypage_content">
+       <!--  <div class="mypage_content">
             <ul>
               <li><input type="checkbox" name="bcategory_all" id="bcategory_all"><label for="bcategory_all">전체</label></li>
               <li><input type="checkbox" name="bhospital" id="bhospital"><label for="bhospital">병원</label></li>
@@ -65,20 +65,24 @@
               <li><input type="checkbox" name="bhairshop" id="bhairshop"><label for="bhairshop">미용실</label></li>
               <li><input type="checkbox" name="betc" id="betc"><label for="betc">기타</label></li>
             </ul>
-          </div>
-         <table class="favorite__table">
-        <tr>
-          <th class="favorite__cell favorite__mnum">번호</th>
-          <th class="favorite__cell favorite_bname">업체명</th>
-          <th class="favorite__cell favorite_score">평점</th>
-        </tr>
-        <tr th:each="favoriteForm :${favoriteForm}">
-          <td class="favorite__cell favorite_bname" ><a th:href="@{|/favoriteForm/post/${favoriteForm.mnum}|}" th:text="${favoriteForm.bname}"></a></td>
-          <td class="favorite__cell favorite__mnum" th:text="${favorite.mnum}">1</td>
-          <td class="favorite__cell favorite_score" th:text="${favorite.score}">3</td>
-          
-          </tr>
-      </table>
+          </div> -->
+ <table class="favorite__table">
+         <tr>
+           <th class="favorite__cell favorite__mnum">번호</th>
+           <th class="favorite__cell favorite_bname">업체명</th>
+           <th class="favorite__cell favorite_score">평점</th>
+         </tr>
+
+         <tr th:each="favorite :${FavoriteDTO}">
+         
+           <td class="favorite__cell favorite__mnum" th:text="${favorite.mnum}">1</td>
+ 
+           <td class="favorite__cell favorite_bname" th:text="${favorite.bname}">2</td>
+
+      	  <td class="favorite__cell favorite_score" th:text="${favorite.score}">3</td>
+
+         </tr>
+       </table>
           
         </div>
       </div>
