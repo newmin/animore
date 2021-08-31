@@ -157,7 +157,7 @@ public class MyPageController {
 		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
 		html.append("<hr>");
 		html.append("<div class='mypage_content'>");
-		html.append("  <form action='/mypage/mypageDel' th:method='delete' class='findId'>");
+		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
 		html.append("    <h1 class='findId__title'></h1>");
 		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
 		html.append("    <div class='findId__form'>");
@@ -192,7 +192,8 @@ public class MyPageController {
 		if(pw == null || pw.trim().length() == 0) {
 			errors.put("pw", "비밀번호를 입력하세요");
 			model.addAttribute("errors", errors);
-			return "mypage/memberOutForm";
+//			return "mypage/memberOutForm";
+			return null;
 		}
 		
 		HttpSession session = request.getSession(false);
@@ -209,7 +210,8 @@ public class MyPageController {
 		}
 		
 		if(!errors.isEmpty()) {
-			return "mypage/memberOutForm";
+//			return "mypage/memberOutForm";
+			return null;
 		}
 		
 		session.invalidate();
