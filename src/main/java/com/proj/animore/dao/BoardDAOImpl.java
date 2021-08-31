@@ -83,30 +83,53 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String btitle) {
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
-		sql.append("from board ");
-		sql.append("where btitle like '%?%'; ");
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t1.btitle like  '%"+btitle+"%'");
+		sql.append("and t1.bcategory = ? ");
+		sql.append(" order by t1.bnum ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				btitle);
+				bcategory);
+//		btitle,bcategory);
 		return list;
 
 	}
-	//게시글검색(by bcontent)
+	//게시글검색(by nickname)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcontent) {
-
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
-		sql.append("from board ");
-		sql.append("where bcontent	 like '%?%'; ");
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t2.nickname like  '%"+nickname+"%' ");
+		sql.append("and t1.bcategory =? ");
+		sql.append(" order by t1.bnum ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcontent);
+				nickname,bcategory);
+		return list;
+	}
+	//게시글검색(by bcontent)
+	@Override
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t1.bcontent like  '%"+bcontent+"%' ");
+		sql.append("and t1.bcategory =? ");
+		sql.append(" order by t1.bnum ");
+		
+		List<BoardReqDTO> list = jt.query(sql.toString(), 
+				new BeanPropertyRowMapper<>(BoardReqDTO.class),
+				bcontent,bcategory);
 		return list;
 
 	}

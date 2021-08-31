@@ -8,17 +8,17 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.dto.BoardDTO;
@@ -27,6 +27,7 @@ import com.proj.animore.dto.RboardListReqDTO;
 import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;
+import com.proj.animore.form.Result;
 import com.proj.animore.svc.BoardSVC;
 import com.proj.animore.svc.RboardSVC;
 
@@ -171,6 +172,38 @@ public class BoardController {
 		
 		return "redirect:/board/{bcategory}";
 	}
+	//제목으로 게시글 검색
+	@ResponseBody
+	@GetMapping("/search/{bcategory}")
+	public Result searchByBtitle(@PathVariable String bcategory,
+								@RequestParam String btitle,
+								HttpServletRequest request) {
+//		HttpSession session = request.getSession(false);
+//		if(session==null) return "redirect:/login";
+		
+		List<BoardReqDTO> list = boardSVC.findBoardByBtitle(bcategory,btitle);
+		log.info("bcategory:{}",bcategory);
+		Result result = new Result();
+		if (list.size() == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("게시글이 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(list);
+		}
+
+		log.info("result:{}",result);
+		return result;
+	}
+		
+	}
 	
-}
+
+
+
+
+
+
+
 
