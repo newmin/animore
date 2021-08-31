@@ -284,5 +284,16 @@ public class MemberDAOImpl implements MemberDAO {
 //		jt.update(sql.toString(), id, pw);
 	}
 	
+	@Override
+	public void changePw(String email, String pw, String tmpPw) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update member ");
+		sql.append("	 set pw = ? ");   //변경할 비밀번호
+		sql.append(" where email = ? ");
+		sql.append("   and pw = ? ");   //이전 비밀번호
+		
+		jdbcTemplate.update(sql.toString(), tmpPw, email, pw);
+		
+	}
 	
 }
