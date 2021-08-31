@@ -58,6 +58,16 @@ request.get(URL)
 		.then(res=>{
 		if(res.rtcd==0){
 		const data = res.data;
+    if($url.slice(-1,$url.length)=='P'){
+      let html ='';
+      html += `  <div class="b_galary_post"> `;
+      data.forEach(boardForm=>{
+        html += `<div class="b_galary_img"><a href="/board/post/${boardForm.bnum}"> `;
+        html += `  <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">${boardForm.btitle}</p></a></div> `;
+      })
+      html += `</div>`;
+      document.querySelector('.board__table').innerHTML = html;
+    }else{
 		let html ='';
 		html += `    <tr> `;
           html += `      <th class="board__cell board__num">카테고리</th> `;
@@ -75,7 +85,7 @@ request.get(URL)
       html +=` <td class="board__cell board__hearthits" >${boardForm.bgood}</td> `;
     html +=`</tr> `;
 		});
-		document.querySelector('.board__table').innerHTML = html;
+		document.querySelector('.board__table').innerHTML = html;}
   }else{
   		throw new Error(res.rtmsg);
   	}
