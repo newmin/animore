@@ -203,4 +203,86 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public boolean isLogin(String id, String pw) {
+		boolean isLogin = false;
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("select count(id) ");
+		sql.append("  from member ");
+		sql.append(" where id = ? ");
+		sql.append("   and pw = ? ");
+//		sql.append("   and status is null ");
+		
+		Integer cnt = 
+				jdbcTemplate.queryForObject(sql.toString(), Integer.class, id, pw);
+		if(cnt == 1) isLogin = true;
+		
+		return isLogin;
+	}
+	
+	@Override
+	public void outMember(String id, String pw) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("delete member ");
+		sql.append("where id = ? ");
+		sql.append("  and pw = ?");
+		
+		jdbcTemplate.update(sql.toString(), id, pw);
+		
+//		회원상태플래그 사용시 쿼리
+//		sql.append("update member ");
+//		sql.append("   set status= 'D' ");
+//		sql.append(" where id = ? ");
+//		sql.append("   and pw = ?");		
+//		jt.update(sql.toString(), id, pw);
+	}
+	
+	
 }

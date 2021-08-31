@@ -41,4 +41,43 @@ public interface MemberDAO {
 
 	//비밀번호변경처리
 	int changePW(ChangePwForm changePWForm);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 로그인 체크
+	 * @param id
+	 * @param pw
+	 * @return
+	 */
+	boolean isLogin(String id, String pw);
+	
+	/**
+	 * 탈퇴
+	 * @param email
+	 */
+	void outMember(String id, String pw);
+	
+	
 }

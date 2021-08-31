@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer></script>
+	<title>마이페이지|내가 쓴 댓글</title>
+<style>
+/*
+	.mypagereply__{
+	  display: grid;
+	  grid-template-rows: repeat(10, 40px);
+	  grid-template-columns: 40px 120px 60px 250px 120px;
+	  grid-template-columns: 20% 20% 20% 20% 20%;
+	}
+	.mypagereply__title,
+	.mypagereply__text{
+	  border: 1px solid rgba(0, 0, 0, 0.5);
+	  border-collapse: collapse;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  white-space : nowrap;
+	  overflow : hidden;
+	  text-overflow : ellipsis;
+	}
+*/
+	.mypagereply__{margin: 0 auto;}
+	.mypagereply__text1{}
+	.mypagereply__text2{}
+	.mypagereply__text3{}
+	.mypagereply__text4{ text-align: center; }
+	.mypagereply__title{
+	  font-weight: 600;
+	}
+	
+	
+</style>
+
+</head>
+<body>
+
+  <main class="main">
+     <!-- 프로필정보 -->
+      <div class="mypage_profile_container">
+        <div class="mypage_profile_profileimg">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+        </div>
+        <div class="mypage_profile_nickname">
+          Tester1
+        </div>
+        <div class="mypage_profile_usertypeicon">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
+        </div>
+        <div class="mypage_profile_mileage">
+          마일리지: 1000p
+        </div>
+      </div>
+      <!-- 프로필정보 끝 -->
+      <div class="mypage_container2">
+        <div class="mypage_aside_container">
+          <h2 class="mypage_aside_title">마이페이지</h2>
+          <ul class="mypage_aside_menu">
+            <!-- TODO th:href 등록 파일명'임의'표기-->
+            <li class="mypage_aside_menu_highlight"><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+            <li><a href="/mypage/mypageReview" >내가 쓴 리뷰</a></li>
+            <li><a href="/mypage/mypagePost.html" >내가 쓴 글</a></li>
+            <li><a href="/mypage/mypageReply" >내가 쓴 댓글</a></li>
+            <li><a href="/mypage/mypageGood.html" >좋아요</a></li>
+            <li><a href="/mypage/mypageCoupon.html" >내 쿠폰</a></li>
+            <li><a href="/mypage/mypageModi.html" >회원 정보 수정</a></li>
+            <li><a href="/mypage/mypageDel" >회원 탈퇴</a></li>
+          </ul>
+        </div>
+        <div class="mypage_content_container">
+          <h3 class="mypage_content_title">내가 쓴 댓글</h3>
+          <hr>
+        	<div class="mypage_content">
+        	
+        	
+	          <table class="mypagereply__"> 
+		          <tr>
+						    <th class="mypagereply__title1">번호</th>
+						    <th class="mypagereply__title2">댓글내용</th>
+						    <th class="mypagereply__title3">작성일</th>
+						    <th class="mypagereply__title4">좋아요</th>
+ 						    <!-- <th class="mypagereply__title5"></th> -->
+					    </tr>
+					    <tr th:each="mypagereply : ${mypagereply}">
+					      <td class="mypagereply__text1" th:text="${mypagereply.rnum}" >번호</td>
+					      <td class="mypagereply__text2"><a th:href="@{|/board/post/${mypagereply.bnum}|}" th:text="${mypagereply.rcontent}">댓글내용</a></td>
+					      <td class="mypagereply__text3" th:text="${mypagereply.rcdate}">작성일</td>
+					      <td class="mypagereply__text4" th:text="${mypagereply.bgood}">좋아요</td>
+					      <!-- <td th:text="5번째칸" class="mypagereply__text"></td> -->
+					    </tr>
+			    	</table>
+			    	
+			    	
+        	</div>
+      	</div>
+    </main>
+    
+</body>
+</html>
