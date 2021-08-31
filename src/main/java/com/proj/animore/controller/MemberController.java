@@ -193,7 +193,7 @@ public class MemberController {
     
     model.addAttribute("info", "가입된 이메일로 임시비밀번호가 발송되었습니다.");
     
-    return "redirect:/login";
+    return "redirect:/member/changePWSuccess";
     
 //		//정보가 DB와 일치할 경우
 //		redirectAttributes.addAttribute("id", changePwForm.getId());
