@@ -57,31 +57,23 @@
 /* 마이페이지 메뉴 */
 .mypage_aside_title{
   margin-left: 15px;
-  margin-top: 0;
 }
 .mypage_aside_menu{
   font-size: 16px;
 }
-.mypage_aside_container ul{
- list-style: none;
- padding: 0;
-}
+
 .mypage_aside_menu li{
   box-sizing: border-box;
   margin-top: -1px;
   padding: 11px 10px;
   border: 1px solid #ddd;
+  cursor: pointer;
 }
-.mypage_aside_menu li a{
-  color: #000;
-  text-decoration: none;
-}
-.mypage_aside_menu li a:hover{
+
+/* .mypage_aside_menu:hover{
   color: cornflowerblue;
-  /* font-weight: bold; */
-}
-.mypage_aside_menu li.mypage_aside_menu_highlight a{
-  /* font-weight: bold; */
+} */
+.mypage_aside_menu_highlight {
   color: cornflowerblue;
 }
 
@@ -103,8 +95,6 @@
 .mypage_content ul{
   display: flex;
   justify-content:space-evenly;
-  margin: 0; padding: 0;
-  list-style: none;
   font-size: 12px;
 }
 
@@ -119,8 +109,46 @@
   color: cornflowerblue;
 }
 
+/* 내 리뷰 */
+ .my-review{
+   display: grid;
+   grid-template-rows: repeat(10, 40px);
+   grid-template-columns: 40px 120px 60px 250px 120px;
+   border-top: 1px solid rgba(0, 0, 0, 0.1);
+   border-left: 1px solid rgba(0, 0, 0, 0.1);
+ }
+ .my-review__title,
+ .my-review__text{
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   border-right: 1px solid rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .my-review__title{
+   font-weight: 600;
+ }
+ 
+ /* 내가 쓴 글 */
+/*내가쓴글*/
+.mypost__cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height:22px;
+  line-height:22px;
+  text-align: center;
+}
 
-
+/*.mypost__bcategory,
+.mypost__udate,
+.mypost__bhit{
+  width: 15%;
+}*/
+.mypost__btitle{
+  width: 60%;
+}
+.mypage__mypostBtn:hover{
+	cursor:pointer;
+}
 
 
 /* 모바일(여유되면) */

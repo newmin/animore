@@ -12,6 +12,7 @@ public class ReviewReq {
 	private Integer rscore;		//사용자가 입력한 평점
 	private String rcontent;	//리뷰내용
 	private String id;			//작성자ID
+	private String bname;
 	private String nickname;
 	private LocalDate rvcdate;
 	private LocalDate rvudate;

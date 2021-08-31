@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.ReviewForm;
 
@@ -22,6 +23,45 @@ public interface MyPageDAO {
 	
 	//내가 쓴 리뷰
 	List<ReviewForm> myReview(String id);
+
+
 	
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//내가쓴댓글
+	List<MypageReplyRes> mypageReply(String id);
 }

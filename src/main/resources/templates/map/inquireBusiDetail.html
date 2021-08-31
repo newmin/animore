@@ -17,8 +17,11 @@
  <!--카카오 API-->
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
  <script src="/js/inquireBusiDetail.js" defer></script>
- <script src="/js/api/ajaxCall.js"></script>
- <script src="/js/api/reviewReq.js"></script>
+ <script src="/js/api/ajaxCall.js" defer></script>
+ <script th:inline="javascript">
+	 const $id = /*[[${session.loginMember?.id}]]*/ null;	//아이디
+ </script>
+ <script src="/js/api/reviewReq.js" defer></script>
  <title>업체조회</title>
 </head>
 <body>
@@ -107,19 +110,19 @@
 		                    <label for="point5"><i class="fas fa-star reviewForm__score five reviewForm__checked"></i></label>
 		                </div>
 		            </div>
-		            <div class="review_contents">
+		            <div class="review__contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
 		                <textarea rows="10" class="review__textarea" name="rcontent"></textarea>
-		                <button class="review__regist" type="submit">등록</button>
+		                <button class="review__regist" type="button">등록</button>
 		            </div>   
 		        </form>
 		    </section>
 		      
-		      <section th:if="${session.loginMember == null}">
-		      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
-		      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
-		      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
-		      </section>
+	      <section th:if="${session.loginMember?.id == null}">
+	      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
+	      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
+	      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
+	      </section> 
 		      
 		      
 		    </div>

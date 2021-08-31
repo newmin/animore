@@ -47,4 +47,21 @@ public interface MemberSVC {
 	//비밀번호 변경처리
 	int changePW(ChangePwForm changePWForm);
 	
+	
+	
+	
+	
+	/**
+	 * 회원 유무체크
+	 * @param email
+	 * @param pw
+	 */
+	boolean isMemember(String id, String pw);
+	
+	/**
+	 * 탈퇴
+	 * @param email
+	 */
+	void outMember(String email, String pw);
+	
 }

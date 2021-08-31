@@ -104,4 +104,22 @@ public class MemberSVCImpl implements MemberSVC {
 	public int changePW(ChangePwForm changePWForm) {
 		return memberDAO.changePW(changePWForm);
 	}
+	
+	
+	
+	
+	
+	//회원 우무체크
+	@Override
+	public boolean isMemember(String id, String pw) {
+		return memberDAO.isLogin(id, pw);
+	}
+	
+//id로 회원 탈퇴
+	@Override
+	public void outMember(String id, String pw) {
+		memberDAO.outMember(id, pw);
+		
+	}
+	
 }

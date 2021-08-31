@@ -98,9 +98,9 @@ public class BoardController {
 						HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
-		if(session==null) {
-			return "/member/login";
-		}
+
+		if(session == null) return "redirect:/login";
+		
 		return "board/addBoardForm";
 	}
 	
@@ -173,4 +173,3 @@ public class BoardController {
 	}
 	
 }
-
