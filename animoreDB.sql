@@ -27,6 +27,7 @@ create table member(
   status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp DEFAULT systimestamp,
+  lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
   image blob,
   fsize varchar2(45),
   ftype varchar2(50),
