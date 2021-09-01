@@ -98,21 +98,21 @@
       infowindow.open(map, center);
   }
 
-  // 현재문서가 로딩되면 현재위치를 저장한다.
-  window.addEventListener("load", function() {
-      if (navigator.geolocation) {
-          /**
-           * navigator.geolocation 은 Chrome 50 버젼 이후로 HTTP 환경에서 사용이 Deprecate 되어 HTTPS 환경에서만 사용 가능 합니다.
-           * http://localhost 에서는 사용이 가능하며, 테스트 목적으로, Chrome 의 바로가기를 만들어서 아래와 같이 설정하면 접속은 가능합니다.
-           * chrome.exe --unsafely-treat-insecure-origin-as-secure="http://example.com"
-           */
-          navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-      } else {
-          var center = map.getCenter();
-          infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
-          infowindow.open(map, center);
-      }
-  });    
+  // // 현재문서가 로딩되면 현재위치를 저장한다.
+  // window.addEventListener("load", function() {
+  //     if (navigator.geolocation) {
+  //         /**
+  //          * navigator.geolocation 은 Chrome 50 버젼 이후로 HTTP 환경에서 사용이 Deprecate 되어 HTTPS 환경에서만 사용 가능 합니다.
+  //          * http://localhost 에서는 사용이 가능하며, 테스트 목적으로, Chrome 의 바로가기를 만들어서 아래와 같이 설정하면 접속은 가능합니다.
+  //          * chrome.exe --unsafely-treat-insecure-origin-as-secure="http://example.com"
+  //          */
+  //         navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+  //     } else {
+  //         var center = map.getCenter();
+  //         infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
+  //         infowindow.open(map, center);
+  //     }
+  // });    
 
   //현재위치 버튼 클릭하면 현재위치를 저장한다.
   currBtn.addEventListener('click',e=>{
@@ -151,87 +151,120 @@
     });
   }
 
-  const markers = [];
-  const infos = [];
-  const HOME_PATH = window.HOME_PATH || '.';
-  // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-  function placesSearchCB (data, status, pagination) {
-      switch (status) {
-        case kakao.maps.services.Status.OK : //검색 결과 있음
-          console.log(data);
+  // const markers = [];
+  // const infos = [];
+  // const HOME_PATH = window.HOME_PATH || '.';
+  // // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+  // function placesSearchCB (data, status, pagination) {
+  //     switch (status) {
+  //       case kakao.maps.services.Status.OK : //검색 결과 있음
+  //         console.log(data);
 
-          if(markers.length){
-            //검색전 마커존재시 지도에서 제거
-            markers.forEach(ele=>ele.setMap(null)); 
+  //         if(markers.length){
+  //           //검색전 마커존재시 지도에서 제거
+  //           markers.forEach(ele=>ele.setMap(null)); 
 
-            //마커,인포 배열요소 제거
-            markers.splice(0,markers.length);
-            infos.splice(0,infos.length);
-          }
+  //           //마커,인포 배열요소 제거
+  //           markers.splice(0,markers.length);
+  //           infos.splice(0,infos.length);
+  //         }
 
-          data.forEach(ele=>{
-            console.log(ele.y, ele.x);
+  //         data.forEach(ele=>{
+  //           console.log(ele.y, ele.x);
 
-            //마커 생성
-            let marker = new naver.maps.Marker({
-              position: new naver.maps.LatLng(ele.y, ele.x),
-              map: map,
-              icon: {
-                // content: [
-                //       // '<div>',
-                //       '   <div><img class="marker" src="marker.png"/></div>',
-                //       // '</div>',
-                //   ].join(''),
-                content:'<div><img class="marker" src="marker.png"/></div>',
-                size: new naver.maps.Size(50, 52),
-                origin: new naver.maps.Point(0, 0),
-                anchor: new naver.maps.Point(25, 26)              
-              }
-            });
-            //마커 배열에 저장
-            markers.push(marker);  
-            infos.push({
-              place_name:ele.place_name,              //가게이름
-              phone:ele.phone,                        //연락처
-              road_address_name:ele.road_address_name //도로명주소
-            });            
-          });
+  //           //마커 생성
+  //           let marker = new naver.maps.Marker({
+  //             position: new naver.maps.LatLng(ele.y, ele.x),
+  //             map: map,
+  //             icon: {
+  //               // content: [
+  //               //       // '<div>',
+  //               //       '   <div><img class="marker" src="marker.png"/></div>',
+  //               //       // '</div>',
+  //               //   ].join(''),
+  //               content:'<div><img class="marker" src="marker.png"/></div>',
+  //               size: new naver.maps.Size(50, 52),
+  //               origin: new naver.maps.Point(0, 0),
+  //               anchor: new naver.maps.Point(25, 26)              
+  //             }
+  //           });
+  //           //마커 배열에 저장
+  //           markers.push(marker);  
+  //           infos.push({
+  //             place_name:ele.place_name,              //가게이름
+  //             phone:ele.phone,                        //연락처
+  //             road_address_name:ele.road_address_name //도로명주소
+  //           });            
+  //         });
 
-          //마커 클릭시 인포창띄우기
-          markers.forEach((ele,idx)=>{
-            naver.maps.Event.addListener(ele, 'click', function(e) {
-              //인포정보
-              const currInfoHTML = `<div class='currInfo'>
-                                <p>가게이름 : ${infos[idx].place_name}</P>
-                                <p>연락처 : ${infos[idx].phone}</P>
-                                <p>도로명주소 : ${infos[idx].road_address_name}</P>
-                              </div>`; 
+  //         //마커 클릭시 인포창띄우기
+  //         markers.forEach((ele,idx)=>{
+  //           naver.maps.Event.addListener(ele, 'click', function(e) {
+  //             //인포정보
+  //             const currInfoHTML = `<div class='currInfo'>
+  //                               <p>가게이름 : ${infos[idx].place_name}</P>
+  //                               <p>연락처 : ${infos[idx].phone}</P>
+  //                               <p>도로명주소 : ${infos[idx].road_address_name}</P>
+  //                             </div>`; 
 
-              //infowindow.setContent(currInfoHTML);
-              infowindow.setOptions({
-                content:currInfoHTML,
-                backgroundColor: '#0ff03',  
-                borderWidth:0,
-                anchorSize: new naver.maps.Size(10,10),
-                anchorSkew : true,
-                anchorColor: 'red',
-                disableAnchor: false
-                // pixelOffset :new naver.maps.Point(0, -10),
-              });
+  //             //infowindow.setContent(currInfoHTML);
+  //             infowindow.setOptions({
+  //               content:currInfoHTML,
+  //               backgroundColor: '#0ff03',  
+  //               borderWidth:0,
+  //               anchorSize: new naver.maps.Size(10,10),
+  //               anchorSkew : true,
+  //               anchorColor: 'red',
+  //               disableAnchor: false
+  //               // pixelOffset :new naver.maps.Point(0, -10),
+  //             });
 
-              infowindow.open(map, ele);                   
-            })                
-          })
+  //             infowindow.open(map, ele);                   
+  //           })                
+  //         })
 
-          break;        
-        case kakao.maps.services.Status.ZERO_RESULT  : //정상적으로 응답 받았으나 검색 결과는 없음
-          alert('정상적으로 응답 받았으나 검색 결과는 없음');
-          break;        
-        case kakao.maps.services.Status.ERROR   : //서버 응답에 문제가 있는 경우
-          alert('서버 응답에 문제가 있는 경우');
-          break;        
-        default:
+  //         break;        
+  //       case kakao.maps.services.Status.ZERO_RESULT  : //정상적으로 응답 받았으나 검색 결과는 없음
+  //         alert('정상적으로 응답 받았으나 검색 결과는 없음');
+  //         break;        
+  //       case kakao.maps.services.Status.ERROR   : //서버 응답에 문제가 있는 경우
+  //         alert('서버 응답에 문제가 있는 경우');
+  //         break;        
+  //       default:
 
-          break;
+  //         break;
+  //     }
+  // }    
+
+
+  var myaddress = $baddress;// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
+  // 주소가 있는지 체크
+  naver.maps.Service.geocode({address: myaddress}, function(status, response) {
+      if (status !== naver.maps.Service.Status.OK) {
+          return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
       }
-  }    
+      var result = response.result;
+      // 검색 결과 갯수: result.total
+      // 첫번째 결과 결과 주소: result.items[0].address
+      // 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
+      var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
+      map.setCenter(myaddr); // 검색된 좌표로 지도 이동
+      // 마커 표시 ( 검색한 주소에 마커를 찍어둠 )
+      var marker = new naver.maps.Marker({
+          position: myaddr,
+          map: map
+      });
+      // 마커 클릭 이벤트 처리 ( 클릭할 경우 infowindow에 등록된 이미지와 이름이 뜸 )
+      naver.maps.Event.addListener(marker, "click", function(e) {
+          if (infowindow.getMap()) {
+          infowindow.close();
+      } else {
+          infowindow.open(map, marker);
+      }
+  });
+  // 마크 클릭시 인포윈도우 오픈
+  var infowindow = new naver.maps.InfoWindow({
+  //띄워줄 이름과 사이트 이미지, 클릭했을경우 이동할 url 주소를 입력해주면 된다.
+       content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
+  });
+});

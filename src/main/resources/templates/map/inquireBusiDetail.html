@@ -11,6 +11,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./10-10.css"/>
 <script type="text/javascript" src="./10-10.js"></script> -->
+	<script th:inline="javascript">
+	 const $busi = /*[[${busi}]]*/ null;	//아이디
+ </script>
 <script src="/js/mapAPI.js" defer></script>
  <!--네이버 API-->
  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script>
@@ -18,9 +21,6 @@
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
  <script src="/js/inquireBusiDetail.js" defer></script>
  <script src="/js/api/ajaxCall.js" defer></script>
-<!--  <script th:inline="javascript">
-	 const $id = /*[[${session.loginMember?.id}]]*/ null;	//아이디
- </script> -->
  <script src="/js/api/reviewReq.js" defer></script>
  <title>업체조회</title>
 </head>
