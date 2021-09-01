@@ -46,6 +46,7 @@
 const $search_select = document.querySelector('.board__search_select');
 const $searchText = document.querySelector('.board__searchInput');
 const $searchBtn = document.querySelector('.searchBtn');
+
 const $url = document.location.href;
 /*제목으로게시글찾기*/
 function searchByBtitle(){
@@ -70,7 +71,7 @@ request.get(URL)
     }else{
 		let html ='';
 		html += `    <tr> `;
-          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__num">번호</th> `;
           html += `      <th class="board__cell board__title">제목</th> `;
           html += `      <th class="board__cell board__writer">작성자</th> `;
           html += `      <th class="board__cell board__hits">조회수</th> `;
@@ -78,7 +79,7 @@ request.get(URL)
           html += `    </tr> `;
 		data.forEach(boardForm=>{
     html +=`<tr>`;
-      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__num" >${boardForm.bnum}</td> `;
       html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
       html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
       html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
@@ -121,7 +122,7 @@ request.get(URL)
     }else{
 		let html ='';
 		html += `    <tr> `;
-          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__num">번호</th> `;
           html += `      <th class="board__cell board__title">제목</th> `;
           html += `      <th class="board__cell board__writer">작성자</th> `;
           html += `      <th class="board__cell board__hits">조회수</th> `;
@@ -129,7 +130,7 @@ request.get(URL)
           html += `    </tr> `;
 		data.forEach(boardForm=>{
     html +=`<tr>`;
-      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__num" >${boardForm.bnum}</td> `;
       html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
       html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
       html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
@@ -172,7 +173,7 @@ request.get(URL)
     }else{
 		let html ='';
 		html += `    <tr> `;
-          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__num">번호</th> `;
           html += `      <th class="board__cell board__title">제목</th> `;
           html += `      <th class="board__cell board__writer">작성자</th> `;
           html += `      <th class="board__cell board__hits">조회수</th> `;
@@ -180,7 +181,7 @@ request.get(URL)
           html += `    </tr> `;
 		data.forEach(boardForm=>{
     html +=`<tr>`;
-      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__num" >${boardForm.bnum}</td> `;
       html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
       html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
       html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
@@ -200,7 +201,6 @@ request.get(URL)
   	
 
 };
-
 
 $searchBtn.addEventListener('click',e=>{
 console.log(`url은? ${$url.slice(-1,$url.length)}`);
