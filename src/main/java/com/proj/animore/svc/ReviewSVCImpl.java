@@ -32,13 +32,13 @@ public class ReviewSVCImpl implements ReviewSVC {
 	}
 
 	@Override
-	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewDTO reviewDTO) {
+	public List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO) {
 		return reviewDAO.updateReview(bnum, id, reviewDTO);
 	}
 
 	@Override
-	public List<ReviewReq> removeReview(Integer bnum, String id) {
-		return reviewDAO.removeReview(bnum, id);
+	public List<ReviewReq> removeReview(int bnum, int rnum, String id) {
+		return reviewDAO.removeReview(bnum, rnum, id);
 	}
 
 }
