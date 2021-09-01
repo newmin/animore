@@ -41,13 +41,18 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String btitle) {
-		return boardDAO.findBoardByBtitle(btitle);
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
+		return boardDAO.findBoardByBtitle(bcategory,btitle);
 	}
 	//게시글검색(by bcontent)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcontent) {
-		return boardDAO.findBoardByBcontent(bcontent);
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
+		return boardDAO.findBoardByBcontent(bcategory,bcontent);
+	}
+	//게시글검색(by nickname)
+	@Override
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
+		return boardDAO.findBoardByNickname(bcategory,nickname);
 	}
 	//게시글수정
 	@Override

@@ -43,5 +43,171 @@
   
 }
 
+const $search_select = document.querySelector('.board__search_select');
+const $searchText = document.querySelector('.board__searchInput');
+const $searchBtn = document.querySelector('.searchBtn');
+const $url = document.location.href;
+/*제목으로게시글찾기*/
+function searchByBtitle(){
+
+const URL  =`/board/search/title/${$url.slice(-1,$url.length)}?btitle=${$searchText.value}`;
+console.log("url:",URL);
+
+request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+		if(res.rtcd==0){
+		const data = res.data;
+    if($url.slice(-1,$url.length)=='P'){
+      let html ='';
+      html += `  <div class="b_galary_post"> `;
+      data.forEach(boardForm=>{
+        html += `<div class="b_galary_img"><a href="/board/post/${boardForm.bnum}"> `;
+        html += `  <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">${boardForm.btitle}</p></a></div> `;
+      })
+      html += `</div>`;
+      document.querySelector('.board__table').innerHTML = html;
+    }else{
+		let html ='';
+		html += `    <tr> `;
+          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__title">제목</th> `;
+          html += `      <th class="board__cell board__writer">작성자</th> `;
+          html += `      <th class="board__cell board__hits">조회수</th> `;
+          html += `      <th class="board__cell board__hearthits">좋아요</th> `;
+          html += `    </tr> `;
+		data.forEach(boardForm=>{
+    html +=`<tr>`;
+      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
+      html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
+      html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
+      html +=` <td class="board__cell board__hearthits" >${boardForm.bgood}</td> `;
+    html +=`</tr> `;
+		});
+		document.querySelector('.board__table').innerHTML = html;}
+  }else{
+  		throw new Error(res.rtmsg);
+  	}
+  	})
+  	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+  
+  	
+
+};
+/*닉네임으로게시글찾기*/
+function searchByNickname(){
+
+const URL  =`/board/search/nickname/${$url.slice(-1,$url.length)}?nickname=${$searchText.value}`;
+console.log("url:",URL);
+
+request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+		if(res.rtcd==0){
+		const data = res.data;
+    if($url.slice(-1,$url.length)=='P'){
+      let html ='';
+      html += `  <div class="b_galary_post"> `;
+      data.forEach(boardForm=>{
+        html += `<div class="b_galary_img"><a href="/board/post/${boardForm.bnum}"> `;
+        html += `  <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">${boardForm.btitle}</p></a></div> `;
+      })
+      html += `</div>`;
+      document.querySelector('.board__table').innerHTML = html;
+    }else{
+		let html ='';
+		html += `    <tr> `;
+          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__title">제목</th> `;
+          html += `      <th class="board__cell board__writer">작성자</th> `;
+          html += `      <th class="board__cell board__hits">조회수</th> `;
+          html += `      <th class="board__cell board__hearthits">좋아요</th> `;
+          html += `    </tr> `;
+		data.forEach(boardForm=>{
+    html +=`<tr>`;
+      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
+      html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
+      html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
+      html +=` <td class="board__cell board__hearthits" >${boardForm.bgood}</td> `;
+    html +=`</tr> `;
+		});
+		document.querySelector('.board__table').innerHTML = html;}
+  }else{
+  		throw new Error(res.rtmsg);
+  	}
+  	})
+  	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+  
+  	
+
+};
+/*본문으로게시글찾기*/
+function searchByBcontent(){
+
+const URL  =`/board/search/content/${$url.slice(-1,$url.length)}?bcontent=${$searchText.value}`;
+console.log("url:",URL);
+
+request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+		if(res.rtcd==0){
+		const data = res.data;
+    if($url.slice(-1,$url.length)=='P'){
+      let html ='';
+      html += `  <div class="b_galary_post"> `;
+      data.forEach(boardForm=>{
+        html += `<div class="b_galary_img"><a href="/board/post/${boardForm.bnum}"> `;
+        html += `  <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title">${boardForm.btitle}</p></a></div> `;
+      })
+      html += `</div>`;
+      document.querySelector('.board__table').innerHTML = html;
+    }else{
+		let html ='';
+		html += `    <tr> `;
+          html += `      <th class="board__cell board__num">카테고리</th> `;
+          html += `      <th class="board__cell board__title">제목</th> `;
+          html += `      <th class="board__cell board__writer">작성자</th> `;
+          html += `      <th class="board__cell board__hits">조회수</th> `;
+          html += `      <th class="board__cell board__hearthits">좋아요</th> `;
+          html += `    </tr> `;
+		data.forEach(boardForm=>{
+    html +=`<tr>`;
+      html +=` <td class="board__cell board__num" >${boardForm.bcategory}</td> `;
+      html +=` <td class="board__cell board__title" ><a href="/board/post/${boardForm.bnum}" >${boardForm.btitle}</a></td> `;
+      html +=` <td class="board__cell board__writer" >${boardForm.nickname}</td> `;
+      html +=` <td class="board__cell board__hits" >${boardForm.bhit}</td> `;
+      html +=` <td class="board__cell board__hearthits" >${boardForm.bgood}</td> `;
+    html +=`</tr> `;
+		});
+		document.querySelector('.board__table').innerHTML = html;}
+  }else{
+  		throw new Error(res.rtmsg);
+  	}
+  	})
+  	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+  
+  	
+
+};
+
+
+$searchBtn.addEventListener('click',e=>{
+console.log(`url은? ${$url.slice(-1,$url.length)}`);
+if($search_select.value == "btitle") {searchByBtitle();}
+if($search_select.value == "nickname") {searchByNickname()};
+if($search_select.value == "bcontent") {searchByBcontent()};
+});
+
 	
     
