@@ -36,8 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-@RequestMapping("/board")
 @RequiredArgsConstructor
+@RequestMapping("/board")
 public class BoardController {
 	private final BoardSVC boardSVC;
 	private final RboardSVC rboardSVC;
@@ -117,6 +117,9 @@ public class BoardController {
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
 		
+		
+		if(bindingResult.hasErrors()) {return "board/addBoardForm";}
+		
 		//boardSVC.addBoard(loginMemberId,boardDTO);
 		log.info("boardForm:{}",boardForm);
 		
@@ -129,9 +132,9 @@ public class BoardController {
 		redirectAttributes.addAttribute("bnum",stored.getBnum());
 		
 		
-		
+	
 		return "redirect:/board/post/{bnum}";
-		
+
 	}
 	
 	//게시글수정양식출력
