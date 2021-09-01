@@ -13,16 +13,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.proj.animore.dto.FavoriteDTO;
-import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.form.LoginMember;
-import com.proj.animore.form.Result;
 import com.proj.animore.svc.FavoriteSVC;
 import com.proj.animore.svc.MemberSVC;
-import com.proj.animore.svc.MypageSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,128 +31,24 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
 	private final FavoriteSVC favoriteSVC;
 	private final MemberSVC memberSVC;
-	private final MypageSVC mypageSVC;
 	
 	@GetMapping("/mypageFavorites")
 	public String mypage(HttpServletRequest request,
 			Model model) {
-		
-		
-		
+				
 		HttpSession session = request.getSession(false);
  		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
  		String id = loginMember.getId();
  		log.info(id);
 
-
  		List<FavoriteDTO> favoritelist = favoriteSVC.favoritelist(id);
 
  		model.addAttribute("FavoriteDTO",favoritelist);
-		
 
 		return "mypage/mypageFavorites";
 	}
 
-	
-	
-	
-//	@GetMapping("/mypageReply")
-//	public String mypageReply(
-//			HttpServletRequest request,
-//			Model model) {
-//		
-//		HttpSession session = request.getSession(false);
-//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//		log.info("loginMember:{}",loginMember);
-//		
-//		List<MypageReplyRes> list = mypageSVC.mypageReply(loginMember.getId());
-//		
-//		model.addAttribute("mypagereply", list);
-//		
-////		list.forEach(ele->{
-////			log.info("ele:{}",ele);
-////		});
-//		return "mypage/mypageReply";
-//	}
-	
-	
-	@ResponseBody
-	@GetMapping("/mypageReply")
-	public Result mypageReply(HttpServletRequest request) {
-	
-		HttpSession session = request.getSession(false);
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginMember:{}",loginMember);
-		
-		List<MypageReplyRes> list = mypageSVC.mypageReply(loginMember.getId());
-		
-		StringBuffer html = new StringBuffer();
-			
-			html.append("<h3 class='mypage_content_title'>내가 쓴 댓글</h3>");
-			html.append("<hr>");
-			html.append("<div class='mypage_content'>");
-			html.append("  <table class='mypagereply__'> ");
-			html.append("    <tr>");
-			html.append("      <th class='mypagereply__title1'>번호</th>");
-			html.append("      <th class='mypagereply__title2'>댓글내용</th>");
-			html.append("      <th class='mypagereply__title3'>작성일</th>");
-			html.append("      <th class='mypagereply__title4'>좋아요</th>");
-			html.append("       <!-- <th class='mypagereply__title5'></th> -->");
-			html.append("    </tr>");
-		list.forEach(rec->{
-			html.append("    <tr>");
-			html.append("      <td class='mypagereply__text1'>"+rec.getRnum()+"</td>");
-			html.append("      <td class='mypagereply__text2'><a href='/board/post/"+rec.getBnum()+"'>"+rec.getRcontent()+"</a></td>");
-			html.append("      <td class='mypagereply__text3'>"+rec.getRcdate()+"</td>");
-			html.append("      <td class='mypagereply__text4'>"+rec.getBgood()+"</td>");
-			html.append("      <!-- <td th:text='5번째칸' class='mypagereply__text'></td> -->");
-			html.append("    </tr>");
-		});
-			html.append("  </table>");
-			html.append("</div>");
-		
-		Result result;
-		result = new Result("00","OK",html);
-		
-	//	list.forEach(ele->{
-	//		log.info("ele:{}",ele);
-	//	});
-		return result;
-	}
-	
-	@ResponseBody
-	@GetMapping("/mypageDel")
-	public Result mypageDel() {
-		
-		Result result;
-		
-		StringBuffer html = new StringBuffer();
-		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content'>");
-		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
-		html.append("    <h1 class='findId__title'></h1>");
-		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
-		html.append("    <div class='findId__form'>");
-		html.append("      <span class='findId__text'>비밀번호 확인</span>");
-		html.append("      <input class='findId__input' type='text' name='pw'>");
-		html.append("    </div>");
-		html.append("    <button class='findId__btn' type='submit'>회원탈퇴</button>");
-		html.append("  </form>");
-		html.append("</div>");
-		
-		result = new Result("00","OK",html);
-		
-		return result;
-	}
-//	@GetMapping("/mypageDel")
-//	public String mypageDel() {
-//		
-//		
-//		
-//		return "mypage/mypageDel";
-//	}
-	
+	//회원탈퇴처리
 	@DeleteMapping("/mypageDel")
 	public String mypageDel(
 			@RequestParam String pw,
