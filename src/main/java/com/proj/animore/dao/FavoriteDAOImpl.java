@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
+
 public class FavoriteDAOImpl implements FavoriteDAO{
 	
 	private final JdbcTemplate jdbcTemplate;
@@ -43,15 +44,21 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	}
 	//즐겨찾기 목록
 	@Override
-	public List<FavoriteDTO> list(Integer mnum) {
+	public List<FavoriteDTO>favoritelist(String id) {
+
 		StringBuffer sql = new StringBuffer();
-		sql.append("select business.bname,business.bname baddress  ");
-		sql.append(" from favorite,business " );
-		sql.append("  where  ");
-		sql.append("   and  ");
-		List<FavoriteDTO> list = jdbcTemplate.query(sql.toString(),
+		sql.append(" select f.mnum , b.bname , m.id");
+		sql.append(" from favorite f,business b ,member m " );
+		sql.append(" where f.bnum  = b.bnum  ");
+		sql.append(" and f.id = m.id" );
+		sql.append(" and m.id = ? " );
+
+		List<FavoriteDTO> favoritelist = jdbcTemplate.query(sql.toString(),
 										new BeanPropertyRowMapper<>(FavoriteDTO.class),
-										mnum);
-		return list;
+										id);
+		log.info(favoritelist.toString());
+		
+		
+		return favoritelist;
 	}
 }

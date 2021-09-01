@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.proj.animore.common.mail.MailService;
+import com.proj.animore.common.util.PasswordGeneratorCreator;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.ChangePwForm;
@@ -35,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberSVC memberSVC;
+	private final MailService ms;
 
 	/**
 	 * 회원가입유형선택
@@ -143,7 +145,9 @@ public class MemberController {
 	@PostMapping("/findPW")
 	public String findPW(
 			@ModelAttribute FindPwForm findPwForm,
-			RedirectAttributes redirectAttributes) {
+			HttpServletRequest request,
+			Model model
+			/* ,RedirectAttributes redirectAttributes */) {
 		
 		ChangePwForm changePwForm = memberSVC.findPw(findPwForm);
 		
@@ -152,10 +156,49 @@ public class MemberController {
 			return "member/findPWForm";
 		}
 		
-		//정보가 DB와 일치할 경우
-		redirectAttributes.addAttribute("id", changePwForm.getId());
-		log.info(changePwForm.getId());
-		return "redirect:/member/findPW/{id}";	//비밀번호변경양식
+    //1)임의의 비밀번호 생성
+    String tmpPw = PasswordGeneratorCreator.generator(7);
+    
+    //2)임시비밀번호로 회원의 비밀번호 변경
+    memberSVC.changePw(findPwForm.getEmail(), changePwForm.getPw(), tmpPw);
+
+    //생성된 비밀번호 이메일 전송
+    String subject = "신규 비밀번호 전송";
+    
+    //로긴주소
+    StringBuilder url = new StringBuilder();
+    url.append("http://" + request.getServerName());
+    url.append(":" + request.getServerPort());
+    url.append(request.getContextPath());
+    url.append("/login");
+    
+    //메일본문내용
+    StringBuilder sb = new StringBuilder();
+    sb.append("<!DOCTYPE html>");
+    sb.append("<html lang='ko'>");
+    sb.append("<head>");
+    sb.append("  <meta charset='UTF-8'>");
+    sb.append("  <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+    sb.append("  <title>임시 비밀번호 발송</title>");
+    sb.append("</head>");
+    sb.append("<body>");
+    sb.append("  <h1>신규비밀번호</h1>");
+    sb.append("  <p>아래 비밀번호로 로그인 하셔서 비밀번호를 변경하세요</p>");
+    sb.append("  <p>비밀번호 :" + tmpPw + "</p>");
+    sb.append("  <a href='"+ url +"'>로그인</a>");
+    sb.append("</body>");
+    sb.append("</html>");
+    
+    ms.sendMail(findPwForm.getEmail(), subject , sb.toString());
+    
+    model.addAttribute("info", "가입된 이메일로 임시비밀번호가 발송되었습니다.");
+    
+    return "redirect:/member/changePWSuccess";
+    
+//		//정보가 DB와 일치할 경우
+//		redirectAttributes.addAttribute("id", changePwForm.getId());
+//		log.info(changePwForm.getId());
+//		return "redirect:/member/findPW/{id}";	//비밀번호변경양식
 	}
 	
 	/**
@@ -185,7 +228,7 @@ public class MemberController {
 			BindingResult bindingResult) {
 		
 		if(!changePWForm.getPw().equals(changePWForm.getPwChk())) {
-			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");	//TODO 비밀번호 안맞을때 메세지 뭐라고 할까
+			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
 			return "member/changePWForm";
 		}
 		
@@ -201,7 +244,5 @@ public class MemberController {
 		
 		return "/member/changePWSuccess";
 	}
-
-
 	
 }

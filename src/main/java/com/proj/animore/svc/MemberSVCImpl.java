@@ -122,4 +122,11 @@ public class MemberSVCImpl implements MemberSVC {
 		
 	}
 	
+//비밀번호변경(이메일로 임시비밀번호 발급 기능 사용시, 생성된 임시비밀번호를 비밀번호찾기 신청한 회원정보에 업데이트하는 메소드)
+	@Override
+	public void changePw(String email, String pw, String tmpPw) {
+		// TODO Auto-generated method stub
+		memberDAO.changePw(email, pw, tmpPw);
+	}
+	
 }

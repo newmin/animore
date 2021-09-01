@@ -13,5 +13,7 @@ public interface FavoriteSVC {
 	void deleteBoard(int mnum);
 	
 	//즐겨찾기 목록
-	List<FavoriteDTO> list(Integer mnum);
+	List<FavoriteDTO>favoritelist(String id);
+
+
 }
