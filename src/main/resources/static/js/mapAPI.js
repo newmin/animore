@@ -235,3 +235,95 @@
           break;
       }
   }    
+
+
+
+
+
+
+
+
+
+  //원본
+
+  // // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+  // function placesSearchCB (data, status, pagination) {
+  //     switch (status) {
+  //       case kakao.maps.services.Status.OK : //검색 결과 있음
+  //         console.log(data);
+
+  //         if(markers.length){
+  //           //검색전 마커존재시 지도에서 제거
+  //           markers.forEach(ele=>ele.setMap(null)); 
+
+  //           //마커,인포 배열요소 제거
+  //           markers.splice(0,markers.length);
+  //           infos.splice(0,infos.length);
+  //         }
+
+  //         data.forEach(ele=>{
+  //           console.log(ele.y, ele.x);
+
+  //           //마커 생성
+  //           let marker = new naver.maps.Marker({
+  //             position: new naver.maps.LatLng(ele.y, ele.x),
+  //             map: map,
+  //             icon: {
+  //               // content: [
+  //               //       // '<div>',
+  //               //       '   <div><img class="marker" src="marker.png"/></div>',
+  //               //       // '</div>',
+  //               //   ].join(''),
+  //               content:'<div><img class="marker" src="marker.png"/></div>',
+  //               size: new naver.maps.Size(50, 52),
+  //               origin: new naver.maps.Point(0, 0),
+  //               anchor: new naver.maps.Point(25, 26)              
+  //             }
+  //           });
+  //           //마커 배열에 저장
+  //           markers.push(marker);  
+  //           infos.push({
+  //             place_name:ele.place_name,              //가게이름
+  //             phone:ele.phone,                        //연락처
+  //             road_address_name:ele.road_address_name //도로명주소
+  //           });            
+  //         });
+
+  //         //마커 클릭시 인포창띄우기
+  //         markers.forEach((ele,idx)=>{
+  //           naver.maps.Event.addListener(ele, 'click', function(e) {
+  //             //인포정보
+  //             const currInfoHTML = `<div class='currInfo'>
+  //                               <p>가게이름 : ${infos[idx].place_name}</P>
+  //                               <p>연락처 : ${infos[idx].phone}</P>
+  //                               <p>도로명주소 : ${infos[idx].road_address_name}</P>
+  //                             </div>`; 
+
+  //             //infowindow.setContent(currInfoHTML);
+  //             infowindow.setOptions({
+  //               content:currInfoHTML,
+  //               backgroundColor: '#0ff03',  
+  //               borderWidth:0,
+  //               anchorSize: new naver.maps.Size(10,10),
+  //               anchorSkew : true,
+  //               anchorColor: 'red',
+  //               disableAnchor: false
+  //               // pixelOffset :new naver.maps.Point(0, -10),
+  //             });
+
+  //             infowindow.open(map, ele);                   
+  //           })                
+  //         })
+
+  //         break;        
+  //       case kakao.maps.services.Status.ZERO_RESULT  : //정상적으로 응답 받았으나 검색 결과는 없음
+  //         alert('정상적으로 응답 받았으나 검색 결과는 없음');
+  //         break;        
+  //       case kakao.maps.services.Status.ERROR   : //서버 응답에 문제가 있는 경우
+  //         alert('서버 응답에 문제가 있는 경우');
+  //         break;        
+  //       default:
+
+  //         break;
+  //     }
+  // }    
