@@ -20,10 +20,13 @@ public interface BoardDAO {
 	List<BoardReqDTO> findBoardById(String id);
 	
 	//게시글 조회(by btitle)
-	List<BoardReqDTO> findBoardByBtitle(String btitle);
+	List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle);
 	
 	//게시글 조회(by bcontent)
-	List<BoardReqDTO> findBoardByBcontent(String bcontent);
+	List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent);
+	
+	//게시글 조회(by nickname)
+	List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname);
 	
 	//게시글 수정
 	BoardReqDTO modifyBoard(int bnum,BoardDTO boardDTO);

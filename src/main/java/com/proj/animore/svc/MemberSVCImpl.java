@@ -83,7 +83,6 @@ public class MemberSVCImpl implements MemberSVC {
 	//로그인시 멤버확인
 	@Override
 	public MemberDTO findByIdPw(String id, String pw) {
-		
 		return memberDAO.findByIdPw(id, pw);
 	}
 

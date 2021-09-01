@@ -48,7 +48,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public boolean isExistId(String id) {
 			boolean isExistId = false;
 			String sql = "select count(id) from member where id = ? ";
-			int cnt = jdbcTemplate.update(sql, id);
+			int cnt = jdbcTemplate.queryForObject(sql, Integer.class, id);
 			if(cnt >= 1) isExistId = true;
 			return isExistId;
 	}
@@ -58,7 +58,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public boolean isExistNickname(String nickname) {
 		boolean isExistNickname = false;
 		String sql = "select count(id) from member where nickname = ? ";
-		int cnt = jdbcTemplate.update(sql, nickname);
+		int cnt = jdbcTemplate.queryForObject(sql, Integer.class, nickname);
 		if(cnt >= 1) isExistNickname = true;
 		return isExistNickname;
 	}
@@ -92,6 +92,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("    email = ? ");
 		sql.append("    address = ? ");
 		sql.append("    nickname = ? ");
+		sql.append("    udate = systimestamp ");
 		sql.append("where id = ? ");
 
 		jdbcTemplate.update(sql.toString(),
@@ -109,7 +110,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 
-	//회원탈퇴
+	//회원정보삭제
 	@Override
 	public void deleteMember(String id) {
 		StringBuffer sql = new StringBuffer();
@@ -121,7 +122,7 @@ public class MemberDAOImpl implements MemberDAO {
 												id);
 
 	}
-
+	
 	@Override
 	public List<MemberDTO> list() {
 		StringBuffer sql = new StringBuffer();
@@ -143,6 +144,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("from member ");
 		sql.append("where name = ? ");
 		sql.append("  and email= ? ");
+		sql.append("  and not status= 'W' ");	//탈퇴회원 제외하고 찾기
 		
 		log.info(findIdForm.toString());
 		
@@ -165,6 +167,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("where id = ? ");
 		sql.append("  and name= ? ");
 		sql.append("  and email= ? ");
+		sql.append("  and not status= 'W' ");
 
 		ChangePwForm changePwForm = jdbcTemplate.queryForObject(sql.toString(),
 				new BeanPropertyRowMapper<>(ChangePwForm.class),
@@ -183,6 +186,7 @@ public class MemberDAOImpl implements MemberDAO {
 	      sql.append("from member ");
 	      sql.append("where id = ? ");
 	      sql.append("  and pw= ? ");
+	      sql.append("  and not status = 'W' ");
 	      
 	     MemberDTO memberDTO = jdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(MemberDTO.class),id,pw);
 	      return memberDTO;
@@ -196,8 +200,9 @@ public class MemberDAOImpl implements MemberDAO {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("update member ");
-		sql.append("   set pw=? ");
+		sql.append("   set pw=?, udate=systimestamp ");
 		sql.append(" where id=? ");
+		sql.append("   and status='A' ");
 		
 		int result = jdbcTemplate.update(sql.toString(), changePWForm.getPw(), changePWForm.getId());
 		
@@ -248,7 +253,7 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	
 	
-	
+	//로그인확인
 	@Override
 	public boolean isLogin(String id, String pw) {
 		boolean isLogin = false;
@@ -258,7 +263,7 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("  from member ");
 		sql.append(" where id = ? ");
 		sql.append("   and pw = ? ");
-//		sql.append("   and status is null ");
+		sql.append("   and status='A' ");
 		
 		Integer cnt = 
 				jdbcTemplate.queryForObject(sql.toString(), Integer.class, id, pw);
@@ -266,31 +271,29 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return isLogin;
 	}
-	
+	//회원탈퇴
 	@Override
 	public void outMember(String id, String pw) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("delete member ");
-		sql.append("where id = ? ");
-		sql.append("  and pw = ?");
+		sql.append("update member ");
+		sql.append("   set status = 'W', ");		
+		sql.append("   		 udate = systimestamp ");		
+		sql.append(" where id = ? ");
+		sql.append("   and pw = ?");
 		
 		jdbcTemplate.update(sql.toString(), id, pw);
 		
-//		회원상태플래그 사용시 쿼리
-//		sql.append("update member ");
-//		sql.append("   set status= 'D' ");
-//		sql.append(" where id = ? ");
-//		sql.append("   and pw = ?");		
-//		jt.update(sql.toString(), id, pw);
 	}
 	
+	//비밀번호찾기 - 발급된 임시비밀번호 업데이트
 	@Override
 	public void changePw(String email, String pw, String tmpPw) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update member ");
-		sql.append("	 set pw = ? ");   //변경할 비밀번호
+		sql.append("	 set pw = ?, udate=systimestamp ");   	//변경할 비밀번호
 		sql.append(" where email = ? ");
-		sql.append("   and pw = ? ");   //이전 비밀번호
+		sql.append("   and pw = ? ");   	//이전 비밀번호
+		sql.append("   and status='A' ");
 		
 		jdbcTemplate.update(sql.toString(), tmpPw, email, pw);
 		

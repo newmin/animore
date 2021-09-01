@@ -1,6 +1,31 @@
 /**
  * 
  */
+ //즐겨찾기
+	const $myFavorite = document.querySelector('a[href="/mypage/mypageFavorites"]');
+	$myFavorite.addEventListener('click',e=>{
+	e.preventDefault();
+	
+	const URL = `/mypage/mypageFavorites`;
+	
+	request.get(URL)
+	.then(res=>res.json())
+	.then(res=>{
+		if(res.rtcd == '00'){
+			//성공로직처리
+			console.log(res);
+			const data = res.data;
+			document.querySelector('.favorite__table').innerHTML = data;
+		}else{
+			throw new Error(res.rtmsg);
+		}
+	})
+	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+
+});
  
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
@@ -29,20 +54,25 @@ function review(){
 
 function refreshReview(data){
   let html= '';
-  html += `<div class="my-review">`;
-  html += `  <span class="my-review__title">번호</span>`;
-  html += `  <span class="my-review__title">업체명</span>`;
-  html += `  <span class="my-review__title">내평점</span>`;
-  html += `  <span class="my-review__title">리뷰내용</span>`;
-  html += `  <span class="my-review__title">작성일</span>`;
+  html += `<h2>내가 쓴 리뷰</h2>`;
+  html += `<hr>`;
+  html += `<table class="review_table">`;
+  html += `<tr>`;
+  html += `  <th class="review__cell">번호</span>`;
+  html += `  <th class="review__cell">업체명</span>`;
+  html += `  <th class="review__cell">내평점</span>`;
+  html += `  <th class="review__cell">리뷰내용</span>`;
+  html += `  <th class="review__cell">작성일</span>`;
+  html += `</tr>`;
   data.forEach(review => {
-    html += `    <span class="my-review__text">번호</span>`;
-    html += `    <span class="my-review__text">${review.bname}</span>`;
-    html += `    <span class="my-review__text">${review.rscore}</span>`;
-    html += `    <span class="my-review__text">${review.rcontent}</span>`;
-    html += `    <span class="my-review__text">${review.rvcdate}</span>`;
+    html += `<tr>`;
+    html += `    <td class="review__cell">번호</span>`;
+    html += `    <td class="review__cell">${review.bname}</span>`;
+    html += `    <td class="review__cell">${review.rscore}</span>`;
+    html += `    <td class="review__cell">${review.rcontent}</span>`;
+    html += `    <td class="review__cell">${review.rvcdate}</span>`;
+    html += `</tr>`;
   });
-  html += `</div>`;
   
   document.querySelector('.mypage_content_container').innerHTML = html;
 
@@ -67,7 +97,8 @@ request.get(URL)
         if(res.rtcd == '00'){
           const data = res.data;
           let html ='';
-          html += `<h3 class='mypage_content_title'>내가 쓴 글</h3>`;
+          html += `<h2 class='mypage_content_title'>내가 쓴 글</h2>`;
+          html += `<hr>`;
           html += `<table class="mypage__post"> `;
           html += `    <tr> `;
           html += `      <th class="mypost__cell mypost__bcategory">카테고리</th> `;
