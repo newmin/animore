@@ -46,12 +46,14 @@
 }
 
 .board__table th:nth-child(3) {
-  width: 15%;
+  width: 13%;
 }
-.board__table th:first-child,
+.board__table th:first-child{
+	width:7%
+}
 .board__table th:nth-child(4),
 .board__table th:last-child{
-	width: 5%;
+	width: 6%;
 }
 
 .board__table th:nth-child(2) {
@@ -70,6 +72,7 @@
 }
 
 .board__btns {
+	width:1100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
