@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.animore.common.mail.MailService;
 import com.proj.animore.common.util.PasswordGeneratorCreator;
+import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.ChangePwForm;
@@ -101,8 +102,8 @@ public class MemberController {
 
 	// TODO 전문가 회원가입
 	@PostMapping("/join/S")
-	public String join2(MemberDTO memberDTO, BusinessDTO businessDTO) {
-		memberSVC.joinMember(memberDTO, businessDTO);
+	public String join2(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO) {
+		memberSVC.joinMember(memberDTO, businessDTO, bcategoryDTO);
 		return "redirect:/";
 	}
 

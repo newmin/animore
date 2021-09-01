@@ -3,9 +3,12 @@ package com.proj.animore.svc;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.proj.animore.dao.BcategoryDAO;
 import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
+import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
@@ -21,6 +24,7 @@ public class MemberSVCImpl implements MemberSVC {
 	
 	private final MemberDAO memberDAO;
 	private final BusinessDAO businessDAO;
+	private final BcategoryDAO bcategoryDAO;
 	
 	//일반회원가입
 	@Override
@@ -30,10 +34,11 @@ public class MemberSVCImpl implements MemberSVC {
 	
 	//사업가회원 가입
 	@Override
-	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO) {
+	@Transactional
+	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO) {
 		memberDAO.joinMember(memberDTO);
 		businessDAO.joinBusi(businessDTO);
-	
+		bcategoryDAO.addBcategory(bcategoryDTO);
 	}
 	//TODO 전문가 회원가입
 	@Override

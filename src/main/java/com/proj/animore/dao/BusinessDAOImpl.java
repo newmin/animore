@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BusinessDTO;
@@ -32,7 +33,6 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
-		
 	}
 	//업체조회
 	@Override

@@ -2,6 +2,7 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
@@ -13,7 +14,7 @@ public interface MemberSVC {
 
 	//회원가입
 	void joinMember(MemberDTO memberDTO);
-	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO);
+	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO);
 	//TODO 전문가가입
 	void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO);
 	

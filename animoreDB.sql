@@ -146,16 +146,16 @@ create table profession(
 --업체카테고리
 create table bcategory(
   bnum number(8),
-  bhospital char(1) DEFAULT 'N' not null,
-  bpharmacy char(1) DEFAULT 'N' not null,
-  bhotel char(1) DEFAULT 'N' not null,
-  bkindergarden char(1) DEFAULT 'N' not null,
-  bfood char(1) DEFAULT 'N' not null,
-  btraining char(1) DEFAULT 'N' not null,
-  bshop char(1) DEFAULT 'N' not null,
-  bplayground char(1) DEFAULT 'N' not null,
-  bhairshop char(1) DEFAULT 'N' not null,
-  betc char(1) DEFAULT 'N' not null,
+  bhospital char(1) DEFAULT 'N'  null,
+  bpharmacy char(1) DEFAULT 'N'  null,
+  bhotel char(1) DEFAULT 'N'  null,
+  bkindergarden char(1) DEFAULT 'N'  null,
+  bfood char(1) DEFAULT 'N'  null,
+  btraining char(1) DEFAULT 'N'  null,
+  bshop char(1) DEFAULT 'N'  null,
+  bplayground char(1) DEFAULT 'N'  null,
+  bhairshop char(1) DEFAULT 'N'  null,
+  betc char(1) DEFAULT 'N'  null,
   constraint BCATEGORY_BNUM_PK primary key(bnum),
   constraint bcategory_bnum_FK foreign key(bnum) 
                                 references business(bnum)
