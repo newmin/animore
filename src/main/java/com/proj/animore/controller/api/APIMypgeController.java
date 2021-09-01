@@ -1,4 +1,4 @@
-package com.proj.animore.controller;
+package com.proj.animore.controller.api;
 
 import java.util.List;
 
