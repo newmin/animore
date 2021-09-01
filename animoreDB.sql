@@ -24,7 +24,7 @@ create table member(
   address varchar2(150) not null,
   birth date not null,
   mtype char(1) not null,
-  status char(1) DEFAULT 'A' not null, --회원상태  기본값:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
+  status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp DEFAULT systimestamp,
   image blob,
