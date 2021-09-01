@@ -73,59 +73,5 @@ public class MainController {
 		
 		return "map/inquireBusiDetail";
 	}
-	//리뷰등록
-	@ResponseBody
-	@PostMapping("/inquire/{bnum}")
-	public Result addReview(@PathVariable int bnum, 
-//							@ModelAttribute ReviewForm reviewForm, 
-							@RequestBody ReviewForm reviewForm, 
-							HttpServletRequest request) {
-		Result result;
-		
-		HttpSession session = request.getSession(false);
-		//비로그인/로그인만료 상태라면?
-		if(session == null) {
-			result = new Result("01","로그인이 만료되었어요 다시 로그인해주세요.",null);
-			return result;
-		}
-		
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		String id = loginMember.getId();
-
-		//리뷰작성폼→리뷰DTO
-		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(reviewForm,reviewDTO);
-		
-		List<ReviewReq> list = reviewSVC.registReview(bnum, id, reviewDTO);
-		
-		result = new Result("00","성공",list);
-	  	return result;
-	}
-	
-	@PatchMapping("/inquire/{bnum}")
-	public Result modiReview(@PathVariable int bnum,
-													 @RequestBody ReviewForm reviewForm, 
-													 HttpServletRequest request) {
-		Result result;
-		HttpSession session = request.getSession(false);
-		if(session==null) {
-			result = new Result("01","로그인이 만료되었어요. 다시 로그인해주세요.",null);
-			return result;
-		}
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		String id = loginMember.getId();
-		
-		//리뷰작성폼→리뷰DTO
-		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(reviewForm,reviewDTO);
-		
-		List<ReviewReq> list = reviewSVC.updateReview(bnum, id, reviewDTO);
-		result = new Result("00","성공",list);
-		return result;
-	}
-	
-	
-//	@DeleteMapping()
-	
 	
 }

@@ -14,12 +14,6 @@ const delBtn = document.querySelectorAll('.review__del');
 const rcontent = document.querySelector('.review__textarea');
 const rscore = document.querySelector('input[name="rscore"]:checked');
 
-console.log("id="+$id);
-console.log("bnum="+bnum);
-console.log("regiBtn="+regiBtn);
-console.log("rcontent="+rcontent.value);
-console.log("rscore="+rscore.value);
-
 
 //  리뷰등록
 const regiBtn_f = e =>{
