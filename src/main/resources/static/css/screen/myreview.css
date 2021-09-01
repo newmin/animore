@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.board {
+  width: 1100px;
+}
+
+
+.review__cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height:22px;
+  line-height:22px;
+}
+.review_table{
+	  width: 100%;
+  text-align: center;
+}
+/* 내 리뷰 */
+ .my-favorite{
+   display: grid;
+   grid-template-rows: repeat(10, 40px);
+   grid-template-columns: 40px 120px 60px 250px 120px;
+   border-top: 1px solid rgba(0, 0, 0, 0.1);
+   border-left: 1px solid rgba(0, 0, 0, 0.1);
+ }
+ .my-review__title,
+ .my-review__text{
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   border-right: 1px solid rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ .my-review__title{
+   font-weight: 600;
+ }

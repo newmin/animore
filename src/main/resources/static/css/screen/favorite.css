@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.board {
+  width: 1100px;
+}
+
+
+.favorite__cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height:22px;
+  line-height:22px;
+}
+.favorite__table{
+	  width: 100%;
+  text-align: center;
+}
