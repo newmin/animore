@@ -106,13 +106,13 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
 		sql.append("from board t1, member t2 ");
 		sql.append("where t1.id = t2.id ");
-		sql.append("and t2.nickname like  '%"+nickname+"%' ");
+		sql.append("and t2.nickname like  '%"+nickname+"%'");
 		sql.append("and t1.bcategory =? ");
 		sql.append(" order by t1.bnum ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				nickname,bcategory);
+				bcategory);
 		return list;
 	}
 	//게시글검색(by bcontent)
@@ -123,13 +123,13 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
 		sql.append("from board t1, member t2 ");
 		sql.append("where t1.id = t2.id ");
-		sql.append("and t1.bcontent like  '%"+bcontent+"%' ");
+		sql.append("and t1.bcontent like  '%"+bcontent+"%'");
 		sql.append("and t1.bcategory =? ");
 		sql.append(" order by t1.bnum ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcontent,bcategory);
+				bcategory);
 		return list;
 
 	}

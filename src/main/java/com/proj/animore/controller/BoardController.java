@@ -174,12 +174,10 @@ public class BoardController {
 	}
 	//제목으로 게시글 검색
 	@ResponseBody
-	@GetMapping("/search/{bcategory}")
+	@GetMapping("/search/title/{bcategory}")
 	public Result searchByBtitle(@PathVariable String bcategory,
 								@RequestParam String btitle,
 								HttpServletRequest request) {
-//		HttpSession session = request.getSession(false);
-//		if(session==null) return "redirect:/login";
 		
 		List<BoardReqDTO> list = boardSVC.findBoardByBtitle(bcategory,btitle);
 		log.info("bcategory:{}",bcategory);
@@ -196,6 +194,51 @@ public class BoardController {
 		log.info("result:{}",result);
 		return result;
 	}
+	//닉네임으로 게시글 검색
+	@ResponseBody
+	@GetMapping("/search/nickname/{bcategory}")
+	public Result searchByNickname(@PathVariable String bcategory,
+									@RequestParam String nickname,
+									HttpServletRequest request) {
+		
+		List<BoardReqDTO> list = boardSVC.findBoardByNickname(bcategory,nickname);
+		log.info("bcategory:{}",bcategory);
+		Result result = new Result();
+		if (list.size() == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("게시글이 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(list);
+		}
+		
+		log.info("result:{}",result);
+		return result;
+	}
+	//본문으로 게시글 검색
+	@ResponseBody
+	@GetMapping("/search/content/{bcategory}")
+	public Result searchByBcontent(@PathVariable String bcategory,
+									@RequestParam String bcontent,
+									HttpServletRequest request) {
+		
+		List<BoardReqDTO> list = boardSVC.findBoardByBcontent(bcategory,bcontent);
+		log.info("bcategory:{}",bcategory);
+		Result result = new Result();
+		if (list.size() == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("게시글이 없습니다.");
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("성공");
+			result.setData(list);
+		}
+		
+		log.info("result:{}",result);
+		return result;
+	}
+	
 		
 	}
 	
