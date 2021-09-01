@@ -23,7 +23,8 @@ create table member(
   gender char(3) not null,
   address varchar2(150) not null,
   birth date not null,
-  mtype varchar2(1) not null,
+  mtype char(1) not null,
+  status char(1) DEFAULT 'A' not null, --회원상태  기본값:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp DEFAULT systimestamp,
   image blob,
@@ -32,6 +33,7 @@ create table member(
   fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
+  constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),
   constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
 );
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
@@ -50,7 +52,7 @@ create table board(
   bcontent clob not null,
   bgroup number(5),
   constraint BOARD_BNUM_PK primary key(bnum),
-  constraint board_id_FK foreign key(id) references member(id),
+  constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
 );
 
@@ -71,6 +73,7 @@ create table rboard(
                                 ON DELETE CASCADE,
   constraint rboard_id_FK foreign key(id) 
                                 references member(id)
+                                ON DELETE CASCADE
 );
 
 --건강정보
@@ -85,7 +88,7 @@ create table hboard(
   bgood number(5) DEFAULT 0 not null,
   bcontent clob not null,
   constraint HBOARD_BNUM_PK primary key(bnum),
-  constraint hboard_id_FK foreign key(id) references member(id),
+  constraint hboard_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint hboard_hcategory_ck check(hcategory in('질병사전','행동사전'))
 );
 
@@ -183,13 +186,14 @@ create table review(
                                 ON DELETE CASCADE,
   constraint review_id_FK foreign key(id) 
                                 references member(id)
+                                ON DELETE CASCADE
 );
 
 --즐겨찾기
 create table favorite(
-  id varchar2(40),
-  bnum number(10),
   mnum number(10),
+  bnum number(10),
+  id varchar2(40),
   constraint favorite_mnum_PK primary key(mnum),
   constraint favorite_id_FK foreign key(id) 
                                  references member(id)
@@ -294,5 +298,15 @@ insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.ne
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1);
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1);
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1);
+
+--즐겨찾기
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'normal@zxc.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'user@test.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'special@zxc.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'busi@test.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'normal@zxc.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'user@test.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'special@zxc.com');
+insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'busi@test.com');
 
 commit;
