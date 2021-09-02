@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
@@ -57,14 +58,22 @@ public class MainController {
 		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);
 		model.addAttribute("busi",businessLoadDTO);
 		
-//		HttpSession session = request.getSession(false);
-//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//		
+		if(request.getSession(false) != null) {
+		HttpSession session = request.getSession(false);		
+			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+			String id = loginMember.getId();
+			
+			FavoriteReq isFavor = favoriteSVC.isFavorite(bnum, id);
+			model.addAttribute("favor",isFavor);
+			
+		}
+				
 //		List<ReviewReq> rvlist = null;
 //		if(loginMember!=null) rvlist = reviewSVC.allReview(bnum);
 		//비로그인 상태일 경우, 리뷰는 출력안되도록? 출력은 하되 뷰에서 가리도록?
 		
-		List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
+
+				List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
 		model.addAttribute("review", rvlist);
 		
 		return "map/inquireBusiDetail";

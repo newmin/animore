@@ -32,7 +32,7 @@
 		  <!--업체정보-->
 		  <div class="selected-busi" th:object="${busi}" th:data-bnum="*{bnum}"> 
 		  	<div class="busi-info">
-			    <span class="sbusi-info__name" th:text="*{bname}">업체명</span><i class="far fa-heart unfavorite"></i>
+			    <span class="sbusi-info__name" th:text="*{bname}">업체명</span><i th:if="${favor.count != 1}" class="far fa-heart favorBtn unfavorite"></i><i th:if="${favor.count == 1}" class="fas fa-heart favorite"></i>
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->

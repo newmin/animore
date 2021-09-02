@@ -56,6 +56,12 @@ const $addFavor = document.querySelector('.unfavorite');
 const $delFavor = document.querySelector('.favorite');
 
 
+/*$addFavor.addEventListener('click',e=>{
+	console.log('즐겨찾기 등록')	
+
+	favoriteToggle();
+	heart();
+})*/
 
 //하트 색상 함수
 function heart(){
@@ -68,18 +74,12 @@ function favoriteToggle(){
     $heart.classList.toggle('favorite');
 }
 
-$addFavor.addEventListener('click',e=>{
-	
-
-	favoriteToggle;
-	heart;
-})
 
 $delFavor.addEventListener('click',e=>{
 
 
-	favoriteToggle;
-	heart;
+	favoriteToggle();
+	heart();
 })
 
 

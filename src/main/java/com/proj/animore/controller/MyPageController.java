@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
@@ -48,9 +49,9 @@ public class MyPageController {
  		String id = loginMember.getId();
  		log.info(id);
 
- 		List<FavoriteDTO> favoritelist = favoriteSVC.favoriteList(id);
+ 		List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(id);
 
- 		model.addAttribute("FavoriteDTO",favoritelist);
+ 		model.addAttribute("Favorite",favoritelist);
 
 		return "mypage/mypageFavorites";
 	}

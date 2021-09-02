@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.FavoriteDAO;
-import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.FavoriteReq;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +29,15 @@ public class FavoriteSVCImpl implements FavoriteSVC {
 
 	//즐겨찾기 목록
 	@Override
-	public List<FavoriteDTO>favoriteList(String id) {
+	public List<FavoriteReq>favoriteList(String id) {
 		return favoriteDAO.favoriteList(id);
+	}
+	
+	//즐겨찾기 조회
+	@Override
+//	public int isFavorite(Integer bnum, String id) {
+	public FavoriteReq isFavorite(Integer bnum, String id) {
+		return favoriteDAO.isFavorite(bnum, id);
 	}
 
 }

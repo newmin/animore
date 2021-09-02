@@ -2,7 +2,7 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
-import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.FavoriteReq;
 
 public interface FavoriteSVC {
 	
@@ -13,7 +13,9 @@ public interface FavoriteSVC {
 	public void deleteFavorite(Integer bnum, String id);
 
 	//즐겨찾기 목록
-	public List<FavoriteDTO> favoriteList(String id);
+	public List<FavoriteReq> favoriteList(String id);
 
-
+	//즐겨찾기 조회
+//	public int isFavorite(Integer bnum, String id);
+	public FavoriteReq isFavorite(Integer bnum, String id);
 }
