@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.FavoriteReq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-
 public class FavoriteDAOImpl implements FavoriteDAO{
 	
 	private final JdbcTemplate jdbcTemplate;
@@ -42,7 +42,7 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	public List<FavoriteDTO>favoriteList(String id) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select f.mnum , b.bname , m.id, b.bscore ");
+		sql.append(" select f.fnum , b.bname , m.id ");
 		sql.append("   from favorite f, business b ,member m " );
 		sql.append("  where f.bnum = b.bnum  ");
 		sql.append("    and f.id = m.id" );
@@ -57,14 +57,21 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		return favoritelist;
 	}
 	
-	//즐겨찾기 조회
-	public int isFavorite() {
+	//즐겨찾기 여부 조회
+	@Override
+	public FavoriteReq isFavorite(Integer bnum, String id) {
 		
 		StringBuffer sql = new StringBuffer();
+		sql.append("select count(fnum) ");
+		sql.append("  from favorite ");
+		sql.append(" where bnum = ? ");
+		sql.append("   and id = ? ");
 		
+		FavoriteReq favor = jdbcTemplate.queryForObject(sql.toString(),
+						new BeanPropertyRowMapper<>(FavoriteReq.class),
+						bnum,id);
 		
-		
-		return null;
+		return favor;
 	}
 	
 	
