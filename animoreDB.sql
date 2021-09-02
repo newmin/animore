@@ -305,13 +305,13 @@ insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.ne
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1);
 
 --즐겨찾기
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'normal@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'user@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'special@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'busi@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'normal@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'user@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'special@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'busi@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'busi@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'busi@test.com');
 
 commit;
