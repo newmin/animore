@@ -28,7 +28,8 @@ $busiList.forEach( (rec, index) => {
           position: coords
       });
 
-      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      // 지도의 중심을 현재위치로 이동시킵니다
+      coords = '내위치';
       map.setCenter(coords);
 
       // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
