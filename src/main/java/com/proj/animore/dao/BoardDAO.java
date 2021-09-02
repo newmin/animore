@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.BoardReqDTO;
+import com.proj.animore.dto.GoodBoardDTO;
 
 public interface BoardDAO {
 
@@ -48,4 +49,6 @@ public interface BoardDAO {
 	
 	//댓글수 조회
 	Integer reqBreply(Integer bnum);
+
+	
 }

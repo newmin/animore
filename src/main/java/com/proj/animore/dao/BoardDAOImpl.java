@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.BoardReqDTO;
+import com.proj.animore.dto.GoodBoardDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -228,5 +229,5 @@ public class BoardDAOImpl implements BoardDAO {
 				
 		return breply;
 	}
-	
+
 }

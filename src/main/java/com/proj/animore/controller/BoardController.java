@@ -29,6 +29,7 @@ import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.BoardSVC;
+import com.proj.animore.svc.GoodBoardSVC;
 import com.proj.animore.svc.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	private final BoardSVC boardSVC;
 	private final RboardSVC rboardSVC;
+	private final GoodBoardSVC goodBoardSVC;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -242,6 +244,35 @@ public class BoardController {
 		return result;
 	}
 	
-		
+	//좋아요클릭시
+	@ResponseBody
+	@GetMapping("/good/{bnum}")
+	public Result addGoodBoard(@PathVariable int bnum,
+								HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String id = loginMember.getId();
+		int res= goodBoardSVC.isGoodBoard(bnum,id);
+		if(res==0) {
+			goodBoardSVC.addGoodBoard(id, bnum);
+			goodBoardSVC.upGoodBoardCnt(bnum);
+		}else {
+			goodBoardSVC.delGoodBoard(bnum, id);
+			goodBoardSVC.downGoodBoardCnt(bnum);
+		}
+		Integer bgoodCnt= goodBoardSVC.GoodBoardCnt(bnum);
+		Result result = new Result();
+		if (res == 0) {
+			result.setRtcd("01");
+			result.setRtmsg("좋아요 추가되었습니다.");
+			result.setData(bgoodCnt);
+		} else {
+			result.setRtcd("00");
+			result.setRtmsg("좋아요 제거되었습니다.");
+			result.setData(bgoodCnt);
+		}
+
+		return result;
 	}
+}
 	
