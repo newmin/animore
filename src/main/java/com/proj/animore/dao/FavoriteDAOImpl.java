@@ -25,7 +25,7 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	public void addFavorite(Integer bnum, String id) {
 		String sql = new String();
 		
-		sql = "insert into favorite values(Favorite_mnum_seq.nextval,?,?) ";
+		sql = "insert into favorite values(Favorite_fnum_seq.nextval,?,?) ";
 		
 		jdbcTemplate.update(sql,bnum,id);
 		
@@ -56,4 +56,18 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		
 		return favoritelist;
 	}
+	
+	//즐겨찾기 조회
+	public int isFavorite() {
+		
+		StringBuffer sql = new StringBuffer();
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	
 }
