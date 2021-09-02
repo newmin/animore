@@ -6,17 +6,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.LoginMember;
+import com.proj.animore.form.ModifyForm;
 import com.proj.animore.svc.FavoriteSVC;
 import com.proj.animore.svc.MemberSVC;
 
@@ -31,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
 	private final FavoriteSVC favoriteSVC;
 	private final MemberSVC memberSVC;
-	
+	//즐겨찾기 목록
 	@GetMapping("/mypageFavorites")
 	public String mypage(HttpServletRequest request,
 			Model model) {
@@ -87,4 +94,36 @@ public class MyPageController {
 		
 		return "redirect:/";
 	}
+	//개인정보 수정양식
+	@GetMapping("/mypage")
+public String modifyMember(HttpServletRequest request,
+		Model model) {
+		log.info("회원양식 호출");
+		HttpSession session  = request.getSession(false);
+		LoginMember loginMember = 
+				(LoginMember)session.getAttribute("loginMember");
+		
+		if(loginMember == null)return "redirect:/login";
+		
+		//회원정보 가져오기
+		
+		MemberDTO memberDTO = memberSVC.findMemberById(loginMember.getId());
+		ModifyForm modifyForm = new ModifyForm();
+		BeanUtils.copyProperties(memberDTO, modifyForm);
+		
+		model.addAttribute("modifyForm",modifyForm);
+	
+	
+	
+	return "redirect:/mypageModify";
+}
+	@PatchMapping("/mypage")
+	public String modifyMember(@Valid @ModelAttribute ModifyForm modifyForm,
+			BindingResult bindingResult,
+			HttpServletRequest request) {
+		
+		
+		return "redirect:/mypage/mypageModify";
+	}
+	
 }
