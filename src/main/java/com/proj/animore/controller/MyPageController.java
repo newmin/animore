@@ -41,7 +41,7 @@ public class MyPageController {
  		String id = loginMember.getId();
  		log.info(id);
 
- 		List<FavoriteDTO> favoritelist = favoriteSVC.favoritelist(id);
+ 		List<FavoriteDTO> favoritelist = favoriteSVC.favoriteList(id);
 
  		model.addAttribute("FavoriteDTO",favoritelist);
 

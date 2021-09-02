@@ -46,3 +46,40 @@ two.addEventListener('click',score2);
 three.addEventListener('click',score3);
 four.addEventListener('click',score4);
 five.addEventListener('click',score5);
+
+
+
+//즐겨찾기 등록 / 즐겨찾기 등록/삭제 + 하트 채우기/비우기
+
+const $heart = document.querySelector('.fa-heart');
+const $addFavor = document.querySelector('.unfavorite');
+const $delFavor = document.querySelector('.favorite');
+
+
+
+//하트 색상 함수
+function heart(){
+ 	$heart.classList.toggle('far');
+  $heart.classList.toggle('fas');
+}
+//즐겨찾기 토글 함수
+function favoriteToggle(){
+    $heart.classList.toggle('unfavorite');
+    $heart.classList.toggle('favorite');
+}
+
+$addFavor.addEventListener('click',e=>{
+	
+
+	favoriteToggle;
+	heart;
+})
+
+$delFavor.addEventListener('click',e=>{
+
+
+	favoriteToggle;
+	heart;
+})
+
+
