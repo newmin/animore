@@ -2,6 +2,7 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
@@ -13,7 +14,7 @@ public interface MemberSVC {
 
 	//회원가입
 	void joinMember(MemberDTO memberDTO);
-	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO);
+	void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO);
 	//TODO 전문가가입
 	void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO);
 	
@@ -46,5 +47,30 @@ public interface MemberSVC {
 
 	//비밀번호 변경처리
 	int changePW(ChangePwForm changePWForm);
+	
+	
+	
+	
+	
+	/**
+	 * 회원 유무체크
+	 * @param email
+	 * @param pw
+	 */
+	boolean isMemember(String id, String pw);
+	
+	/**
+	 * 탈퇴
+	 * @param email
+	 */
+	void outMember(String email, String pw);
+	
+	/**
+	 * 비밀번호변경(이메일로 임시비밀번호 발급 기능 사용시, 생성된 임시비밀번호를 비밀번호찾기 신청한 회원정보에 업데이트하는 메소드)
+	 * @param email
+	 * @param pw
+	 * @param tmpPw
+	 */
+	void changePw(String id, String pw, String tmpPw);
 	
 }

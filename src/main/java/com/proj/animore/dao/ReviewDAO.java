@@ -14,8 +14,8 @@ public interface ReviewDAO {
     //리뷰 조회(마이페이지 내리뷰)
     List<ReviewReq> myReview(String id);
     //리뷰수정
-    List<ReviewReq> updateReview(Integer bnum, String id, ReviewDTO reviewDTO);
+    List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO);
     //리뷰삭제
-    List<ReviewReq> removeReview(Integer bnum, String id);
+    List<ReviewReq> removeReview(int bnum, int rnum, String id);
 	
 }

@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class FavoriteDTO {
-	private String id;
-	private int bnum;
-	private int mnum;
 
+	private int fnum;
+ 	private int bnum;
+ 	private String id;
 }

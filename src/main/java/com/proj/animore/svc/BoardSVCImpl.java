@@ -41,13 +41,18 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String btitle) {
-		return boardDAO.findBoardByBtitle(btitle);
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
+		return boardDAO.findBoardByBtitle(bcategory,btitle);
 	}
 	//게시글검색(by bcontent)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcontent) {
-		return boardDAO.findBoardByBcontent(bcontent);
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
+		return boardDAO.findBoardByBcontent(bcategory,bcontent);
+	}
+	//게시글검색(by nickname)
+	@Override
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
+		return boardDAO.findBoardByNickname(bcategory,nickname);
 	}
 	//게시글수정
 	@Override
@@ -77,5 +82,27 @@ public class BoardSVCImpl implements BoardSVC {
 	public Integer reqBreply(Integer bnum) {
 		return boardDAO.reqBreply(bnum);
 	}
-
+	//공지추가
+	@Override
+	public void addNotice(int bnum) {
+		boardDAO.addNotice(bnum);
+		
+	}
+	//공지삭제
+	@Override
+	public void delNotice(int bnum) {
+		boardDAO.delNotice(bnum);
+		
+	}
+	//공지리스트
+	@Override
+	public List<BoardReqDTO> noticeList(String bcategory) {
+		return boardDAO.noticeList(bcategory);
+	}
+	
+	//공지글여부
+	@Override
+	public boolean isNotice(int bnum) {
+		return boardDAO.isNotice(bnum);
+	}
 }

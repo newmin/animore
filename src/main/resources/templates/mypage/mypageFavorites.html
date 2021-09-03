@@ -6,9 +6,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/api/ajaxCall.js"></script>
+  <script src="/js/api/mypageReq.js" defer></script>
   <script src="/js/mypage.js" defer></script>
-  <title>Document</title>
+  <title>마이페이지</title>
 </head>
 <body>
 
@@ -35,20 +38,20 @@
           <h2 class="mypage_aside_title">마이페이지</h2>
           <ul class="mypage_aside_menu">
             <!-- TODO th:href 등록 파일명'임의'표기-->
-            <li class="mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
-            <li><a href="/mypage/mypageReview" 		class="mypage__myReviewBtn">내가 쓴 리뷰</a></li>
-            <li><a href="/mypage/mypagePost.html" class="mypage__mypostBtn">내가 쓴 글</a></li>
-            <li><a href="/mypage/mypageReply.html" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
-            <li><a href="/mypage/mypageGood.html" class="mypage__myGoodBtn">좋아요</a></li>
-            <li><a href="/mypage/mypageCoupon.html" class="mypage__myCouponBtn">내 쿠폰</a></li>
-            <li><a href="/mypage/mypageModi.html" class="mypage__myInfoBtn">회원 정보 수정</a></li>
-            <li><a href="/mypage/mypageDel.html"  class="mypage__outBtn">회원 탈퇴</a></li>
+            <li class="mypage_aside_menu mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
+            <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
+            <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageGood.html" class="mypage__myGoodBtn">좋아요</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageCoupon.html" class="mypage__myCouponBtn">내 쿠폰</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageModify" class="mypage__myInfoBtn">회원 정보 수정</a></li>
+            <li class="mypage_aside_menu"><a href="/mypage/mypageDel"  class="mypage__outBtn">회원 탈퇴</a></li>
           </ul>
         </div>
         <div class="mypage_content_container">
-          <h3 class="mypage_content_title">즐겨 찾는 업체</h3>
-          <hr>
-        <div class="mypage_content">
+        
+          <h2 class="mypage_content_title">즐겨 찾는 업체</h2>
+       <!--  <div class="mypage_content">
             <ul>
               <li><input type="checkbox" name="bcategory_all" id="bcategory_all"><label for="bcategory_all">전체</label></li>
               <li><input type="checkbox" name="bhospital" id="bhospital"><label for="bhospital">병원</label></li>
@@ -62,20 +65,31 @@
               <li><input type="checkbox" name="bhairshop" id="bhairshop"><label for="bhairshop">미용실</label></li>
               <li><input type="checkbox" name="betc" id="betc"><label for="betc">기타</label></li>
             </ul>
-          </div>
-         <table class="favorite__table">
-        <tr>
-          <th class="favorite__cell favorite__mnum">번호</th>
-          <th class="favorite__cell favorite_bname">업체명</th>
-          <th class="favorite__cell favorite_score">평점</th>
-        </tr>
-        <tr th:each="favoriteForm :${favoriteForm}">
-          <td class="favorite__cell favorite_bname" ><a th:href="@{|/favoriteForm/post/${favoriteForm.mnum}|}" th:text="${favoriteForm.bname}"></a></td>
-          <td class="favorite__cell favorite__mnum" th:text="${favorite.mnum}">1</td>
-          <td class="favorite__cell favorite_score" th:text="${favorite.score}">3</td>
-          
-          </tr>
-      </table>
+          </div> -->
+          <hr>
+ 	<table class="favorite__table ">
+         <tr class="w3-hover-green">
+           <th class="favorite__cell favorite__fnum">번호</th>
+           <th class="favorite__cell favorite_bname">업체명</th>
+           <th class="favorite__cell favorite_score">평점</th>
+         </tr>
+       		       		
+         
+
+         <tr th:each="favorite :${Favorite}" class="w3-hover-green">
+         
+           <td class="favorite__cell favorite__fnum" th:text="${favorite.fnum}">1</td>
+ 
+           <td class="favorite__cell favorite_bname" th:text="${favorite.bname}">2</td>
+
+      	  <td class="favorite__cell favorite_score" th:text="${favorite.bscore}">3</td>
+
+         </tr>
+       </table>
+
+       
+       
+       
           
         </div>
       </div>

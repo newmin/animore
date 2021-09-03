@@ -3,9 +3,12 @@ package com.proj.animore.svc;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.proj.animore.dao.BcategoryDAO;
 import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
+import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
@@ -21,6 +24,7 @@ public class MemberSVCImpl implements MemberSVC {
 	
 	private final MemberDAO memberDAO;
 	private final BusinessDAO businessDAO;
+	private final BcategoryDAO bcategoryDAO;
 	
 	//일반회원가입
 	@Override
@@ -30,10 +34,11 @@ public class MemberSVCImpl implements MemberSVC {
 	
 	//사업가회원 가입
 	@Override
-	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO) {
+	@Transactional
+	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO) {
 		memberDAO.joinMember(memberDTO);
 		businessDAO.joinBusi(businessDTO);
-	
+		bcategoryDAO.addBcategory(bcategoryDTO);
 	}
 	//TODO 전문가 회원가입
 	@Override
@@ -83,7 +88,6 @@ public class MemberSVCImpl implements MemberSVC {
 	//로그인시 멤버확인
 	@Override
 	public MemberDTO findByIdPw(String id, String pw) {
-		
 		return memberDAO.findByIdPw(id, pw);
 	}
 
@@ -104,4 +108,29 @@ public class MemberSVCImpl implements MemberSVC {
 	public int changePW(ChangePwForm changePWForm) {
 		return memberDAO.changePW(changePWForm);
 	}
+	
+	
+	
+	
+	
+	//회원 우무체크
+	@Override
+	public boolean isMemember(String id, String pw) {
+		return memberDAO.isLogin(id, pw);
+	}
+	
+//id로 회원 탈퇴
+	@Override
+	public void outMember(String id, String pw) {
+		memberDAO.outMember(id, pw);
+		
+	}
+	
+//비밀번호변경(이메일로 임시비밀번호 발급 기능 사용시, 생성된 임시비밀번호를 비밀번호찾기 신청한 회원정보에 업데이트하는 메소드)
+	@Override
+	public void changePw(String email, String pw, String tmpPw) {
+		// TODO Auto-generated method stub
+		memberDAO.changePw(email, pw, tmpPw);
+	}
+	
 }

@@ -71,42 +71,70 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> findBoardById(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
 		sql.append("from board ");
 		sql.append("where id=? ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 												new BeanPropertyRowMapper<>(BoardReqDTO.class),
 												id);
+		
 		return list;
 		
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String btitle) {
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
-		sql.append("from board ");
-		sql.append("where btitle like '%?%'; ");
+
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t1.btitle like  '%"+btitle+"%'");
+		sql.append("and t1.bcategory = ? ");
+		sql.append(" order by t1.bnum ");
+
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				btitle);
+				bcategory);
+//		btitle,bcategory);
 		return list;
 
 	}
-	//게시글검색(by bcontent)
+	//게시글검색(by nickname)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcontent) {
-
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
-		sql.append("from board ");
-		sql.append("where bcontent	 like '%?%'; ");
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t2.nickname like  '%"+nickname+"%'");
+		sql.append("and t1.bcategory =? ");
+		sql.append(" order by t1.bnum ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcontent);
+				bcategory);
+		return list;
+	}
+	//게시글검색(by bcontent)
+	@Override
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
+
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append("from board t1, member t2 ");
+		sql.append("where t1.id = t2.id ");
+		sql.append("and t1.bcontent like  '%"+bcontent+"%'");
+		sql.append("and t1.bcategory =? ");
+		sql.append(" order by t1.bnum ");
+
+		
+		List<BoardReqDTO> list = jt.query(sql.toString(), 
+				new BeanPropertyRowMapper<>(BoardReqDTO.class),
+				bcategory);
 		return list;
 
 	}
@@ -200,5 +228,63 @@ public class BoardDAOImpl implements BoardDAO {
 				
 		return breply;
 	}
+	//공지추가
+	@Override
+	public void addNotice(int bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("	set bstatus='Y',");
+		sql.append("	bndate = current_timestamp ");
+		sql.append("	where bnum=? ");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
+	//공지삭제
+	@Override
+	public void delNotice(int bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("	set bstatus='N' ");
+		sql.append("	where bnum=? ");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
+	//공지리스트
+	@Override
+	public List<BoardReqDTO> noticeList(String bcategory) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent, b.bstatus ");
+		sql.append("  from board b, member m ");
+		sql.append("  where b.id = m.id ");
+		sql.append("   and b.bstatus='Y' ");
+		sql.append("   and bcategory=? ");
+		sql.append(" order by bndate desc ");
+
+		List<BoardReqDTO> list = jt.query(sql.toString(), 
+								new BeanPropertyRowMapper<>(BoardReqDTO.class),
+								bcategory);
+		
+		return list;
+	}
 	
+	//해당글 공지여부
+	@Override
+	public boolean isNotice(int bnum) {
+		boolean isNotice = false;
+		StringBuffer sql = new StringBuffer();
+
+		 sql.append("select count(bnum) ");
+    	 sql.append("	from board ");
+    	 sql.append("	where bstatus='Y' ");
+      	 sql.append("	and bnum=? ");
+	
+      	if(jt.queryForObject(sql.toString(), Integer.class,bnum) != 0) {
+      		isNotice = true;
+      	}
+      	
+		return isNotice;
+	}
 }

@@ -11,14 +11,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./10-10.css"/>
 <script type="text/javascript" src="./10-10.js"></script> -->
-<script src="/js/mapAPI.js" defer></script>
- <!--네이버 API-->
- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script>
- <!--카카오 API-->
- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
+	<script th:inline="javascript">
+		const $busi = /*[[${busi}]]*/ null;	//업체목록
+		const $id = /*[[${session.loginMember?.id}]]*/ null; //아이디
+	</script>
+	<script src="/js/mapAPI3.js" defer></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
+ <script src="/js/api/ajaxCall.js" defer></script>
+ <script src="/js/api/favorites.js" defer></script>
+ <script src="/js/api/reviewReq.js" defer></script>
  <script src="/js/inquireBusiDetail.js" defer></script>
- <script src="/js/api/ajaxCall.js"></script>
- <script src="/js/api/reviewReq.js"></script>
  <title>업체조회</title>
 </head>
 <body>
@@ -32,7 +34,13 @@
 		  <!--업체정보-->
 		  <div class="selected-busi" th:object="${busi}" th:data-bnum="*{bnum}"> 
 		  	<div class="busi-info">
-			    <h1 class="sbusi-info__name" th:text="*{bname}">업체명</h1>
+			    <span class="sbusi-info__name" th:text="*{bname}" th:data-bnum="*{bnum}">업체명</span>
+			    <div th:if="${session.loginMember != null}">
+				    <i th:if="${favor.count != 1}" class="far fa-heart favorBtn unfavorite"></i>
+				    <i th:if="${favor.count == 1}" class="fas fa-heart favorBtn favorite"></i>
+			    </div>
+			    <i th:if="${session.loginMember == null}" class="far fa-heart favorBtn"></i>
+			    <!--TODO 클릭했을시 회원만 이용가능한 기능, 로그인? -->
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->
@@ -73,14 +81,14 @@
 					<div><p th:text="|리뷰수 : ${review.size}|"></p></div>
 					<!-- 로그인시에만 리뷰 출력 -->
 		      <section class="review" th:if="${session.loginMember != null}">
-		        <div class="review__row" th:each="review :${review}">
+		        <div class="review__row" th:each="review :${review}" th:data-rnum="${review.rnum}">
 							<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진"></div>
 							<div class="review__column">
 								<p class="review__nickname" th:text="${review.nickname}">닉네임</p>
 								<div class="review__star-score" th:text=${review.rscore}><i class="fas fa-star"><i class="far fa-star"></i></i></div>
 								<p class="review__date" th:text="|작성일자 : ${review.rvcdate}|">작성일자</p>
 								<p class="review__content" th:text="${review.rcontent}">리뷰내용</p>
-								<div th:if="${session.loginMember.id.equals(review.id)}"><p><a th:href="@{#}" class="review__modi">수정</a><span>|</span><a th:href="@{#}" class="review__del">삭제</a></p></div>
+								<div th:if="${session.loginMember.id.equals(review.id)}"><p class="review__userBtns"><span class="review__userBtn review__modi-frm">수정</span><span>|</span><span class="review__userBtn review__del">삭제</span></p></div>
 								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글</span></p>
 							</div>
 							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>
@@ -107,19 +115,19 @@
 		                    <label for="point5"><i class="fas fa-star reviewForm__score five reviewForm__checked"></i></label>
 		                </div>
 		            </div>
-		            <div class="review_contents">
+		            <div class="review__contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
 		                <textarea rows="10" class="review__textarea" name="rcontent"></textarea>
-		                <button class="review__regist" type="submit">등록</button>
+		                <button class="review__regist" type="button">등록</button>
 		            </div>   
 		        </form>
 		    </section>
 		      
-		      <section th:if="${session.loginMember == null}">
-		      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
-		      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
-		      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
-		      </section>
+	      <section th:if="${session.loginMember?.id == null}">
+	      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
+	      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
+	      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
+	      </section> 
 		      
 		      
 		    </div>

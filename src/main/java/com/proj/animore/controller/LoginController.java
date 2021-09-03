@@ -71,11 +71,11 @@ public class LoginController {
 			return "/member/login";
 		}
 		
+		//로긴성공
+		HttpSession session =request.getSession(true);
 		//로그인 성공시
 //		쿠키에 저장할 정보 담기 (아이디, 닉네임, 회원유형)
 		LoginMember loginMember = new LoginMember(memberDTO.getId(),memberDTO.getNickname(),memberDTO.getMtype());
-		//로긴성공
-		HttpSession session =request.getSession(true);
 		session.setAttribute("loginMember", loginMember);
 		
 		//자동로그인 체크했으면

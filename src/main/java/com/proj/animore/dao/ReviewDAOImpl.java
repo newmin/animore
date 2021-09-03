@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.ReviewDTO;
 import com.proj.animore.dto.ReviewReq;
-import com.proj.animore.form.ReviewForm;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +54,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select rv.id,rv.rcontent,rscore,rvcdate,rnum,m.nickname ");
+		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname ");
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");
@@ -79,7 +78,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rv.id,rcontent,rscore,rvcdate,rvudate,rv.bnum ");
+		sql.append("select rv.id,rnum,rcontent,rscore,rvcdate,rvudate,rv.bnum, b.bname ");
 		sql.append("  from review rv, business b ");
 		sql.append(" where rv.bnum = b.bnum ");
 		sql.append("   and rv.id = ? ");
@@ -96,20 +95,20 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 	//리뷰수정
 	@Override
-	public List<ReviewReq> updateReview(Integer bnum, String id, ReviewDTO reviewDTO) {
+	public List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
 		sql.append("   	   rscore =?, ");
-		sql.append("   	   rvudate =? ");
-		sql.append(" where bnum = ? ");
+		sql.append("   	   rvudate = 'timestamp' ");
+		sql.append(" where rnum = ? ");
 		sql.append("   and id =? ");
 
 		jdbcTemplate.update(sql.toString(), 
 							reviewDTO.getRcontent(), 
 							reviewDTO.getRscore(), 
-							"timestamp", 
-							bnum, id);
+							reviewDTO.getRnum(), 
+							id);
 		
 		//예외처리
 		//접속만료되어 id값 없는 경우
@@ -121,13 +120,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 	//리뷰삭제
 	@Override
-	public List<ReviewReq> removeReview(Integer bnum, String id) {
+	public List<ReviewReq> removeReview(int bnum, int rnum, String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from review ");
-		sql.append(" where bnum = ? ");
-		sql.append("   and id = ? ");
+		sql.append(" where rnum = ? ");
+		sql.append("   and id =? ");
 
-		jdbcTemplate.update(sql.toString(), bnum, id);
+		jdbcTemplate.update(sql.toString(), rnum, id);
 
 		//예외처리
 		//접속만료 등 id값을 찾을 수 없는 경우

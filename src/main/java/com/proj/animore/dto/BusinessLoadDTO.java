@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class BusinessLoadDTO {
 	private int bnum;
+	private float bscore;
 	private String bname;
 	private String baddress;
 	private String btel;

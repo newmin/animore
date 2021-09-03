@@ -7,11 +7,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>업체 리스트</title>
-  <script src="/js/mapAPI.js" defer></script>
-   <!--네이버 API-->
- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script>
- <!--카카오 API-->
- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script>
+<!-- 테스트코드시작 -->
+	<script th:inline="javascript">
+		const $busiList = /*[[${busiList}]]*/ null;	//업체목록
+	</script>
+	<script src="/js/mapAPI2.js" defer></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
+<!-- 테스트코드끝 -->
+
+<!-- 원본 -->
+<!-- <script src="/js/mapAPI.js" defer></script> -->
+<!--네이버 API--> 
+<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script> -->
+<!--카카오 API-->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script> -->
+ 
 </head>
 <body>
   <main class="main">
@@ -65,7 +75,7 @@
             <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
             <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
             <span class="busi-list__column busi-list__distance">3cm</span>
-            <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
+            <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i><span th:text="${busiList.bscore}"></span></div>
           </li>
         </ul>
       

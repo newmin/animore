@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BusinessDTO;
@@ -32,7 +33,6 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
-		
 	}
 	//업체조회
 	@Override
@@ -80,10 +80,13 @@ public class BusinessDAOImpl implements BusinessDAO {
 	public List<BusinessLoadDTO> busiList(String bcategory) {
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL ");
-		sql.append("from business b, bcategory c ");
-		sql.append("where b.bnum=c.bnum ");
-		sql.append("and "+bcategory+" = 'Y' ");
+		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL, r.bscore  ");
+		sql.append("from business b, bcategory c, (select bnum, round(avg(rscore),2) bscore ");
+		sql.append("                                from review ");
+		sql.append("                                group by bnum) r  ");
+		sql.append("where b.bnum=c.bnum  ");
+		sql.append("  and b.bnum=r.bnum  ");
+		sql.append("  and "+bcategory+" = 'Y'  ");
 		
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
 					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));

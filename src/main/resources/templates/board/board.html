@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/board.js" defer></script>
+  <script src="/js/api/ajaxCall.js"></script>
   <title>글목록</title>
 </head>
 
@@ -25,7 +26,6 @@
           <li><a href="/board/P" class="board__category" id="category_P">내새끼보세요</a></li>
         </ul>
       </div>
-
       <!-- Q&A -->
    <div th:if="${bcategory} =='Q'">
       <table class="board__table">
@@ -36,6 +36,13 @@
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
+        </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
           <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
@@ -44,21 +51,6 @@
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
-
-      <div class="board__btns">
- 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
-        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
-      </div>
-
-      <div class="board__search">
-        <select name="search" id="" class="board__search_select">
-          <option value="">제목</option>
-          <option value="">작성자명</option>
-          <option value="">내용</option>
-        </select>
-        <input type="text" name="" id="">
-        <button type="button">검색</button>
-      </div>
 
       <div class="borad__pageBtn">
 
@@ -74,6 +66,13 @@
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
+        </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
           <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
@@ -82,21 +81,6 @@
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
-
-      <div class="board__btns">
- 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
-        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
-      </div>
-
-      <div class="board__search">
-        <select name="search" id="" class="board__search_select">
-          <option value="">제목</option>
-          <option value="">작성자명</option>
-          <option value="">내용</option>
-        </select>
-        <input type="text" name="" id="">
-        <button type="button">검색</button>
-      </div>
 
       <div class="borad__pageBtn">
 
@@ -113,6 +97,13 @@
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
+        </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
@@ -121,58 +112,43 @@
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
-
-      <div class="board__btns">
- 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
-        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
-      </div>
-
-      <div class="board__search">
-        <select name="search" id="" class="board__search_select">
-          <option value="">제목</option>
-          <option value="">작성자명</option>
-          <option value="">내용</option>
-        </select>
-        <input type="text" name="" id="">
-        <button type="button">검색</button>
-      </div>
-
       <div class="borad__pageBtn">
 
       </div>
 
     </div>
+    
     </div>
 
     <!-- 내새끼보세요 -->
    <div th:if="${bcategory} =='P'">
-    <div class="b_galarywrap">
+    <div class="b_galarywrap board__table">
         <div class="b_galary_post" th:each="boardForm :${boardForm}">
           <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
           <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title" th:text="${boardForm.btitle}">글제목</p></a></div>
         </div>
         
       </div>
-      <div class="board__btns">
-        <button class="board__btn board__myPostbtn" type="button">내글보기</button>
-        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
-      </div>
-      
-      <div class="board__search">
-        <select name="search" id="" class="board__search_select">
-          <option value="">제목</option>
-          <option value="">작성자명</option>
-          <option value="">내용</option>
-        </select>
-        <input type="text" name="" id="">
-        <button type="button" >검색</button>
-      </div>
       
       <div class="borad__pageBtn">
         
       </div>
     </div>
-    </div>
+     <div class="board__btns">
+ 		<button class="board__btn board__myPostbtn" type="button">내글보기</button>
+        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
+      </div>
+
+      <div class="board__search">
+        <select name="search" id="" class="board__search_select">
+          <option value="btitle">제목</option>
+          <option value="nickname">작성자명</option>
+          <option value="bcontent">내용</option>
+        </select>
+        <input type="text" name="" id="" class="board__searchInput">
+        <button type="button" class="searchBtn">검색</button>
+      </div>
+    
   </main>
 </body>
 

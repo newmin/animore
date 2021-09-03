@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.proj.animore.dto.BoardReqDTO;
-import com.proj.animore.dto.FavoriteDTO;
+import com.proj.animore.dto.FavoriteReq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,38 +19,67 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	private final JdbcTemplate jdbcTemplate;
 	
 	//즐겨찾기 추가
-	
 	@Override
-	public void addFavorite(FavoriteDTO FavoriteDTO) {
-		StringBuffer sql = new StringBuffer();
+	public void addFavorite(Integer bnum, String id) {
+		String sql = new String();
 		
-		sql.append("insert into favorite() values(Favorite_mnum_seq.nextval,?,?,?) ");
+		sql = "insert into favorite values(Favorite_fnum_seq.nextval,?,?) ";
 		
-		jdbcTemplate.update(sql.toString(),
-											FavoriteDTO.getId(),
-											FavoriteDTO.getBnum(),
-											FavoriteDTO.getMnum()
-											);
+		jdbcTemplate.update(sql,bnum,id);
 		
 	}
 	//즐겨찾기 삭제
 	@Override
-	public void deleteFavorite(Integer mnum) {
-		String sql = " delete Favorite where Mnum=? ";
-		jdbcTemplate.update(sql.toString(),mnum);
+	public void deleteFavorite(Integer bnum, String id) {
+		StringBuffer sql = new StringBuffer(); 
+		sql.append(" delete from favorite ");
+		sql.append(" where bnum=? ");
+		sql.append(" and id= ? ");
+		jdbcTemplate.update(sql.toString(),bnum,id);
 		
 	}
 	//즐겨찾기 목록
 	@Override
-	public List<FavoriteDTO> list(Integer mnum) {
+	public List<FavoriteReq>favoriteList(String id) {
+
+//		Integer avg = jdbcTemplate.queryForObject("select avg(rscore) from review where bnum = ? ",Integer.class,bnum);
+		
+		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select business.bname,business.bname baddress  ");
-		sql.append(" from favorite,business " );
-		sql.append("  where  ");
-		sql.append("   and  ");
-		List<FavoriteDTO> list = jdbcTemplate.query(sql.toString(),
-										new BeanPropertyRowMapper<>(FavoriteDTO.class),
-										mnum);
-		return list;
+		sql.append("select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum ");
+		sql.append("  from favorite f, business b,(select bnum, round(avg(rscore),2) avg ");
+		sql.append("                                from review ");
+		sql.append("                                group by bnum) r ");
+		sql.append(" where f.bnum=b.bnum ");
+		sql.append("   and f.bnum=r.bnum ");
+		sql.append("   and f.id= ? ");
+
+		List<FavoriteReq> favoritelist = jdbcTemplate.query(sql.toString(),
+										new BeanPropertyRowMapper<>(FavoriteReq.class),
+										id);
+		log.info(favoritelist.toString());
+		
+		
+		return favoritelist;
 	}
+	
+	//즐겨찾기 여부 조회
+	@Override
+	public FavoriteReq isFavorite(Integer bnum, String id) {
+//		public int isFavorite(Integer bnum, String id) {
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("select count(fnum) count");
+		sql.append("  from favorite ");
+		sql.append(" where bnum = ? ");
+		sql.append("   and id = ? ");
+		
+		FavoriteReq favor = jdbcTemplate.queryForObject(sql.toString(),
+								new BeanPropertyRowMapper<>(FavoriteReq.class),bnum,id);
+		return favor;
+	}
+	
+	
+	
+	
 }

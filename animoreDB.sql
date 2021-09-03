@@ -23,15 +23,18 @@ create table member(
   gender char(3) not null,
   address varchar2(150) not null,
   birth date not null,
-  mtype varchar2(1) not null,
+  mtype char(1) not null,
+  status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp DEFAULT systimestamp,
+  lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
   image blob,
   fsize varchar2(45),
   ftype varchar2(50),
   fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
+  constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),
   constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
 );
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
@@ -49,8 +52,10 @@ create table board(
   breply number(5) DEFAULT 0 not null,
   bcontent clob not null,
   bgroup number(5),
+  bstatus char(1) default 'N',
+  bndate timestamp ,
   constraint BOARD_BNUM_PK primary key(bnum),
-  constraint board_id_FK foreign key(id) references member(id),
+  constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
 );
 
@@ -71,6 +76,7 @@ create table rboard(
                                 ON DELETE CASCADE,
   constraint rboard_id_FK foreign key(id) 
                                 references member(id)
+                                ON DELETE CASCADE
 );
 
 --건강정보
@@ -85,7 +91,7 @@ create table hboard(
   bgood number(5) DEFAULT 0 not null,
   bcontent clob not null,
   constraint HBOARD_BNUM_PK primary key(bnum),
-  constraint hboard_id_FK foreign key(id) references member(id),
+  constraint hboard_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint hboard_hcategory_ck check(hcategory in('질병사전','행동사전'))
 );
 
@@ -93,7 +99,7 @@ create table hboard(
 create table goodboard(
   gnum number(8),
   id varchar2(40) not null,
-  bnum number(10) not null,
+  bnum number(8) not null,
   constraint GOODBOARD_gnum_PK primary key(gnum),
   constraint goodboard_id_FK foreign key(id) 
                                 references member(id)
@@ -134,7 +140,7 @@ create table profession(
   id varchar2(40),
   licenseno varchar2(20) not null,
   constraint PROFESSION_PNUM_PK primary key(pnum),
-  constraint profession_pid_FK foreign key(id) 
+  constraint profession_id_FK foreign key(id) 
                                 references member(id)
                                 ON DELETE CASCADE
 );
@@ -142,16 +148,16 @@ create table profession(
 --업체카테고리
 create table bcategory(
   bnum number(8),
-  bhospital char(1) DEFAULT 'N' not null,
-  bpharmacy char(1) DEFAULT 'N' not null,
-  bhotel char(1) DEFAULT 'N' not null,
-  bkindergarden char(1) DEFAULT 'N' not null,
-  bfood char(1) DEFAULT 'N' not null,
-  btraining char(1) DEFAULT 'N' not null,
-  bshop char(1) DEFAULT 'N' not null,
-  bplayground char(1) DEFAULT 'N' not null,
-  bhairshop char(1) DEFAULT 'N' not null,
-  betc char(1) DEFAULT 'N' not null,
+  bhospital char(1) DEFAULT 'N'  null,
+  bpharmacy char(1) DEFAULT 'N'  null,
+  bhotel char(1) DEFAULT 'N'  null,
+  bkindergarden char(1) DEFAULT 'N'  null,
+  bfood char(1) DEFAULT 'N'  null,
+  btraining char(1) DEFAULT 'N'  null,
+  bshop char(1) DEFAULT 'N'  null,
+  bplayground char(1) DEFAULT 'N'  null,
+  bhairshop char(1) DEFAULT 'N'  null,
+  betc char(1) DEFAULT 'N'  null,
   constraint BCATEGORY_BNUM_PK primary key(bnum),
   constraint bcategory_bnum_FK foreign key(bnum) 
                                 references business(bnum)
@@ -183,14 +189,15 @@ create table review(
                                 ON DELETE CASCADE,
   constraint review_id_FK foreign key(id) 
                                 references member(id)
+                                ON DELETE CASCADE
 );
 
 --즐겨찾기
 create table favorite(
+  fnum number(10),
+  bnum number(8),
   id varchar2(40),
-  bnum number(10),
-  mnum number(10),
-  constraint favorite_mnum_PK primary key(mnum),
+  constraint favorite_fnum_PK primary key(fnum),
   constraint favorite_id_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE,
@@ -230,7 +237,7 @@ DROP SEQUENCE goodboard_gnum_seq;
 DROP SEQUENCE hboard_bnum_seq;
 DROP SEQUENCE business_bnum_seq;
 DROP SEQUENCE review_rnum_seq;
-DROP SEQUENCE favorite_mnum_seq;
+DROP SEQUENCE favorite_fnum_seq;
 DROP SEQUENCE myani_mnum_seq;
 DROP SEQUENCE profession_pnum_seq;
 DROP SEQUENCE coupon_cnum_seq;
@@ -242,7 +249,7 @@ CREATE SEQUENCE goodboard_gnum_seq;
 CREATE SEQUENCE hboard_bnum_seq;
 CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
-CREATE SEQUENCE favorite_mnum_seq;
+CREATE SEQUENCE favorite_fnum_seq;
 CREATE SEQUENCE myani_mnum_seq;
 CREATE SEQUENCE profession_pnum_seq;
 CREATE SEQUENCE coupon_cnum_seq;
@@ -256,12 +263,16 @@ insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) val
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444-4444-4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');
 -- 업체
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'사업자번호','special@zxc.com','물어!','코드도 깨끄시','333-3333-3333','Y','Y','Y','Y','Y');
+values(BUSINESS_BNUM_SEQ.nextval,'456-78-90123','special@zxc.com','울산롯데마트','울산광역시 남구 삼산로 74','333-3333-3333','Y','Y','Y','Y','Y');
+insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','할퀴어!','갱상도 울싼시','555-5555-5555','Y','Y','Y','Y','Y');
---업체카테고리
-insert into BCATEGORY values(1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
-insert into BCATEGORY values(2,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','이마트','울산광역시 남구 삼산동 1646','555-5555-5555','Y','Y','Y','Y','Y');
+insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','이마트양산점','경상남도 양산시 양산역6길 12 신세계이마트양산점','555-5555-5555','Y','Y','Y','Y','Y');
+insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 -- 업체별 리뷰
 insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,0,'좋아좋아','normal@zxc.com');
@@ -295,4 +306,15 @@ insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.ne
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1);
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1);
 
+--즐겨찾기
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'busi@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'busi@test.com');
+
 commit;
+

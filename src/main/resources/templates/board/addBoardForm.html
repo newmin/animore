@@ -21,12 +21,24 @@
 			th:value="${ele.code}" th:text="${ele.decode}">
 	</option>
     </select>
+    <p th:errors="*{bcategory}" th:errorclass="field-errmsg"></p>
     <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <p th:errors="*{btitle}" th:errorclass="field-errmsg"></p>
     <div class="addPost__icons">
-      <a><i class="far fa-image"></i></a>
-      <a><i class="fab fa-youtube"></i></a>
-      <a><i class="fas fa-link"></i></a>
+      <label for="fileBtn" class="addpost__fileBtn">
+        <i class="far fa-image"></i>
+        <input type="file"  name="fileBtn" id="fileBtn" style="display: none;" multiple>
+      </label>
+      <label for="videoBtn" class="addpost__videoBtn">
+        <a><i class="fab fa-youtube"></i></a>
+        <input type="file"  name="videoBtn" id="videoBtn" style="display: none;" multiple>
+      </label>
+      <!-- <label for="urlBtn" class="addpost__urlBtn">
+        <a><i class="fas fa-link"></i></a>
+        <input type="url" name="urlBtn" id="urlBtn"style="display: none;" >
+      </label> -->
     </div>
+    <p th:errors="*{bcontent}" th:errorclass="field-errmsg"></p>
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
     <div class="addPost__btns">
       <button type="button" class="addPost__escBtn">취소</button>
