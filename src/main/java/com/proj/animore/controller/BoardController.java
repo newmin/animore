@@ -75,9 +75,12 @@ public class BoardController {
 										Model model,
 										HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		//LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		if(session == null) return "redirect:/login";
-		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String id = loginMember.getId();
+		int isGoodBoard = goodBoardSVC.isGoodBoard(bnum, id);
+	    model.addAttribute("good",isGoodBoard);
+	    
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
