@@ -66,6 +66,9 @@ public class BoardController {
 	     List<BoardReqDTO> list = boardSVC.list(bcategory);
 	     model.addAttribute("boardForm",list);
 	     
+	    List<BoardReqDTO> nlist = boardSVC.noticeList(bcategory);
+	    model.addAttribute("notice",nlist);
+	     
 		return "board/board";
 	}
 	
@@ -76,10 +79,17 @@ public class BoardController {
 										HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if(session == null) return "redirect:/login";
+		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
+		//해당회원이 해당글 좋아요여부확인
 		int isGoodBoard = goodBoardSVC.isGoodBoard(bnum, id);
 	    model.addAttribute("good",isGoodBoard);
+	    
+	    //해당글 공지여부확인
+	    boolean isNotice = boardSVC.isNotice(bnum);
+	    model.addAttribute("notice",isNotice);
+	    log.info("isNotice:{}",isNotice);
 	    
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
@@ -277,5 +287,23 @@ public class BoardController {
 
 		return result;
 	}
+	//공지버튼클릭시
+	@ResponseBody
+	@GetMapping("/notice/{bnum}")
+	public Result postNotice(@PathVariable int bnum) {
+		boolean res = boardSVC.isNotice(bnum);
+		Result result = new Result();
+		if(res ==false) {
+			boardSVC.addNotice(bnum);
+			result.setRtcd("01");
+			result.setRtmsg("공지추가되었습니다.");
+		}else {
+			result.setRtcd("00");
+			result.setRtmsg("공지삭제되었습니다..");
+			boardSVC.delNotice(bnum);
+		}
+		return result;
+	}
+	
 }
 	

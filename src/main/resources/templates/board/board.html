@@ -36,6 +36,13 @@
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
         </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
+        </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
           <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
@@ -58,6 +65,13 @@
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
+        </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
@@ -82,6 +96,13 @@
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
+        </tr>
+        <tr th:each="notice :${notice}">
+          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
+          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
+          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
+          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
+          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>

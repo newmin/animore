@@ -17,6 +17,8 @@ public class BoardReqDTO {
 	private int breply;
 	private String bcontent;
 	private int bgroup;
-  private LocalDate bcdate;
-  private LocalDate budate;
+	private String bstatus;
+	private LocalDate bndate;
+	private LocalDate bcdate;
+	private LocalDate budate;
 }

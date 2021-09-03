@@ -82,5 +82,27 @@ public class BoardSVCImpl implements BoardSVC {
 	public Integer reqBreply(Integer bnum) {
 		return boardDAO.reqBreply(bnum);
 	}
-
+	//공지추가
+	@Override
+	public void addNotice(int bnum) {
+		boardDAO.addNotice(bnum);
+		
+	}
+	//공지삭제
+	@Override
+	public void delNotice(int bnum) {
+		boardDAO.delNotice(bnum);
+		
+	}
+	//공지리스트
+	@Override
+	public List<BoardReqDTO> noticeList(String bcategory) {
+		return boardDAO.noticeList(bcategory);
+	}
+	
+	//공지글여부
+	@Override
+	public boolean isNotice(int bnum) {
+		return boardDAO.isNotice(bnum);
+	}
 }

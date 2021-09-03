@@ -30,11 +30,22 @@
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
-                   <div class="boardForm__noticebox" th:if="${session.loginMember != null && session.loginMember.id.equals('admin@animore.com')}">
+                   <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
+                   								session.loginMember.id.equals('admin@animore.com')&&
+                   								notice == false}">
                    <p>공지등록</p>
                    <label class="switch">
-            <input type="checkbox" name="autologincheck">
-            <span class="slider round"></span>
+                        <input type="checkbox" class="autologincheck" name="autologincheck">
+                        <span class="slider round" th:data-bnum="*{bnum}"></span>
+                  </label>
+                  </div>
+                   <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
+                   								session.loginMember.id.equals('admin@animore.com') &&
+                   								notice == true}">
+                   <p>공지등록</p>
+                   <label class="switch">
+                        <input type="checkbox" class="autologincheck" name="autologincheck" checked>
+                        <span class="slider round" th:data-bnum="*{bnum}"></span>
                   </label>
                   </div>
         </div>

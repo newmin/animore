@@ -1,7 +1,32 @@
 const $heart = document.querySelector('.boardForm__likeIcon i');
 const $likeHits = document.querySelector('.boardForm__likeHits');
+const $noticeBtn = document.querySelector('.slider');
+const $noticeToggle = document.querySelector('.autologincheck');
 
 
+//공지버튼클릭시
+$noticeBtn.addEventListener('click',e=>{
+    const URL = `/board/notice/${e.target.dataset.bnum}`;
+    console.log(URL);
+    request.get(URL)
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.rtcd=='01'){
+                $noticeToggle.setAttribute("checked","checked");
+                }else if(res.rtcd=='00'){
+                $noticeToggle.removeAttribute("checked");
+                }else{
+                    throw new Error(res.rtmsg);
+                }
+                })
+                .catch(err=>{
+                  //오류로직 처리
+                  console.log (err.message);
+                });
+            });
+
+
+//좋아요버튼클릭시
 $heart.addEventListener('click',e=>{
     const URL =`/board/good/${e.target.dataset.bnum}`;
     console.log(URL);
