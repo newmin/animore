@@ -45,6 +45,9 @@ public class MyPageController {
          Model model) {
             
       HttpSession session = request.getSession(false);
+      if(session == null || session.getAttribute("loginMember") == null){
+        return "redirect:/login";
+      }
        LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
        String id = loginMember.getId();
        log.info(id);
