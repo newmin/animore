@@ -42,4 +42,16 @@ public interface BoardSVC {
 	
 	//댓글수 조회
 	Integer reqBreply(Integer bnum);
+	
+	//공지추가
+	void addNotice(int bnum);
+		
+	//공지삭제
+	void delNotice(int bnum);
+		
+	//공지목록
+	List<BoardReqDTO> noticeList(String bcategory);
+	
+	//해당글 공지여부
+	boolean isNotice(int bnum);
 }

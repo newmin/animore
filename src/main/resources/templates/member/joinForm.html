@@ -7,7 +7,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/css/style.css">
+<script src="/js/api/ajaxCall.js"></script>
 <script src="/js/joinForm.js" defer></script>
+<script src="/js/api/joinFormReq.js" defer></script>
 <title>회원가입</title>
 </head>
 <style>
@@ -34,6 +36,11 @@
             <h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
             <h1 th:if="${mtype} == 'S'">특수회원가입양식</h1>
             
+     				<div th:errors="*{global}" th:errorclass="field-msg">
+								<p th:each="err : ${#fields.globalErrors()}"
+																			 th:text="${err}">글로벌 오류 메시지</p>      				
+     				</div>
+            
             <h3 class="joinform__title">공통정보</h3>
             <hr>
             
@@ -41,9 +48,10 @@
     <li>
       <div class="joinform__row"><label for="id">아이디</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
-        <input class="joinform__input joinform__input--sm" type="text" th:field="*{id}" placeholder="Ex.) petlove1@animore.com" required/>
-        <button class="joinform__btn">중복확인</button>
+        <input class="joinform__input joinform__input--sm joinform__idInputTextbox" type="text" th:field="*{id}" placeholder="Ex.) petlove1@animore.com" required/>
+        <button class="joinform__btn joinform__idDupChkBtn" type="button">중복확인</button>
       </div>
+      <div><p id="errmsg_joinFormId" class="field-msg"></p></div>
     </li>
     <li>
       <div class="joinform__row"><label for="pw">비밀번호</label><span class="joinform__required-mark">*</span></div>
@@ -96,9 +104,10 @@
     <li>
       <div class="joinform__row"><label for="nickname">별칭</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row">
-        <input type="text" class="joinform__input joinform__input--sm"  th:field="*{nickname}" required>
-        <button class="joinform__btn">중복확인</button>
+        <input type="text" class="joinform__input joinform__input--sm joinform__nicknameInputTextbox"  th:field="*{nickname}" required>
+        <button class="joinform__btn joinform__nicknameDupChkBtn" type="button">중복확인</button>
       </div>
+      <div><p id="errmsg_joinFormNickname" class="field-msg"></p></div>
     </li>
   </ul>
             
@@ -181,9 +190,10 @@
             
             <!-- 버튼 -->
             <div class="joinform__btns">
-               <input class="joinform__btn joinform__btn--big" id='joinBtn' type='submit' value="회원가입"></input>
+               <input class="joinform__btn joinform__btn--big joinform__submitBtn" id='joinBtn' type='submit' value="회원가입"></input>
                <input class="joinform__btn joinform__btn--big" id='homeBtn' type='button' value="홈으로"></input>
             </div>
+            <div><p id="errmsg_DupCheck" class="field-msg"></p></div>
             
          </form>
       </main>
