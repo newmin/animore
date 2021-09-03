@@ -31,8 +31,11 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	//즐겨찾기 삭제
 	@Override
 	public void deleteFavorite(Integer bnum, String id) {
-		String sql = " delete from favorite where bnum=? and id=? ";
-		jdbcTemplate.update(sql,bnum,id);
+		StringBuffer sql = new StringBuffer(); 
+		sql.append(" delete from favorite ");
+		sql.append(" where bnum=? ");
+		sql.append(" and id= ? ");
+		jdbcTemplate.update(sql.toString(),bnum,id);
 		
 	}
 	//즐겨찾기 목록

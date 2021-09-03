@@ -13,12 +13,14 @@
 <script type="text/javascript" src="./10-10.js"></script> -->
 	<script th:inline="javascript">
 		const $busi = /*[[${busi}]]*/ null;	//업체목록
+		const $id = /*[[${session.loginMember?.id}]]*/ null; //아이디
 	</script>
 	<script src="/js/mapAPI3.js" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
- <script src="/js/inquireBusiDetail.js" defer></script>
  <script src="/js/api/ajaxCall.js" defer></script>
+ <script src="/js/api/favorites.js" defer></script>
  <script src="/js/api/reviewReq.js" defer></script>
+ <script src="/js/inquireBusiDetail.js" defer></script>
  <title>업체조회</title>
 </head>
 <body>
@@ -32,7 +34,13 @@
 		  <!--업체정보-->
 		  <div class="selected-busi" th:object="${busi}" th:data-bnum="*{bnum}"> 
 		  	<div class="busi-info">
-			    <span class="sbusi-info__name" th:text="*{bname}">업체명</span><i th:if="${favor.count != 1}" class="far fa-heart favorBtn unfavorite"></i><i th:if="${favor.count == 1}" class="fas fa-heart favorite"></i>
+			    <span class="sbusi-info__name" th:text="*{bname}" th:data-bnum="*{bnum}">업체명</span>
+			    <div th:if="${session.loginMember != null}">
+				    <i th:if="${favor.count != 1}" class="far fa-heart favorBtn unfavorite"></i>
+				    <i th:if="${favor.count == 1}" class="fas fa-heart favorBtn favorite"></i>
+			    </div>
+			    <i th:if="${session.loginMember == null}" class="far fa-heart favorBtn"></i>
+			    <!--TODO 클릭했을시 회원만 이용가능한 기능, 로그인? -->
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->
