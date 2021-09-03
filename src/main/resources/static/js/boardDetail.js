@@ -3,27 +3,20 @@ const $likeHits = document.querySelector('.boardForm__likeHits');
 const $noticeBtn = document.querySelector('.slider');
 const $noticeToggle = document.querySelector('.autologincheck');
 
+const $listBtns = document.querySelectorAll('.boardForm__listBtn');
+for(let i=0; i<$listBtns.length; i++){
+$listBtns[i].addEventListener('click',e=>{
+const category = e.target.dataset.bcategory;
+location.href=`/board/${e.target.dataset.bcategory}`;
+});
+}
 
-//공지버튼클릭시
-$noticeBtn.addEventListener('click',e=>{
-    const URL = `/board/notice/${e.target.dataset.bnum}`;
-    console.log(URL);
-    request.get(URL)
-            .then(res=>res.json())
-            .then(res=>{
-                if(res.rtcd=='01'){
-                $noticeToggle.setAttribute("checked","checked");
-                }else if(res.rtcd=='00'){
-                $noticeToggle.removeAttribute("checked");
-                }else{
-                    throw new Error(res.rtmsg);
-                }
-                })
-                .catch(err=>{
-                  //오류로직 처리
-                  console.log (err.message);
-                });
-            });
+const $addBtn = document.querySelector('.boardForm__addBtn');
+$addBtn.addEventListener('click',e=>{
+location.href='/board/';
+});
+
+
 
 
 //좋아요버튼클릭시
@@ -54,18 +47,26 @@ $heart.addEventListener('click',e=>{
         });
 });
 
-const $listBtns = document.querySelectorAll('.boardForm__listBtn');
-for(let i=0; i<$listBtns.length; i++){
-$listBtns[i].addEventListener('click',e=>{
-const category = e.target.dataset.bcategory;
-location.href=`/board/${category}`;
-});
-}
-
-const $addBtn = document.querySelector('.boardForm__addBtn');
-$addBtn.addEventListener('click',e=>{
-location.href='/board/';
-});
+//공지버튼클릭시
+$noticeBtn.addEventListener('click',e=>{
+    const URL = `/board/notice/${e.target.dataset.bnum}`;
+    console.log(URL);
+    request.get(URL)
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.rtcd=='01'){
+                $noticeToggle.setAttribute("checked","checked");
+                }else if(res.rtcd=='00'){
+                $noticeToggle.removeAttribute("checked");
+                }else{
+                    throw new Error(res.rtmsg);
+                }
+                })
+                .catch(err=>{
+                  //오류로직 처리
+                  console.log (err.message);
+                });
+            });
 
 const $modifyBtn = document.querySelector('.boardForm__modifyBtn');
 $modifyBtn.addEventListener('click',e=>{
