@@ -32,7 +32,8 @@
                    <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
                    <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
                    								session.loginMember.id.equals('admin@animore.com')&&
-                   								notice == false}">
+                   								notice == false &&
+                   								post.bcategory != 'P'}">
                    <p>공지등록</p>
                    <label class="switch">
                         <input type="checkbox" class="autologincheck" name="autologincheck">
@@ -41,7 +42,8 @@
                   </div>
                    <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
                    								session.loginMember.id.equals('admin@animore.com') &&
-                   								notice == true}">
+                   								notice == true &&
+                   								 post.bcategory != 'P'}">
                    <p>공지등록</p>
                    <label class="switch">
                         <input type="checkbox" class="autologincheck" name="autologincheck" checked>
