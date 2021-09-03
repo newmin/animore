@@ -69,17 +69,13 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 //		public int isFavorite(Integer bnum, String id) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select count(fnum) ");
+		sql.append("select count(fnum) count");
 		sql.append("  from favorite ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and id = ? ");
 		
-		Integer cnt = jdbcTemplate.update(sql.toString(),
-						bnum,id);
-		
-		FavoriteReq favor = new FavoriteReq();
-		favor.setCount(cnt);
-		
+		FavoriteReq favor = jdbcTemplate.queryForObject(sql.toString(),
+								new BeanPropertyRowMapper<>(FavoriteReq.class),bnum,id);
 		return favor;
 	}
 	
