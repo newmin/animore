@@ -31,8 +31,11 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 	//즐겨찾기 삭제
 	@Override
 	public void deleteFavorite(Integer bnum, String id) {
-		String sql = " delete from favorite where bnum=? and id=? ";
-		jdbcTemplate.update(sql,bnum,id);
+		StringBuffer sql = new StringBuffer(); 
+		sql.append(" delete from favorite ");
+		sql.append(" where bnum=? ");
+		sql.append(" and id= ? ");
+		jdbcTemplate.update(sql.toString(),bnum,id);
 		
 	}
 	//즐겨찾기 목록
@@ -43,11 +46,13 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select f.fnum , b.bname , m.id ");
-		sql.append("   from favorite f, business b ,member m " );
-		sql.append("  where f.bnum = b.bnum ");
-		sql.append("    and f.id = m.id" );
-		sql.append("    and m.id = ? " );
+		sql.append("select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum ");
+		sql.append("  from favorite f, business b,(select bnum, round(avg(rscore),2) avg ");
+		sql.append("                                from review ");
+		sql.append("                                group by bnum) r ");
+		sql.append(" where f.bnum=b.bnum ");
+		sql.append("   and f.bnum=r.bnum ");
+		sql.append("   and f.id= ? ");
 
 		List<FavoriteReq> favoritelist = jdbcTemplate.query(sql.toString(),
 										new BeanPropertyRowMapper<>(FavoriteReq.class),
@@ -64,17 +69,13 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 //		public int isFavorite(Integer bnum, String id) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select count(fnum) ");
+		sql.append("select count(fnum) count");
 		sql.append("  from favorite ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and id = ? ");
 		
-		Integer cnt = jdbcTemplate.update(sql.toString(),
-						bnum,id);
-		
-		FavoriteReq favor = new FavoriteReq();
-		favor.setCount(cnt);
-		
+		FavoriteReq favor = jdbcTemplate.queryForObject(sql.toString(),
+								new BeanPropertyRowMapper<>(FavoriteReq.class),bnum,id);
 		return favor;
 	}
 	

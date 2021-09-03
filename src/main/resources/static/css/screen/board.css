@@ -44,7 +44,9 @@
   height:22px;
   line-height:22px;
 }
-
+.notice__cell{
+  font-weight: bold;
+}
 .board__table th:nth-child(3) {
   width: 13%;
 }

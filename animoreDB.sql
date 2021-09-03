@@ -52,6 +52,8 @@ create table board(
   breply number(5) DEFAULT 0 not null,
   bcontent clob not null,
   bgroup number(5),
+  bstatus char(1) default 'N',
+  bndate timestamp ,
   constraint BOARD_BNUM_PK primary key(bnum),
   constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
@@ -315,3 +317,4 @@ insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'speci
 insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'busi@test.com');
 
 commit;
+

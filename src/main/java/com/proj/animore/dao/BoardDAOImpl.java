@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.BoardReqDTO;
-import com.proj.animore.dto.GoodBoardDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -229,5 +228,63 @@ public class BoardDAOImpl implements BoardDAO {
 				
 		return breply;
 	}
+	//공지추가
+	@Override
+	public void addNotice(int bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("	set bstatus='Y',");
+		sql.append("	bndate = current_timestamp ");
+		sql.append("	where bnum=? ");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
+	//공지삭제
+	@Override
+	public void delNotice(int bnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update board ");
+		sql.append("	set bstatus='N' ");
+		sql.append("	where bnum=? ");
+		
+		jt.update(sql.toString(),bnum);
+		
+	}
+	//공지리스트
+	@Override
+	public List<BoardReqDTO> noticeList(String bcategory) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent, b.bstatus ");
+		sql.append("  from board b, member m ");
+		sql.append("  where b.id = m.id ");
+		sql.append("   and b.bstatus='Y' ");
+		sql.append("   and bcategory=? ");
+		sql.append(" order by bndate desc ");
 
+		List<BoardReqDTO> list = jt.query(sql.toString(), 
+								new BeanPropertyRowMapper<>(BoardReqDTO.class),
+								bcategory);
+		
+		return list;
+	}
+	
+	//해당글 공지여부
+	@Override
+	public boolean isNotice(int bnum) {
+		boolean isNotice = false;
+		StringBuffer sql = new StringBuffer();
+
+		 sql.append("select count(bnum) ");
+    	 sql.append("	from board ");
+    	 sql.append("	where bstatus='Y' ");
+      	 sql.append("	and bnum=? ");
+	
+      	if(jt.queryForObject(sql.toString(), Integer.class,bnum) != 0) {
+      		isNotice = true;
+      	}
+      	
+		return isNotice;
+	}
 }

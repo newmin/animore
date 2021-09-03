@@ -9,5 +9,5 @@ public class FavoriteReq {
 	private String bname;
 	private String id;
 	private Integer count;
-	private Integer bscore;
+	private float bscore;
 }

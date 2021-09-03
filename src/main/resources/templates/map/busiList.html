@@ -75,7 +75,7 @@
             <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
             <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
             <span class="busi-list__column busi-list__distance">3cm</span>
-            <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i></div>
+            <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i><span th:text="${busiList.bscore}"></span></div>
           </li>
         </ul>
       
