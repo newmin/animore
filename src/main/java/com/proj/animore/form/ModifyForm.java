@@ -13,13 +13,11 @@ public class ModifyForm {
 	
 	  private String id;
 	  private String pw;
-	  // TODO private 프로필사진타입 image;
 	  private String name;
 	  private String nickname;
-	  @DateTimeFormat(pattern ="yyyy-MM-dd")
-	  @Past
 	  private LocalDate birth;
 	  private String gender;
+	  //TODO
 	  private String tel;
 	  private String email;
 	  private String address;

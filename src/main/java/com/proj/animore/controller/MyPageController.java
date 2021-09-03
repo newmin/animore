@@ -96,7 +96,7 @@ public class MyPageController {
       return "redirect:/";
    }
    //개인정보 수정양식
-   @GetMapping("/mypage")
+   @GetMapping("/mypageModify")
 public String modifyMember(HttpServletRequest request,
       Model model) {
       log.info("회원양식 호출");
@@ -109,18 +109,19 @@ public String modifyMember(HttpServletRequest request,
       //회원정보 가져오기
       
       MemberDTO memberDTO = memberSVC.findMemberById(loginMember.getId());
+      
       ModifyForm modifyForm = new ModifyForm();
       BeanUtils.copyProperties(memberDTO, modifyForm);
       
       model.addAttribute("modifyForm",modifyForm);
+      log.info(modifyForm.toString());
    
    
-   
-   return "redirect:/mypageModify";
+   return "/mypage/mypageModify";
 }
    
    //개인정보 수정처리
-   @PatchMapping("/mypage")
+   @PatchMapping("/mypageModify")
    public String modifyMember(@Valid @ModelAttribute ModifyForm modifyForm,
          BindingResult bindingResult,
          HttpServletRequest request) {
@@ -133,7 +134,7 @@ public String modifyMember(HttpServletRequest request,
          if(loginMember == null) return "redirect:/login";
          //비밀번호를 잘못 입력 했을경우
          if(!memberSVC.isMemember(loginMember.getId(), modifyForm.getPw())) {
-            bindingResult.rejectValue("pw", "error.member.modifyForm", "비밀번호가 잘못입력되었습니다.");
+            bindingResult.rejectValue("pw", "error.member.MyEditForm", "비밀번호가 잘못입력되었습니다.");
          }
          if(bindingResult.hasErrors()) {
             log.info("errors={}",bindingResult);

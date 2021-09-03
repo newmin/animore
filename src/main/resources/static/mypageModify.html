@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer></script>
+  <title>회원탈퇴</title>
+</head>
+<body>
+  
+  <!-- 메인 시작 -->
+  <main class="main">
+     <!-- 프로필정보 -->
+      <div class="mypage_profile_container">
+        <div class="mypage_profile_profileimg">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+        </div>
+        <div class="mypage_profile_nickname">
+          Tester1
+        </div>
+        <div class="mypage_profile_usertypeicon">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
+        </div>
+        <div class="mypage_profile_mileage">
+          마일리지: 1000p
+        </div>
+      </div>
+      <!-- 프로필정보 끝 -->
+      <div class="mypage_container2">
+        <div class="mypage_aside_container">
+          <h2 class="mypage_aside_title">마이페이지</h2>
+          <ul class="mypage_aside_menu">
+            <!-- TODO th:href 등록 파일명'임의'표기-->
+            <li class="mypage_aside_menu_highlight"><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+            <li><a href="/mypage/mypageReview" >내가 쓴 리뷰</a></li>
+            <li><a href="/mypage/mypagePost.html" >내가 쓴 글</a></li>
+            <li><a href="/mypage/mypageReply.html" >내가 쓴 댓글</a></li>
+            <li><a href="/mypage/mypageGood.html" >좋아요</a></li>
+            <li><a href="/mypage/mypageCoupon.html" >내 쿠폰</a></li>
+            <li><a href="/mypage/mypageModi.html" >회원 정보 수정</a></li>
+            <li><a href="/mypage/mypageDel.html" >회원 탈퇴</a></li>
+          </ul>
+        </div>
+        <div class="mypage_content_container">
+          <h3 class="mypage_content_title">개인 정보 수정</h3>
+          <hr>
+	        <div class="mypage_content">
+            <form class="main" th:action="@{/mypage/mypageModify}" th:method="patch" th:object="${modifyFrom}" >
+						<ul>
+							<li><h3 class="title">회원 수정</h3></li>
+      				<li th:errors="*{global}" th:errorclass="field-msg">
+								<p th:each="err : ${#fields.globalErrors()}"
+								th:text="${err}">글로벌 오류 메시지</p>      				
+      				</li>							
+							<li><label for="id">아이디</label></li>
+							<li><input type="text" th:field="*{id}" readonly="readonly"/></li>
+
+							<li><label for="pw">비밀번호</label></li>
+							<li><input type="password" th:field="*{pw}"/></li>
+							<li th:errors="*{pw}" th:errorclass="field-msg"></li>
+							
+							<li>
+     						<div class="modify__row"><label for="image">프로필사진</label></div>
+      						<div class="modify__row"><input type="file" class="modify_input" id="image" name="image"></div>
+    						</li>
+    						
+    						<li>
+     						<div class="modify__row"><label for="name">이름</label><span class="joinform__required-mark">*</span></div>
+      						<div class="modify__row"><input type="text" class="modify_input" th:field="*{name}" required></div>
+                            </li>  
+							
+							<li><label for="tel">전화번호</label></li>
+							<li><input type="tel" name="tel" th:field="*{tel}"/></li>
+							<li th:errors="*{tel}" th:errorclass="field-msg"></li>
+							
+							<li><label for="nickname">별칭</label></li>
+							<li><input type="text" th:field="*{nickname}" /></li>
+							<li th:errors="*{nickname}" th:errorclass="field-msg"></li>							
+    						
+    						<li>
+      						<div class="modify__row"><label for="gender">성별</label><span class="joinform__required-mark">*</span></div>
+      						<div class="modify__row">
+        					<label for="male">남자</label><input type="radio" class="modify_input" name="gender" id="male" value="M">
+        					<label for="female">여자</label><input type="radio" class="modify_input" name="gender" id="female" value="F"></div>
+     					 	</li>
+     					 	
+						 	<li>
+      						<div class="modify__row"><label for="address">주소</label><span class="joinform__required-mark">*</span></div>
+     					 	<div class="modify__row"><input type="text" class="modify_input" th:field="*{address}" required></div>
+    						</li>
+							<li><label for="birth">생년월일</label></li>
+							<li><input type="date" th:field="*{birth}" readonly="readonly" /></li>
+								
+							<li th:errors="*{birth}" th:errorclass="field-msg"></li>
+											
+							<li><span class="errmsg" id="errmsg_birth"></span></li>								
+							<li><input type="submit" value="회원수정" id="modifyBtn"></li>
+						</ul>
+					</form>        	
+      	
+          </div>
+        </div>
+      </div>
+    </main>
+  <!-- 메인 끝 -->
+	
+  
+
+
+
+</body>
+</html>
