@@ -39,5 +39,15 @@ public class BusinessSVCImpl implements BusinessSVC {
 	public List<BusinessLoadDTO> busiList(String bcategory) {
 		return businessDAO.busiList(bcategory);
 	}
+	//즐겨찾기 상단고정하여 목록조회
+	@Override
+	public List<BusinessLoadDTO> busiListForMember(String bcategory, String id) {
+		return businessDAO.busiListForMember(bcategory, id);
+	}
+	//검색어로 목록 조회
+	@Override
+	public List<BusinessLoadDTO> busiListBySearch(String text) {
+		return businessDAO.busiListBySearch(text);
+	}
 
 }

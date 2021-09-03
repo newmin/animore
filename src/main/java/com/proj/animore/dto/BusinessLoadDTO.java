@@ -1,5 +1,7 @@
 package com.proj.animore.dto;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -10,6 +12,7 @@ public class BusinessLoadDTO {
 	private String baddress;
 	private String btel;
 	private String openhours;
+	private LocalDate fdate;
 
 	private String bhospital;
 	private String bpharmacy;

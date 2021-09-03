@@ -38,11 +38,23 @@ public class MainController {
 	
 //	(카테고리별)업체목록 조회
 	@GetMapping("/{bcategory}")
-	public String list(@PathVariable String bcategory,Model model){
+	public String list(@PathVariable String bcategory,
+						HttpServletRequest request,
+						Model model){
 		
 		model.addAttribute("businessLoadDTO",new BusinessLoadDTO()); 
-		List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
-		model.addAttribute("busiList", list);
+		
+		HttpSession session = request.getSession(false);		
+		if(session != null && session.getAttribute("loginMember") != null) {
+			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+			String id = loginMember.getId();
+			
+			List<BusinessLoadDTO> list = businessSVC.busiListForMember(bcategory,id);
+			model.addAttribute("busiList", list);
+		} else {
+			List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
+			model.addAttribute("busiList", list);			
+		}
 		
 		return "map/busiList";
 	}
@@ -66,13 +78,8 @@ public class MainController {
 			FavoriteReq isFavor = favoriteSVC.isFavorite(bnum, id);
 			model.addAttribute("favor",isFavor);
 		}
-				
-//		List<ReviewReq> rvlist = null;
-//		if(loginMember!=null) rvlist = reviewSVC.allReview(bnum);
-		//비로그인 상태일 경우, 리뷰는 출력안되도록? 출력은 하되 뷰에서 가리도록?
-		
 
-				List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
+		List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
 		model.addAttribute("review", rvlist);
 		
 		return "map/inquireBusiDetail";

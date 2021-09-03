@@ -22,4 +22,10 @@ public interface BusinessSVC {
 	//업체전체목록
 	//TODO 업체카테고리받기 / 텍스트검색으로 출력
 	public List<BusinessLoadDTO> busiList(String bcategory);
+	
+	//회원은 즐겨찾기 목록 상단 고정
+	public List<BusinessLoadDTO> busiListForMember(String bcategory, String id);
+
+	//검색어로 목록
+	public List<BusinessLoadDTO> busiListBySearch(String text);
 }

@@ -132,7 +132,7 @@
 		  
 		      </section>
 		
-		      <section class="wrap" th:if="${session.loginMember != null}">
+		      <section class="wrap" th:if="${session != null && session.loginMember != null}">
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
@@ -159,7 +159,7 @@
 		        </form>
 		    </section>
 		      
-	      <section th:if="${session.loginMember?.id == null}">
+	      <section th:if="${session == null || session.loginMember == null}">
 	      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
 	      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
 	      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
