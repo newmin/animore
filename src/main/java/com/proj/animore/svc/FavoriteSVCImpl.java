@@ -5,7 +5,7 @@ import java.util.List;
 import com.proj.animore.dao.FavoriteDAO;
 import com.proj.animore.dto.FavoriteDTO;
 
-public class favoriteSVCImpl implements FavoriteSVC {
+public class FavoriteSVCImpl implements FavoriteSVC {
 	
 	private FavoriteDAO favoriteDAO;
 
