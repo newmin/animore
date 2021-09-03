@@ -99,7 +99,7 @@ modiBtn.addEventListener('click',e =>{
 
 
 //리뷰삭제
-delBtn.addEventListener('click', e=> {
+/*delBtn.addEventListener('click', e=> {
 	confirm('한번 삭제한 리뷰는 되돌릴 수 없어요. 정말 리뷰를 지우시겠어요?');
 	
 	const rnum = e.target.dataset.rnum;
@@ -125,7 +125,7 @@ delBtn.addEventListener('click', e=> {
 			});
 	
 });
-
+*/
 
 
 

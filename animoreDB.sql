@@ -192,10 +192,10 @@ create table review(
 
 --즐겨찾기
 create table favorite(
-  mnum number(10),
+  fnum number(10),
   bnum number(8),
   id varchar2(40),
-  constraint favorite_mnum_PK primary key(mnum),
+  constraint favorite_fnum_PK primary key(fnum),
   constraint favorite_id_FK foreign key(id) 
                                  references member(id)
                                  ON DELETE CASCADE,
@@ -235,7 +235,7 @@ DROP SEQUENCE goodboard_gnum_seq;
 DROP SEQUENCE hboard_bnum_seq;
 DROP SEQUENCE business_bnum_seq;
 DROP SEQUENCE review_rnum_seq;
-DROP SEQUENCE favorite_mnum_seq;
+DROP SEQUENCE favorite_fnum_seq;
 DROP SEQUENCE myani_mnum_seq;
 DROP SEQUENCE profession_pnum_seq;
 DROP SEQUENCE coupon_cnum_seq;
@@ -247,7 +247,7 @@ CREATE SEQUENCE goodboard_gnum_seq;
 CREATE SEQUENCE hboard_bnum_seq;
 CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
-CREATE SEQUENCE favorite_mnum_seq;
+CREATE SEQUENCE favorite_fnum_seq;
 CREATE SEQUENCE myani_mnum_seq;
 CREATE SEQUENCE profession_pnum_seq;
 CREATE SEQUENCE coupon_cnum_seq;
@@ -305,13 +305,13 @@ insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.ne
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1);
 
 --즐겨찾기
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'normal@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'user@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'special@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 1, 'busi@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'normal@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'user@test.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'special@zxc.com');
-insert into favorite(mnum, bnum, id) values(favorite_mnum_seq.nextval, 2, 'busi@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'busi@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'normal@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'user@test.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'special@zxc.com');
+insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 2, 'busi@test.com');
 
 commit;

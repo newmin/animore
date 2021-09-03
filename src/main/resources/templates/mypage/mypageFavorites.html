@@ -69,20 +69,20 @@
           <hr>
  	<table class="favorite__table ">
          <tr class="w3-hover-green">
-           <th class="favorite__cell favorite__mnum">번호</th>
+           <th class="favorite__cell favorite__fnum">번호</th>
            <th class="favorite__cell favorite_bname">업체명</th>
            <th class="favorite__cell favorite_score">평점</th>
          </tr>
        		       		
          
 
-         <tr th:each="favorite :${FavoriteDTO}" class="w3-hover-green">
+         <tr th:each="favorite :${Favorite}" class="w3-hover-green">
          
-           <td class="favorite__cell favorite__mnum" th:text="${favorite.mnum}">1</td>
+           <td class="favorite__cell favorite__fnum" th:text="${favorite.fnum}">1</td>
  
            <td class="favorite__cell favorite_bname" th:text="${favorite.bname}">2</td>
 
-      	  <td class="favorite__cell favorite_score" th:text="${favorite.score}">3</td>
+      	  <td class="favorite__cell favorite_score" th:text="${favorite.bscore}">3</td>
 
          </tr>
        </table>

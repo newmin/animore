@@ -11,21 +11,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="./10-10.css"/>
 <script type="text/javascript" src="./10-10.js"></script> -->
- <!-- 테스트코드시작 -->
 	<script th:inline="javascript">
 		const $busi = /*[[${busi}]]*/ null;	//업체목록
 	</script>
 	<script src="/js/mapAPI3.js" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
-<!-- 테스트코드끝 -->
-
-<!-- <script src="/js/mapAPI.js" defer></script> -->
-<!--네이버 API-->
-<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script> -->
-<!--카카오 API-->
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d59903b6f57ce99bc6ab765eadfb68d0&libraries=services"></script> -->
-
-
  <script src="/js/inquireBusiDetail.js" defer></script>
  <script src="/js/api/ajaxCall.js" defer></script>
  <script src="/js/api/reviewReq.js" defer></script>
@@ -42,7 +32,7 @@
 		  <!--업체정보-->
 		  <div class="selected-busi" th:object="${busi}" th:data-bnum="*{bnum}"> 
 		  	<div class="busi-info">
-			    <h1 class="sbusi-info__name" th:text="*{bname}">업체명</h1>
+			    <span class="sbusi-info__name" th:text="*{bname}">업체명</span><i th:if="${favor.count != 1}" class="far fa-heart favorBtn unfavorite"></i><i th:if="${favor.count == 1}" class="fas fa-heart favorite"></i>
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->
