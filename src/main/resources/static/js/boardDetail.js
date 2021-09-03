@@ -19,6 +19,7 @@ location.href='/board/';
 
 
 
+
 //좋아요버튼클릭시
 $heart.addEventListener('click',e=>{
     const URL =`/board/good/${e.target.dataset.bnum}`;
@@ -47,6 +48,32 @@ $heart.addEventListener('click',e=>{
         });
 });
 
+
+
+            const $delBtn = document.querySelector('.boardForm__delBtn');
+            $delBtn.addEventListener('click',e=>{
+            const URL =`/board/${e.target.dataset.bnum}`;
+            console.log(URL);
+            request.delete(URL)
+                    .then(res=>res.json())
+                    .then(res=>{
+                        if(res.rtcd =='00'){
+                            alert('게시글이 삭제되었습니다.');
+                            location.href=`/board/${e.target.dataset.bcategory}`;
+                        }
+                        throw new Error(res.rtmsg);
+                    })
+                    .catch(err=>{
+                        //오류로직 처리
+                        console.log (err.message);
+                      });
+            });
+const $modifyBtn = document.querySelector('.boardForm__modifyBtn');
+$modifyBtn.addEventListener('click',e=>{
+const bnum = e.target.dataset.bnum;
+location.href =`/board/modify/${bnum}`;
+});
+
 //공지버튼클릭시
 $noticeBtn.addEventListener('click',e=>{
     const URL = `/board/notice/${e.target.dataset.bnum}`;
@@ -67,17 +94,4 @@ $noticeBtn.addEventListener('click',e=>{
                   console.log (err.message);
                 });
             });
-
-const $modifyBtn = document.querySelector('.boardForm__modifyBtn');
-$modifyBtn.addEventListener('click',e=>{
-const bnum = e.target.dataset.bnum;
-location.href =`/board/modify/${bnum}`;
-});
-
-const $delBtn = document.querySelector('.boardForm__delBtn');
-$delBtn.addEventListener('click',e=>{
-const bnum = e.target.dataset.bnum;
-const bcategory = e.target.dataset.bcategory;
-location.href =`/board/${bcategory}/${bnum}`;
-});
 

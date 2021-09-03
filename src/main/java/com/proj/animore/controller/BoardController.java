@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -182,13 +183,13 @@ public class BoardController {
 		
 	}
 	//게시글 삭제처리
-	@GetMapping("/{bcategory}/{bnum}")
-	public String deletePost(@PathVariable String bcategory,
-							@PathVariable Integer bnum) {
+	@ResponseBody
+	@DeleteMapping("/{bnum}")
+	public Result deletePost(@PathVariable Integer bnum) {
 		
 		boardSVC.deleteBoard(bnum);
 		
-		return "redirect:/board/{bcategory}";
+		return new Result ("00","ok",bnum);
 	}
 	//제목으로 게시글 검색
 	@ResponseBody
