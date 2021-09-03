@@ -52,7 +52,10 @@
        <div class="boardForm__likeContainer">
            <div class="boardForm__likewrap">
                <div class="boardForm__likeText">좋아요</div>
-               <div class="boardForm__likeIcon"><i th:data-bnum="*{bnum}" class="fa-heart far unfavorite"></i></div>
+               <div class="boardForm__likeIcon">
+               <i th:if="${good==0}" th:data-bnum="*{bnum}" class="fa-heart far "></i>
+               <i th:if="${good==1}" th:data-bnum="*{bnum}" class="fa-heart fas toggleColorChange"></i>
+               </div>
            </div>
            <div class="boardForm__likeHits" th:text="*{bgood}">좋아요 수</div>
        </div>
