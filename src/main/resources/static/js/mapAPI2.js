@@ -12,9 +12,6 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 //주소목록
 
-let $preEle = '';
-
-
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 if (navigator.geolocation) {
     
@@ -47,6 +44,7 @@ function displayMarker(locPosition, message) {
 }    
 
 
+var selectedMarker = null;  // 클릭한 마커를 담을 변수
 
 $busiList.forEach( (rec, index) => {
   // 주소로 좌표를 검색합니다
@@ -90,12 +88,6 @@ $busiList.forEach( (rec, index) => {
       kakao.maps.event.addListener(map, 'click', function(){
         infowindow.close(map, marker);
       });
-
-      // if(!!$preEle) $preEle.style.fontSize = "1em";
-      // e.target.style.fontSize = "1.3em";
-      //   $preEle = e.target;
-
-
     };
   });
 });
