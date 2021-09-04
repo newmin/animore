@@ -52,13 +52,15 @@ const id_dupChk_f = e => {
 		$joinform__idInputTextbox.focus();
 		$joinform__idInputTextbox.select();
 		errmsg_joinFormId.textContent = '아이디를 입력하세요!';
+		idDupChkFlag = false;
 		return false;
 	}
 	
-	//이메일 유효성 체크
+	//아이디 유효성 체크
 	const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	if(!$joinform__idInputTextbox.value.match(regExp)){
 		errmsg_joinFormId.textContent = '아이디가 이메일 형식에 맞지 않습니다.';
+		idDupChkFlag = false;
 		return false;
 	}
 
@@ -78,6 +80,7 @@ const nickname_dupChk_f = e => {
 		$joinform__nicknameInputTextbox.focus();
 		$joinform__nicknameInputTextbox.select();
 		errmsg_joinFormNickname.textContent = '별칭을 입력하세요!';
+		nicknameDupChkFlag = false;
 		return false;
 	}
 	
