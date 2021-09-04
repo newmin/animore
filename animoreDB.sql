@@ -114,7 +114,7 @@ create table business(
   bnum number(8),
   bbnum varchar2(20),
   id varchar2(40) default 'admin@animore.com',
-  bname varchar2(30) not null,
+  bname varchar2(150) not null,
   baddress varchar2 (150) not null,
   btel varchar2(13) not null,
   openhours clob,
