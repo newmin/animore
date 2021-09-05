@@ -13,7 +13,7 @@ public class BcategoryDAOImpl implements BcategoryDAO {
 
 	private final JdbcTemplate jdbcTemplate;
 
-	
+	//업체카테고리 등록
 	@Override
 	public void addBcategory(BcategoryDTO bcategoryDTO) {
 		String sql = new String();
@@ -26,8 +26,14 @@ public class BcategoryDAOImpl implements BcategoryDAO {
 				bcategoryDTO.getBkindergarden(),bcategoryDTO.getBfood(),
 				bcategoryDTO.getBtraining(),bcategoryDTO.getBshop(),
 				bcategoryDTO.getBplayground(),bcategoryDTO.getBhairshop(),
-				bcategoryDTO.getBetc());
-		
+				bcategoryDTO.getBetc());	
 	}
 
+	//업체카테고리 삭제
+	@Override
+	public void delBcategory(String bnum) {
+		String sql = "delete from bcategory where bnum = ? ";
+		jdbcTemplate.update(sql,bnum);
+	}
+	
 }

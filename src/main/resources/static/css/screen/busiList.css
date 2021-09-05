@@ -81,6 +81,14 @@
   position: relative;
   margin-bottom: 10px;
 }
+
+.busi-list__row:hover{
+	transform : translateX(-20px);
+	transition : 0.5s;
+	/* position: relative;
+	right : 20px;*/
+}
+
 .busi-list__column{
   width: 33%;
   text-align: center;

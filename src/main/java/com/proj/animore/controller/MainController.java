@@ -29,129 +29,122 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-//@RequestMapping("/company")
+// @RequestMapping("/company")
 public class MainController {
 
 	private final ReviewSVC reviewSVC;
 	private final BusinessSVC businessSVC;
 	private final FavoriteSVC favoriteSVC;
-	
-//	(카테고리별)업체목록 조회
+
+	// (카테고리별)업체목록 조회
 	@GetMapping("/{bcategory}")
-	public String list(@PathVariable String bcategory,
-						HttpServletRequest request,
-						Model model){
-		
-		model.addAttribute("businessLoadDTO",new BusinessLoadDTO()); 
-		
-		HttpSession session = request.getSession(false);		
-		if(session != null && session.getAttribute("loginMember") != null) {
-			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	public String list(@PathVariable String bcategory, HttpServletRequest request, Model model) {
+
+		model.addAttribute("businessLoadDTO", new BusinessLoadDTO());
+
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("loginMember") != null) {
+			LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
 			String id = loginMember.getId();
-			
-			List<BusinessLoadDTO> list = businessSVC.busiListForMember(bcategory,id);
+
+			List<BusinessLoadDTO> list = businessSVC.busiListForMember(bcategory, id);
 			model.addAttribute("busiList", list);
 		} else {
 			List<BusinessLoadDTO> list = businessSVC.busiList(bcategory);
-			model.addAttribute("busiList", list);			
+			model.addAttribute("busiList", list);
 		}
-		
+
 		return "map/busiList";
 	}
-	
-	//업체조회(상세보기) + 리뷰조회
-//	@GetMapping("/{bcategory}/{bnum}")
+
+	// 업체조회(상세보기) + 리뷰조회
+	// @GetMapping("/{bcategory}/{bnum}")
 	@GetMapping("/inquire/{bnum}")
 	public String inquire(
-//			@PathVariable String bcategory,
-			@PathVariable int bnum,
-			HttpServletRequest request,
-												Model model) {
+			// @PathVariable String bcategory,
+			@PathVariable int bnum, HttpServletRequest request, Model model) {
 		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);
-		model.addAttribute("busi",businessLoadDTO);
-		
-		HttpSession session = request.getSession(false);		
-		if(session != null && session.getAttribute("loginMember") != null) {
-			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		model.addAttribute("busi", businessLoadDTO);
+
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("loginMember") != null) {
+			LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
 			String id = loginMember.getId();
-			
+
 			FavoriteReq isFavor = favoriteSVC.isFavorite(bnum, id);
-			model.addAttribute("favor",isFavor);
+			model.addAttribute("favor", isFavor);
 		}
 
 		List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
 		model.addAttribute("review", rvlist);
-		
+
 		return "map/inquireBusiDetail";
 	}
-	
-	
-	
-	//즐겨찾기 등록
+
+	// 즐겨찾기 등록
 	@GetMapping("/favor/{bnum}")
 	@ResponseBody
-	public Result addFavorite(HttpServletRequest request,
-													@PathVariable Integer bnum) {
+	public Result addFavorite(HttpServletRequest request, @PathVariable Integer bnum) {
 		Result result;
 		HttpSession session = request.getSession(false);
-		if(session==null) {
-			result = new Result("01","로그인 후 사용할 수 있어요!",null);
+		if (session == null) {
+			result = new Result("01", "로그인 후 사용할 수 있어요!", null);
 			return result;
 		}
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
 		String id = loginMember.getId();
-		
+
 		log.info(id);
-		
+
 		Integer cnt = favoriteSVC.isFavorite(bnum, id).getCount();
-		if(cnt == 0) {
+		if (cnt == 0) {
 			favoriteSVC.addFavorite(bnum, id);
-			result = new Result<String>("00","성공","등록");			
+			result = new Result<String>("00", "성공", "등록");
 		} else {
 			favoriteSVC.deleteFavorite(bnum, id);
-			result = new Result<String>("00","성공","해제");	
+			result = new Result<String>("00", "성공", "해제");
 		}
-		
+
 		return result;
 	}
-//	//즐겨찾기 등록
-//	@GetMapping("/favor/{bnum}")
-////	@ResponseBody
-//	public Result addFavorite(HttpServletRequest request,
-//			@PathVariable Integer bnum) {
-//		Result result;
-//		HttpSession session = request.getSession(false);
-//		if(session==null) {
-//			result = new Result("01","로그인 후 사용할 수 있어요!",null);
-//			return result;
-//		}
-//		LoginMember loginMember = (LoginMember)session.getAttribute("LoginMember");
-//		String id = loginMember.getId();
-//		
-//		favoriteSVC.addFavorite(bnum, id);
-//		result = new Result("00","성공",null);
-//		
-//		return result;
-//	}
-	
-	//즐겨찾기 삭제
-//	@DeleteMapping("/favor/{bnum}")
-//	@ResponseBody
-//	public Result<String> delFavorite(HttpServletRequest request,
-//													@PathVariable Integer bnum) {
-//		Result<String> result;
-//		HttpSession session = request.getSession(false);
-//		if(session==null) {
-//			result = new Result<String>("01","로그인 후 사용할 수 있어요!","삭제");
-//			return result;
-//		}
-//		LoginMember loginMember = (LoginMember)session.getAttribute("LoginMember");
-//		String id = loginMember.getId();
-//		
-//		favoriteSVC.deleteFavorite(bnum, id);
-//		result = new Result<String>("00","성공","삭제");
-//		
-//		return result;
-//	}
-	
+	// //즐겨찾기 등록
+	// @GetMapping("/favor/{bnum}")
+	//// @ResponseBody
+	// public Result addFavorite(HttpServletRequest request,
+	// @PathVariable Integer bnum) {
+	// Result result;
+	// HttpSession session = request.getSession(false);
+	// if(session==null) {
+	// result = new Result("01","로그인 후 사용할 수 있어요!",null);
+	// return result;
+	// }
+	// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	// String id = loginMember.getId();
+	//
+	// favoriteSVC.addFavorite(bnum, id);
+	// result = new Result("00","성공",null);
+	//
+	// return result;
+	// }
+
+	// 즐겨찾기 삭제
+	// @DeleteMapping("/favor/{bnum}")
+	// @ResponseBody
+	// public Result<String> delFavorite(HttpServletRequest request,
+	// @PathVariable Integer bnum) {
+	// Result<String> result;
+	// HttpSession session = request.getSession(false);
+	// if(session==null) {
+	// result = new Result<String>("01","로그인 후 사용할 수 있어요!","삭제");
+	// return result;
+	// }
+	// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	// String id = loginMember.getId();
+	//
+	// favoriteSVC.deleteFavorite(bnum, id);
+	// result = new Result<String>("00","성공","삭제");
+	//
+	// return result;
+	// }
+
 }
