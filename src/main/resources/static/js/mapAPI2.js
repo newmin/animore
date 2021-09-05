@@ -66,10 +66,11 @@ $busiList.forEach( (rec, index) => {
       // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
       // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
       var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
-                        '<a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a>'+
+                        '<div><a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a></div>'+
+                        '<div></div>'+
                       '</div>'
 
-          ,iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+          ,iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
       // 인포윈도우를 생성합니다
       var infowindow = new kakao.maps.InfoWindow({
@@ -80,14 +81,46 @@ $busiList.forEach( (rec, index) => {
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'click', function() {
         // 기존에 열린 인포윈도우 닫기
-        infowindow.close(map, marker);
+        infowindow.close(map, selectedMarker);
         // 마커 위에 인포윈도우를 표시합니다
         infowindow.open(map, marker);
+
+        selectedMarker = marker;
       });
 
       kakao.maps.event.addListener(map, 'click', function(){
         infowindow.close(map, marker);
       });
+
+
+      const $listATag = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`).parentElement.parentElement;
+      $listATag.addEventListener('mouseover', function(){
+        // 업체목록에 마우스오버 이벤트를 등록합니다
+        // console.log(`오버${$listATag}`);
+          // 업체목록에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+          infowindow.open(map, marker);
+      });
+      $listATag.addEventListener('mouseout', function(){
+        // console.log(`아웃${$listATag}`);
+        // 업체목록에 마우스아웃 이벤트를 등록합니다
+          // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+          infowindow.close();
+      });
+
+      // 마커에 마우스오버 이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'mouseover', function() {
+        // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+        infowindow.open(map, marker);
+      });
+      // 마커에 마우스아웃 이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'mouseout', function() {
+        // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+        // 마커를 클릭했다면 인포윈도우 제거 안함
+        if(selectedMarker!=marker){
+          infowindow.close();
+        }
+      });
+
     };
   });
 });
