@@ -45,6 +45,10 @@ function displayMarker(locPosition, message) {
 
 
 var selectedMarker = null;  // 클릭한 마커를 담을 변수
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+  removable : false
+});
 
 $busiList.forEach( (rec, index) => {
   // 주소로 좌표를 검색합니다
@@ -63,52 +67,44 @@ $busiList.forEach( (rec, index) => {
       // coords = '내위치';
       // map.setCenter(coords);
 
-      // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-      // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-      var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
-                        '<div><a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a></div>'+
-                        '<div></div>'+
-                      '</div>'
-
-          ,iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-      // 인포윈도우를 생성합니다
-      var infowindow = new kakao.maps.InfoWindow({
-        content : iwContent,
-        removable : iwRemoveable
-      });
-
+      
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'click', function() {
-        // 기존에 열린 인포윈도우 닫기
-        infowindow.close(map, selectedMarker);
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindow.open(map, marker);
+        
+        if (!selectedMarker || selectedMarker !== marker) {
 
+          makeInfoWindow($busiList,index);
+
+          infowindow.close();
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, marker);
+        }
+        
         selectedMarker = marker;
       });
 
       kakao.maps.event.addListener(map, 'click', function(){
-        infowindow.close(map, marker);
+        infowindow.close();
+        selectedMarker = null;
       });
 
 
       const $listATag = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`).parentElement.parentElement;
       $listATag.addEventListener('mouseover', function(){
         // 업체목록에 마우스오버 이벤트를 등록합니다
-        // console.log(`오버${$listATag}`);
-          // 업체목록에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-          infowindow.open(map, marker);
+        makeInfoWindow($busiList,index);
+        // 업체목록에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+        infowindow.open(map, marker);
       });
       $listATag.addEventListener('mouseout', function(){
-        // console.log(`아웃${$listATag}`);
         // 업체목록에 마우스아웃 이벤트를 등록합니다
-          // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-          infowindow.close();
+        // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+        infowindow.close();
       });
 
       // 마커에 마우스오버 이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'mouseover', function() {
+        makeInfoWindow($busiList,index);
         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
         infowindow.open(map, marker);
       });
@@ -123,6 +119,20 @@ $busiList.forEach( (rec, index) => {
 
     };
   });
+
+  function makeInfoWindow($busiList,index){
+    // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
+                      '<div><a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a></div>'+
+                      '<div></div>'+
+                    '</div>'
+
+        // ,iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    infowindow.setContent(iwContent);
+  }
+
 });
 
 
