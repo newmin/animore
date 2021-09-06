@@ -137,7 +137,7 @@ $busiList.forEach( (rec, index) => {
         
         if (!selectedMarker || selectedMarker !== marker) {
           
-          makeInfoWindow($busiList,index);
+          makeInfoWindow($busiList,index,distance);
           
           infowindow.close();
           // 마커 위에 인포윈도우를 표시합니다
@@ -158,7 +158,7 @@ $busiList.forEach( (rec, index) => {
       const $listATag = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`);
       $listATag.addEventListener('mouseover', function(){
         // 업체목록에 마우스오버 이벤트를 등록합니다
-        makeInfoWindow($busiList,index);
+        makeInfoWindow($busiList,index,distance);
         map.setCenter(coords);
         // 업체목록에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
         infowindow.open(map, marker);
@@ -171,7 +171,7 @@ $busiList.forEach( (rec, index) => {
 
       // 마커에 마우스오버 이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'mouseover', function() {
-        makeInfoWindow($busiList,index);
+        makeInfoWindow($busiList,index,distance);
         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
         infowindow.open(map, marker);
       });
@@ -187,12 +187,12 @@ $busiList.forEach( (rec, index) => {
     };
   });
 
-  function makeInfoWindow($busiList,index){
+  function makeInfoWindow($busiList,index,distance){
     // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
     // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
                       '<div><a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a></div>'+
-                      '<div></div>'+
+                      '<div><span>거리 : '+distance+' M</span></div>'+
                     '</div>'
 
         // ,iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
