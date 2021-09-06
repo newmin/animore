@@ -13,8 +13,10 @@ public interface ReviewSVC {
     List<ReviewReq> allReview(Integer bnum);
     //리뷰 조회(마이페이지 내리뷰리스트)
     List<ReviewReq> myReview(String id);
+    //리뷰 1개 호출(리뷰수정전 기존리뷰 호출)
+    ReviewReq findReview(int rnum);
     //리뷰수정
     List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO);
     //리뷰삭제
-    List<ReviewReq> removeReview(int bnum, int rnum, String id);
+    List<ReviewReq> removeReview(int bnum, int rnum);
 }

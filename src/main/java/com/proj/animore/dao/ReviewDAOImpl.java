@@ -49,7 +49,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return allReview(bnum);
 	}
 
-	//업체별 리뷰조회
+	//업체별 리뷰조회(최신순)
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
@@ -58,7 +58,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");
-		sql.append(" order by 4 ");
+		sql.append(" order by rvcdate desc ");
 
 		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
 										   new BeanPropertyRowMapper<>(ReviewReq.class),
@@ -93,6 +93,19 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		return list;
 	}
+	
+	//리뷰 1개짜리(리뷰수정시 호출)
+	@Override
+	public ReviewReq findReview(int rnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select rscore, rcontent ");
+		sql.append("  from review ");
+		sql.append(" where rnum = ? ");
+		
+		ReviewReq reviewReq = 	jdbcTemplate.queryForObject(sql.toString(),ReviewReq.class,rnum);
+		return reviewReq;
+	}
+	
 	//리뷰수정
 	@Override
 	public List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO) {
@@ -100,7 +113,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
 		sql.append("   	   rscore =?, ");
-		sql.append("   	   rvudate = 'timestamp' ");
+		sql.append("   	   rvudate = systimestamp ");
 		sql.append(" where rnum = ? ");
 		sql.append("   and id =? ");
 
@@ -120,13 +133,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 	//리뷰삭제
 	@Override
-	public List<ReviewReq> removeReview(int bnum, int rnum, String id) {
+	public List<ReviewReq> removeReview(int bnum, int rnum) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from review ");
 		sql.append(" where rnum = ? ");
-		sql.append("   and id =? ");
 
-		jdbcTemplate.update(sql.toString(), rnum, id);
+		jdbcTemplate.update(sql.toString(), rnum);
 
 		//예외처리
 		//접속만료 등 id값을 찾을 수 없는 경우

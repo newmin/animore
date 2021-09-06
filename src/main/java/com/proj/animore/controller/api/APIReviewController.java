@@ -7,8 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ public class APIReviewController {
 		
 		HttpSession session = request.getSession(false);
 		//비로그인/로그인만료 상태라면?
-		if(session == null) {
+		if(session == null || session.getAttribute("loginMember") == null) {
 			result = new Result("01","로그인이 만료되었어요 다시 로그인해주세요.",null);
 			return result;
 		}
@@ -61,6 +62,12 @@ public class APIReviewController {
 		result = new Result("00","성공",list);
 	  	return result;
 	}
+	//리뷰1개 호출(리뷰수정폼)
+	@GetMapping("/")
+	public ReviewReq findReview(@ModelAttribute ReviewReq reviewReq,
+															@RequestParam int rnum) {
+		return reviewSVC.findReview(rnum);
+	}
 	
 	//리뷰수정
 	@PatchMapping("/")
@@ -68,12 +75,17 @@ public class APIReviewController {
 													 HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
-		if(session==null) {
+		if(session==null || session.getAttribute("loginMember") == null) {
 			result = new Result("01","로그인이 만료되었어요. 다시 로그인해주세요.",null);
 			return result;
 		}
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
+
+		if(loginMember.getId() != reviewForm.getId()){
+			result = new Result("01","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
+			return result;
+		}
 		
 		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
@@ -90,17 +102,25 @@ public class APIReviewController {
 	@DeleteMapping("/")
 	public Result deleteReview(@RequestParam int bnum,
 														 @RequestParam int rnum,
+														 @RequestParam String id,
 														 HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
-		if(session == null) {
+		if(session == null || session.getAttribute("loginMember") == null) {
 			result = new Result("01","로그인이 만료되었어요. 다시 로그인해주세요.",null);
 			return result;
 		}
+		//로그인회원ID과 리뷰작성자ID가 일치하지 않을 경우
+		//뷰에서 작성자와 일치할 경우에만 삭제버튼을 띄우지만 혹시나? never?
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		String id = loginMember.getId();
+		log.info("id.sess={}, id.req={}", loginMember.getId(), id);
+
+		// if(loginMember.getId().toString() != id){
+		// 	result = new Result("01","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
+		// 	return result;
+		// }
 		
-		List<ReviewReq> list = reviewSVC.removeReview(bnum, rnum, id);
+		List<ReviewReq> list = reviewSVC.removeReview(bnum, rnum);
 		result = new Result("00","성공",list);
 		return result;
 	}

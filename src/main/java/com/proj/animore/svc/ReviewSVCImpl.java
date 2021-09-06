@@ -30,6 +30,11 @@ public class ReviewSVCImpl implements ReviewSVC {
 	public List<ReviewReq> myReview(String id) {
 		return reviewDAO.myReview(id);
 	}
+	
+	@Override
+	public ReviewReq findReview(int rnum) {
+		return reviewDAO.findReview(rnum);
+	}
 
 	@Override
 	public List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO) {
@@ -37,8 +42,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	}
 
 	@Override
-	public List<ReviewReq> removeReview(int bnum, int rnum, String id) {
-		return reviewDAO.removeReview(bnum, rnum, id);
+	public List<ReviewReq> removeReview(int bnum, int rnum) {
+		return reviewDAO.removeReview(bnum, rnum);
 	}
 
 }
