@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,9 +65,10 @@ public class APIReviewController {
 	}
 	//리뷰1개 호출(리뷰수정폼)
 	@GetMapping("/")
-	public ReviewReq findReview(@ModelAttribute ReviewReq reviewReq,
-															@RequestParam int rnum) {
-		return reviewSVC.findReview(rnum);
+	public ReviewReq findReview(@RequestParam int rnum,Model model) {
+		ReviewReq reviewReq	= reviewSVC.findReview(rnum);
+		model.addAttribute("review", reviewReq);
+		return reviewReq;
 	}
 	
 	//리뷰수정
