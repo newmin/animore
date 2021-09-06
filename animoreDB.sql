@@ -1,4 +1,5 @@
 --테이블 및 시퀀스 생성
+drop table reviewfile;
 drop table businessfile;
 drop table boardfile;
 drop table coupon;
