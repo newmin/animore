@@ -1,5 +1,8 @@
 'strict mode';
 
+
+var locPosition = null;
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -21,7 +24,7 @@ if (navigator.geolocation) {
       var lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
       
-      var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+      locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
       
       // 마커와 인포윈도우를 표시합니다
@@ -31,7 +34,7 @@ if (navigator.geolocation) {
   
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
   
-  var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+  locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
       message = 'geolocation을 사용할수 없어요..'
       
   displayMarker(locPosition, message);
@@ -101,14 +104,41 @@ $busiList.forEach( (rec, index) => {
       // coords = '내위치';
       // map.setCenter(coords);
 
+      var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
+      // 클릭한 위치를 기준으로 선을 생성하고 지도위에 표시합니다
+              clickLine = new kakao.maps.Polyline({
+                  map: map, // 선을 표시할 지도입니다 
+                  path: [locPosition], // 선을 구성하는 좌표 배열입니다 현재 위치를 넣어줍니다
+                  strokeWeight: 3, // 선의 두께입니다 
+                  strokeColor: '#db4040', // 선의 색깔입니다
+                  strokeOpacity: 0, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+                  strokeStyle: 'solid' // 선의 스타일입니다
+              });
       
+      // 마우스 클릭으로 그려진 선의 좌표 배열을 얻어옵니다
+      var path = clickLine.getPath();
+      
+      // 좌표 배열에 업체 위치를 추가합니다
+      path.push(coords);
+
+      // 다시 선에 좌표 배열을 설정하여 클릭 위치까지 선을 그리도록 설정합니다
+      clickLine.setPath(path);
+
+      var distance = Math.round(clickLine.getLength()); // 선의 총 거리를 계산합니다
+
+      console.log("locPosition: "+locPosition);
+      console.log("coords: "+coords);
+      console.log("clickLine.getPath(): "+clickLine.getPath());
+      console.log("clickLine.getLength(): "+clickLine.getLength());
+      console.log("distance: "+distance);
+
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'click', function() {
         
         if (!selectedMarker || selectedMarker !== marker) {
-
+          
           makeInfoWindow($busiList,index);
-
+          
           infowindow.close();
           // 마커 위에 인포윈도우를 표시합니다
           infowindow.open(map, marker);
@@ -116,13 +146,15 @@ $busiList.forEach( (rec, index) => {
         
         selectedMarker = marker;
       });
-
+      
       kakao.maps.event.addListener(map, 'click', function(){
         infowindow.close();
         selectedMarker = null;
       });
 
-
+      const $distance = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`).parentElement.nextElementSibling;
+      $distance.textContent = distance + ' M';
+      
       const $listATag = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`);
       $listATag.addEventListener('mouseover', function(){
         // 업체목록에 마우스오버 이벤트를 등록합니다
