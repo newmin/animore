@@ -1,4 +1,6 @@
 --테이블 및 시퀀스 생성
+drop table businessfile;
+drop table boardfile;
 drop table coupon;
 drop table profession;
 drop table Myani;
@@ -58,7 +60,19 @@ create table board(
   constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
 );
-
+--게시판 이미지업로드
+create table boardfile(
+fnum number(10),
+bnum number (8),
+store_fname varchar2(50),
+upload_fname varchar2(50),
+fsize varchar2(45),
+ftype varchar2(50),
+cdate timestamp default systimestamp,
+udate timestamp,
+constraint boardfile_fnum_pk primary key(fnum),
+constraint boardfile_bnum_fk foreign key(bnum)references board(bnum) on delete cascade
+);
 --댓글
 create table rboard(
   rnum number(10),
@@ -133,7 +147,19 @@ create table business(
   constraint business_holidayopen_ck check(holidayopen in('Y','N')),
   constraint business_dental_ck check(dental in('Y','N'))
 );
-
+--업체 이미지업로드
+create table businessfile(
+fnum number(10),
+bnum number (8),
+store_fname varchar2(50),
+upload_fname varchar2(50),
+fsize varchar2(45),
+ftype varchar2(50),
+cdate timestamp default systimestamp,
+udate timestamp,
+constraint businessfile_fnum_pk primary key(fnum),
+constraint businessfile_bnum_fk foreign key(bnum)references business(bnum) on delete cascade
+);
 --전문가
 create table profession(
   pnum number(8),
@@ -191,6 +217,19 @@ create table review(
                                 references member(id)
                                 ON DELETE CASCADE
 );
+--리뷰 이미지업로드
+create table reviewfile(
+fnum number(10),
+rnum number (10),
+store_fname varchar2(50),
+upload_fname varchar2(50),
+fsize varchar2(45),
+ftype varchar2(50),
+cdate timestamp default systimestamp,
+udate timestamp,
+constraint reviewfile_fnum_pk primary key(fnum),
+constraint reviewfile_rnum_fk foreign key(rnum)references review(rnum) on delete cascade
+);
 
 --즐겨찾기
 create table favorite(
@@ -242,6 +281,9 @@ DROP SEQUENCE favorite_fnum_seq;
 DROP SEQUENCE myani_mnum_seq;
 DROP SEQUENCE profession_pnum_seq;
 DROP SEQUENCE coupon_cnum_seq;
+drop sequence boardfile_fnum_seq;
+drop sequence business_fnum_seq;
+drop sequence review_fnum_seq;
 
 --시퀀스 생성
 CREATE SEQUENCE BOARD_BNUM_SEQ;
@@ -254,6 +296,9 @@ CREATE SEQUENCE favorite_fnum_seq;
 CREATE SEQUENCE myani_mnum_seq;
 CREATE SEQUENCE profession_pnum_seq;
 CREATE SEQUENCE coupon_cnum_seq;
+create sequence boardfile_fnum_seq;
+create sequence business_fnum_seq;
+create sequence review_fnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
