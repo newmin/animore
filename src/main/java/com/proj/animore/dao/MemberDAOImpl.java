@@ -84,21 +84,19 @@ public class MemberDAOImpl implements MemberDAO {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("update member ");
-		sql.append("set pw = ? ");
-		sql.append("    name = ? ");
-		sql.append("    birth = ? ");
-		sql.append("    gender = ? ");
-		sql.append("    tel = ? ");
-		sql.append("    email = ? ");
-		sql.append("    address = ? ");
-		sql.append("    nickname = ? ");
+		sql.append("set pw = ?, ");
+		sql.append("    name = ?, ");
+		sql.append("    gender = ?, ");
+		sql.append("    tel = ?, ");
+		sql.append("    email = ?, ");
+		sql.append("    address = ?, ");
+		sql.append("    nickname = ?, ");
 		sql.append("    udate = systimestamp ");
-		sql.append("where id = ? ");
+		sql.append(" where id = ? ");
 
 		jdbcTemplate.update(sql.toString(),
 												memberDTO.getPw(),
 												memberDTO.getName(),
-												memberDTO.getBirth(),
 												memberDTO.getGender(),
 												memberDTO.getTel(),
 												memberDTO.getEmail(),
