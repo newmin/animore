@@ -46,7 +46,7 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum, fdate, fstatus ");
+		sql.append("select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum, fdate ");
 		sql.append("  from favorite f, business b,(select bnum, round(avg(rscore),2) avg ");
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r ");
