@@ -1,6 +1,7 @@
 package com.proj.animore.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.proj.animore.common.Paginator;
 import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.ReviewReq;
@@ -35,10 +37,14 @@ public class MainController {
 	private final ReviewSVC reviewSVC;
 	private final BusinessSVC businessSVC;
 	private final FavoriteSVC favoriteSVC;
+	
+  private static final Integer POSTS_PER_PAGE = 10;
+  private static final Integer PAGES_PER_BLOCK = 5;
 
 	// (카테고리별)업체목록 조회
 	@GetMapping("/{bcategory}")
-	public String list(@PathVariable String bcategory, HttpServletRequest request, Model model) {
+	public String list(@PathVariable String bcategory, HttpServletRequest request, Model model,
+										@RequestParam(value = "page", defaultValue = "1") Integer page) {
 
 		model.addAttribute("businessLoadDTO", new BusinessLoadDTO());
 
@@ -54,6 +60,18 @@ public class MainController {
 			model.addAttribute("busiList", list);
 		}
 
+		
+		// 페이지네이션
+    try {
+        Paginator paginator = new Paginator(PAGES_PER_BLOCK, POSTS_PER_PAGE, businessSVC.busiList(bcategory).count());
+        Map<String, Object> pageInfo = paginator.getFixedBlock(page);
+        model.addAttribute("pageInfo", pageInfo);
+    } catch(IllegalStateException e) {
+        model.addAttribute("pageInfo", null);
+        System.err.println(e);
+    }
+		
+		
 		return "map/busiList";
 	}
 
