@@ -69,10 +69,10 @@ const modiFrmBtns_f = e=> {
 					if(res.rtcd == '00'){
 							//성공로직처리
 							const data = res.data;
+							alert('되니?')
 							//리뷰목록갱신
 							reviewModiForm(data);
-							//리뷰입력창 초기화
-							rcontent.value=null;
+							alert('됐니?')
 					}else{
 							throw new Error(res.rtmsg);
 							alert('else');
@@ -84,11 +84,18 @@ const modiFrmBtns_f = e=> {
 					alert(err.message);
 			});
 
+
+}
+
+//리뷰수정폼출력 //생성된 디브의 inner에 삽입
+function reviewModiForm(review){
+
+			//length!=0으로 안되면 !=null로
 			const modiForms = document.querySelectorAll('.review__modiForm');
 			//다른 수정폼 있을시
 			if(modiForms.length!=0){
 				if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
-					document.querySelectorAll('.review__modiForm').remove();
+					modiForms.forEach(ele=>ele.remove());
 				}
 			}
 			//새로운 수정폼, 기존 리뷰 아래 생성
@@ -97,10 +104,8 @@ const modiFrmBtns_f = e=> {
 			e.closest('.review__main-text').after(review__modiForm);
 			//원래 내용은 숨김처리
 			document.querySelector('.review__main-text').classList('hidden');
-}
 
-//리뷰수정폼출력 //생성된 디브의 inner에 삽입
-function reviewModiForm(review){
+
 	let html ='';
 	html += `		<div>`
 	html += `			<span class="review__nickname">${review.nickname}</span>`;
@@ -129,15 +134,12 @@ function reviewModiForm(review){
 	document.querySelector('.review__column:nth-child(2)').innerHTML = html;
 
 	const modiBtn = document.querySelector('.review__modi');		//수정처리
-	const cancleBtn = document.querySelector('.review__modiCancle');		//수정처리
+	const cancleBtn = document.querySelector('.review__modiCancle');		//수정취소
 	modiBtn.addEventListener('click',modiBtn_f);
 	cancleBtn.addEventListener('click',document.querySelector('.review__modiForm').remove());
 }
 
-//수정버튼 셀렉하고 이벤트주기
-
-
-/*//리뷰수정처리
+//리뷰수정처리
 const modiBtn_f = e =>{
 
 	console.log('리뷰수정');
@@ -176,7 +178,7 @@ const modiBtn_f = e =>{
 					console.log(err.message);
 					alert(err.message);
 			});
-});//수정처리*/
+};//수정처리
 
 //리뷰삭제
 const delBtn_f = e => {
