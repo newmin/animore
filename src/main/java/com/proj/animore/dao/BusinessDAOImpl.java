@@ -100,17 +100,16 @@ public class BusinessDAOImpl implements BusinessDAO {
 	public List<BusinessLoadDTO> busiListForMember(String bcategory, String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL, r.bscore ");
-		sql.append("  from business b left join favorite f on b.bnum=f.bnum, bcategory c, (select bnum, round(avg(rscore),2) bscore ");
+		sql.append("  from business b left join favorite f on b.bnum=f.bnum and f.id = '"+id+"', bcategory c, (select bnum, round(avg(rscore),2) bscore ");
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r ");
 		sql.append(" where b.bnum=c.bnum ");
 		sql.append("   and b.bnum=r.bnum ");
 		sql.append("   and "+bcategory+" = 'Y' ");
-		sql.append("   and f.id = ? ");
 		sql.append(" order by fdate desc nulls last ");
 		
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
-				   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),id);
+				   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
 	
 		log.info(list.toString());
 	
