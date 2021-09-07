@@ -10,17 +10,15 @@ const bnum = document.querySelector('.selected-busi').dataset.bnum;		//업체번
 const regiBtn = document.querySelector('.review__regist');  //등록하기
 let modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
 let delBtns = document.querySelectorAll('.review__del');		//삭제하기
-//리뷰 작성폼
-const rcontent = document.querySelector('.review__textarea');
-const rscore = document.querySelector('input[name="rscore"]:checked');
-const modiContent = document.querySelector('.review__textarea-modi');
-
 
 //  리뷰등록
 const regiBtn_f = e =>{
 	
 	console.log('리뷰등록');
 	
+	const rcontent = document.querySelector('.reviewform .review__textarea');
+	const rscore = document.querySelector('.reviewform input[name="rscore"]:checked');
+
 	//리뷰입력체크
 	if(!rcontent.value) {
 			alert("리뷰 내용을 입력하세요");
@@ -45,8 +43,10 @@ const regiBtn_f = e =>{
 							refreshReview(data);
 							//리뷰입력창 초기화
 							rcontent.value=null;
+							//등록후 별점도 초기화?
 					}else{
-							throw new Error(res.rtmsg);
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
 					}
 			})
 			.catch(err=>{
@@ -58,20 +58,38 @@ const regiBtn_f = e =>{
 
 //수정폼 버튼 클릭시, 수정폼+수정버튼 출력
 const modiFrmBtns_f = e=> {
+	let modiForms = document.querySelectorAll('.review__modiForm');
+	
+	//다른 수정폼 있을시
+	if(modiForms.length!=0){
+		if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
+			modiForms.forEach(ele=>ele.remove());
+		}
+		return;
+	}
+	//새로운 수정폼, 기존 리뷰 아래 생성
+	const modiForm = document.createElement('div');
+	modiForm.classList.add('review__modiForm');
+	// e.target.closest('.review__main-text').after('<div class="review__modiForm"></div>');
+	e.target.closest('.review__column').append(modiForm);
+	//원래 내용은 숨김처리
+	e.target.closest('.review__main-text').classList.add('hidden');
+	
 	const rnum = e.target.dataset.rnum;
 	const rid = e.target.dataset.id;
 
 	const URL = `/inquire/?rnum=${rnum}`;
+	// &id=${rid}`;
 
 	request.get(URL)
 			.then(res=>res.json())
 			.then(res=>{
-					if(res.rtcd == '00'){
+					if(res.rtcd == "00"){
 							//성공로직처리
-							const data = res.data;
 							alert('되니?')
+							// const data = res.data;
 							//리뷰목록갱신
-							reviewModiForm(data);
+							// reviewModiForm(rnum);
 							alert('됐니?')
 					}else{
 							throw new Error(res.rtmsg);
@@ -79,39 +97,21 @@ const modiFrmBtns_f = e=> {
 					}
 			})
 			.catch(err=>{
-					//오류로직 처리
+				//오류로직 처리
+				alert('catch');
 					console.log(err.message);
 					alert(err.message);
-			});
-
-
+			})
+	
 }
 
 //리뷰수정폼출력 //생성된 디브의 inner에 삽입
-function reviewModiForm(review){
+function reviewModiForm(review) {
 
-			//length!=0으로 안되면 !=null로
-			const modiForms = document.querySelectorAll('.review__modiForm');
-			//다른 수정폼 있을시
-			if(modiForms.length!=0){
-				if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
-					modiForms.forEach(ele=>ele.remove());
-				}
-			}
-			//새로운 수정폼, 기존 리뷰 아래 생성
-			const review__modiForm = document.createElement('div');
-			review__modiForm.classList.add('review__modiForm');
-			e.closest('.review__main-text').after(review__modiForm);
-			//원래 내용은 숨김처리
-			document.querySelector('.review__main-text').classList('hidden');
+
 
 
 	let html ='';
-	html += `		<div>`
-	html += `			<span class="review__nickname">${review.nickname}</span>`;
-	html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
-	html += `		<div>`
-
 	html += `<div class="rscore">`;
 	html += `	<input type="radio" name="rscore" id="point1" value="1" title="1점" hidden>`;
 	html += `	<label for="point1"><i class="fas fa-star reviewForm__score one reviewForm__checked"></i></label>`;
@@ -126,12 +126,12 @@ function reviewModiForm(review){
 	html += `</div>`;
 	html += `<div class="review__contents">`;
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
-	html += `	<textarea rows="10" class="review__textarea" name="rcontent">${review.rcontent}</textarea>`;
-	html += `	<button data-rnum="${review.rnum}" class="review__modi" type="button">수정</button>`;
+	html += `	<textarea rows="10" class="review__textarea" name="rcontent">${review}</textarea>`;
+	html += `	<button data-rnum="${review}" class="review__modi" type="button">수정</button>`;
 	html += `	<button class="review__modiCancle" type="button">취소</button>`;
 	html += `</div>`;
 
-	document.querySelector('.review__column:nth-child(2)').innerHTML = html;
+	document.querySelector('.review__modiForm').innerHTML = html;
 
 	const modiBtn = document.querySelector('.review__modi');		//수정처리
 	const cancleBtn = document.querySelector('.review__modiCancle');		//수정취소
@@ -145,6 +145,8 @@ const modiBtn_f = e =>{
 	console.log('리뷰수정');
 	
   const rnum = e.target.dataset.rnum;
+	const modiContent = document.querySelector('.review__textarea-modi');
+	const modiRscore = document.querySelector('.review__modiForm input[name="rscore"]:checked');
 	
 	//리뷰입력체크
 	if(!modiContent.value) {
@@ -157,7 +159,7 @@ const modiBtn_f = e =>{
 			"bnum": bnum,
 			"rnum": rnum,
 			"rcontent": modiContent.value,
-			"rscore" : rscore.value,
+			"rscore" : modiRscore.value,
 			"id" : $id
 													 };
 	
@@ -187,20 +189,21 @@ const delBtn_f = e => {
 	}
 	
 	const rnum = e.target.dataset.rnum;
-	const rid = e.target.dataset.id;
+	// const rid = e.target.dataset.id;
 	
-	const URL = `/inquire/?bnum=${bnum}&rnum=${rnum}&id=${rid}`;
+	const URL = `/inquire/?bnum=${bnum}&rnum=${rnum}`;
 	
 	request.delete(URL)
 			.then(res=>res.json())
 			.then(res=>{
-					if(res.rtcd == '00'){
+					if(res.rtcd == "00"){
 							//성공로직처리
 							const data = res.data;
 							//댓글목록갱신
 							refreshReview(data);
 					}else{
-							throw new Error(res.rtmsg);
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
 					}
 			})
 			.catch(err=>{
@@ -223,6 +226,7 @@ function refreshReview(data){
 		html += `		<div>`
 		html += `			<span class="review__nickname">${review.nickname}</span>`;
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
+		html += `			<span class="review__date">평점 : ${review.rscore}</span>`;
 		html += `		</div>`
 		switch(review.rscore){
 			case 1:
@@ -289,11 +293,11 @@ function refreshReview(data){
 	html += `</section>`;
 	document.querySelector('.review__container').innerHTML = html;
 			
-	//버튼 재호출
-	modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
+	//버튼 재호출 + 이벤트리스너 재등록
+	// modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
+	// modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
+
 	delBtns = document.querySelectorAll('.review__del');		//삭제하기
-	//이벤트리스너 재등록
-	modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 	delBtns.forEach(ele=>ele.addEventListener('click',delBtn_f));
 }
 //각 버튼 이벤트리스너 등록
