@@ -158,7 +158,8 @@ public class BoardController {
 		boardDTO.setFiles(convert(storedFiles));
 		
 		BoardReqDTO stored = boardSVC.addBoard(loginMemberId,boardDTO);
-		
+		stored.setFiles(boardDTO.getFiles());
+		log.info("stored:{}",stored);
 		redirectAttributes.addAttribute("bnum",stored.getBnum());
 		
 		
@@ -188,12 +189,11 @@ public class BoardController {
 								Model model) {
 		
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
-		BoardForm boardForm = new BoardForm();
-		
-		BeanUtils.copyProperties(boardReqDTO, boardForm);
+		log.info("boardForm:{}",boardReqDTO);
 		
 		model.addAttribute("boardForm",boardReqDTO);
-		
+		log.info("files:{}",boardReqDTO.getFiles());
+		log.info("files:{}",boardReqDTO.getFiles().get(0).getUpload_fname());
 		
 		return "board/modifyBoardForm";
 	}
