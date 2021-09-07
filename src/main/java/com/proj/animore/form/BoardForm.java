@@ -1,10 +1,17 @@
 package com.proj.animore.form;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class BoardForm {
 
 	private int bnum;
@@ -19,4 +26,7 @@ public class BoardForm {
 	private int bgood;
 	private int breply;
 	private int bgroup;
-}
+	
+	private List<MultipartFile> files; //첨부파일
+	}
+

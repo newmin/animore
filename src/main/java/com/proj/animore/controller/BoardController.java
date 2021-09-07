@@ -1,5 +1,6 @@
 package com.proj.animore.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,16 +24,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.proj.animore.dto.BoardDTO;
-import com.proj.animore.dto.BoardReqDTO;
-import com.proj.animore.dto.RboardListReqDTO;
+import com.proj.animore.common.file.FileStore;
+import com.proj.animore.dto.board.BoardDTO;
+import com.proj.animore.dto.board.BoardReqDTO;
+import com.proj.animore.dto.board.BoardUploadFileDTO;
+import com.proj.animore.dto.board.MetaOfUploadFile;
+import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BoardSVC;
-import com.proj.animore.svc.GoodBoardSVC;
-import com.proj.animore.svc.RboardSVC;
+import com.proj.animore.svc.board.BoardSVC;
+import com.proj.animore.svc.board.GoodBoardSVC;
+import com.proj.animore.svc.board.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +49,7 @@ public class BoardController {
 	private final BoardSVC boardSVC;
 	private final RboardSVC rboardSVC;
 	private final GoodBoardSVC goodBoardSVC;
+	private final FileStore fileStore;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -123,10 +129,11 @@ public class BoardController {
 	
 	//게시글 등록처리
 	@PostMapping("/")
+	@Transactional
 	public String addpost(@Valid @ModelAttribute BoardForm boardForm,
 							BindingResult bindingResult,
 							HttpServletRequest request,
-							RedirectAttributes redirectAttributes) {
+							RedirectAttributes redirectAttributes) throws IllegalStateException, IOException  {
 		
 		HttpSession session = request.getSession(false);
 		
@@ -142,6 +149,10 @@ public class BoardController {
 		BoardDTO boardDTO = new BoardDTO();
 		//boardForm 의 값이 boardDTO에 복사됨
 		BeanUtils.copyProperties(boardForm, boardDTO);
+		//첨부파일 메타정보 추출
+		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(boardForm.getFiles());
+		
+		boardDTO.setFiles(convert(storedFiles));
 		
 		BoardReqDTO stored = boardSVC.addBoard(loginMemberId,boardDTO);
 		
@@ -151,6 +162,21 @@ public class BoardController {
 	
 		return "redirect:/board/post/{bnum}";
 
+	}
+	private BoardUploadFileDTO convert(MetaOfUploadFile attatchFile) {
+		BoardUploadFileDTO boardUploadFileDTO = new BoardUploadFileDTO();
+		BeanUtils.copyProperties(attatchFile, boardUploadFileDTO);
+		return boardUploadFileDTO;
+	}
+	
+	private List<BoardUploadFileDTO> convert(List<MetaOfUploadFile> uploadFiles){
+		List<BoardUploadFileDTO> list = new ArrayList<>();
+		
+		for(MetaOfUploadFile file : uploadFiles) {
+			BoardUploadFileDTO uploadFileDTO = convert(file);
+			list.add(uploadFileDTO);
+		}
+		return list;
 	}
 	
 	//게시글수정양식출력

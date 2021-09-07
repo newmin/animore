@@ -1,10 +1,15 @@
-package com.proj.animore.dto;
+package com.proj.animore.dto.board;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class BoardReqDTO {
 
 	private Integer bnum;
@@ -21,4 +26,7 @@ public class BoardReqDTO {
 	private LocalDate bndate;
 	private LocalDate bcdate;
 	private LocalDate budate;
-}
+	
+	private List<BoardUploadFileDTO> files;
+	}
+

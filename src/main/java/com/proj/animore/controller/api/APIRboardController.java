@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.dto.RboardDTO;
-import com.proj.animore.dto.RboardListReqDTO;
+import com.proj.animore.dto.board.RboardDTO;
+import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BoardSVC;
-import com.proj.animore.svc.RboardSVC;
+import com.proj.animore.svc.board.BoardSVC;
+import com.proj.animore.svc.board.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

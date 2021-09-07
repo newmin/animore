@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BoardSVC;
 import com.proj.animore.svc.MypageSVC;
 import com.proj.animore.svc.ReviewSVC;
+import com.proj.animore.svc.board.BoardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

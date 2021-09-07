@@ -58,8 +58,7 @@ $heart.addEventListener('click',e=>{
                     .then(res=>res.json())
                     .then(res=>{
                         if(res.rtcd =='00'){
-                            alert('게시글이 삭제되었습니다.');
-                            location.href=`/board/${e.target.dataset.bcategory}`;
+                           if(confirm("게시글을 삭제하시겠습니까?")) location.href=`/board/${e.target.dataset.bcategory}`;
                         }
                         throw new Error(res.rtmsg);
                     })

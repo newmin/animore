@@ -1,8 +1,8 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.board;
 
 import java.util.List;
 
-import com.proj.animore.dto.GoodBoardDTO;
+import com.proj.animore.dto.board.GoodBoardDTO;
 
 public interface GoodBoardSVC {
 

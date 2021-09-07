@@ -62,6 +62,15 @@
         </div>
        </div>
        <div class="boardForm__contents"><p th:text="*{bcontent}"></p></div>
+        <div class>
+			<label for="file">첨부</label>
+			<div  >
+			<p th:each="file : *{files}">
+			<a th:href="@{|/attach/${file.store_fname}/${file.upload_fname}}|"
+				th:text="${file.upload_fname}"></a>
+			</p>
+			</div>
+		</div>
        <div class="boardForm__likeContainer">
            <div class="boardForm__likewrap">
                <div class="boardForm__likeText">좋아요</div>

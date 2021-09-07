@@ -1,8 +1,8 @@
-package com.proj.animore.dao;
+package com.proj.animore.dao.board;
 
 import java.util.List;
 
-import com.proj.animore.dto.GoodBoardDTO;
+import com.proj.animore.dto.board.GoodBoardDTO;
 
 public interface GoodBoardDAO {
 	
