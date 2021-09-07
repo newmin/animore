@@ -62,11 +62,11 @@
         </div>
        </div>
        <div class="boardForm__contents"><p th:text="*{bcontent}"></p></div>
-        <div class>
-			<label for="file">첨부</label>
-			<div  >
+        <div class="boardForm__files">
+			<label for="file" class="file__title">첨부파일></label>
+			<div >
 			<p th:each="file : *{files}">
-			<a th:href="@{|/attach/${file.store_fname}/${file.upload_fname}}|"
+			<a class="file__content" th:href="@{|/attach/${file.store_fname}/${file.upload_fname}}|"
 				th:text="${file.upload_fname}"></a>
 			</p>
 			</div>
@@ -83,7 +83,7 @@
        </div>
 
        <!-- 댓글 -->
-       <div class="">댓글 <span class="boardForm__reply" th:text="|댓글수 ${reply.size}|"></span></div>
+       <div class=" boardForm__text">댓글 <span class="boardForm__reply boardForm__text" th:text="|댓글수 ${reply.size}|"></span></div>
        <div class="boardForm__replyListWrap">
      		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
            <div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>

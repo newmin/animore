@@ -238,6 +238,18 @@
     background-color: lightgray;    
     border-radius: 5px;
     border: none;
+    padding: 5px;
+}
+.boardForm__files{
+  display: flex;
+  height: 30px;
+}
+.boardForm__files .file__title{
+  font-weight: bold;
+  line-height: 30px;
+}
+.boardForm__files .file__content{
+  line-height: 30px;
 }
 .boardForm__likeContainer{
     display: flex;
@@ -246,6 +258,7 @@
 .boardForm__likewrap{
     display: flex;
     flex-direction: row;
+    align-items: center;
     background-color: lightgray;
     height: 30px;
     width: 75px;
@@ -263,6 +276,10 @@
 }
 .boardForm__Replywrap{
     display: flex;
+}
+.boardForm__text{
+  font-size: 15px;
+  padding: 5px 0 5px 0;
 }
 .boardForm__AddReplyContainer{
     background-color: lightgray;
