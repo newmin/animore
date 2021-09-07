@@ -314,12 +314,62 @@
     margin: 5px;
 	background-color: inherit;
 }
-.addPost__icons{
-    display: flex;
+
+.addPost__icons {
+  width: 450px;
 }
-.addPost__icons i{
-    font-size: 1.2em;
-    padding: 5px;
+
+.addPost__icons .filetype {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  *margin-right: 4px;
+}
+
+.addPost__icons .filetype * {
+  vertical-align: middle;
+}
+
+.addPost__icons .filetype .file-text {
+  position: relative;
+  width: 350px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  height: 30px;
+  border-bottom: 1px solid black;
+  margin: 0;
+  line-height: 20px;
+  z-index: 10;
+}
+
+.addPost__icons .filetype .file-select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 78px;
+  overflow: hidden;
+}
+
+.addPost__icons .filetype .file-select .input-file {
+  width: 50px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  height: 30px;
+  background-color: #fff;
+}
+
+.addPost__icons .filetype .file-text + .file-btn {
+  display: inline-block;
+  background-color: var(--primary);
+  height: 30px;
+  line-height: 30px;
+  border-radius: 5px;
+  padding: 0 15px;
+  color: #fff !important;
+  cursor: pointer;
+  *margin-left: 4px;
 }
 .addPost__content{
     background-color: lightgray;

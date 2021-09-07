@@ -85,9 +85,9 @@ public class BoardController {
 										Model model,
 										HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if(session == null) return "redirect:/login";
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(loginMember == null) return "redirect:/login";
 		String id = loginMember.getId();
 		//해당회원이 해당글 좋아요여부확인
 		int isGoodBoard = goodBoardSVC.isGoodBoard(bnum, id);
@@ -122,9 +122,12 @@ public class BoardController {
 		
 		HttpSession session = request.getSession(false);
 
-		if(session == null) return "redirect:/login";
-		
+			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+			if(loginMember == null) return "redirect:/login";
+			
 		return "board/addBoardForm";
+
+		
 	}
 	
 	//게시글 등록처리

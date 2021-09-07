@@ -63,15 +63,32 @@ public class APIReviewController {
 		result = new Result("00","성공",list);
 	  	return result;
 	}
-	//리뷰1개 호출(리뷰수정폼)
+	// //리뷰1개 호출(리뷰수정폼)
 	@GetMapping("/")
-	public ReviewReq findReview(@RequestParam int rnum,Model model) {
+	public Result findReview(@RequestParam int rnum,
+												  //  @RequestParam String id,
+													 HttpServletRequest request
+													 ) {
+		Result result;											
+		//로그인x
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("loginMember")==null){
+			result = new Result("01","로그인이 만료되었습니다.",null);
+			return result;
+		}												
+		//아이디값 다른 경우
+		// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		// if(!id.equals(loginMember.getId())){
+		// 	result = new Result("02","작성자의 아이디와 일치하지 않습니다.",null);
+		// 	return result;
+		// }
+
 		ReviewReq reviewReq	= reviewSVC.findReview(rnum);
-		model.addAttribute("review", reviewReq);
-		return reviewReq;
+		result = new Result("00","성공",reviewReq);
+		return result;
 	}
 	
-	//리뷰수정
+	// //리뷰수정
 	@PatchMapping("/")
 	public Result modiReview(@RequestBody ReviewForm reviewForm, 
 													 HttpServletRequest request) {
@@ -104,7 +121,7 @@ public class APIReviewController {
 	@DeleteMapping("/")
 	public Result deleteReview(@RequestParam int bnum,
 														 @RequestParam int rnum,
-														 @RequestParam String id,
+														//  @RequestParam String rid,
 														 HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
@@ -114,10 +131,10 @@ public class APIReviewController {
 		}
 		//로그인회원ID과 리뷰작성자ID가 일치하지 않을 경우
 		//뷰에서 작성자와 일치할 경우에만 삭제버튼을 띄우지만 혹시나? never?
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("id.sess={}, id.req={}", loginMember.getId(), id);
+		// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		// log.info("id.sess={}, id.req={}", loginMember.getId(), rid);
 
-		// if(loginMember.getId().toString() != id){
+		// if(loginMember.getId() != rid){
 		// 	result = new Result("01","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
 		// 	return result;
 		// }
