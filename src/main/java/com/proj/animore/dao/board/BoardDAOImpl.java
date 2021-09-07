@@ -92,7 +92,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("where t1.id = t2.id ");
 		sql.append("and t1.btitle like  '%"+btitle+"%'");
 		sql.append("and t1.bcategory = ? ");
-		sql.append(" order by t1.bnum ");
+		sql.append(" order by t1.bnum desc ");
 
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
@@ -111,7 +111,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("where t1.id = t2.id ");
 		sql.append("and t2.nickname like  '%"+nickname+"%'");
 		sql.append("and t1.bcategory =? ");
-		sql.append(" order by t1.bnum ");
+		sql.append(" order by t1.bnum desc ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
@@ -129,7 +129,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("where t1.id = t2.id ");
 		sql.append("and t1.bcontent like  '%"+bcontent+"%'");
 		sql.append("and t1.bcategory =? ");
-		sql.append(" order by t1.bnum ");
+		sql.append(" order by t1.bnum desc ");
 
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
