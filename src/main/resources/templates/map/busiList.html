@@ -11,7 +11,9 @@
 	<script th:inline="javascript">
 		const $busiList = /*[[${busiList}]]*/ null;	//업체목록
 	</script>
+	<script src="/js/api/ajaxCall.js"></script>
 	<script src="/js/mapAPI2.js" defer></script>
+	<script src="/js/api/busiListHospitalTagSearchReq.js" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
 <!-- 테스트코드끝 -->
 
@@ -38,7 +40,7 @@
             <input type="checkbox" th:field="*{rareani}" th:value="Y"><label for="rareani">희귀동물</label>
           </div>
         </div>
-      
+      	
         <div class="position__column">
           <div class="position__info">
             <p class="position__locate">내위치 : 여기는 어디~~</p>
@@ -85,6 +87,10 @@
             <div><button id="currBtn">현재위치</button></div>
             <div><input type="text" name="" id="search"><button id='searchBtn'>검색</button></div>
           </div>
+          <div class="hAddr" style='z-index:1; position:absolute'>
+		        <!-- <span class="title">지도중심기준 행정동 주소정보</span> -->
+		        <span id="centerAddr" style='display:block'></span>
+			    </div>
         </div>
 
       </section>

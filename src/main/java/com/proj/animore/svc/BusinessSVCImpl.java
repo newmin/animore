@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.HtagBusiListReq;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,4 +51,10 @@ public class BusinessSVCImpl implements BusinessSVC {
 		return businessDAO.busiListBySearch(text);
 	}
 
+	//업체목록조회 (병원태그포함)
+	@Override
+	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr) {
+		return businessDAO.busiListHospitalTag(bcategory, htblr);
+	}
+	
 }

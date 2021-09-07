@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/rboard")
 @RequiredArgsConstructor
-public class RboardController {
+public class APIRboardController {
 
 	private final RboardSVC rboardSVC;
 	
