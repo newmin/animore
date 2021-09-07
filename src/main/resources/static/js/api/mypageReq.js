@@ -162,6 +162,93 @@ const $mypageReplyMenu = document.querySelector('a[href="/mypage/mypageReply"]')
 
 });
 
+
+//개인정보 수정처리
+
+const modifyBtn = e =>{
+	e.preventDefault();
+	
+	const $id = id.value;
+	const $pw = pw.value;
+	const $name = name.value;
+	const $tel = tel.value;
+	const $nickname = nickname.value;
+	const $address = address.value;
+	const $birth = birth.value;
+	const $email = email.value;
+	
+	
+	
+	const URL = `mypage/mypageModify`;
+	const data = {
+								 "id":$id,
+								 "pw":$pw,
+								 "name":$name,
+								 "tel":$tel,
+								 email":$email,
+								 "nickname":$nickname,
+								 "address": $address,
+								 "birth" : $birth
+							 };
+	
+	request.patch(URL,data)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+				//성공로직처리
+				const data = res.data;
+				
+				refreshModi(data);				//개인정보수정 리프레쉬
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			alert(err.message);
+		});
+		
+		const $modifyBtn = document.querySelector('#modifyBtn');
+		$modifyBtn.addEventListener("click", modifyBtn); 
+};
+
+
+//개인정보수정
+	
+	
+	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
+	$mypageModify.addEventListener('click',e=>{
+		e.preventDefault();
+		
+		const URL = `/mypage/mypageModify`;
+		
+		request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+				//성공로직처리
+				console.log(res);
+				const data = res.data;
+				document.querySelector('.mypage_content_container').innerHTML = data;
+				
+				const $modifyBtn = document.querySelector('#modifyBtn');
+				$modifyBtn.addEventListener("click", modifyBtn); 
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			console.log (err.message);
+		});
+	
+		
+
+});
+
+
 //회원탈퇴
 const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	$mypageDelMenu.addEventListener('click',e=>{
@@ -187,3 +274,61 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	});
 
 });
+
+
+
+function refreshModi(data){
+
+
+	let html ='';
+	data.forEach(rec => {
+
+		html+="<div class=\"mypage_content_container\">";
+		
+		html+="<h2 class=\"mypage_content_title\">즐겨 찾는 업체</h2>";
+		
+		html+="<hr>";
+		
+		html+="<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">";
+
+		
+		
+		html+="<li><label for=\"id\">아이디</label></li>";
+		html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>";
+		
+		html+="<li><label for=\"pw\">비밀번호</label></li>";
+		html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
+		
+		html+="    <li>";
+		html+="      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>";
+		html+="      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>";
+		html+="    </li>";
+		
+		
+		
+		html+="    <li><label for=\"nickname\">별칭</label></li>";
+		html+="  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"/></li>";
+
+		
+		html+="<li><label for=\"birth\">생년월일</label></li>";
+		html+="<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	";
+		
+
+		
+		
+		html+="<li><label for=\"tel\">전화번호</label></li>";
+		html+="<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>";
+		
+		
+		html+="<li>";
+		html+="<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>";
+		html+="<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.getAddress()+" required></div>";
+
+		html+="</li>";
+		html+="<li><input type=\"button\" id=\"modifyBtn\"></li>";
+		
+		html+="</ul>";
+		html+="</form >";
+		html+="</div>";
+});
+}

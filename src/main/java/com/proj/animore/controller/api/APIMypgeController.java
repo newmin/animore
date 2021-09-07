@@ -5,16 +5,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proj.animore.dto.BoardReqDTO;
+import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.form.LoginMember;
+import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.BoardSVC;
+import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.MypageSVC;
 import com.proj.animore.svc.ReviewSVC;
 
@@ -30,6 +36,7 @@ public class APIMypgeController {
 	private final ReviewSVC reviewSVC;
 	private final BoardSVC boardSVC;
 	private final MypageSVC mypageSVC;
+	private final MemberSVC memberSVC;
 	
 	//내 리뷰 조회
 	@GetMapping("/review")
@@ -124,8 +131,8 @@ public class APIMypgeController {
 	
 	//회원탈퇴양식
 	@GetMapping("/mypageDel")
-	public Result mypageDel() {
-		
+	public Result mypageDel(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		Result result;
 		
 		StringBuffer html = new StringBuffer();
@@ -147,5 +154,81 @@ public class APIMypgeController {
 		
 		return result;
 	}
+	
+	//내정보 개안정보수정
+	@GetMapping("/mypageModify")
+	
+	public Result mypageModify(HttpServletRequest request,
+			@RequestBody ModifyForm modidyfyForm) { 
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		log.info("loginMember:{}",loginMember);
+		MemberDTO memberDTO2 = new MemberDTO();
+		BeanUtils.copyProperties(modidyfyForm, memberDTO2);
+		
+		String id = loginMember.getId();
+		memberSVC.modifyMember(id, memberDTO2);
+		MemberDTO memberDTO = memberSVC.findMemberById(id);
+		
+		Result result;
+		
+		
+		StringBuffer html = new StringBuffer();
+		
+		html.append("<div class=\"mypage_content_container\">");
+		
+		html.append("<h2 class=\"mypage_content_title\">즐겨 찾는 업체</h2>");
+		
+		html.append("<hr>");
+		
+		html.append("<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
+
+		
+		
+		html.append("<li><label for=\"id\">아이디</label></li>");
+		html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>");
+		
+		html.append("<li><label for=\"pw\">비밀번호</label></li>");
+		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+		
+		html.append("    <li>");
+		html.append("      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>");
+		html.append("      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>");
+		html.append("    </li>");
+		
+		
+		
+		html.append("    <li><label for=\"nickname\">별칭</label></li>");
+		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"/></li>");
+
+		
+		html.append("<li><label for=\"birth\">생년월일</label></li>");
+		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	");
+		
+
+		
+		
+		html.append("<li><label for=\"tel\">전화번호</label></li>");
+		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>");
+		
+		
+		html.append("<li>");
+		html.append("<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>");
+		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.getAddress()+" required></div>");
+
+		html.append("</li>");
+		html.append("<li><input type=\"submit\" value=\"회원수정\" id=\"modifyBtn\"></li>");
+		
+		html.append("</ul>");
+		html.append("</form >");
+		html.append("</div>");
+		
+		
+		result = new Result("00","OK",html);
+		
+		return result;
+	}
+	
+	
 
 }

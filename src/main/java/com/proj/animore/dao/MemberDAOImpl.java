@@ -86,7 +86,6 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append("update member ");
 		sql.append("set pw = ?, ");
 		sql.append("    name = ?, ");
-		sql.append("    gender = ?, ");
 		sql.append("    tel = ?, ");
 		sql.append("    email = ?, ");
 		sql.append("    address = ?, ");
@@ -97,7 +96,6 @@ public class MemberDAOImpl implements MemberDAO {
 		jdbcTemplate.update(sql.toString(),
 												memberDTO.getPw(),
 												memberDTO.getName(),
-												memberDTO.getGender(),
 												memberDTO.getTel(),
 												memberDTO.getEmail(),
 												memberDTO.getAddress(),

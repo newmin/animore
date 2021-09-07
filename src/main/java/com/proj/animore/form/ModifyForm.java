@@ -16,10 +16,8 @@ public class ModifyForm {
 	  private String name;
 	  private String nickname;
 	  private LocalDate birth;
-	  private String gender;
 	  //TODO
 	  private String tel;
 	  private String email;
 	  private String address;
-	  private String mtype;
 }

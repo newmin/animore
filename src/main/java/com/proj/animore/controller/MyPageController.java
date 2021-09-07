@@ -16,15 +16,21 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.proj.animore.dto.BusinessDTO;
+import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.FavoriteDTO;
 import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
+import com.proj.animore.form.ReviewForm;
+import com.proj.animore.svc.BusinessSVC;
 import com.proj.animore.svc.FavoriteSVC;
 import com.proj.animore.svc.MemberSVC;
 
@@ -39,6 +45,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
    private final FavoriteSVC favoriteSVC;
    private final MemberSVC memberSVC;
+   private final BusinessSVC businessSVC;
+   
    //즐겨찾기 목록
    @GetMapping("/mypageFavorites")
    public String mypage(HttpServletRequest request,
@@ -53,7 +61,7 @@ public class MyPageController {
        log.info(id);
 
        List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(id);
-
+       model.addAttribute("mtype",loginMember.getMtype());
        model.addAttribute("Favorite",favoritelist);
 
       return "mypage/mypageFavorites";
@@ -99,7 +107,7 @@ public class MyPageController {
       return "redirect:/";
    }
    //개인정보 수정양식
-   @GetMapping("/mypageModify")
+//   @GetMapping("/mypageModify")
 public String modifyMember(HttpServletRequest request,
       Model model) {
       log.info("회원양식 호출");
@@ -117,6 +125,7 @@ public String modifyMember(HttpServletRequest request,
       BeanUtils.copyProperties(memberDTO, modifyForm);
       
       model.addAttribute("modifyForm",modifyForm);
+      
       log.info(modifyForm.toString());
    
    
@@ -128,26 +137,64 @@ public String modifyMember(HttpServletRequest request,
    public String modifyMember(@Valid @ModelAttribute ModifyForm modifyForm,
          BindingResult bindingResult,
          HttpServletRequest request) {
+	   
          log.info("회원수정처리 호출됨");
          HttpSession session = request.getSession(false);
          LoginMember loginMember =
                (LoginMember)session.getAttribute("loginMember");
          log.info("회원 수정 처리:{}"+loginMember.toString());
+         
          //세션이 없으면 로그인 페이지로 이동
          if(loginMember == null) return "redirect:/login";
+         
          //비밀번호를 잘못 입력 했을경우
-         if(!memberSVC.isMemember(loginMember.getId(), modifyForm.getPw())) {
-            bindingResult.rejectValue("pw", "error.member.MyEditForm", "비밀번호가 잘못입력되었습니다.");
-         }
+//         if(!memberSVC.isMemember(loginMember.getId(), modifyForm.getPw())) {
+//            bindingResult.rejectValue("pw", "error.member.MyEditForm", "비밀번호가 잘못입력되었습니다.");
+//         }
          if(bindingResult.hasErrors()) {
             log.info("errors={}",bindingResult);
             return "mypage/modifyForm";
          }
          MemberDTO mdto = new MemberDTO();
+         
+         BeanUtils.copyProperties(modifyForm, mdto);
+         
          memberSVC.modifyMember(loginMember.getId(), mdto);
          log.info("=={},{}",loginMember.getId(), mdto);
 
          return "redirect:/mypage/mypageModify";
    }
+   
+   //복북상태
+   //내업체 정보 수정양식
+   @GetMapping("/mypageModify2")
+   public String modifyBusi( @RequestBody BusiModifyForm busiModifyForm ,HttpServletRequest request,
+		      Model model) {
+	   
+		      log.info("회원양식 호출");
+		      
+		      HttpSession session  = request.getSession(false);
+		      LoginMember loginMember = 
+		            (LoginMember)session.getAttribute("loginMember");
+		      
+		      if(loginMember == null)return "redirect:/login";
+		      
+		      //업체정보 가져오기
+		      
+		      BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
+		      businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
+		      
+		      BusiModifyForm busimodifyForm = new BusiModifyForm();
+		      
+		      BeanUtils.copyProperties(businessLoadDTO, busimodifyForm);
+		      
+		      model.addAttribute("busimodifyForm",busimodifyForm);
+		      
+		      log.info(busimodifyForm.toString());
+		   
+		   
+		   return "/mypage/mypageModify2";
+		}
+  
    
 }
