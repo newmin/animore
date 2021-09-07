@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.HtagBusiListReq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -138,4 +139,32 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
 	}
+	
+	//업체목록 조회
+	@Override
+	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr) {
+		StringBuffer sql = new StringBuffer();
+
+															sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL, r.bscore  ");
+															sql.append("from business b, bcategory c, (select bnum, round(avg(rscore),2) bscore ");
+															sql.append("                                from review ");
+															sql.append("                                group by bnum) r  ");
+															sql.append("where b.bnum=c.bnum  ");
+															sql.append("  and b.bnum=r.bnum(+)	  ");
+															sql.append("  and "+bcategory+" = 'Y'  ");
+		if(htblr.isNightcare())		sql.append("  and nightcare = 'Y' ");
+		if(htblr.isRareani())			sql.append("  and rareani = 'Y' ");
+		if(htblr.isVisitcare())		sql.append("  and visitcare = 'Y' ");
+		if(htblr.isHolidayopen())	sql.append("  and holidayopen = 'Y' ");	
+		if(htblr.isDental())			sql.append("  and dental = 'Y' ");
+
+		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
+					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
+		
+		log.info(list.toString());
+		
+		return list;
+	}
+	
+	
 }

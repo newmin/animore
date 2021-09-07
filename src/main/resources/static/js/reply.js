@@ -5,7 +5,7 @@
 	
 	// 댓글수정버튼 누르면 기존 div 숨기고 그 자리에 댓글 수정을 위한 div 생성해서 보이기
 	const modiTextbox_f = e => {
-		// TODO 이미 열린 댓글수정창 있는 상태로 다른 댓글수정 버튼을 누르면 버그남.
+
 		if(document.querySelector('div.boardForm__modiReplyTextarea')) {
 			document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 			document.querySelector('div.boardForm__modiReplyTextarea').remove();

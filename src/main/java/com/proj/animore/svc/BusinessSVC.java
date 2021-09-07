@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.HtagBusiListReq;
 
 public interface BusinessSVC {
 
@@ -28,4 +29,7 @@ public interface BusinessSVC {
 
 	//검색어로 목록
 	public List<BusinessLoadDTO> busiListBySearch(String text);
+	
+	//업체목록조회 (병원태그포함)
+	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr);
 }
