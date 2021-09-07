@@ -30,5 +30,7 @@ public class BusinessLoadDTO {
 	private String visitcare;
 	private String holidayopen;
 	private String dental;
+	
+	private String search; //검색어
 
 }

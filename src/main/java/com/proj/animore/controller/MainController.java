@@ -41,7 +41,7 @@ public class MainController {
 	public String list(@PathVariable String bcategory, HttpServletRequest request, Model model) {
 
 		model.addAttribute("businessLoadDTO", new BusinessLoadDTO());
-
+		//로그인회원은 즐겨찾기 상단고정한 목록 메소드 
 		HttpSession session = request.getSession(false);
 		if (session != null && session.getAttribute("loginMember") != null) {
 			LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
@@ -56,6 +56,19 @@ public class MainController {
 
 		return "map/busiList";
 	}
+	
+	//업체검색어 목록조회
+	@GetMapping("/")
+	public String listBySearch(@RequestParam String search,Model model) {
+		
+		model.addAttribute("businessLoadDTO", new BusinessLoadDTO());
+		
+//		List<BusinessLoadDTO> list = businessSVC.검색어조회메소드(search);
+//		model.addAttribute("busiList",list);
+		
+		return "map/busiList";
+	}
+	
 
 	// 업체조회(상세보기) + 리뷰조회
 	// @GetMapping("/{bcategory}/{bnum}")
