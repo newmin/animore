@@ -1,4 +1,4 @@
-package com.proj.animore.dto;
+package com.proj.animore.dto.board;
 
 import lombok.Data;
 

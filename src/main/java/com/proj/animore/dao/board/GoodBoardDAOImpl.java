@@ -1,4 +1,4 @@
-package com.proj.animore.dao;
+package com.proj.animore.dao.board;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.proj.animore.dto.GoodBoardDTO;
+import com.proj.animore.dto.board.GoodBoardDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

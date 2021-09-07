@@ -1,7 +1,7 @@
 package com.proj.animore.dao;
 
-import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.CouponDTO;
+import com.proj.animore.dto.board.BoardDTO;
 
 public interface CouponDAO {
 	

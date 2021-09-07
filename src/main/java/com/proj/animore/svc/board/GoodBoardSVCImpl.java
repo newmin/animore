@@ -1,11 +1,11 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.board;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proj.animore.dao.GoodBoardDAO;
-import com.proj.animore.dto.GoodBoardDTO;
+import com.proj.animore.dao.board.GoodBoardDAO;
+import com.proj.animore.dto.board.GoodBoardDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

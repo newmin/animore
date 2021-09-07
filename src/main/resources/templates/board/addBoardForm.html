@@ -13,7 +13,7 @@
 <body>
 <main class="main ">
 	<!-- TODO 링크에 id값 넣기 -->
-	<form action=""  th:method="post"  th:object="${boardForm}">
+	<form action=""  th:method="post"  th:object="${boardForm}" enctype="multipart/form-data">
 	<div class="addPost__container">
     <select name="bcategory"  class="addPost__selectbox">
       <option value="" th:field="*{bcategory}" selected>게시판명</option>
@@ -25,14 +25,14 @@
     <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
     <p th:errors="*{btitle}" th:errorclass="field-errmsg"></p>
     <div class="addPost__icons">
-      <label for="fileBtn" class="addpost__fileBtn">
+       <label for="files" class="addpost__fileBtn">
         <i class="far fa-image"></i>
-        <input type="file"  name="fileBtn" id="fileBtn" style="display: none;" multiple>
-      </label>
-      <label for="videoBtn" class="addpost__videoBtn">
+        <input type="file"  th:field="*{files}" hidden="hidden" multiple="multiple">
+       </label>
+      <!-- <label for="attachFile" class="addpost__videoBtn">
         <a><i class="fab fa-youtube"></i></a>
-        <input type="file"  name="videoBtn" id="videoBtn" style="display: none;" multiple>
-      </label>
+        <input type="file" th:field=*{files} hidden="hidden">
+      </label> -->
       <!-- <label for="urlBtn" class="addpost__urlBtn">
         <a><i class="fas fa-link"></i></a>
         <input type="url" name="urlBtn" id="urlBtn"style="display: none;" >

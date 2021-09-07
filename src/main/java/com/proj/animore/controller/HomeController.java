@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.proj.animore.dto.BoardReqDTO;
+import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BoardSVC;
+import com.proj.animore.svc.board.BoardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

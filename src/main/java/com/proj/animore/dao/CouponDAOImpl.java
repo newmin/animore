@@ -4,8 +4,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.proj.animore.dto.BoardDTO;
 import com.proj.animore.dto.CouponDTO;
+import com.proj.animore.dto.board.BoardDTO;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
