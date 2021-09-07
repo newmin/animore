@@ -98,9 +98,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public ReviewReq findReview(int rnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rscore, rcontent ");
-		sql.append("  from review ");
+		sql.append("select rscore, rcontent,rvcdate,rnum, m.nickname ");
+		sql.append("  from review r, member m ");
 		sql.append(" where rnum = ? ");
+		sql.append("   and r.id = m.id ");
 		
 		ReviewReq reviewReq = 	jdbcTemplate.queryForObject(sql.toString(),ReviewReq.class,rnum);
 		return reviewReq;
