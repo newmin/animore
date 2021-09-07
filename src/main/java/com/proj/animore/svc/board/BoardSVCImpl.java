@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class BoardSVCImpl implements BoardSVC {
 
 	private final BoardDAO boardDAO;
@@ -89,12 +90,14 @@ public class BoardSVCImpl implements BoardSVC {
 	//게시글삭제
 	@Override
 	public void deleteBoard(int bnum) {
-		boardDAO.deleteBoard(bnum);
 		//서버파일 시스템에 있는 업로드 파일삭제
-		fileStore.deleteFiles(boardUploadFileDAO.getStore_Fname(bnum));
 		log.info("store_fname:{}",boardUploadFileDAO.getStore_Fname(bnum));
+		fileStore.deleteFiles(boardUploadFileDAO.getStore_Fname(bnum));
+		
+		boardDAO.deleteBoard(bnum);
+
 		//업로드 파일 메타정보 삭제
-		boardUploadFileDAO.deleteFileByBnum(bnum);
+		//boardUploadFileDAO.deleteFileByBnum(bnum);
 		
 	}
 	//게시글전체목록(by bcategory)
