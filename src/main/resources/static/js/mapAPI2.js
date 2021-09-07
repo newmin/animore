@@ -65,6 +65,7 @@ function searchDetailAddrFromCoords(coords, callback) {
   geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
 
+let ccc = 0; 
 // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
 function displayCenterInfo(result, status) {
   if (status === kakao.maps.services.Status.OK) {
@@ -74,6 +75,7 @@ function displayCenterInfo(result, status) {
           // 행정동의 region_type 값은 'H' 이므로
           if (result[i].region_type === 'H') {
               infoDiv.innerHTML = result[i].address_name;
+         			document.querySelector('.position__locate').textContent = `내위치 : ${result[i].address_name}`;
               break;
           }
       }
