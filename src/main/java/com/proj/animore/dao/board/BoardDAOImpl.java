@@ -171,7 +171,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("  from board b, member m ");
 		sql.append("  where b.id = m.id ");
 		sql.append("   and bcategory=? ");
-		sql.append(" order by bnum ");
+		sql.append(" order by bnum desc ");
 		List<BoardReqDTO> list = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardReqDTO.class),
 										bcategory);
