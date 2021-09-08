@@ -54,9 +54,12 @@ create table board(
   bgood number(5) DEFAULT 0 not null,
   breply number(5) DEFAULT 0 not null,
   bcontent clob not null,
+  pbnum number(10),               --부모게시글번호
   bgroup number(5),
-  bstatus char(1) default 'N',
-  bndate timestamp ,
+  bstep number(3),                
+  bindent number(3),
+  bstatus char(1) default 'N',    --공지여부
+  bndate timestamp ,              --공지업로드시간
   constraint BOARD_BNUM_PK primary key(bnum),
   constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
