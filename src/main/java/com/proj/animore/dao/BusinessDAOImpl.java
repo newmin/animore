@@ -116,10 +116,21 @@ public class BusinessDAOImpl implements BusinessDAO {
 	
 		return list;
 	}
-	
+	//검색어로 업체조회
 	@Override
 	public List<BusinessLoadDTO> busiListBySearch(String text) {
 		StringBuffer sql = new StringBuffer();
+		sql.append("select b.BNUM,b.BBNUM,b.BNAME,b.BADDRESS,b.BTEL,b.NIGHTCARE,b.RAREANI,b.VISITCARE,b.HOLIDAYOPEN,b.DENTAL, r.bscore  ");
+		sql.append("from business b, (select bnum, round(avg(rscore),2) bscore ");
+		sql.append("                                from review ");
+		sql.append("                                group by bnum) r  ");
+		sql.append(" where b.bnum=r.bnum(+)	  ");
+		sql.append("   and BNAME = ? ");
+		sql.append("    or BADDRESS = ? ");
+
+		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
+				   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),text,text);
+
 		return null;
 	}
 	

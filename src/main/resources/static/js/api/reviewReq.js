@@ -86,19 +86,15 @@ const modiFrmBtns_f = e=> {
 			.then(res=>{
 					if(res.rtcd == "00"){
 							//성공로직처리
-							alert('되니?')
-							// const data = res.data;
-							//리뷰목록갱신
-							// reviewModiForm(rnum);
-							alert('됐니?')
+							const data = res.data;
+							//리뷰폼띄우기
+							reviewModiForm(data);
 					}else{
 							throw new Error(res.rtmsg);
-							alert('else');
 					}
 			})
 			.catch(err=>{
 				//오류로직 처리
-				alert('catch');
 					console.log(err.message);
 					alert(err.message);
 			})
@@ -108,11 +104,8 @@ const modiFrmBtns_f = e=> {
 //리뷰수정폼출력 //생성된 디브의 inner에 삽입
 function reviewModiForm(review) {
 
-
-
-
 	let html ='';
-	html += `<div class="rscore">`;
+	html += `<div class="rscore" ${review.rscore}>`;
 	html += `	<input type="radio" name="rscore" id="point1" value="1" title="1점" hidden>`;
 	html += `	<label for="point1"><i class="fas fa-star reviewForm__score one reviewForm__checked"></i></label>`;
 	html += `	<input type="radio" name="rscore" id="point2" value="2" title="2점" hidden>`;
@@ -126,8 +119,8 @@ function reviewModiForm(review) {
 	html += `</div>`;
 	html += `<div class="review__contents">`;
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
-	html += `	<textarea rows="10" class="review__textarea" name="rcontent">${review}</textarea>`;
-	html += `	<button data-rnum="${review}" class="review__modi" type="button">수정</button>`;
+	html += `	<textarea rows="10" class="review__textarea" name="rcontent">${review.rcontent}</textarea>`;
+	html += `	<button data-rnum="${review.rnum}" class="review__modi" type="button">수정</button>`;
 	html += `	<button class="review__modiCancle" type="button">취소</button>`;
 	html += `</div>`;
 
@@ -135,8 +128,8 @@ function reviewModiForm(review) {
 
 	const modiBtn = document.querySelector('.review__modi');		//수정처리
 	const cancleBtn = document.querySelector('.review__modiCancle');		//수정취소
-	modiBtn.addEventListener('click',modiBtn_f);
-	cancleBtn.addEventListener('click',document.querySelector('.review__modiForm').remove());
+	modiBtn.addEventListener('click', modiBtn_f);
+	cancleBtn.addEventListener('click',e=>{ document.querySelector('.review__modiForm').remove()});
 }
 
 //리뷰수정처리

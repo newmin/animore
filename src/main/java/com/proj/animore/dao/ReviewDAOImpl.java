@@ -100,10 +100,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select rscore, rcontent,rvcdate,rnum, m.nickname ");
 		sql.append("  from review r, member m ");
-		sql.append(" where rnum = ? ");
+		sql.append(" where rnum = ?	 ");
 		sql.append("   and r.id = m.id ");
 		
-		ReviewReq reviewReq = 	jdbcTemplate.queryForObject(sql.toString(),ReviewReq.class,rnum);
+		ReviewReq reviewReq = 	jdbcTemplate.queryForObject(sql.toString(),new BeanPropertyRowMapper<>(ReviewReq.class),rnum);
 		return reviewReq;
 	}
 	
