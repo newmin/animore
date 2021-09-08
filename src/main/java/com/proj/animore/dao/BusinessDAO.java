@@ -28,7 +28,7 @@ public interface BusinessDAO {
 	public List<BusinessLoadDTO> busiListForMember(String bcategory, String id);
 
 	//검색어로 목록
-	public List<BusinessLoadDTO> busiListBySearch(String text);
+	public List<BusinessLoadDTO> busiListBySearch(String search);
 
 	//업체목록조회 (병원태그포함)
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr);

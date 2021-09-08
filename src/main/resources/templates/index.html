@@ -18,10 +18,10 @@
   <button><a href="#" th:href="@{/logout}">세션제거하기</a></button>
 
       <!-- 검색창 -->
-  <div class="search">
-    <input class="search__input" type="text" >
-    <span class="search__icon"><i class="fas fa-search"></i></span>
-  </div>
+  <form class="search" th:action="@{|/search?search=${search}|}">
+    <input class="search__input" name="search" type="text">
+    <button class="search__icon"><i class="fas fa-search"></i></button>
+  </form>
 
     <!-- 업체 카테고리 -->
     <section class="busi-category">

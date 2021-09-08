@@ -58,13 +58,13 @@ public class MainController {
 	}
 	
 	//업체검색어 목록조회
-	@GetMapping("/")
+	@GetMapping("/search")
 	public String listBySearch(@RequestParam String search,Model model) {
 		
 		model.addAttribute("businessLoadDTO", new BusinessLoadDTO());
 		
-//		List<BusinessLoadDTO> list = businessSVC.검색어조회메소드(search);
-//		model.addAttribute("busiList",list);
+		List<BusinessLoadDTO> list = businessSVC.busiListBySearch(search);
+		model.addAttribute("busiList",list);
 		
 		return "map/busiList";
 	}
