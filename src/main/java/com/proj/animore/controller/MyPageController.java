@@ -133,7 +133,7 @@ public String modifyMember(HttpServletRequest request,
 }
    
    //개인정보 수정처리
-   @PatchMapping("/mypageModify")
+//   @PatchMapping("/mypageModify")
    public String modifyMember(@Valid @ModelAttribute ModifyForm modifyForm,
          BindingResult bindingResult,
          HttpServletRequest request) {
@@ -165,35 +165,27 @@ public String modifyMember(HttpServletRequest request,
          return "redirect:/mypage/mypageModify";
    }
    
-   //복북상태
-   //내업체 정보 수정양식
-   @GetMapping("/mypageModify2")
-   public String modifyBusi( @RequestBody BusiModifyForm busiModifyForm ,HttpServletRequest request,
+   //내업체 목록
+   //@GetMapping("/mybusilist")
+   public String modifyBusi(HttpServletRequest request,
 		      Model model) {
 	   
-		      log.info("회원양식 호출");
-		      
-		      HttpSession session  = request.getSession(false);
-		      LoginMember loginMember = 
-		            (LoginMember)session.getAttribute("loginMember");
-		      
-		      if(loginMember == null)return "redirect:/login";
-		      
-		      //업체정보 가져오기
-		      
-		      BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
-		      businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
-		      
-		      BusiModifyForm busimodifyForm = new BusiModifyForm();
-		      
-		      BeanUtils.copyProperties(businessLoadDTO, busimodifyForm);
-		      
-		      model.addAttribute("busimodifyForm",busimodifyForm);
-		      
-		      log.info(busimodifyForm.toString());
-		   
-		   
-		   return "/mypage/mypageModify2";
+	      HttpSession session = request.getSession(false);
+	      if(session == null || session.getAttribute("loginMember") == null){
+	        return "redirect:/login";
+	      }
+	       LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	       
+	       String id = loginMember.getId();
+	       
+	       log.info(id);
+
+	       List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(id);
+	       
+	 
+	       model.addAttribute("mybusiList",mybusiList);
+
+	      return "mypage/mybusilist";
 		}
   
    

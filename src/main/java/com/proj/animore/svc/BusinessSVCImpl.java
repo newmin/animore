@@ -49,5 +49,10 @@ public class BusinessSVCImpl implements BusinessSVC {
 	public List<BusinessLoadDTO> busiListBySearch(String text) {
 		return businessDAO.busiListBySearch(text);
 	}
+	@Override
+	public List<BusinessLoadDTO> mybusiList(String id){
+		return  businessDAO.mybusiList(id);
+	}
+
 
 }

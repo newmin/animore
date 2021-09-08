@@ -28,4 +28,9 @@ public interface BusinessSVC {
 
 	//검색어로 목록
 	public List<BusinessLoadDTO> busiListBySearch(String text);
+	
+	//내업체 목록 
+	public List<BusinessLoadDTO> mybusiList(String id);
+
+
 }

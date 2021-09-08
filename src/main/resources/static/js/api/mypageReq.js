@@ -24,8 +24,16 @@
 		//오류로직 처리
 		console.log (err.message);
 	});
-
 });
+
+
+
+
+
+
+
+
+
  
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
@@ -163,6 +171,38 @@ const $mypageReplyMenu = document.querySelector('a[href="/mypage/mypageReply"]')
 });
 
 
+
+//개인정보수정 화면
+	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
+	$mypageModify.addEventListener('click',e=>{
+		e.preventDefault();
+		
+		const URL = `/mypage/mypageModify`;
+		
+		request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+			
+				//성공로직처리
+				console.log(res);
+				const data = res.data;
+				document.querySelector('.mypage_content_container').innerHTML = data;
+				
+				const $modifyBtn = document.querySelector('#modifyBtn');
+				$modifyBtn.addEventListener("click", modifyBtn); 
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			console.log (err.message);
+		});
+});
+
+
 //개인정보 수정처리
 
 const modifyBtn = e =>{
@@ -170,7 +210,7 @@ const modifyBtn = e =>{
 	
 	const $id = id.value;
 	const $pw = pw.value;
-	const $name = name.value;
+	//const $namee = namee.value;
 	const $tel = tel.value;
 	const $nickname = nickname.value;
 	const $address = address.value;
@@ -179,13 +219,13 @@ const modifyBtn = e =>{
 	
 	
 	
-	const URL = `mypage/mypageModify`;
+	const URL = `/mypage/mypageModify`;
 	const data = {
 								 "id":$id,
 								 "pw":$pw,
-								 "name":$name,
+								 //"name":$namee,
 								 "tel":$tel,
-								 email":$email,
+								 "email":$email,
 								 "nickname":$nickname,
 								 "address": $address,
 								 "birth" : $birth
@@ -213,70 +253,6 @@ const modifyBtn = e =>{
 		$modifyBtn.addEventListener("click", modifyBtn); 
 };
 
-
-//개인정보수정
-	
-	
-	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
-	$mypageModify.addEventListener('click',e=>{
-		e.preventDefault();
-		
-		const URL = `/mypage/mypageModify`;
-		
-		request.get(URL)
-		.then(res=>res.json())
-		.then(res=>{
-			if(res.rtcd == '00'){
-				//성공로직처리
-				console.log(res);
-				const data = res.data;
-				document.querySelector('.mypage_content_container').innerHTML = data;
-				
-				const $modifyBtn = document.querySelector('#modifyBtn');
-				$modifyBtn.addEventListener("click", modifyBtn); 
-				
-			}else{
-				throw new Error(res.rtmsg);
-			}
-		})
-		.catch(err=>{
-			//오류로직 처리
-			console.log (err.message);
-		});
-	
-		
-
-});
-
-
-//회원탈퇴
-const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
-	$mypageDelMenu.addEventListener('click',e=>{
-	e.preventDefault();
-	
-	const URL = `/mypage/mypageDel`;
-	
-	request.get(URL)
-	.then(res=>res.json())
-	.then(res=>{
-		if(res.rtcd == '00'){
-			//성공로직처리
-			console.log(res);
-			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
-		}else{
-			throw new Error(res.rtmsg);
-		}
-	})
-	.catch(err=>{
-		//오류로직 처리
-		console.log (err.message);
-	});
-
-});
-
-
-
 function refreshModi(data){
 
 
@@ -298,6 +274,9 @@ function refreshModi(data){
 		
 		html+="<li><label for=\"pw\">비밀번호</label></li>";
 		html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
+		
+		
+		
 		
 		html+="    <li>";
 		html+="      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>";
@@ -331,4 +310,86 @@ function refreshModi(data){
 		html+="</form >";
 		html+="</div>";
 });
+
+//내업체 목록
+	const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
+	$mybusilist.addEventListener('click',e=>{
+		e.preventDefault();
+		
+		const URL = `/mypage/mybusilist`;
+		
+		request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+			
+				//성공로직처리
+				console.log(res);
+				const data = res.data;
+				document.querySelector('.mypage_content_container').innerHTML = data;
+				
+				//const $modifyBtn = document.querySelector('#modifyBtn');
+				//$modifyBtn.addEventListener("click", modifyBtn); 
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			console.log (err.message);
+		});
+});
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//회원탈퇴
+const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
+	$mypageDelMenu.addEventListener('click',e=>{
+	e.preventDefault();
+	
+	const URL = `/mypage/mypageDel`;
+	
+	request.get(URL)
+	.then(res=>res.json())
+	.then(res=>{
+		if(res.rtcd == '00'){
+			//성공로직처리
+			console.log(res);
+			const data = res.data;
+			document.querySelector('.mypage_content_container').innerHTML = data;
+		}else{
+			throw new Error(res.rtmsg);
+		}
+	})
+	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+
+});
+
+
+
