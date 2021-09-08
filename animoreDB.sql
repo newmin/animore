@@ -89,7 +89,7 @@ create table rboard(
   rgroup number(5) default 0 not null,
   rstep number(5) default 0 not null,
   rindent number(5) default 0 not null,
-  prid number(10),
+  prnum number(10),
   status char (1) default 'A' not null, --활성(A), 삭제(D)
   constraint RBOARD_RNUM_PK primary key(rnum),
   constraint rboard_bnum_FK foreign key(bnum) 

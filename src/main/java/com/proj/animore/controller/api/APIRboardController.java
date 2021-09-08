@@ -21,8 +21,8 @@ import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
+import com.proj.animore.form.RboardReReplyReq;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -48,12 +48,7 @@ public class APIRboardController {
 			@PathVariable String id,
 			@Valid @RequestBody RboardAddReq rar,
 			HttpServletRequest request) {
-		// rnum : 시퀀스
-		// bnum : 게시글번호
-		// rgroup : 댓글그룹
-		// 댓글단계 : 부모댓글(댓글그룹)의 댓글단계 +1 해줘야함
-		// Content : 댓글내용
-
+		
 		//우선 할것 : 요청받기, 데이터 옮겨담기, 저장하기
 		//나중에 덧붙일것 : 결과 리턴받아서 보여주기, 무결성검사, 등등
 		//요청의 세션 받기
@@ -81,6 +76,34 @@ public class APIRboardController {
   	return result;
 	}
 
+//대댓글작성처리
+	@PostMapping("/{bnum}/{rnum}")
+	public Result reReplyRegister(
+			@PathVariable("bnum") int bnum,
+			@PathVariable("rnum") int rnum,
+			@Valid @RequestBody RboardReReplyReq rrrr,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		
+		RboardDTO rboardDTO = new RboardDTO();
+		BeanUtils.copyProperties(rrrr, rboardDTO);
+		
+		RboardListReqDTO prboardDTO = rboardSVC.findByRnum(bnum, rnum);
+		rboardDTO.setPrnum(prboardDTO.getRnum());
+		rboardDTO.setRgroup(prboardDTO.getRgroup());
+		rboardDTO.setRstep(prboardDTO.getRstep());
+		rboardDTO.setRindent(prboardDTO.getRindent());
+		rboardDTO.setId(loginMember.getId());
+		
+		rboardSVC.addReReply(rboardDTO);
+		
+		return new Result();
+	}
+	
+	
+	
 //댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
 //
 	@GetMapping("/{bnum}/{rnum}")
