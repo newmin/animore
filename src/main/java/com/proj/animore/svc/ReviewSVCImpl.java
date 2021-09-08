@@ -45,5 +45,15 @@ public class ReviewSVCImpl implements ReviewSVC {
 	public List<ReviewReq> removeReview(int bnum, int rnum) {
 		return reviewDAO.removeReview(bnum, rnum);
 	}
+	
+	@Override
+	public ReviewReq findRvReply(int rnum) {
+		return reviewDAO.findRvReply(rnum);
+	}
+	
+	@Override
+	public List<ReviewReq> addRvReply(int bnum, int rnum, String rvReply) {
+		return reviewDAO.addRvReply(bnum, rnum, rvReply);
+	}
 
 }

@@ -144,5 +144,54 @@ public class APIReviewController {
 		return result;
 	}
 	
+	//사장님 리뷰리댓 등록/수정폼
+	@GetMapping("/rvreply")
+	public Result rvReplyForm(@RequestParam int rnum, 
+													 @RequestParam String bid,
+													 HttpServletRequest request) {
+		Result result;
+		//로그인 확인
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("loginMember")==null) {
+			result = new Result("01","로그인이 만료되었습니다.",null);
+			return result;
+		}
+		//아이디 일치 여부
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(!loginMember.getId().equals(bid)) {
+			result = new Result("02","해당 업체의 사업자 아이디와 일치하지 않습니다.",null);
+		}
+		
+		ReviewReq reviewReq = reviewSVC.findRvReply(rnum);
+		result = new Result("00","성공",reviewReq);
+		return result;
+	}
+	
+	//사장님 리뷰리댓 등록
+	@PatchMapping("/rvreply")
+	public Result addRvReply(@RequestParam String bid,
+														@RequestBody ReviewReq reviewReq,
+												  	HttpServletRequest request) {
+		Result result;
+		//로그인 확인
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("loginMember")==null) {
+			result = new Result("01","로그인이 만료되었습니다.",null);
+			return result;
+		}
+		//아이디 일치 여부
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(!loginMember.getId().equals(bid)) {
+			result = new Result("02","해당 업체의 사업자 아이디와 일치하지 않습니다.",null);
+		}
+		
+		int bnum = reviewReq.getBnum();
+		int rnum = reviewReq.getBnum();
+		String rvReply = reviewReq.getRvReply();
+		
+		List<ReviewReq> list = reviewSVC.addRvReply(bnum,rnum,rvReply);
+		result = new Result("00","성공",list);
+		return result;
+	}
 	
 }

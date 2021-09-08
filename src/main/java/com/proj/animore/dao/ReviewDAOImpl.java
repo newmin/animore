@@ -147,5 +147,28 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		return allReview(bnum);
 	}
+	
+  //사장님 이전 리뷰리댓 조회
+	@Override
+	public ReviewReq findRvReply(int rnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select rvReply ");
+		sql.append("  from review ");
+		sql.append(" where rnum = ?	");
+		ReviewReq reviewReq = jdbcTemplate.queryForObject(sql.toString(),new BeanPropertyRowMapper<>(ReviewReq.class),rnum);
+		return reviewReq;
+	}
+	
+  //사장님 리뷰리댓등록
+	@Override
+	public List<ReviewReq> addRvReply(int bnum, int rnum, String rvReply) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update review ");
+		sql.append("   set rvReply =? ");
+		sql.append(" where rnum =? ");
+		jdbcTemplate.update(sql.toString(),rvReply,rnum);
+		
+		return allReview(bnum);
+	}
 
 }

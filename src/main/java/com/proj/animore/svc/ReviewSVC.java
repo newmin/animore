@@ -19,4 +19,8 @@ public interface ReviewSVC {
     List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO);
     //리뷰삭제
     List<ReviewReq> removeReview(int bnum, int rnum);
+    //사장님 이전 리뷰리댓 조회
+    ReviewReq findRvReply(int rnum);
+    //사장님 리뷰리댓등록
+    List<ReviewReq> addRvReply(int bnum, int rnum, String rvReply);
 }
