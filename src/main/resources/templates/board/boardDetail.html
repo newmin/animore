@@ -65,10 +65,10 @@
         <div class="boardForm__files">
 			<label for="file" class="file__title">첨부파일></label>
 			<div >
-			<p th:each="file : *{files}">
+			<span th:each="file : *{files}">
 			<a class="file__content" th:href="@{|/attach/${file.store_fname}/${file.upload_fname}}|"
-				th:text="${file.upload_fname}"></a>
-			</p>
+				th:text="|/${file.upload_fname}|"></a>
+			</span>
 			</div>
 		</div>
        <div class="boardForm__likeContainer">
