@@ -82,16 +82,19 @@
 					<div><p th:text="|리뷰수 : ${review.size}|"></p></div>
 					<!-- 로그인시에만 리뷰 출력 -->
 		      <section class="review" th:if="${session.loginMember != null}">
-		        <div class="review__row" th:each="review :${review}" th:data-rnum="${review.rnum}">
-							<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진"></div>
+		        <div class="review__row" th:each="review :${review}" th:object="${review}" th:data-rnum="${review.rnum}">
+							<div class="review__column">
+								<img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진">
+								<span class="review__nickname" th:text="*{nickname}">닉네임</span>
+							</div>
 							<div class="review__column">
 								<div>
-									<span class="review__nickname" th:text="${review.nickname}">닉네임</span>
-									<span class="review__date" th:text="|작성일자 : ${review.rvcdate}|">작성일자</span>
+									<span class="review__date" th:text="|작성일자 : *{rvcdate}|">작성일자</span>
+									<span class="review__isUpdate" th:if="${review.rvudate!= null}" th:text="수정됨">수정됨</span>
 								</div>
 
 								<div class="review__main-text">
-									<th:block th:switch="${review.rscore}">
+									<th:block th:switch="*{rscore}">
 										<div class="review__star-score" th:case="1">
 											<i class="fas fa-star"></i>
 											<i class="far fa-star"></i>
@@ -128,12 +131,12 @@
 										<i class="fas fa-star"></i>
 									</div>
 								</th:block>
-								<p class="review__content" th:text="${review.rcontent}">리뷰내용</p>
+								<p class="review__content" th:text="*{rcontent}">리뷰내용</p>
 								<div th:if="${session.loginMember.id.equals(review.id)}">
 									<p class="review__userBtns">
-										<span th:data-rnum="${review.rnum}" th:data-id="${review.id}" class="review__userBtn review__modi-frm">수정</span>
+										<span th:data-rnum="*{rnum}" th:data-id="*{id}" class="review__userBtn review__modi-frm">수정</span>
 										<span>|</span>
-										<span th:data-rnum="${review.rnum}" th:data-id="${review.id}" class="review__userBtn review__del">삭제</span>
+										<span th:data-rnum="*{rnum}" th:data-id="*{id}" class="review__userBtn review__del">삭제</span>
 									</p>
 								</div>
 								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글~ 답글느낌?</span></p>

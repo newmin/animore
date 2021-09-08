@@ -325,11 +325,16 @@ function refreshReview(data){
 	html += `<section class="review">`;
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
-		html += `	<div class="review__column"><img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진"></div>`;
+		html += `	<div class="review__column">`;
+		html += ` 	<img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진">`;
+		html += `		<span class="review__nickname">${review.nickname}</span>`;
+		html += ` </div>`;
 		html += `	<div class="review__column">`;
 		html += `		<div>`
-		html += `			<span class="review__nickname">${review.nickname}</span>`;
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
+		if(review.rvudate) {
+			html += `<span class="review__isUpdate">수정됨</span>`;
+		}
 		html += `		</div>`
 		html += `		<div class="review__main-text">`
 		switch(review.rscore){

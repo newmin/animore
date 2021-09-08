@@ -95,13 +95,26 @@
 .review__column:first-child{
   width: 80px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding-top: 10px;
 }
 .review__column:nth-child(2){
   width: 570px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.review__isUpdate,
+.review__userBtns{
+  color: var(--primary);
+  font-weight: 400;
+}
+.review__userBtn{
+  cursor: pointer;
 }
 
 .review__profile{

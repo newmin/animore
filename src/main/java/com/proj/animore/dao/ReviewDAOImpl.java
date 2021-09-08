@@ -54,7 +54,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname ");
+		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname,rvudate ");
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");

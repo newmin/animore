@@ -209,7 +209,7 @@ create table review(
   rcontent clob not null,
   id varchar2(40) not null,
   rvcdate timestamp DEFAULT systimestamp not null,
-  rvudate timestamp DEFAULT systimestamp,
+  rvudate timestamp,
   constraint REVIEW_RNUM_PK primary key(rnum),
   constraint review_bnum_FK foreign key(bnum) 
                                 references business(bnum)
