@@ -334,14 +334,14 @@ insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,
 insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,4,'좋아좋아','normal@zxc.com');
 insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,5,'별루별루','user@test.com');
 -- 게시글
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','normal@zxc.com','필요없어',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','normal@zxc.com','제시요',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'F','애니모어 힘내요','normal@zxc.com','ㅈㄱㄴ',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'P','세계관 최강 귀요미들','normal@zxc.com','이거 보여주려고 어그로 끌었다',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'Q','요즘 애니모어에 벽이 느껴지지 않나요?','user@test.com','<완벽>이라는 이름의 벽이요',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'M','중고 팔아여','user@test.com','새거처럼 깨끗해여',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'F','요즘 털빠짐이 심하네요..','user@test.com','제 머리에서요ㅠㅠ',BOARD_BNUM_SEQ.currval);
-insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup) values(BOARD_BNUM_SEQ.nextval,'P','인형에 진심인 우리애들','user@test.com','이미 인형 그 자체',BOARD_BNUM_SEQ.currval);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','normal@zxc.com','필요없어',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','normal@zxc.com','제시요',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'F','애니모어 힘내요','normal@zxc.com','ㅈㄱㄴ',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'P','세계관 최강 귀요미들','normal@zxc.com','이거 보여주려고 어그로 끌었다',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'Q','요즘 애니모어에 벽이 느껴지지 않나요?','user@test.com','<완벽>이라는 이름의 벽이요',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'M','중고 팔아여','user@test.com','새거처럼 깨끗해여',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'F','요즘 털빠짐이 심하네요..','user@test.com','제 머리에서요ㅠㅠ',BOARD_BNUM_SEQ.currval,0,0);
+insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'P','인형에 진심인 우리애들','user@test.com','이미 인형 그 자체',BOARD_BNUM_SEQ.currval,0,0);
 -- 댓글
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1,0);
 insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1,0);
