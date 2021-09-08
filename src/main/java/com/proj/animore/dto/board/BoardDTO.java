@@ -20,7 +20,10 @@ public class BoardDTO {
 	private int bgood;
 	private int breply;
 	private String bcontent;
+	private int pbnum;
 	private int bgroup;
+	private int bstep;
+	private int bindent;
   private LocalDateTime bcdate;
   private LocalDateTime budate;
 

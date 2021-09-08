@@ -31,7 +31,7 @@ public class BoardSVCImpl implements BoardSVC {
 	public BoardReqDTO addBoard(String id,BoardDTO boardDTO) {
 		//게시글등록
 		BoardReqDTO savedBoardDTO = boardDAO.addBoard(id,boardDTO);
-				
+		//첨부파일 메타정보 저장
 		boardUploadFileDAO.addFiles(
 				convert(savedBoardDTO.getBnum(),boardDTO.getFiles()));
 				
@@ -43,6 +43,16 @@ public class BoardSVCImpl implements BoardSVC {
 		}
 		
 		return files;
+	}
+	
+	//답글작성
+	@Override
+	public int reply(String id,BoardDTO boardDTO) {
+		int bnum = boardDAO.reply(id,boardDTO);
+		//첨부파일 메타정보 저장
+				boardUploadFileDAO.addFiles(
+						convert(bnum,boardDTO.getFiles()));
+				return bnum;
 	}
 	
 	//게시글조회

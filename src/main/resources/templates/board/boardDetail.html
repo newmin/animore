@@ -108,9 +108,9 @@
 
         </form>
         <div class="boardForm__btns boardForm__underBtns">
-            <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
-            <button class="boardForm__replyReBtn" th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}">답글</button>
-            <button class="boardForm__addBtn">글쓰기</button>
+            <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+            <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
+            <button type="button" class="boardForm__addBtn">글쓰기</button>
         </div>
         </div>
     </main>

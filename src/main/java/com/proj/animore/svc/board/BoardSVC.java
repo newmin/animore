@@ -11,6 +11,9 @@ public interface BoardSVC {
 	//게시글 등록
 	BoardReqDTO addBoard(String id, BoardDTO boardDTO);
 	
+	//답글작성
+	int reply(String id,BoardDTO boardDTO);
+	
 	//게시글 조회(by bnum)
 	BoardReqDTO findBoardByBnum(Integer bnum);
 	

@@ -21,7 +21,10 @@ public class BoardReqDTO {
 	private int bgood;
 	private int breply;
 	private String bcontent;
+	private int pbnum;
 	private int bgroup;
+	private int bstep;
+	private int bindent;
 	private String bstatus;
 	private LocalDate bndate;
 	private LocalDate bcdate;

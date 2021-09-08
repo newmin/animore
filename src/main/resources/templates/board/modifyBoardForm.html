@@ -25,8 +25,8 @@
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
       <div class="addPost__icons">
         <span class="filetype">
-                  <span class="file-text" th:text="*{files.get(0).getUpload_fname()}"></span>
-        <label for="files" class="file-btn">찾아보기</label>
+           <span class="file-text" th:text="*{files.get(0).getUpload_fname()}"></span>
+        	<label for="files" class="file-btn">찾아보기</label>
         <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
         </span>
       </div>

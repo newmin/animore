@@ -30,10 +30,11 @@ import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
 import com.proj.animore.dto.board.MetaOfUploadFile;
 import com.proj.animore.dto.board.RboardListReqDTO;
-import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
+import com.proj.animore.form.board.BoardForm;
+import com.proj.animore.form.board.ReplyForm;
 import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
@@ -182,6 +183,70 @@ public class BoardController {
 		}
 		return list;
 	}
+	
+	//답글양식출력
+	@GetMapping("/reply/{bnum}")
+	public String replyForm(@PathVariable int bnum,
+							Model model,
+							HttpServletRequest request) {
+		ReplyForm replyForm = new ReplyForm();
+		
+//		//세션에서 회원정보 가져오기
+//		HttpSession session = request.getSession(false);
+//		if(session != null && session.getAttribute("loginMember") != null) {
+//			LoginMember loginMember =
+//						(LoginMember)session.getAttribute("loginMember");
+//			
+//			replyForm.setId(loginMember.getId());
+//		}
+		BoardReqDTO pBoardDTO = boardSVC.findBoardByBnum(bnum);
+		
+		replyForm.setPbnum(pBoardDTO.getBnum());
+		replyForm.setBcategory(pBoardDTO.getBcategory());
+		replyForm.setBtitle("답글 : "+pBoardDTO.getBtitle());
+		
+		model.addAttribute("replyForm",replyForm);
+		
+		return "board/replyForm";
+	}
+	//답글작성처리
+	@PostMapping("/reply/{bnum}")
+	public String reply(@PathVariable("bnum") int pbnum,
+						@Valid @ModelAttribute ReplyForm replyForm,
+						BindingResult bindingResult,
+						RedirectAttributes redirectAttributes,
+						HttpServletRequest request) throws IllegalStateException, IOException {
+		
+		HttpSession session = request.getSession(false);
+		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
+		
+		if(bindingResult.hasErrors()) {
+			return "board/replyForm";
+		}
+		BoardDTO boardDTO = new BoardDTO();
+		BeanUtils.copyProperties(replyForm, boardDTO);
+		
+		BoardReqDTO pBoardDTO = boardSVC.findBoardByBnum(pbnum);
+		boardDTO.setPbnum(pBoardDTO.getBnum());
+		boardDTO.setBgroup(pBoardDTO.getBgroup());
+		boardDTO.setBstep(pBoardDTO.getBstep());
+		boardDTO.setBindent(pBoardDTO.getBindent());
+		
+		//첨부파일 메타정보 추출
+		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(replyForm.getFiles());
+		//UploadFileDTO 변환	
+		boardDTO.setFiles(convert(storedFiles));
+		
+		int rbnum = boardSVC.reply(loginMemberId,boardDTO);
+		
+		redirectAttributes.addAttribute("bnum",rbnum);
+		
+		return "redirect:/board/post/{bnum}";
+		
+	}
+	
 	
 	//게시글수정양식출력
 	@GetMapping("/modify/{bnum}")

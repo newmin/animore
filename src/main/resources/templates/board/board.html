@@ -31,7 +31,7 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__title">제목</th>
+          <th class="board__cell board__titles">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
@@ -45,7 +45,13 @@
         </tr>
         <tr th:each="boardForm :${boardForm}">
           <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
+          <td class="board__cell board__title" >
+           <th:block th:if="${boardForm.bindent} > 0">
+            <span th:each="cnt :${#numbers.sequence(1,boardForm.bindent)}">&nbsp;&nbsp;</span>
+            <i class="fas fa-arrow-right"></i>
+          </th:block>
+          <a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a>
+          </td>
           <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
           <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
@@ -61,7 +67,7 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__title">제목</th>
+          <th class="board__cell board__titles">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>
@@ -92,7 +98,7 @@
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__title">제목</th>
+          <th class="board__cell board__titles">제목</th>
           <th class="board__cell board__writer">작성자</th>
           <th class="board__cell board__hits">조회</th>
           <th class="board__cell board__hearthits">좋아요</th>

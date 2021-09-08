@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.MypageReplyRes;
-import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.ReviewForm;
+import com.proj.animore.form.board.BoardForm;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,9 +1,16 @@
 package com.proj.animore.dao.board;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.board.BoardDTO;
@@ -23,8 +30,8 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public BoardReqDTO addBoard(String id,BoardDTO boardDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" insert into board(bnum,bcategory,id,btitle,bcontent) ");
-		sql.append("   values(board_bnum_seq.nextval,?,?,?,?) ");
+		sql.append(" insert into board(bnum,bcategory,id,btitle,bcontent,bgroup,bstep,bindent) ");
+		sql.append("   values(board_bnum_seq.nextval,?,?,?,?,board_bnum_seq.currval,0,0) ");
 		jt.update(sql.toString(),
 					boardDTO.getBcategory(),
 					id,
@@ -40,11 +47,55 @@ public class BoardDAOImpl implements BoardDAO {
 		return findBoardByBnum(boardSeq);
 		
 	}
+	//답글등록
+	@Override
+	public int reply(String id,BoardDTO boardDTO) {
+		updateStep(boardDTO.getBgroup(), boardDTO.getBstep());
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" insert into board(bnum,bcategory,id,btitle,bcontent,pbnum,bgroup,bstep,bindent) ");
+		sql.append("   values(board_bnum_seq.nextval,?,?,?,?,?,?,?,?) ");
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		jt.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(
+						sql.toString(),
+						new String[] {"bnum"});
+				
+				pstmt.setString(1, boardDTO.getBcategory());
+				pstmt.setString(2, id);
+				pstmt.setString(3, boardDTO.getBtitle());
+				pstmt.setString(4, boardDTO.getBcontent());
+				pstmt.setInt(5, boardDTO.getPbnum());
+				pstmt.setInt(6, boardDTO.getBgroup());
+				pstmt.setInt(7, boardDTO.getBstep() +1);
+				pstmt.setInt(8, boardDTO.getBindent() +1);
+				
+				return pstmt;
+			}
+		}, keyHolder);
+		
+		
+		return ((BigDecimal)keyHolder.getKeys().get("bnum")).intValue();
+	}
+	private void updateStep(int bgroup,int bstep) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("update board ");
+		sql.append(" set bstep = bstep+1 ");
+		sql.append(" where bgroup =?");
+		sql.append(" and bstep > ? ");
+		
+		jt.update(sql.toString(),bgroup,bstep);
+	}
 	//게시글조회
 	@Override
 	public BoardReqDTO findBoardByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum ");
+		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum,b.bgroup,b.bstep,b.bindent");
 		sql.append("      from board b, member m ");
 		sql.append("     where b.id =m.id ");
 		sql.append("         and b.bnum=? ");
@@ -167,11 +218,12 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> list(String bcategory) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent ");
+		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
 		sql.append("  from board b, member m ");
 		sql.append("  where b.id = m.id ");
 		sql.append("   and bcategory=? ");
-		sql.append(" order by bnum desc ");
+		sql.append(" order by bgroup desc, bstep asc ");
+		
 		List<BoardReqDTO> list = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardReqDTO.class),
 										bcategory);

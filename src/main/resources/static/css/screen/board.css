@@ -61,7 +61,12 @@
 .board__table th:nth-child(2) {
   width: 70%;
 }
-
+.board__table .board__titles{
+  text-align: center;
+}
+.board__table .board__title{
+  text-align: left;
+}
 .board__table__select {
   width: inherit;
   height: 26px;

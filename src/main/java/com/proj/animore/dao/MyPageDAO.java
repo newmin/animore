@@ -5,8 +5,8 @@ import java.util.List;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.dto.board.BoardDTO;
-import com.proj.animore.form.BoardForm;
 import com.proj.animore.form.ReviewForm;
+import com.proj.animore.form.board.BoardForm;
 
 public interface MyPageDAO {
 	
