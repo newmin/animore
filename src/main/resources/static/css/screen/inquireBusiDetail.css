@@ -41,7 +41,37 @@
     border: 1px solid #e0e0e0;
   }
   
-  
+/* 업체 상단 정보 */
+.busi-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+  .busi-info__name{
+    font-size: 40px;
+  }
+  .favorBtn{
+    font-size: 40px;
+    color: var(--red);
+    margin-left: 3px;
+  }
+  .busi-info__btns{
+    position: sticky;
+    top: 50px;
+  }
+  .busi-info__btn{
+    border: none;
+    background-color: var(--secondary);
+    padding: 5px 15px;
+    color: var(--secondary-text);
+    font-weight: 600;
+    margin-bottom: -10px;
+    border-radius: 2px;
+  }
+
+
   /* 업체정보 + 지도 */
   .busi-detail{
     display: flex;
@@ -77,8 +107,8 @@
 
 
 
-  /* 리뷰 */
-  .review{
+/* 리뷰 */
+.review{
     display: flex;
     flex-direction: column;
   gap: 5px;
@@ -91,7 +121,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   padding: 5px 0px;
 }
-
+/* 리뷰 이미지 및 닉네임 */
 .review__column:first-child{
   width: 80px;
   display: flex;
@@ -101,11 +131,21 @@
   gap: 15px;
   padding-top: 10px;
 }
+.review__profile{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+/* 리뷰 내용 */
 .review__column:nth-child(2){
   width: 570px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.review__star-score{
+  color: var(--yellow);
 }
 
 .review__isUpdate,
@@ -116,15 +156,13 @@
 .review__userBtn{
   cursor: pointer;
 }
-
-.review__profile{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.hidden{
+  display: none;
 }
+/* 리뷰 첨부이미지 */
 .review__column:last-child{
   width: 200px;
 }
 .reviewForm__checked{
-	color : yellow;
+	color : var(--yellow);
 }

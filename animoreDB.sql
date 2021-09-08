@@ -201,13 +201,16 @@ create table bcategory(
   constraint dental_betc_ck check(betc in('Y','N'))
 );
 
---후기
+--리뷰
 create table review(
   rnum number(10),
   bnum number(8) not null,
   rscore number(1) not null,
   rcontent clob not null,
   id varchar2(40) not null,
+  rvgroup number(10) not null,
+  isReply number(1) default 0,
+  rvStep number(1) default 0,
   rvcdate timestamp DEFAULT systimestamp not null,
   rvudate timestamp,
   constraint REVIEW_RNUM_PK primary key(rnum),
@@ -322,10 +325,10 @@ values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','이마트양산
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 -- 업체별 리뷰
-insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,3,'좋아좋아','normal@zxc.com');
-insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,1,2,'별루별루','user@test.com');
-insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,4,'좋아좋아','normal@zxc.com');
-insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID) values(REVIEW_RNUM_SEQ.nextval,2,5,'별루별루','user@test.com');
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID,rvgroup) values(REVIEW_RNUM_SEQ.nextval,1,3,'좋아좋아','normal@zxc.com',REVIEW_RNUM_SEQ.currval);
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID,rvgroup) values(REVIEW_RNUM_SEQ.nextval,1,2,'별루별루','user@test.com',REVIEW_RNUM_SEQ.currval);
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID,rvgroup) values(REVIEW_RNUM_SEQ.nextval,2,4,'좋아좋아','normal@zxc.com',REVIEW_RNUM_SEQ.currval);
+insert into review(RNUM,BNUM,RSCORE,RCONTENT,ID,rvgroup) values(REVIEW_RNUM_SEQ.nextval,2,5,'별루별루','user@test.com',REVIEW_RNUM_SEQ.currval);
 -- 게시글
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'Q','지,질문드리겠습니다','normal@zxc.com','필요없어');
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT) values(BOARD_BNUM_SEQ.nextval,'M','ㅍㅍ','normal@zxc.com','제시요');

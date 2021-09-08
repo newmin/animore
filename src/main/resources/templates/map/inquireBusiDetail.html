@@ -34,21 +34,23 @@
 		  <!--업체정보-->
 		  <div class="selected-busi" th:object="${busi}" th:data-bnum="*{bnum}"> 
 		  	<div class="busi-info">
-			    <span class="sbusi-info__name" th:text="*{bname}" th:data-bnum="*{bnum}">업체명</span>
-			    <div th:if="${session != null && session.loginMember != null}">
-				    <i th:if="${favor.count == 0}" class="far fa-heart favorBtn unfavorite"></i>
-				    <i th:if="${favor.count == 1}" class="fas fa-heart favorBtn favorite"></i>
-			    </div>
-			    <i th:if="${session != null && session.loginMember == null}" class="far fa-heart favorBtn"></i>
+			    <div>
+						<span class="busi-info__name" th:text="*{bname}" th:data-bnum="*{bnum}">업체명</span>
+						<th:block th:if="${session != null && session.loginMember != null}">
+							<i th:if="${favor.count == 0}" class="far fa-heart favorBtn unfavorite"></i>
+							<i th:if="${favor.count == 1}" class="fas fa-heart favorBtn favorite"></i>
+						</th:block>
+						<i th:if="${session != null && session.loginMember == null}" class="far fa-heart favorBtn"></i>
+					</div>
 			    <!--TODO 클릭했을시 회원만 이용가능한 기능, 로그인? -->
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->
 			    <p style="color:sandybrown;">로그인 후 별점확인 리뷰 50</p>
-			    <div>
+			    <div class="busi-info__btns">
 			      <!--링크해야됨-->
-				    <button>업체정보</button>
-				    <button>리뷰</button>
+				    <button class="busi-info__btn">업체정보</button>
+				    <button class="busi-info__btn">리뷰</button>
 					</div>
 					<!-- <button><a th:href="@{/{bcategory}}">목록으로 돌아가기</a></button> -->
 		  	</div>
