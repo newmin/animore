@@ -65,13 +65,12 @@ const modiFrmBtns_f = e=> {
 		if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
 			modiForms.forEach(ele=>ele.remove());
 		}
-		return;
 	}
 	//새로운 수정폼, 기존 리뷰 아래 생성
 	const modiForm = document.createElement('div');
 	modiForm.classList.add('review__modiForm');
-	// e.target.closest('.review__main-text').after('<div class="review__modiForm"></div>');
 	e.target.closest('.review__column').append(modiForm);
+	// e.target.closest('.review__column').append('<div class="review__modiForm"></div>');
 	//원래 내용은 숨김처리
 	e.target.closest('.review__main-text').classList.add('hidden');
 	
@@ -105,32 +104,144 @@ const modiFrmBtns_f = e=> {
 function reviewModiForm(review) {
 
 	let html ='';
-	html += `<div class="rscore" ${review.rscore}>`;
-	html += `	<input type="radio" name="rscore" id="point1" value="1" title="1점" hidden>`;
-	html += `	<label for="point1"><i class="fas fa-star reviewForm__score one reviewForm__checked"></i></label>`;
-	html += `	<input type="radio" name="rscore" id="point2" value="2" title="2점" hidden>`;
-	html += `	<label for="point2"><i class="fas fa-star reviewForm__score two reviewForm__checked"></i></label>`;
-	html += `	<input type="radio" name="rscore" id="point3" value="3" title="3점" hidden>`;
-	html += `	<label for="point3"><i class="fas fa-star reviewForm__score three reviewForm__checked"></i></label>`;
-	html += `	<input type="radio" name="rscore" id="point4" value="4" title="4점" hidden>`;
-	html += `	<label for="point4"><i class="fas fa-star reviewForm__score four reviewForm__checked"></i></label>`;
-	html += `	<input type="radio" name="rscore" id="point5" value="5" title="5점" hidden>`;
-	html += `	<label for="point5"><i class="fas fa-star reviewForm__score five reviewForm__checked"></i></label>`;
-	html += `</div>`;
+	switch(review.rscore){
+		case 1:
+			html += `<div class="rscore" ${review.rscore}>`;
+			html += `	<input type="radio" name="rscore" id="mpoint1" value="1" title="1점" hidden checked>`;
+			html += `	<label for="mpoint1"><i class="fas fa-star reviewModiForm__score modi-one reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint2" value="2" title="2점" hidden>`;
+			html += `	<label for="mpoint2"><i class="fas fa-star reviewModiForm__score modi-two"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint3" value="3" title="3점" hidden>`;
+			html += `	<label for="mpoint3"><i class="fas fa-star reviewModiForm__score modi-three"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint4" value="4" title="4점" hidden>`;
+			html += `	<label for="mpoint4"><i class="fas fa-star reviewModiForm__score modi-four"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint5" value="5" title="5점" hidden>`;
+			html += `	<label for="mpoint5"><i class="fas fa-star reviewModiForm__score modi-five"></i></label>`;
+			html += `</div>`;
+		break;
+		case 2:
+			html += `<div class="rscore" ${review.rscore}>`;
+			html += `	<input type="radio" name="rscore" id="mpoint1" value="1" title="1점" hidden>`;
+			html += `	<label for="mpoint1"><i class="fas fa-star reviewModiForm__score modi-one reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint2" value="2" title="2점" hidden checked>`;
+			html += `	<label for="mpoint2"><i class="fas fa-star reviewModiForm__score modi-two reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint3" value="3" title="3점" hidden>`;
+			html += `	<label for="mpoint3"><i class="fas fa-star reviewModiForm__score modi-three"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint4" value="4" title="4점" hidden>`;
+			html += `	<label for="mpoint4"><i class="fas fa-star reviewModiForm__score modi-four"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint5" value="5" title="5점" hidden>`;
+			html += `	<label for="mpoint5"><i class="fas fa-star reviewModiForm__score modi-five"></i></label>`;
+			html += `</div>`;
+		break;
+		case 3:
+			html += `<div class="rscore" ${review.rscore}>`;
+			html += `	<input type="radio" name="rscore" id="mpoint1" value="1" title="1점" hidden>`;
+			html += `	<label for="mpoint1"><i class="fas fa-star reviewModiForm__score modi-one reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint2" value="2" title="2점" hidden>`;
+			html += `	<label for="mpoint2"><i class="fas fa-star reviewModiForm__score modi-two reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint3" value="3" title="3점" hidden checked>`;
+			html += `	<label for="mpoint3"><i class="fas fa-star reviewModiForm__score modi-three reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint4" value="4" title="4점" hidden>`;
+			html += `	<label for="mpoint4"><i class="fas fa-star reviewModiForm__score modi-four"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint5" value="5" title="5점" hidden>`;
+			html += `	<label for="mpoint5"><i class="fas fa-star reviewModiForm__score modi-five"></i></label>`;
+			html += `</div>`;
+		break;
+		case 4:
+			html += `<div class="rscore" ${review.rscore}>`;
+			html += `	<input type="radio" name="rscore" id="mpoint1" value="1" title="1점" hidden>`;
+			html += `	<label for="mpoint1"><i class="fas fa-star reviewModiForm__score modi-one reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint2" value="2" title="2점" hidden>`;
+			html += `	<label for="mpoint2"><i class="fas fa-star reviewModiForm__score modi-two reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint3" value="3" title="3점" hidden>`;
+			html += `	<label for="mpoint3"><i class="fas fa-star reviewModiForm__score modi-three reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint4" value="4" title="4점" hidden checked>`;
+			html += `	<label for="mpoint4"><i class="fas fa-star reviewModiForm__score modi-four reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint5" value="5" title="5점" hidden>`;
+			html += `	<label for="mpoint5"><i class="fas fa-star reviewModiForm__score modi-five"></i></label>`;
+			html += `</div>`;
+		break;
+		case 5:
+			html += `<div class="rscore" ${review.rscore}>`;
+			html += `	<input type="radio" name="rscore" id="mpoint1" value="1" title="1점" hidden>`;
+			html += `	<label for="mpoint1"><i class="fas fa-star reviewModiForm__score modi-one reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint2" value="2" title="2점" hidden>`;
+			html += `	<label for="mpoint2"><i class="fas fa-star reviewModiForm__score modi-two reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint3" value="3" title="3점" hidden>`;
+			html += `	<label for="mpoint3"><i class="fas fa-star reviewModiForm__score modi-three reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint4" value="4" title="4점" hidden>`;
+			html += `	<label for="mpoint4"><i class="fas fa-star reviewModiForm__score modi-four reviewForm__checked"></i></label>`;
+			html += `	<input type="radio" name="rscore" id="mpoint5" value="5" title="5점" hidden checked>`;
+			html += `	<label for="mpoint5"><i class="fas fa-star reviewModiForm__score modi-five reviewForm__checked"></i></label>`;
+			html += `</div>`;
+		break;
+
+	} 
 	html += `<div class="review__contents">`;
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
-	html += `	<textarea rows="10" class="review__textarea" name="rcontent">${review.rcontent}</textarea>`;
+	html += `	<textarea rows="10" class="review__textarea-modi" name="rcontent">${review.rcontent}</textarea>`;
 	html += `	<button data-rnum="${review.rnum}" class="review__modi" type="button">수정</button>`;
 	html += `	<button class="review__modiCancle" type="button">취소</button>`;
 	html += `</div>`;
 
 	document.querySelector('.review__modiForm').innerHTML = html;
-
+	modi_score();
 	const modiBtn = document.querySelector('.review__modi');		//수정처리
 	const cancleBtn = document.querySelector('.review__modiCancle');		//수정취소
 	modiBtn.addEventListener('click', modiBtn_f);
-	cancleBtn.addEventListener('click',e=>{ document.querySelector('.review__modiForm').remove()});
+	cancleBtn.addEventListener('click',e=>{ 
+		document.querySelector('.review__modiForm').remove()
+		document.querySelectorAll('.review__main-text').forEach(ele=>ele.classList.remove('hidden'));
+	});
 }
+
+//평점수정 함수
+	//리뷰 수정별점
+	function modi_score(){
+		let mone = document.querySelector('.modi-one');
+		let mtwo = document.querySelector('.modi-two');
+		let mthree = document.querySelector('.modi-three');
+		let mfour = document.querySelector('.modi-four');
+		let mfive = document.querySelector('.modi-five');
+	
+	
+		const mstar = document.querySelectorAll('.reviewModiForm__score');
+	
+		let score=0;
+		
+		function mscore1(){
+			mstar.forEach(ele=>ele.classList.remove('reviewForm__checked'));
+			mone.classList.add('reviewForm__checked');
+			score=1
+		}
+		function mscore2(){
+			mscore1();
+			mtwo.classList.add('reviewForm__checked');
+			score=2
+		}
+		function mscore3(){
+			mscore2();
+			mthree.classList.add('reviewForm__checked');
+			score=3
+		}
+		function mscore4(){
+			mscore3();
+			mfour.classList.add('reviewForm__checked');
+			score=4
+		}
+		function mscore5(){
+			mscore4();
+			mfive.classList.add('reviewForm__checked');
+			score=5
+		}
+	
+		mone.addEventListener('click',mscore1);
+		mtwo.addEventListener('click',mscore2);
+		mthree.addEventListener('click',mscore3);
+		mfour.addEventListener('click',mscore4);
+		mfive.addEventListener('click',mscore5);
+	}
+	
 
 //리뷰수정처리
 const modiBtn_f = e =>{
@@ -139,7 +250,7 @@ const modiBtn_f = e =>{
 	
   const rnum = e.target.dataset.rnum;
 	const modiContent = document.querySelector('.review__textarea-modi');
-	const modiRscore = document.querySelector('.review__modiForm input[name="rscore"]:checked');
+	const modiRscore = document.querySelector('.review__modiForm input:checked');
 	
 	//리뷰입력체크
 	if(!modiContent.value) {
@@ -219,8 +330,8 @@ function refreshReview(data){
 		html += `		<div>`
 		html += `			<span class="review__nickname">${review.nickname}</span>`;
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
-		html += `			<span class="review__date">평점 : ${review.rscore}</span>`;
 		html += `		</div>`
+		html += `		<div class="review__main-text">`
 		switch(review.rscore){
 			case 1:
 				html += `			<div class="review__star-score">`;
@@ -279,6 +390,7 @@ function refreshReview(data){
 			html += `		</div>`;
 		}
 		html += `		<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글</span></p>`;
+		html += `		</div>`;
 		html += `	</div>`;
 		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
 		html += `</div>`;
@@ -287,8 +399,8 @@ function refreshReview(data){
 	document.querySelector('.review__container').innerHTML = html;
 			
 	//버튼 재호출 + 이벤트리스너 재등록
-	// modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
-	// modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
+	modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
+	modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 
 	delBtns = document.querySelectorAll('.review__del');		//삭제하기
 	delBtns.forEach(ele=>ele.addEventListener('click',delBtn_f));

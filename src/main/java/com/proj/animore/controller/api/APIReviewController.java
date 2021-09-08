@@ -90,7 +90,7 @@ public class APIReviewController {
 	
 	// //리뷰수정
 	@PatchMapping("/")
-	public Result modiReview(@RequestBody ReviewForm reviewForm, 
+	public Result modiReview(@RequestBody ReviewReq reviewReq, 
 													 HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
@@ -101,15 +101,15 @@ public class APIReviewController {
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
 
-		if(loginMember.getId() != reviewForm.getId()){
-			result = new Result("01","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
+		if(!loginMember.getId().equals(reviewReq.getId())){
+			result = new Result("02","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
 			return result;
 		}
 		
 		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(reviewForm,reviewDTO);
-		
+		BeanUtils.copyProperties(reviewReq,reviewDTO);
+		log.info(reviewDTO.toString());
 		int bnum = reviewDTO.getBnum();
 		
 		List<ReviewReq> list = reviewSVC.updateReview(bnum, id, reviewDTO);
@@ -134,7 +134,7 @@ public class APIReviewController {
 		// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		// log.info("id.sess={}, id.req={}", loginMember.getId(), rid);
 
-		// if(loginMember.getId() != rid){
+		// if(!loginMember.getId().equals(rid)){
 		// 	result = new Result("01","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
 		// 	return result;
 		// }
