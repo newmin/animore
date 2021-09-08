@@ -141,9 +141,12 @@
 										<span th:data-rnum="*{rnum}" th:data-id="*{id}" class="review__userBtn review__del">삭제</span>
 									</p>
 								</div>
-								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글~ 답글느낌?</span></p>
-								<p th:if="${session.loginMember != null && session.loginMember.id == busi.id && review.rvReply==null}">리댓달기</p>
-								<p th:if="*{rvReply}" th:text="|사장님 : *{rvReply}"></p>
+								<div class="review__reply">
+									<p><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글~ 답글느낌?</span></p>
+									<p th:if="${session.loginMember!=null && session.loginMember.id==busi.id && review.rvReply==null}" 
+											th:data-rnum="*{rnum}" class="review__replyBtn">리댓달기</p>
+									<p class="review__reply-text" th:if="*{rvReply}" th:text="|	└─>사장님 : *{rvReply}"></p>
+								</div>
 							</div>
 
 							</div>
@@ -152,7 +155,7 @@
 		  
 		      </section>
 				</section>
-		      <section class="wrap" th:if="${session != null && session.loginMember != null}">
+		      <section class="wrap" th:if="${session!=null && session.loginMember!=null}">
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
