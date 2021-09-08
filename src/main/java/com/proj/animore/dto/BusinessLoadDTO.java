@@ -13,6 +13,7 @@ public class BusinessLoadDTO {
 	private String btel;
 	private String openhours;
 	private LocalDate fdate;
+	private String id;
 
 	private String bhospital;
 	private String bpharmacy;

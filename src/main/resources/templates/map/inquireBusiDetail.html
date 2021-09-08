@@ -142,6 +142,8 @@
 									</p>
 								</div>
 								<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글~ 답글느낌?</span></p>
+								<p th:if="${session.loginMember != null && session.loginMember.id == busi.id && review.rvReply==null}">리댓달기</p>
+								<p th:if="*{rvReply}" th:text="|사장님 : *{rvReply}"></p>
 							</div>
 
 							</div>

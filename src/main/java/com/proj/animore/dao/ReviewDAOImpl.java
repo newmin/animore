@@ -24,7 +24,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> registReview(Integer bnum, String id, ReviewDTO reviewDTO) {
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into review(rnum,bnum,rcontent,rscore,id,rvgroup) values(review_rnum_seq.nextval,?,?,?,?,REVIEW_RNUM_SEQ.currval) ");
+		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,?,?) ");
 
 		jdbcTemplate.update(sql.toString(),
 							bnum, 
@@ -54,11 +54,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
 		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname,rvudate,isReply ");
+		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname,rvudate, rvReply ");
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");
-		sql.append(" order by rvgroup desc,rvStep ");
+		sql.append(" order by rvcdate desc ");
 
 		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
 										   new BeanPropertyRowMapper<>(ReviewReq.class),
@@ -98,7 +98,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public ReviewReq findReview(int rnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rscore, rcontent,rvcdate,rnum, m.nickname ");
+		sql.append("select rscore, rcontent,rvcdate,rnum, m.nickname, rvReply ");
 		sql.append("  from review r, member m ");
 		sql.append(" where rnum = ?	 ");
 		sql.append("   and r.id = m.id ");
