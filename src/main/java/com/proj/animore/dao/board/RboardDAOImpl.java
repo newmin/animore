@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dto.board.RboardDTO;
 import com.proj.animore.dto.board.RboardListReqDTO;
@@ -36,23 +35,27 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("insert into rboard(rnum,bnum,id,rcontent,rgroup,rstep,rindent) ");
 		sql.append("						values(rboard_rnum_seq.nextval,?,?,?,rboard_rnum_seq.currval,0,0)");
 		
-		jt.update(sql.toString()
-							,bnum
-							,id
-							,rboardDTO.getRcontent());
+//		jt.update(sql.toString()
+//							,bnum
+//							,id
+//							,rboardDTO.getRcontent());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		
-		jt.update((Connection con)-> {
-			PreparedStatement pstmt = con.prepareStatement(
-					sql.toString(),
-					new String[] {"rnum"});
+
+		jt.update(new PreparedStatementCreator() {
 			
-			pstmt.setInt(1, bnum);
-			pstmt.setString(2, id);
-			pstmt.setString(3, rboardDTO.getRcontent());
-			
-			return pstmt;
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(
+						sql.toString(),
+						new String[] {"rnum"});
+				
+				pstmt.setInt(1, bnum);
+				pstmt.setString(2, id);
+				pstmt.setString(3, rboardDTO.getRcontent());
+				
+				return pstmt;
+			}
 		}, keyHolder);
 		
 		List<RboardListReqDTO> list = all(bnum);
@@ -89,22 +92,26 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("   ?, ");
 		sql.append(" ) ");
 		
-		KeyHolder keyHolder = new GeneratedKeyHolder();
+		KeyHolder keyHolder = new GeneratedKeyHolder();		
 		
-		jt.update((Connection con)-> {
-			PreparedStatement pstmt = con.prepareStatement(
-					sql.toString(),
-					new String[] {"rnum"});
+		jt.update(new PreparedStatementCreator() {
 			
-			pstmt.setInt(1, rboardDTO.getBnum());
-			pstmt.setString(2, rboardDTO.getId());
-			pstmt.setString(3, rboardDTO.getRcontent());
-			pstmt.setInt(4, rboardDTO.getPrnum());
-			pstmt.setInt(5, rboardDTO.getRgroup());
-			pstmt.setInt(6, rboardDTO.getRstep());
-			pstmt.setInt(7, rboardDTO.getRindent());
-			
-			return pstmt;
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(
+						sql.toString(),
+						new String[] {"rnum"});
+				
+				pstmt.setInt(1, rboardDTO.getBnum());
+				pstmt.setString(2, rboardDTO.getId());
+				pstmt.setString(3, rboardDTO.getRcontent());
+				pstmt.setInt(4, rboardDTO.getPrnum());
+				pstmt.setInt(5, rboardDTO.getRgroup());
+				pstmt.setInt(6, rboardDTO.getRstep());
+				pstmt.setInt(7, rboardDTO.getRindent());
+				
+				return pstmt;
+			}
 		}, keyHolder);
 		
 		List<RboardListReqDTO> list = all(rboardDTO.getBnum());
