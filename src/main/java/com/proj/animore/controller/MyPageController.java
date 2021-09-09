@@ -15,26 +15,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
-import com.proj.animore.dto.FavoriteDTO;
 import com.proj.animore.dto.FavoriteReq;
-import com.proj.animore.dto.GoodBoardDTO;
 import com.proj.animore.dto.MemberDTO;
-import com.proj.animore.form.BusiModifyForm;
+import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
-import com.proj.animore.form.ReviewForm;
 import com.proj.animore.svc.BusinessSVC;
 import com.proj.animore.svc.FavoriteSVC;
-import com.proj.animore.svc.GoodBoardSVC;
 import com.proj.animore.svc.MemberSVC;
+import com.proj.animore.svc.board.GoodBoardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
