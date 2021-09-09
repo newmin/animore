@@ -2,14 +2,15 @@ package com.proj.animore.dao.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dto.board.RboardDTO;
 import com.proj.animore.dto.board.RboardListReqDTO;
@@ -27,56 +28,102 @@ public class RboardDAOImpl implements RboardDAO{
 	/**
 	 * 댓글등록처리
 	 */
-	@Transactional
 	@Override
 	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
-//		임시로 세팅한거
-		rboardDTO.setRgroup("1");
-		rboardDTO.setRstep("1");
-		
-//		시퀀스번호 따기
-//		String sql = "select rboard_rnum_seq.nextval from dual";
-//		String seq = jt.queryForObject(sql, String.class);
-		
-//		입력
-		StringBuffer sql2 = new StringBuffer();
-		sql2.append("insert into rboard(rnum,bnum,id,rcontent,rgroup,rstep) ");
-		sql2.append("						values(rboard_rnum_seq.nextval,?,?,?,?,?)");
-		
-		jt.update(sql2.toString()
-//							,seq
-							,bnum
-							,id
-							,rboardDTO.getRcontent()
-							,rboardDTO.getRgroup()
-							,rboardDTO.getRstep()
-						 );
 
-//		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		jt.update((Connection con)-> {
-//			PreparedStatement pstmt = con.prepareStatement(sql.toString(), new String[] {"bnum"});
-//			pstmt.setInt(1, bnum);
-//			pstmt.setString(2, id);
-//			pstmt.setString(3, rboardDTO.getRcontent());
-//			pstmt.setString(4, rboardDTO.getRgroup());
-//			pstmt.setString(5, rboardDTO.getRstep());
-//			
-//			return pstmt;
-//		}, keyHolder);
+		StringBuffer sql = new StringBuffer();
+		sql.append("insert into rboard(rnum,bnum,id,rcontent,rgroup,rstep,rindent) ");
+		sql.append("						values(rboard_rnum_seq.nextval,?,?,?,rboard_rnum_seq.currval,0,0)");
 		
-////		따놓은 시퀀스번호로 입력한 댓글정보 확인, 받기
-//		RboardDTO retDTO = findbyRnum(seq);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jt.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(
+						sql.toString(),
+						new String[] {"rnum"});
+				
+				pstmt.setInt(1, bnum);
+				pstmt.setString(2, id);
+				pstmt.setString(3, rboardDTO.getRcontent());
+				
+				return pstmt;
+			}
+		}, keyHolder);
 		
-		
-//		log.info("keyHolder:{}",keyHolder.getKeyAs(Integer.class));
-		
-		//댓글단 게시글의 댓글목록 갱신.=> 댓글목록 리턴
-//		List<RboardListReqDTO> list = all(keyHolder.getKeyAs(Integer.class));
 		List<RboardListReqDTO> list = all(bnum);
-//		입력했던 댓글정보 리턴
 		return list;
 	}
 
+	/**
+	 * 대댓글등록처리
+	 */
+	@Override
+	public List<RboardListReqDTO> addReReply(RboardDTO rboardDTO) {
+		
+		//부모글의 rgrouop중 rstep이 부모글의 rstep보다 큰 게시글 rstep + 1
+		updateStep(rboardDTO.getRgroup(), rboardDTO.getRstep());
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" INSERT INTO rboard ( ");
+		sql.append("   rnum, ");
+		sql.append("   bnum, ");
+		sql.append("   id, ");
+		sql.append("   rcontent, ");
+		sql.append("   prnum, ");
+		sql.append("   rgroup, ");
+		sql.append("   rstep, ");
+		sql.append("   rindent ");
+		sql.append(" ) VALUES ( ");
+		sql.append("   rboard_rnum_seq.nextval, ");
+		sql.append("   ?, ");
+		sql.append("   ?, ");
+		sql.append("   ?, ");
+		sql.append("   ?, ");
+		sql.append("   ?, ");
+		sql.append("   ?, ");
+		sql.append("   ? ");
+		sql.append(" ) ");
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();		
+		
+		jt.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(
+						sql.toString(),
+						new String[] {"rnum"});
+				
+				pstmt.setInt(1, rboardDTO.getBnum());
+				pstmt.setString(2, rboardDTO.getId());
+				pstmt.setString(3, rboardDTO.getRcontent());
+				pstmt.setInt(4, rboardDTO.getPrnum());
+				pstmt.setInt(5, rboardDTO.getRgroup());
+				pstmt.setInt(6, rboardDTO.getRstep()+1);
+				pstmt.setInt(7, rboardDTO.getRindent()+1);
+				
+				return pstmt;
+			}
+		}, keyHolder);
+		List<RboardListReqDTO> list = all(rboardDTO.getBnum());
+		return list;
+	}
+	
+	private void updateStep(Integer rgroup, Integer rstep) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("update rboard ");
+		sql.append("   set rstep = rstep + 1 ");
+		sql.append(" where rgroup = ? ");
+//		sql.append("   and rstep < ? ");
+		sql.append("   and rstep > ? ");	//원본
+		
+		jt.update(sql.toString(), rgroup,rstep);
+	}
+	
+	
 	/**
 	 * 댓글조회 by 댓글번호
 	 * 댓글수정 클릭시 해당댓글정보 전달
@@ -85,7 +132,7 @@ public class RboardDAOImpl implements RboardDAO{
 	public RboardListReqDTO findbyRnum(int bnum, int rnum) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rcdate,t2.rgood ");
+		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood ");
 		sql.append(" from member t1, rboard t2 ");
 		sql.append(" where t1.id=t2.id ");
 		sql.append(" and rnum=? ");
@@ -104,7 +151,8 @@ public class RboardDAOImpl implements RboardDAO{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("update rboard ");
-		sql.append("set rcontent=? ");
+		sql.append("set rcontent=?, ");
+		sql.append("    rudate=systimestamp ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
 		sql.append("and id=? ");
@@ -143,10 +191,13 @@ public class RboardDAOImpl implements RboardDAO{
 	public List<RboardListReqDTO> all(int bnum) {
 		log.info(String.valueOf(bnum));
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rcdate,t2.rgood ");
+		sql.append("select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood ");
 		sql.append("from member t1, rboard t2 ");
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
+//		sql.append("order by t2.rgroup desc, t2.rstep asc");	//원본
+//		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
+		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
 		
 		List<RboardListReqDTO> list =
 				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);

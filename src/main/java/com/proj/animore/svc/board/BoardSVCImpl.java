@@ -118,7 +118,11 @@ public class BoardSVCImpl implements BoardSVC {
 	public List<BoardReqDTO> list(String bcategory) {
 		return boardDAO.list(bcategory);
 	}
-	
+	@Override
+	public List<BoardReqDTO> list(String bcategory, int startRec, int endRec) {
+		List<BoardReqDTO> list = boardDAO.list(bcategory, startRec, endRec);
+		return list;
+	}
 	//게시글전체목록(좋아요순나열)
 	@Override
 	public List<BoardReqDTO> bgoodList(String bcategory) {
@@ -152,5 +156,10 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public boolean isNotice(int bnum) {
 		return boardDAO.isNotice(bnum);
+	}
+	//게시판 전체 레코드 수
+	@Override
+	public long totoalRecordCount() {
+		return boardDAO.totlaRecordCount();
 	}
 }

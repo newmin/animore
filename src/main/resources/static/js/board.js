@@ -209,5 +209,9 @@ if($search_select.value == "nickname") {searchByNickname()};
 if($search_select.value == "bcontent") {searchByBcontent()};
 });
 
+const $mypostBtn = document.querySelector('.board__myPostbtn');
+$mypostBtn.addEventListener('click',e=>{
+location.href='/mypage/mypost';
+});
 	
     

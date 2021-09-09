@@ -37,4 +37,5 @@ public interface BusinessSVC {
 	public List<BusinessLoadDTO> mybusiList(String id);
 
 
+
 }

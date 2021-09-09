@@ -33,8 +33,8 @@ public class RboardDAOImplTest {
 		rDTO.setBnum(bnum);
 		rDTO.setId(id);
 		rDTO.setRcontent("테스트");
-		rDTO.setRgroup("1");
-		rDTO.setRstep("1");
+		rDTO.setRgroup(1);
+		rDTO.setRstep(1);
 		
 		log.info("rList:{}",rdao.register(bnum, id, rDTO));
 	}

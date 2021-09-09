@@ -21,8 +21,8 @@ import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.RboardAddReq;
 import com.proj.animore.form.RboardModiReq;
+import com.proj.animore.form.RboardReReplyReq;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -42,29 +42,18 @@ public class APIRboardController {
 	private final RboardSVC rboardSVC;
 	
 //댓글등록처리   post
-	@PostMapping("/{bnum}/{id}")
+	@PostMapping("/{bnum}")
 	public Result register(
 			@PathVariable int bnum,
-			@PathVariable String id,
 			@Valid @RequestBody RboardAddReq rar,
 			HttpServletRequest request) {
-		// rnum : 시퀀스
-		// bnum : 게시글번호
-		// rgroup : 댓글그룹
-		// 댓글단계 : 부모댓글(댓글그룹)의 댓글단계 +1 해줘야함
-		// Content : 댓글내용
-
+		
 		//우선 할것 : 요청받기, 데이터 옮겨담기, 저장하기
 		//나중에 덧붙일것 : 결과 리턴받아서 보여주기, 무결성검사, 등등
 		//요청의 세션 받기
 		HttpSession session = request.getSession(false);
 		
 		Result result;
-		//로그인 하지 않고 요청했다면
-		if(session == null) {
-			result = new Result("01","댓글입력을 위해 로그인이 필요합니다.",null);
-			return result;
-		}
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
@@ -81,12 +70,45 @@ public class APIRboardController {
   	return result;
 	}
 
+//대댓글작성처리
+	@PostMapping("/{bnum}/{rnum}")
+	public Result reReplyRegister(
+			@PathVariable("bnum") int bnum,
+			@PathVariable("rnum") int rnum,
+			@Valid @RequestBody RboardReReplyReq rrrr,
+			HttpServletRequest request) {
+		
+		log.info("[bnum:{}][rnum:{}][rrrr:{}]",bnum,rnum,rrrr);
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		
+		RboardDTO rboardDTO = new RboardDTO();
+		BeanUtils.copyProperties(rrrr, rboardDTO);
+		
+		RboardListReqDTO prboardDTO = rboardSVC.findByRnum(bnum, rnum);
+		rboardDTO.setPrnum(prboardDTO.getRnum());
+		rboardDTO.setRgroup(prboardDTO.getRgroup());
+		rboardDTO.setRstep(prboardDTO.getRstep());
+		rboardDTO.setRindent(prboardDTO.getRindent());
+		rboardDTO.setId(loginMember.getId());
+		
+		log.info("[rboardDTO:{}]",rboardDTO);
+		List<RboardListReqDTO> replyList = rboardSVC.addReReply(rboardDTO);
+		
+		return new Result("00","성공",replyList);
+	}
+	
+	
+	
 //댓글1개조회(댓글수정 클릭하는 순간 댓글정보 전달)		get
 //
 	@GetMapping("/{bnum}/{rnum}")
 	public Result findByRnum(
 			@PathVariable int bnum,
-			@PathVariable int rnum) {
+			@PathVariable int rnum,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
 		
 		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
 		Result result = new Result();
@@ -103,22 +125,21 @@ public class APIRboardController {
 	}
 	
 //댓글수정처리 patch
-	@PatchMapping("/{bnum}/{rnum}/{id}")
+	@PatchMapping("/{bnum}/{rnum}")
 	public Result modify(
 			@PathVariable int bnum,
 			@PathVariable int rnum,
-			@PathVariable String id,			
-			@RequestBody RboardModiReq rmr) {
-		//rcontent
-		log.info("modify:{}",bnum);
-		log.info("modify:{}",rnum);
-		log.info("modify:{}",id);
-		log.info("modify:{}",rmr);
+			@RequestBody RboardModiReq rmr,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false); 
+		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
 		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rmr,rboardDTO);
-		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
-		
+		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, loginMemberId, rboardDTO);
 		
 		Result result = new Result();
 		if (modifiedRboardDTO == null) {

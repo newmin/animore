@@ -3,6 +3,7 @@ package com.proj.animore.svc.board;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dao.board.BoardDAO;
 import com.proj.animore.dao.board.RboardDAO;
@@ -12,6 +13,7 @@ import com.proj.animore.dto.board.RboardListReqDTO;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RboardSVCImpl implements RboardSVC {
 
@@ -26,9 +28,19 @@ public class RboardSVCImpl implements RboardSVC {
 	 * @return
 	 */
 	@Override
+
 	public List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO) {
 		boardDAO.upRcount(bnum);
 		return rboardDAO.register(bnum, id, rboardDTO);
+	}
+	
+	/**
+	 * 대댓글등록처리
+	 */
+	@Override
+	public List<RboardListReqDTO> addReReply(RboardDTO rboardDTO) {
+		boardDAO.upRcount(rboardDTO.getBnum());
+		return rboardDAO.addReReply(rboardDTO);
 	}
 	
 	/**
@@ -67,5 +79,7 @@ public class RboardSVCImpl implements RboardSVC {
 	public List<RboardListReqDTO> all(int bnum) {
 		return rboardDAO.all(bnum);
 	}
+
+	
 	
 }
