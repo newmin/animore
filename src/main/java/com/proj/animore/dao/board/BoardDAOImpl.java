@@ -229,6 +229,23 @@ public class BoardDAOImpl implements BoardDAO {
 										bcategory);
 		return list;
 	}
+	//게시글 전체목록(페이징)
+	@Override
+	public List<BoardReqDTO> list(String bcategory, int startRec, int endRec) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select t1.* ");
+		sql.append(" from(select row_number() over (order by bgroup desc, bstep asc) num, ");
+		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
+		sql.append("     from board b, member m ");
+		sql.append("     where b.id = m.id ");
+		sql.append("     and bcategory=?) t1 ");
+		sql.append(" where num between ? and ? ");
+		
+		List<BoardReqDTO> list = jt.query(sql.toString(),
+										new BeanPropertyRowMapper<>(BoardReqDTO.class),
+										bcategory,startRec,endRec);
+		return list;
+	}
 	//게시글전체목록 좋아요순 나열
 	@Override
 	public List<BoardReqDTO> bgoodList(String bcategory) {
@@ -339,4 +356,14 @@ public class BoardDAOImpl implements BoardDAO {
       	
 		return isNotice;
 	}
+	
+		@Override
+		public int totlaRecordCount() {
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) ");
+			sql.append("	from board ");
+			
+			int totalCount = jt.queryForObject(sql.toString(), Integer.class);
+			return totalCount;
+		}
 }

@@ -40,6 +40,7 @@ public interface BoardDAO {
 	
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
+	List<BoardReqDTO> list(String bcategory,int startRec, int endRec);
 	
 	//게시글 전체목록(좋아요순)
 	List<BoardReqDTO> bgoodList(String bcategory);
@@ -64,4 +65,7 @@ public interface BoardDAO {
 	
 	//해당글 공지여부
 	boolean isNotice(int bnum);
+	
+	//게시판 전체 레코드 수
+	int totlaRecordCount();
 }

@@ -3,6 +3,7 @@
  */
 'use strict'
 const $delFiles = document.querySelectorAll('i.fas.fa-backspace');
+const $returnBtn = document.querySelector('.returnBtn');
 
 const handler = (res,target) =>{
     //console.log(e);
@@ -59,3 +60,8 @@ function uploadChange(file) {
 	  }
 	}
 }
+
+$returnBtn.addEventListener("click",e=>{
+	const bnum = e.target.dataset.bnum;
+	location.href=`/board/post/${bnum}`;
+});

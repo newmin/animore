@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.paging.PageCriteria;
+import com.proj.animore.common.paging.RecordCriteria;
 import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
@@ -54,6 +58,9 @@ public class BoardController {
 	private final GoodBoardSVC goodBoardSVC;
 	private final FileStore fileStore;
 	private final BoardUploadFileDAO boardUploadFileDAO;
+	@Autowired
+	@Qualifier("pc5")
+	private PageCriteria pc;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -68,18 +75,30 @@ public class BoardController {
 	//게시글 목록출력
 	@GetMapping("/{bcategory}")
 	public String boardList(@PathVariable String bcategory,
+							@RequestParam(required = false) Integer reqPage,
 							Model model) {
 	     if(bcategory.equals("Q"))   bcategory="Q";
 	     if(bcategory.equals("M"))   bcategory="M";
 	     if(bcategory.equals("F"))   bcategory="F";
 	     if(bcategory.equals("P"))   bcategory="P";
 		
-	     List<BoardReqDTO> list = boardSVC.list(bcategory);
+	   //요청페이지가 없으면 1페이지로
+		if(reqPage == null) reqPage = 1;
+		//사용자가 요청한 페이지번호
+		pc.getRc().setReqPage(reqPage);
+		//게시판 전체레코드수
+		pc.setTotalRec(boardSVC.totoalRecordCount());
+		//페이징 계산
+		pc.calculatePaging();
+		
+	     List<BoardReqDTO> list = boardSVC.list(bcategory,
+	    		 								pc.getRc().getStartRec(),
+	    		 								pc.getRc().getEndRec());
 	     model.addAttribute("boardForm",list);
 	     
 	    List<BoardReqDTO> nlist = boardSVC.noticeList(bcategory);
 	    model.addAttribute("notice",nlist);
-	     
+	    model.addAttribute("pc",pc);
 		return "board/board";
 	}
 	
@@ -262,7 +281,7 @@ public class BoardController {
 		
 		
 		model.addAttribute("boardForm",boardSVC.findBoardByBnum(bnum));
-		
+		log.info("boardForm:{}",boardSVC.findBoardByBnum(bnum));
 		return "board/modifyBoardForm";
 	}
 	
