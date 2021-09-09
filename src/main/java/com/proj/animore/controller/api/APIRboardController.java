@@ -42,10 +42,9 @@ public class APIRboardController {
 	private final RboardSVC rboardSVC;
 	
 //댓글등록처리   post
-	@PostMapping("/{bnum}/{id}")
+	@PostMapping("/{bnum}")
 	public Result register(
 			@PathVariable int bnum,
-			@PathVariable String id,
 			@Valid @RequestBody RboardAddReq rar,
 			HttpServletRequest request) {
 		
@@ -55,11 +54,6 @@ public class APIRboardController {
 		HttpSession session = request.getSession(false);
 		
 		Result result;
-		//로그인 하지 않고 요청했다면
-		if(session == null) {
-			result = new Result("01","댓글입력을 위해 로그인이 필요합니다.",null);
-			return result;
-		}
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
@@ -84,6 +78,7 @@ public class APIRboardController {
 			@Valid @RequestBody RboardReReplyReq rrrr,
 			HttpServletRequest request) {
 		
+		log.info("[bnum:{}][rnum:{}][rrrr:{}]",bnum,rnum,rrrr);
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		
@@ -97,9 +92,10 @@ public class APIRboardController {
 		rboardDTO.setRindent(prboardDTO.getRindent());
 		rboardDTO.setId(loginMember.getId());
 		
-		rboardSVC.addReReply(rboardDTO);
+		log.info("[rboardDTO:{}]",rboardDTO);
+		List<RboardListReqDTO> replyList = rboardSVC.addReReply(rboardDTO);
 		
-		return new Result();
+		return new Result("00","성공",replyList);
 	}
 	
 	
@@ -109,7 +105,10 @@ public class APIRboardController {
 	@GetMapping("/{bnum}/{rnum}")
 	public Result findByRnum(
 			@PathVariable int bnum,
-			@PathVariable int rnum) {
+			@PathVariable int rnum,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
 		
 		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
 		Result result = new Result();
@@ -126,22 +125,21 @@ public class APIRboardController {
 	}
 	
 //댓글수정처리 patch
-	@PatchMapping("/{bnum}/{rnum}/{id}")
+	@PatchMapping("/{bnum}/{rnum}")
 	public Result modify(
 			@PathVariable int bnum,
 			@PathVariable int rnum,
-			@PathVariable String id,			
-			@RequestBody RboardModiReq rmr) {
-		//rcontent
-		log.info("modify:{}",bnum);
-		log.info("modify:{}",rnum);
-		log.info("modify:{}",id);
-		log.info("modify:{}",rmr);
+			@RequestBody RboardModiReq rmr,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false); 
+		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
 		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rmr,rboardDTO);
-		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, id, rboardDTO);
-		
+		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, loginMemberId, rboardDTO);
 		
 		Result result = new Result();
 		if (modifiedRboardDTO == null) {

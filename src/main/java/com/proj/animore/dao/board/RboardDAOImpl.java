@@ -35,11 +35,6 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("insert into rboard(rnum,bnum,id,rcontent,rgroup,rstep,rindent) ");
 		sql.append("						values(rboard_rnum_seq.nextval,?,?,?,rboard_rnum_seq.currval,0,0)");
 		
-//		jt.update(sql.toString()
-//							,bnum
-//							,id
-//							,rboardDTO.getRcontent());
-
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jt.update(new PreparedStatementCreator() {
@@ -80,7 +75,7 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("   prnum, ");
 		sql.append("   rgroup, ");
 		sql.append("   rstep, ");
-		sql.append("   rindent, ");
+		sql.append("   rindent ");
 		sql.append(" ) VALUES ( ");
 		sql.append("   rboard_rnum_seq.nextval, ");
 		sql.append("   ?, ");
@@ -89,7 +84,7 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("   ?, ");
 		sql.append("   ?, ");
 		sql.append("   ?, ");
-		sql.append("   ?, ");
+		sql.append("   ? ");
 		sql.append(" ) ");
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();		
@@ -107,13 +102,12 @@ public class RboardDAOImpl implements RboardDAO{
 				pstmt.setString(3, rboardDTO.getRcontent());
 				pstmt.setInt(4, rboardDTO.getPrnum());
 				pstmt.setInt(5, rboardDTO.getRgroup());
-				pstmt.setInt(6, rboardDTO.getRstep());
-				pstmt.setInt(7, rboardDTO.getRindent());
+				pstmt.setInt(6, rboardDTO.getRstep()+1);
+				pstmt.setInt(7, rboardDTO.getRindent()+1);
 				
 				return pstmt;
 			}
 		}, keyHolder);
-		
 		List<RboardListReqDTO> list = all(rboardDTO.getBnum());
 		return list;
 	}
@@ -123,7 +117,8 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("update rboard ");
 		sql.append("   set rstep = rstep + 1 ");
 		sql.append(" where rgroup = ? ");
-		sql.append("   and rstep > ? ");
+//		sql.append("   and rstep < ? ");
+		sql.append("   and rstep > ? ");	//원본
 		
 		jt.update(sql.toString(), rgroup,rstep);
 	}
@@ -157,7 +152,7 @@ public class RboardDAOImpl implements RboardDAO{
 		StringBuffer sql = new StringBuffer();
 		sql.append("update rboard ");
 		sql.append("set rcontent=?, ");
-		sql.append("    rudate=systimestamp, ");
+		sql.append("    rudate=systimestamp ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
 		sql.append("and id=? ");
@@ -200,7 +195,9 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("from member t1, rboard t2 ");
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
-		sql.append("order by t2.rgroup desc, t2.rstep asc ");
+//		sql.append("order by t2.rgroup desc, t2.rstep asc");	//원본
+//		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
+		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
 		
 		List<RboardListReqDTO> list =
 				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);
