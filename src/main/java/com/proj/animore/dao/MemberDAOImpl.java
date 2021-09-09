@@ -25,20 +25,24 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into member(id,pw,name,birth,gender,tel,email,address,nickname,mtype) ");
+		sql.append("insert into member(id,pw,name,birth,gender,tel,email,address,nickname,mtype,upload_fname,store_fname,ftype,fsize) ");
 		sql.append(" values(?,?,?,?,?,?,?,?,?,?) ");
 		
 		jdbcTemplate.update(sql.toString(),
-												memberDTO.getId(),
-												memberDTO.getPw(),
-												memberDTO.getName(),
-												memberDTO.getBirth(),
-												memberDTO.getGender(),
-												memberDTO.getTel(),
-												memberDTO.getEmail(),
-												memberDTO.getAddress(),
-												memberDTO.getNickname(),
-												memberDTO.getMtype());
+							memberDTO.getId(),
+							memberDTO.getPw(),
+							memberDTO.getName(),
+							memberDTO.getBirth(),
+							memberDTO.getGender(),
+							memberDTO.getTel(),
+							memberDTO.getEmail(),
+							memberDTO.getAddress(),
+							memberDTO.getNickname(),
+							memberDTO.getMtype(),
+							memberDTO.getUpload_fname(),
+							memberDTO.getStore_fname(),
+							memberDTO.getFtype(),
+							memberDTO.getFsize());
 
 			log.info("memberDTO : {}", memberDTO.toString());
 	}
@@ -68,7 +72,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO findMemberById(String id) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname ");
+		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname,upload_fname,store_fname,ftype,fsize ");
 		sql.append("from member ");
 		sql.append("where id= ? ");
 
@@ -84,23 +88,32 @@ public class MemberDAOImpl implements MemberDAO {
 		StringBuffer sql = new StringBuffer();
 		//이름이 name이 사용중하는 변수라서 사용불가~!
 		sql.append("update member ");
-		//sql.append(" set name = ?, ");
-		sql.append("   set tel = ?, ");
-		sql.append("    email = ?, ");
-		sql.append("    address = ?, ");
-		sql.append("    nickname = ?, ");
-		sql.append("    udate = systimestamp ");
+		sql.append("   set name = ?, ");
+		sql.append("       tel = ?, ");
+		sql.append("       email = ?, ");
+		sql.append("       address = ?, ");
+		sql.append("       nickname = ?, ");
+		sql.append("       upload_fname = ?, ");
+		sql.append("       store_fname = ?, ");
+		sql.append("       ftype = ?, ");
+		sql.append("       fsize = ?, ");
+		sql.append("       udate = systimestamp ");
 		sql.append(" where id = ? ");
-		sql.append(" and pw = ? ");
-
+		sql.append("   and pw = ? "); 
+		//수정폼의 pw작성란은 그럼 수정전 비번재확인용? 해당 부분 뷰에서 pw 마지막에 두고 본인확인용 재입력란임을 알림표시 바람
+		//
 		jdbcTemplate.update(sql.toString(),
-//												memberDTO.getName(),
-												memberDTO.getTel(),
-												memberDTO.getEmail(),
-												memberDTO.getAddress(),
-												memberDTO.getNickname(),
-												id,
-												memberDTO.getPw());
+							memberDTO.getName(),
+							memberDTO.getTel(),
+							memberDTO.getEmail(),
+							memberDTO.getAddress(),
+							memberDTO.getNickname(),
+							memberDTO.getUpload_fname(),
+							memberDTO.getStore_fname(),
+							memberDTO.getFtype(),
+							memberDTO.getFsize(),
+							id,
+							memberDTO.getPw());
 		return findMemberById(id);
 
 	}

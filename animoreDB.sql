@@ -33,7 +33,8 @@ create table member(
   lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
   fsize varchar2(45),
   ftype varchar2(50) default 'png',
-  fname varchar2(150) default 'puppy',
+  store_fname varchar2(150) default 'puppy',
+  upload_fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
   constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),

@@ -1,5 +1,6 @@
 package com.proj.animore.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.common.mail.MailService;
 import com.proj.animore.common.util.PasswordGeneratorCreator;
 import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.board.MetaOfUploadFile;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
@@ -39,6 +42,7 @@ public class MemberController {
 
 	private final MemberSVC memberSVC;
 	private final MailService ms;
+	private final FileStore fileStore;
 
 	/**
 	 * 회원가입유형선택
@@ -89,7 +93,7 @@ public class MemberController {
 
 	@PostMapping("/join/N")
 	public String join(@Valid @ModelAttribute JoinMemberForm joinMemberForm,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws IllegalStateException, IOException {
 		if (!joinMemberForm.getPw().equals(joinMemberForm.getPw2())) {
 			bindingResult.rejectValue("pw2", "pw2", "비밀번호가 일치하지 않습니다.");
 		}
@@ -97,8 +101,17 @@ public class MemberController {
 			log.info("errors={}", bindingResult);
 			return "member/joinForm";
 		}
+		
 		MemberDTO memberDTO = new MemberDTO();
 		BeanUtils.copyProperties(joinMemberForm,memberDTO);
+		
+		fileStore.setFilePath("d:/upload/member/");		
+		MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
+		log.info(joinMemberForm.getImage().toString());
+		memberDTO.setStore_fname(storedFile.getStore_fname());
+		memberDTO.setUpload_fname(storedFile.getUpload_fname());
+		memberDTO.setFsize(storedFile.getFsize());
+		memberDTO.setFtype(storedFile.getFtype());
 		
 		memberSVC.joinMember(memberDTO);
 		return "redirect:/";

@@ -2,6 +2,7 @@ package com.proj.animore.form;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -48,4 +49,6 @@ public class JoinMemberForm {
   private String email;
 //   @NotBlank
   private String address;
+  
+  private List<String> myAni;
 }
