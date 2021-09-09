@@ -55,7 +55,6 @@ public class BusinessSVCImpl implements BusinessSVC {
 		return  businessDAO.mybusiList(id);
 	}
 
-
 	//업체목록조회 (병원태그포함)
 	@Override
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr) {
