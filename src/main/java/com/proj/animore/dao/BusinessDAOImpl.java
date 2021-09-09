@@ -178,4 +178,23 @@ public class BusinessDAOImpl implements BusinessDAO {
 	}
 	
 	
+	//내업체 목록
+	//업체목록 조회
+	@Override
+	public List<BusinessLoadDTO> mybusiList(String id) {
+		
+		StringBuffer sql = new StringBuffer();
+
+		sql.append(" select b.bname, b.baddress ,b.btel ");
+		sql.append(" from business b ");
+		sql.append("  where id = ?  ");
+		
+		List<BusinessLoadDTO> mybusiList = jdbcTemplate.query(sql.toString(),
+					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),id
+					   );
+		
+		log.info(mybusiList.toString());
+		
+		return mybusiList;
+	}
 }

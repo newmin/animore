@@ -82,28 +82,25 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberDTO modifyMember(String id, MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
-		
+		//이름이 name이 사용중하는 변수라서 사용불가~!
 		sql.append("update member ");
-		sql.append("set pw = ?, ");
-		sql.append("    name = ?, ");
-		sql.append("    gender = ?, ");
-		sql.append("    tel = ?, ");
+		//sql.append(" set name = ?, ");
+		sql.append("   set tel = ?, ");
 		sql.append("    email = ?, ");
 		sql.append("    address = ?, ");
 		sql.append("    nickname = ?, ");
 		sql.append("    udate = systimestamp ");
 		sql.append(" where id = ? ");
+		sql.append(" and pw = ? ");
 
 		jdbcTemplate.update(sql.toString(),
-												memberDTO.getPw(),
-												memberDTO.getName(),
-												memberDTO.getGender(),
+//												memberDTO.getName(),
 												memberDTO.getTel(),
 												memberDTO.getEmail(),
 												memberDTO.getAddress(),
 												memberDTO.getNickname(),
-												id);
-		
+												id,
+												memberDTO.getPw());
 		return findMemberById(id);
 
 	}

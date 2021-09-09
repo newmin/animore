@@ -32,4 +32,9 @@ public interface BusinessSVC {
 	
 	//업체목록조회 (병원태그포함)
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr);
+	
+	//내업체 목록 
+	public List<BusinessLoadDTO> mybusiList(String id);
+
+
 }
