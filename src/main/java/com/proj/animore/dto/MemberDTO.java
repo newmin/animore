@@ -27,4 +27,8 @@ public class MemberDTO {
   private String email;
   private String address;
   private String mtype;
+  private String fname; 	//업로드 파일명 upload_fname varchar2(50),
+  private String fsize;		//파일 크기 fsize default puppy
+  private String ftype;		//유형 check in('jpg','png','gif','bmp') default png
+
 }

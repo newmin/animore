@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -88,7 +89,7 @@ public class MemberController {
 
 	@PostMapping("/join/N")
 	public String join(@Valid @ModelAttribute JoinMemberForm joinMemberForm,
-			BindingResult bindingResult, MemberDTO memberDTO) {
+			BindingResult bindingResult) {
 		if (!joinMemberForm.getPw().equals(joinMemberForm.getPw2())) {
 			bindingResult.rejectValue("pw2", "pw2", "비밀번호가 일치하지 않습니다.");
 		}
@@ -96,6 +97,9 @@ public class MemberController {
 			log.info("errors={}", bindingResult);
 			return "member/joinForm";
 		}
+		MemberDTO memberDTO = new MemberDTO();
+		BeanUtils.copyProperties(joinMemberForm,memberDTO);
+		
 		memberSVC.joinMember(memberDTO);
 		return "redirect:/";
 	}
