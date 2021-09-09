@@ -25,16 +25,16 @@ import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.FavoriteDTO;
 import com.proj.animore.dto.FavoriteReq;
-import com.proj.animore.dto.GoodBoardDTO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.ReviewForm;
 import com.proj.animore.svc.BusinessSVC;
 import com.proj.animore.svc.FavoriteSVC;
-import com.proj.animore.svc.GoodBoardSVC;
 import com.proj.animore.svc.MemberSVC;
+import com.proj.animore.svc.board.GoodBoardSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

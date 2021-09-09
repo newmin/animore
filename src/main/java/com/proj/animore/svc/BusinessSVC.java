@@ -28,17 +28,13 @@ public interface BusinessSVC {
 	public List<BusinessLoadDTO> busiListForMember(String bcategory, String id);
 
 	//검색어로 목록
-<<<<<<< HEAD
 	public List<BusinessLoadDTO> busiListBySearch(String search);
 	
 	//업체목록조회 (병원태그포함)
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr);
-=======
-	public List<BusinessLoadDTO> busiListBySearch(String text);
 	
 	//내업체 목록 
 	public List<BusinessLoadDTO> mybusiList(String id);
 
 
->>>>>>> min
 }
