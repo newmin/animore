@@ -33,7 +33,7 @@ public interface BoardDAO {
 	List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname);
 	
 	//게시글 수정
-	BoardReqDTO modifyBoard(int bnum,BoardDTO boardDTO);
+	int modifyBoard(int bnum,BoardDTO boardDTO);
 	
 	//게시글 삭제
 	void deleteBoard(int bnum);
