@@ -50,6 +50,11 @@ public class BusinessSVCImpl implements BusinessSVC {
 	public List<BusinessLoadDTO> busiListBySearch(String search) {
 		return businessDAO.busiListBySearch(search);
 	}
+	@Override
+	public List<BusinessLoadDTO> mybusiList(String id){
+		return  businessDAO.mybusiList(id);
+	}
+
 
 	//업체목록조회 (병원태그포함)
 	@Override
