@@ -15,6 +15,14 @@ public interface RboardDAO {
 	 * @return
 	 */
 	List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO);
+	
+	/**
+	 * 대댓글등록처리
+	 * @param rboardDTO
+	 * @return
+	 */
+	List<RboardListReqDTO> addReReply(RboardDTO rboardDTO);
+	
 	/**
 	 * 댓글수정처리
 	 * @param rnum

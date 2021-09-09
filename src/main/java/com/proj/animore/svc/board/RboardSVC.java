@@ -17,6 +17,12 @@ public interface RboardSVC {
 	List<RboardListReqDTO> register(int bnum, String id, RboardDTO rboardDTO);
 
 	/**
+	 * 대댓글등록처리
+	 * @param rboardDTO
+	 */
+	List<RboardListReqDTO> addReReply(RboardDTO rboardDTO);
+
+	/**
 	 * 댓글수정처리
 	 * @param rnum
 	 * @param id
@@ -40,5 +46,6 @@ public interface RboardSVC {
 	 * 댓글목록조회 by 게시글번호
 	 */
 	List<RboardListReqDTO> all(int bnum);
+
 
 }
