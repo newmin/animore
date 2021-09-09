@@ -81,7 +81,7 @@
 			
 			<!--리뷰 -->
 				<section class="review__container">
-					<div><p th:text="|리뷰수 : ${review.size}|"></p></div>
+					<div class="review__cnt"><i class="far fa-comment-dots"></i><span th:text="|리뷰수 : ${review.size}|"></span></div>
 					<!-- 로그인시에만 리뷰 출력 -->
 		      <section class="review" th:if="${session.loginMember != null}">
 		        <div class="review__row" th:each="review :${review}" th:object="${review}" th:data-rnum="${review.rnum}">

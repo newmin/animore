@@ -119,6 +119,14 @@
 }
 .review::-webkit-scrollbar{ display:none; }
 
+.review__cnt{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  margin: 8px 0;
+}
+
 .review__up{
   position: absolute;
   top: -50px;
