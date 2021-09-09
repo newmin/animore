@@ -152,10 +152,10 @@
 							</div>
 							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>
 		        </div>
-		  
 		      </section>
 				</section>
-		      <section class="wrap" th:if="${session!=null && session.loginMember!=null}">
+				<section class="wrap" th:if="${session!=null && session.loginMember!=null}">
+						<div class="review__up"><i class="fas fa-angle-up"></i></div>
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">

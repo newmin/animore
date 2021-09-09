@@ -125,8 +125,8 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r  ");
 		sql.append(" where b.bnum=r.bnum(+)	  ");
-		sql.append("   and BNAME like '%"+search+"%' ");
-		sql.append("    or BADDRESS like '%\"+search+\"%' ");
+		sql.append("   and (BNAME like '%"+search+"%' ");
+		sql.append("    or BADDRESS like '%"+search+"%') ");
 
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
 				   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
