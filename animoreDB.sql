@@ -29,16 +29,16 @@ create table member(
   mtype char(1) not null,
   status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
-  udate timestamp DEFAULT systimestamp,
+  udate timestamp,
   lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
-  image blob,
   fsize varchar2(45),
-  ftype varchar2(50),
-  fname varchar2(150),
+  ftype varchar2(50) default 'png',
+  fname varchar2(150) default 'puppy',
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
   constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),
-  constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
+  constraint MEMBER_mtype_ck check(mtype in('A','N','S')),
+  constraint MEMBER_ftype_ck check(ftype in('jpg','png','gif','bmp'))  
 );
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
 
