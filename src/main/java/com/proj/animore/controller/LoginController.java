@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.LoginForm;
@@ -56,6 +57,7 @@ public class LoginController {
 	public String login(
 			@Valid @ModelAttribute LoginForm loginForm,	
 			BindingResult bindingResult,
+			@RequestParam(name="redirectUrl",defaultValue="/") String redirectUrl,
 			Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		log.info("loginForm:{}", loginForm);
@@ -88,7 +90,7 @@ public class LoginController {
 			response.addCookie(cookie);
 		}
 		
-		return "redirect:/";
+		return "redirect:"+redirectUrl;
 	}
 	
 	/**

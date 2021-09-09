@@ -16,8 +16,11 @@ import com.proj.animore.dto.board.MetaOfUploadFile;
 @Component
 public class FileStore {
 	//첨부파일이 저장될 파일시스템의 경로 application.properties에서 정의
-		@Value("${product.file.path}")
 		private String filePath;
+
+		public void setFilePath(String filePath){
+			this.filePath=filePath;
+		}
 		
 		public String getFullPath(String fileName) {
 			return filePath + fileName;

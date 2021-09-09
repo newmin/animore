@@ -30,8 +30,8 @@ public class GoodBoardSVCImpl implements GoodBoardSVC {
 	}
 
 	@Override
-	public List<GoodBoardDTO> list(String id) {
-		return goodBoardDAO.list(id);
+	public List<GoodBoardDTO> goodBoardList(String id) {
+		return goodBoardDAO.goodBoardList(id);
 	}
 
 	@Override

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/addBoardForm.js" defer></script>
+<title>답글</title>
+</head>
+<body>
+<main class="main ">
+	<!-- TODO 링크에 id값 넣기 -->
+	<form action=""  th:method="post"  th:object="${replyForm}" enctype="multipart/form-data">
+	<!-- <input type="hidden" th:filed="*{id}"/> -->
+	<div class="addPost__container">
+    <select name="bcategory"  class="addPost__selectbox" th:field="*{bcategory}">
+      <option value="" >게시판명</option>
+	<option th:each="ele : ${bcategoryCode}"
+			th:value="${ele.code}" th:text="${ele.decode}">
+	</option>
+    </select>
+    <p th:errors="*{bcategory}" th:errorclass="field-errmsg"></p>
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <p th:errors="*{btitle}" th:errorclass="field-errmsg"></p>
+    <p th:errors="*{bcontent}" th:errorclass="field-errmsg"></p>
+      <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
+    <div class="addPost__icons">
+      <span class="filetype">
+                <span class="file-text"></span>
+      <label for="files" class="file-btn">찾아보기</label>
+      <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
+      </span>
+    </div>
+    <div class="addPost__btns">
+      <button type="button" class="addPost__escBtn">취소</button>
+      <button type="submit">등록</button>
+    </div>
+    </div>
+    </form>
+</main>
+</body>
+</html>

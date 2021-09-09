@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/template/templateSub::main(~{::title},~{::main},~{::script})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/api/ajaxCall.js"></script>
+  <script src="/js/api/mypageReq.js" defer></script>
+  <script src="/js/mypage.js" defer></script>
+  <script defer></script>
+  <title>내업체목록</title>
+</head>
+<body>
+  
+  <!-- 메인 시작 -->
+  <main class="main">
+     <!-- 프로필정보 -->
+      <div class="mypage_profile_container">
+        <div class="mypage_profile_profileimg">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+        </div>
+        <div class="mypage_profile_nickname">
+          Tester1
+        </div>
+        <div class="mypage_profile_usertypeicon">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
+        </div>
+        <div class="mypage_profile_mileage">
+          마일리지: 1000p
+        </div>
+      </div>
+      <!-- 프로필정보 끝 -->
+      <div class="mypage_container2">
+        <div class="mypage_aside_container">
+          <h2 class="mypage_aside_title">마이페이지</h2>
+          <ul class="mypage_aside_menu">
+            <!-- TODO th:href 등록 파일명'임의'표기-->
+            <li><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+            <li><a href="/mypage/mypageReview" >내가 쓴 리뷰</a></li>
+            <li><a href="/mypage/mypagePost.html" >내가 쓴 글</a></li>
+            <li><a href="/mypage/mypageReply.html" >내가 쓴 댓글</a></li>
+            <li class="mypage_aside_menu_highlight"><a href="/mypage/mypageGood.html" >좋아요</a></li>
+            <li><a href="/mypage/mypageCoupon.html" >내 쿠폰</a></li>
+            <li><a href="/mypage/mypageModify" >개인 정보 수정</a></li>
+            <li><a href="/mypage/mybusilist" >내 업체 목록</a></li>
+            <li><a href="/mypage/mypageDel.html" >회원 탈퇴</a></li>
+          </ul>
+        </div>
+        <div class="mypage_content_container">
+          <h3 class="mypage_content_title">좋아요</h3>
+          <hr>
+	<table class="favorite__table ">
+         <tr class="w3-hover-green">
+           <th class="favorite__cell favorite__fnum">카테고리</th>
+           <th class="favorite__cell favorite_bname">제목</th>
+           <th class="favorite__cell favorite_score">좋아요</th>
+         </tr>
+       		       		
+       
+
+         <tr th:each="goodBoardList :${goodBoardList}" class="w3-hover-green">
+         
+           <td class="favorite__cell favorite__fnum" th:text="${goodBoardList.bcategory}">1</td>
+ 
+           <td class="favorite__cell favorite_bname" th:text="${goodBoardList.btitle}">2</td>
+
+      	  <td class="favorite__cell favorite_score" th:text="${goodBoardList.bgood}">3</td>
+         </tr>
+       </table>
+
+      		
+          </div>
+        </div>
+    </main>
+  <!-- 메인 끝 -->
+	
+  
+
+
+
+</body>
+</html>

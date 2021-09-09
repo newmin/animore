@@ -13,7 +13,7 @@ public interface GoodBoardDAO {
 	void upGoodBoardCnt(Integer bnum);
 	
 	//좋아요 전체목록
-	List<GoodBoardDTO> list (String id);
+	List<GoodBoardDTO> goodBoardList (String id);
 	
 	//좋아요 삭제
 	void delGoodBoard(Integer bnum, String id);
