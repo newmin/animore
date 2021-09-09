@@ -25,6 +25,7 @@ import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.FavoriteDTO;
 import com.proj.animore.dto.FavoriteReq;
+import com.proj.animore.dto.GoodBoardDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
@@ -32,6 +33,7 @@ import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.ReviewForm;
 import com.proj.animore.svc.BusinessSVC;
 import com.proj.animore.svc.FavoriteSVC;
+import com.proj.animore.svc.GoodBoardSVC;
 import com.proj.animore.svc.MemberSVC;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,7 @@ public class MyPageController {
    private final FavoriteSVC favoriteSVC;
    private final MemberSVC memberSVC;
    private final BusinessSVC businessSVC;
+   private final GoodBoardSVC goodBoardSVC;
    
    //즐겨찾기 목록
    @GetMapping("/mypageFavorites")
@@ -187,6 +190,28 @@ public String modifyMember(HttpServletRequest request,
 
 	      return "mypage/mybusilist";
 		}
-  
+   //좋아요
+   //@GetMapping("/mypageGood")
+   public String mypageGood(HttpServletRequest request,
+		      Model model){
+	   HttpSession session = request.getSession(false);
+	      if(session == null || session.getAttribute("loginMember") == null){
+	    	  
+	        return "redirect:/login";
+	      }
+	       LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	       
+	       String id = loginMember.getId();
+	       
+	       log.info(id);
+	       
+	      List<GoodBoardDTO> goodBoardList = goodBoardSVC.goodBoardList(id);
+	      model.addAttribute("goodBoardList",goodBoardList);
+	      
+	      log.info(goodBoardList.toString());
+	   
+	   return "mypage/mypageGood";
+   
+   }
    
 }

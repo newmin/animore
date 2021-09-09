@@ -53,18 +53,19 @@ public class GoodBoardDAOImpl implements GoodBoardDAO {
 	}
 	//좋아요 전체목록
 	@Override
-	public List<GoodBoardDTO> list(String id) {
+	public List<GoodBoardDTO>goodBoardList(String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select t1.id,t2.gnum,t1.bcategory,t1.btitle,t1.bgood ");
 		sql.append("from board t1, goodboard t2 ");
 		sql.append("where t1.bnum = t2.bnum ");
 		sql.append("and t2.id =? ");
-	
-		List<GoodBoardDTO> list = jt.query(sql.toString(), 
+		
+		List<GoodBoardDTO> goodBoardList = jt.query(sql.toString(), 
 										new BeanPropertyRowMapper<>(GoodBoardDTO.class),
 										id);
 		
-		return list;
+		
+		return goodBoardList;
 	}
 	
 	//좋아요숫자감소

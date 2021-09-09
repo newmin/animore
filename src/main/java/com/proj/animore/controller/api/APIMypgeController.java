@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proj.animore.dto.BoardReqDTO;
 import com.proj.animore.dto.BusinessLoadDTO;
+import com.proj.animore.dto.GoodBoardDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.dto.ReviewReq;
@@ -23,6 +24,7 @@ import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.BoardSVC;
 import com.proj.animore.svc.BusinessSVC;
+import com.proj.animore.svc.GoodBoardSVC;
 import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.MypageSVC;
 import com.proj.animore.svc.ReviewSVC;
@@ -41,6 +43,7 @@ public class APIMypgeController {
 	private final MypageSVC mypageSVC;
 	private final MemberSVC memberSVC;
 	private final BusinessSVC businessSVC;
+	private final GoodBoardSVC goodBoardSVC;
 	
 	//내 리뷰 조회
 	@GetMapping("/review")
@@ -196,10 +199,10 @@ public class APIMypgeController {
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
-//		html.append("<li>");
-//		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-//		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" th:field=\"*{name}\" value= \""+memberDTO.getName()+"\"required></div>");
-//		html.append("</li>");
+		//html.append("<li>");
+		//html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
+		//html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name=\"name\" id=\"name\" value= \""+memberDTO.getName()+"\"required></div>");
+		//html.append("</li>");
 
 		
 		html.append("    <li>");
@@ -270,10 +273,10 @@ public class APIMypgeController {
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
-//		html.append("<li>");
-//		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-//		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" th:field=\"*{name}\" value= \""+memberDTO.getName()+"\"required></div>");
-//		html.append("</li>");
+		//html.append("<li>");
+		//html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
+		//html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name=\"name\" id=\"name\" value= \""+memberDTO.getName()+"\"required></div>");
+		//html.append("</li>");
 
 		
 		html.append("    <li>");
@@ -314,24 +317,23 @@ public class APIMypgeController {
 		return new Result("00","OK",html);
 
 	}
-	
+	//업체목록
 	@GetMapping("/mybusilist")
 	public Result mypagebusilist (HttpServletRequest request){
+		
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
 		
 		
-		
-	
-		StringBuffer html = new StringBuffer();
-		
 		List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(loginMember.getId());
 
-		html.append("<div class=\"mypage_content_container\">");
-		html.append("<h3 class=\"mypage_content_title\">내 업체 목록</h3>");
+		
+		StringBuffer html = new StringBuffer();
+		html.append("<h3 class='mypage_content_title'>내업체목록</h3>");
 		html.append("<hr>");
-		html.append("<table class=\"favorite__table \">");
+		html.append("<div class='mypage_content_container'>");
+		html.append("<table class='reply__table'> ");
 		html.append("<tr class=\"w3-hover-green\">");
 		html.append("<th class=\"favorite__cell favorite__fnum\">업체명</th>");
 		html.append("<th class=\"favorite__cell favorite_bname\">주소</th>");
@@ -340,17 +342,59 @@ public class APIMypgeController {
 		html.append(" </tr>");
 		mybusiList.forEach(rec->{
 		html.append("<tr class=\"w3-hover-green\">");
-		html.append(" <td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
-		html.append("      <td class='favorite__cell favorite__fnum'>"+rec.getBaddress()+"</td>");
-		html.append("      <td class='favorite__cell favorite__fnum'>"+rec.getBtel()+"</td>");
+		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
+		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBaddress()+"</td>");
+		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBtel()+"</td>");
 		html.append(" <td><button>수정</button></td>");
 		html.append("</tr>");
 		});
 		html.append("</table>");
 		html.append("</div>");
 		
+		Result result;
+		result = new Result("00","OK",html);
 		
-		
-		return new Result("00","OK",html);	
+		return result;
 	}
+	
+	//내 좋아요 조회
+	@GetMapping("/mypageGood")
+	public Result goodBoardList(HttpServletRequest request) {
+	
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		log.info("loginMember:{}",loginMember);
+		
+		List<GoodBoardDTO> goodBoardList = goodBoardSVC.goodBoardList(loginMember.getId());
+		
+		StringBuffer html = new StringBuffer();
+			
+			html.append("<h3 class='mypage_content_title'>좋아요</h3>");
+			html.append("<hr>");
+			html.append("<div class='mypage_content_container'>");
+			html.append("  <table class='reply__table'> ");
+			html.append("    <tr>");
+			html.append("      <th class='reply__cell'>카테고리</th>");
+			html.append("      <th class='reply__cell'>제목</th>");
+			html.append("      <th class='reply__cell'>좋아요</th>");
+			html.append("       <!-- <th class='mypagereply__title5'></th> -->");
+			html.append("    </tr>");
+			goodBoardList.forEach(rec->{
+			html.append("    <tr>");
+			html.append("      <td class='reply__cell'>"+rec.getBcategory()+"</td>");
+			html.append("      <td class='reply__cell'>"+rec.getBtitle()+"</td>");
+			html.append("      <td class='reply__cell'>"+rec.getBgood()+"</td>");
+			html.append("      <!-- <td th:text='5번째칸' class='mypagereply__text'></td> -->");
+			html.append("    </tr>");
+		});
+			html.append("  </table>");
+			html.append("</div>");
+		
+		Result result;
+		result = new Result("00","OK",html);
+		
+		return result;
+	}
+	
+	
 }
