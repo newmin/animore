@@ -228,7 +228,8 @@ const modifyBtn = e =>{
 	
 	const $id = id.value;
 	const $pw = pw.value;
-	//const $name = name.value;
+	// const $name = name.value;
+	const $name = document.querySelector('input[name="name"]').value;
 	const $tel = tel.value;
 	const $nickname = nickname.value;
 	const $address = address.value;
@@ -241,7 +242,7 @@ const modifyBtn = e =>{
 	const data = {
 								 "id":$id,
 								 "pw":$pw,
-								//"name":$name,
+								 "name":$name,
 								 "tel":$tel,
 								 "email":$email,
 								 "nickname":$nickname,
@@ -299,7 +300,7 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 
 //내업체목록
 const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
-	$mybusilist.addEventListener('click',e=>{
+	$mybusilist?.addEventListener('click',e=>{
 	e.preventDefault();
 	
 	const URL = `/mypage/mybusilist`;
@@ -323,11 +324,11 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 
 });
 
-function refreshModi(data){
+function refreshModi(memberDTO){
 
 
 	let html ='';
-	data.forEach(rec => {
+	// data.forEach(rec => {
 
 		html+="<div class=\"mypage_content_container\">";
 		
@@ -340,7 +341,7 @@ function refreshModi(data){
 		
 		
 		html+="<li><label for=\"id\">아이디</label></li>";
-		html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>";
+		html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.id+" readonly=\"readonly\"/></li>";
 		
 		html+="<li><label for=\"pw\">비밀번호</label></li>";
 		html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
@@ -354,26 +355,26 @@ function refreshModi(data){
 		
 		html+="    <li>";
 		html+="      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>";
-		html+="      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>";
+		html+="      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.email+" \" required></div>";
 		html+="    </li>";
 		
 		
 		
 		html+="    <li><label for=\"nickname\">별칭</label></li>";
-		html+="  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"/></li>";
+		html+="  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.nickname+"/></li>";
 
 		
 		html+="<li><label for=\"birth\">생년월일</label></li>";
-		html+="<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	";
+		html+="<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.birth+" \"/></li>	";
 		
 		
 		html+="<li><label for=\"tel\">전화번호</label></li>";
-		html+="<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>";
+		html+="<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.tel+" \"/></li>";
 		
 		
 		html+="<li>";
 		html+="<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>";
-		html+="<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.getAddress()+" required></div>";
+		html+="<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.address+" required></div>";
 
 
 		html+="</li>";
@@ -383,7 +384,7 @@ function refreshModi(data){
 		html+="</ul>";
 		html+="</form >";
 		html+="</div>";
-});
+// });
 };
 
 
