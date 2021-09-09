@@ -15,11 +15,11 @@ public class WebConfig implements WebMvcConfigurer {
 						.order(1)
 						.addPathPatterns("/**")
 						.excludePathPatterns(
-							"/",
+							"/","/main/{bcategory}",
 							"/login","/logout",
-							"/member/**",
+							"/member/**","/join/**",
 							"/css/**","/js/**","/img/**",
-							"/main/{bcategory}","/{bcategory}","/inquire/**","/search?**",
+							"/{bcategory}","/inquire/**","/search?**",
 							"/board/{bcategory}");
 						//   \" 변수명 \"
 	}
