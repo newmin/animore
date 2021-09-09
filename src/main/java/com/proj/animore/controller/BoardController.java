@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
+import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
@@ -35,6 +36,7 @@ import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.form.board.BoardForm;
 import com.proj.animore.form.board.ReplyForm;
+import com.proj.animore.form.board.modifyBoardForm;
 import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
@@ -51,6 +53,7 @@ public class BoardController {
 	private final RboardSVC rboardSVC;
 	private final GoodBoardSVC goodBoardSVC;
 	private final FileStore fileStore;
+	private final BoardUploadFileDAO boardUploadFileDAO;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -102,6 +105,7 @@ public class BoardController {
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
+		fileStore.setFilePath("d:/upload/board/");
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 		
@@ -149,6 +153,8 @@ public class BoardController {
 		
 		//boardSVC.addBoard(loginMemberId,boardDTO);
 		log.info("boardForm:{}",boardForm);
+		
+		fileStore.setFilePath("d:/upload/board/");
 		
 		BoardDTO boardDTO = new BoardDTO();
 		//boardForm 의 값이 boardDTO에 복사됨
@@ -235,6 +241,7 @@ public class BoardController {
 		boardDTO.setBindent(pBoardDTO.getBindent());
 		
 		//첨부파일 메타정보 추출
+		fileStore.setFilePath("d:/upload/board/");
 		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(replyForm.getFiles());
 		//UploadFileDTO 변환	
 		boardDTO.setFiles(convert(storedFiles));
@@ -253,26 +260,37 @@ public class BoardController {
 	public String modifyPostForm(@PathVariable Integer bnum,
 								Model model) {
 		
-		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
-		log.info("boardForm:{}",boardReqDTO);
 		
-		model.addAttribute("boardForm",boardReqDTO);
-		log.info("files:{}",boardReqDTO.getFiles());
-		log.info("files:{}",boardReqDTO.getFiles().get(0).getUpload_fname());
+		model.addAttribute("boardForm",boardSVC.findBoardByBnum(bnum));
 		
 		return "board/modifyBoardForm";
 	}
 	
 	//게시글 수정 처리
-	@PatchMapping("/{bnum}")
+	@PatchMapping("/modify/{bnum}")
 	public String modifyPost(@PathVariable Integer bnum,
-							@ModelAttribute BoardForm boardFrom) {
-
+							@Valid @ModelAttribute modifyBoardForm modifyForm,
+							BindingResult bindingResult,
+							RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+		
+		if(bindingResult.hasErrors()) {
+			return "board/modifyBoardForm";
+		}
+		
+		fileStore.setFilePath("d:/upload/board/");
 		BoardDTO boardDTO = new BoardDTO();
-		BeanUtils.copyProperties(boardFrom, boardDTO);
+		
+		//첨부파일 메타정보 추출
+		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(modifyForm.getFiles());
+				
+		boardDTO.setFiles(convert(storedFiles));
+		
+		BeanUtils.copyProperties(modifyForm, boardDTO);
 		
 		
-		boardSVC.modifyBoard(bnum, boardDTO);
+		int modifyedBnum = boardSVC.modifyBoard(bnum, boardDTO);
+		redirectAttributes.addAttribute("bnum",modifyedBnum);
+
 		return "redirect:/board/post/{bnum}";
 		
 	}
@@ -285,6 +303,21 @@ public class BoardController {
 		
 		return new Result ("00","ok",bnum);
 	}
+	
+	//게시글첨부파일삭제
+	@ResponseBody
+	@DeleteMapping("/attach/{sfname}")
+	public Result deleteFile(@PathVariable String sfname) {
+		
+		fileStore.setFilePath("d:/upload/board/");
+		if(fileStore.deleteFile(sfname)) {
+			boardUploadFileDAO.deleteFileBySfname(sfname);
+		}else {
+		return new Result("01","nok","파일삭제실패!");
+		}
+		return new Result("00","ok","파일삭제성공!");
+	}
+	
 	//제목으로 게시글 검색
 	@ResponseBody
 	@GetMapping("/search/title/{bcategory}")

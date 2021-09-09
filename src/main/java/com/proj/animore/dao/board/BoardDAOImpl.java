@@ -191,7 +191,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	//게시글수정
 	@Override
-	public BoardReqDTO modifyBoard(int bnum, BoardDTO boardDTO) {
+	public int modifyBoard(int bnum, BoardDTO boardDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update board ");
 		sql.append("set bcategory =?, ");
@@ -205,7 +205,7 @@ public class BoardDAOImpl implements BoardDAO {
 								boardDTO.getBtitle(),
 								boardDTO.getBcontent(),
 								bnum);
-		return findBoardByBnum(bnum);
+		return bnum;
 	}
 	//게시글삭제
 	@Override

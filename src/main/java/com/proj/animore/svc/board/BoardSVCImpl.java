@@ -94,7 +94,10 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시글수정
 	@Override
-	public BoardReqDTO modifyBoard(int bnum, BoardDTO boardDTO) {
+	public int modifyBoard(int bnum, BoardDTO boardDTO) {
+		//첨부파일 메타정보 저장
+		boardUploadFileDAO.addFiles(
+				convert(bnum,boardDTO.getFiles()));
 		return boardDAO.modifyBoard(bnum, boardDTO);
 	}
 	//게시글삭제

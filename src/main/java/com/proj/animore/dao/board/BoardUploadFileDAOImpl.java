@@ -85,6 +85,35 @@ public class BoardUploadFileDAOImpl implements BoardUploadFileDAO {
 		return list;
 	}
 	
+	
+	@Override
+	public BoardUploadFileDTO getFileByfnum(Integer fnum) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select fnum,bnum,store_fname,upload_fname,fsize,ftype,cdate,udate ");
+		sql.append("from boardfile ");
+		sql.append("where fnum=? ");
+
+		return jt.queryForObject(sql.toString(), 
+									new BeanPropertyRowMapper<>(BoardUploadFileDTO.class),
+									fnum);
+		
+		
+	}
+	
+	@Override
+	public BoardUploadFileDTO getFileBySfname(String sfname) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select fnum,bnum,store_fname,upload_fname,fsize,ftype,cdate,udate ");
+		sql.append("from boardfile ");
+		sql.append("where store_fname =? ");
+
+		return jt.queryForObject(sql.toString(), 
+									new BeanPropertyRowMapper<>(BoardUploadFileDTO.class),
+									sfname);
+	}
+	
 	//첨부파일 삭제 by bnum
 	@Override
 	public void deleteFileByBnum(Integer bnum) {
@@ -101,5 +130,19 @@ public class BoardUploadFileDAOImpl implements BoardUploadFileDAO {
 		List<String> store_fname = jt.queryForList(sql, String.class, bnum);
 		
 		return store_fname;
+	}
+	
+	@Override
+	public void deleteFileByFnum(Integer fnum) {
+		String sql = "delete from boardfile where fnum = ? ";
+		jt.update(sql,fnum);
+		
+	}
+	
+	@Override
+	public void deleteFileBySfname(String sfname) {
+		String sql = "delete from boardfile where store_fname =? ";
+		jt.update(sql,sfname);
+		
 	}
 }
