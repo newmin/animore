@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -210,7 +211,7 @@ public String modifyMember(HttpServletRequest request,
    
    }
    //내업체 수정양식
-   @GetMapping("/mybusiModify")
+   //@GetMapping("/mybusiModify")
    public String mybusiModify(HttpServletRequest request,
 		      Model model) {
 	   HttpSession session = request.getSession(false);
@@ -221,18 +222,23 @@ public String modifyMember(HttpServletRequest request,
 	      
 	      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 	       
-	       String id = loginMember.getId();
+	       loginMember.getId();
+	      
 	       
 	      //내업체정보 가져오기
-	      BusinessLoadDTO businessLoadDTO = businessSVC.findBusiById(loginMember.getId());
+	       
 	      
-	      BusiModifyForm busiModifyForm = new BusiModifyForm();
-	      BeanUtils.copyProperties(businessLoadDTO, busiModifyForm);
-	      
-	      model.addAttribute("busiModifyForm",busiModifyForm);
-	      
-	      log.info(busiModifyForm.toString());
-	      
+//	       
+//	      BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
+//	      
+//	      BusiModifyForm busiModifyForm = new BusiModifyForm();
+//	      
+//	      BeanUtils.copyProperties(businessLoadDTO, busiModifyForm);
+//	      
+//	      model.addAttribute("busiModifyForm",busiModifyForm);
+//	      
+//	      log.info(busiModifyForm.toString());
+//	      
 	      
 	   
 	      return "/mypage/mybusiModify";
@@ -244,25 +250,37 @@ public String modifyMember(HttpServletRequest request,
          HttpServletRequest request) {
 	   
          log.info("회원수정처리 호출됨");
+         
          HttpSession session = request.getSession(false);
          LoginMember loginMember =
                (LoginMember)session.getAttribute("loginMember");
+         
          
          //세션이 없으면 로그인 페이지로 이동
          if(loginMember == null) return "redirect:/login";
          
          
          if(bindingResult.hasErrors()) {
+        	 
             log.info("errors={}",bindingResult);
             return "mypage/busiModifyForm";
          }
-         MemberDTO memberDTO = new MemberDTO();
+         
+         
          BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
          
          BeanUtils.copyProperties(busiModifyForm, businessLoadDTO);
          
+         businessSVC.modifyBusi(businessLoadDTO.getBnum(),businessLoadDTO);
+         
+        
+         
+//        BeanUtils.copyProperties(modifyForm, mdto);
+//         
+//         memberSVC.modifyMember(loginMember.getId(), mdto);
+//         log.info("=={},{}",loginMember.getId(), mdto);
 
-         return "redirect:/mypage/mypageModify";
+         return "redirect:/mypage/mybusiModify";
    }
    
 }

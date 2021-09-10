@@ -28,8 +28,8 @@ public class BusinessSVCImpl implements BusinessSVC {
 	}
 	//내업체 수정
 	@Override
-	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO) {
-		return businessDAO.modifyBusi(id, businessDTO);
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessLoadDTO businessLoadDTO) {
+		return businessDAO.modifyBusi(bnum, businessLoadDTO);
 	}
 	@Override
 	public void deleteBusi(Integer bnum) {

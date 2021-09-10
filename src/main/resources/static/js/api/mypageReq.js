@@ -324,12 +324,12 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 
 });
 
-//내업체수정 화면
-	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
-	$mypageModify.addEventListener('click',e=>{
+//내업 체수정 양식
+	const $mybusiModify = document.querySelector('a[href="/mypage/mybusiModify/"]');
+	$mybusiModify.addEventListener('click',e=>{
 		e.preventDefault();
 		
-		const URL = `/mypage/mypageModify`;
+		const URL = `/mypage/mybusiModify/`;
 		
 		request.get(URL)
 		.then(res=>res.json())
@@ -341,8 +341,8 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 				const data = res.data;
 				document.querySelector('.mypage_content_container').innerHTML = data;
 				
-				const $modifyBtn = document.querySelector('#modifyBtn');
-				$modifyBtn.addEventListener("click", modifyBtn); 
+				//const $modifyBtn = document.querySelector('#modifyBtn');
+				//$modifyBtn.addEventListener("click", modifyBtn); 
 				
 			}else{
 				throw new Error(res.rtmsg);
@@ -353,6 +353,8 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 			console.log (err.message);
 		});
 });
+
+
 
 function refreshModi(memberDTO){
 	let html ='';

@@ -14,8 +14,9 @@ public interface BusinessDAO {
 	//업체찾기 by bnum
 	public BusinessLoadDTO findBusiByBnum(Integer bnum);
 	
+	
 	//업체수정 by id
-	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO);
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessLoadDTO businessLoadDTO);
 	
 	//업체삭제 by bnum
 	public void deleteBusi(Integer bnum);

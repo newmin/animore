@@ -52,7 +52,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 
 	//업체정보수정
 	@Override
-	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO) {
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessLoadDTO businessLoadDTO) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update business ");
 		sql.append("   set bname = ?, ");
@@ -60,13 +60,16 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("       btel = ? ");
 		sql.append(" where bnum = ? ");
 		
+		log.info(sql.toString());
+		
 		jdbcTemplate.update(
 				sql.toString(), 
-				businessDTO.getBname(),
-				businessDTO.getBaddress(),
-				businessDTO.getBtel()
+				businessLoadDTO.getBname(),
+				businessLoadDTO.getBaddress(),
+				businessLoadDTO.getBtel(),
+				bnum
 				);
-		return findBusiById(id);
+		return findBusiByBnum(bnum);
 	}
 
 	//업체정보 삭제
