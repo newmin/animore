@@ -65,6 +65,7 @@
         </li>
         <li th:if="${session.loginMember == null}"><a href="/member/join">회원가입</a></li>
         <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
+        <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('A')}"><a href="/mypage/mypageFavorites">내정보</a></li>
         <li th:if="${session.loginMember != null && session.loginMember.mtype.equals('N')}"><a href="/mypage/mypageFavorites">내정보</a></li>
         
       	<li th:if="${session.loginMember != null && session.loginMember.mtype.equals('S')}"><a href="/mypage/mypageFavorites">내정보</a></li>
