@@ -59,8 +59,11 @@ public class BoardController {
 	private final FileStore fileStore;
 	private final BoardUploadFileDAO boardUploadFileDAO;
 	@Autowired
-	@Qualifier("pc5")
+	@Qualifier("pc10")
 	private PageCriteria pc;
+	@Autowired
+	@Qualifier("pc10_2")
+	private PageCriteria pc2;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -71,35 +74,60 @@ public class BoardController {
 		list.add(new Code("P","내새끼 보세요"));
 		return list;
 	}
-	
-	//게시글 목록출력
-	@GetMapping("/{bcategory}")
-	public String boardList(@PathVariable String bcategory,
+
+	//페이징버튼클릭시 게시글 목록출력
+	@GetMapping("/{cate}")
+	public String boardpList(@PathVariable String cate,
 							@RequestParam(required = false) Integer reqPage,
 							Model model) {
-	     if(bcategory.equals("Q"))   bcategory="Q";
-	     if(bcategory.equals("M"))   bcategory="M";
-	     if(bcategory.equals("F"))   bcategory="F";
-	     if(bcategory.equals("P"))   bcategory="P";
+//	     if(bcategory.equals("Q"))   bcategory="Q";
+//	     if(bcategory.equals("M"))   bcategory="M";
+//	     if(bcategory.equals("F"))   bcategory="F";
+//	     if(bcategory.equals("P"))   bcategory="P";
+		
 		
 	   //요청페이지가 없으면 1페이지로
 		if(reqPage == null) reqPage = 1;
+
+		//갤러리타입일경우
+		if(cate.equals("P")) {
+			log.info("갤러리클릭!");
+			//사용자가 요청한 페이지번호
+			pc2.getRc().setReqPage(reqPage);
+			//게시판 전체레코드수
+			pc2.setTotalRec(boardSVC.totalRecordCount(cate));
+			//페이징 계산
+			pc2.calculatePaging();
+			
+			List<BoardReqDTO> list = boardSVC.list(cate,
+					pc2.getRc().getStartRec(),
+					pc2.getRc().getEndRec());
+			model.addAttribute("boardForm",list);
+			
+			List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
+			model.addAttribute("notice",nlist);
+			model.addAttribute("pc",pc2);
+			return "board/board";
+			
+		}else {
+			log.info("그외카테고리클릭");
 		//사용자가 요청한 페이지번호
 		pc.getRc().setReqPage(reqPage);
 		//게시판 전체레코드수
-		pc.setTotalRec(boardSVC.totoalRecordCount());
+		pc.setTotalRec(boardSVC.totalRecordCount(cate));
 		//페이징 계산
 		pc.calculatePaging();
 		
-	     List<BoardReqDTO> list = boardSVC.list(bcategory,
+	     List<BoardReqDTO> list = boardSVC.list(cate,
 	    		 								pc.getRc().getStartRec(),
 	    		 								pc.getRc().getEndRec());
 	     model.addAttribute("boardForm",list);
 	     
-	    List<BoardReqDTO> nlist = boardSVC.noticeList(bcategory);
+	    List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
 	    model.addAttribute("notice",nlist);
 	    model.addAttribute("pc",pc);
 		return "board/board";
+	}
 	}
 	
 	//게시글 조회
@@ -124,7 +152,7 @@ public class BoardController {
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
-		fileStore.setFilePath("d:/upload/board/");
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 		
@@ -140,8 +168,9 @@ public class BoardController {
 	}
 	
 	//게시글 작성화면 출력
-	@GetMapping("/")
-	public String addPost(@ModelAttribute BoardForm boardForm,
+	@GetMapping("")
+	public String addPost(@RequestParam String cate,
+						@ModelAttribute BoardForm boardForm,
 						HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
@@ -149,13 +178,13 @@ public class BoardController {
 			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 			if(loginMember == null) return "redirect:/login";
 			
+			boardForm.setBcategory(cate);
+			
 		return "board/addBoardForm";
-
-		
 	}
 	
 	//게시글 등록처리
-	@PostMapping("/")
+	@PostMapping("")
 	@Transactional
 	public String addpost(@Valid @ModelAttribute BoardForm boardForm,
 							BindingResult bindingResult,
@@ -173,7 +202,7 @@ public class BoardController {
 		//boardSVC.addBoard(loginMemberId,boardDTO);
 		log.info("boardForm:{}",boardForm);
 		
-		fileStore.setFilePath("d:/upload/board/");
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
 		
 		BoardDTO boardDTO = new BoardDTO();
 		//boardForm 의 값이 boardDTO에 복사됨
@@ -296,7 +325,7 @@ public class BoardController {
 			return "board/modifyBoardForm";
 		}
 		
-		fileStore.setFilePath("d:/upload/board/");
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
 		BoardDTO boardDTO = new BoardDTO();
 		
 		//첨부파일 메타정보 추출
@@ -328,7 +357,7 @@ public class BoardController {
 	@DeleteMapping("/attach/{sfname}")
 	public Result deleteFile(@PathVariable String sfname) {
 		
-		fileStore.setFilePath("d:/upload/board/");
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
 		if(fileStore.deleteFile(sfname)) {
 			boardUploadFileDAO.deleteFileBySfname(sfname);
 		}else {

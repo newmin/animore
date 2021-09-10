@@ -366,4 +366,14 @@ public class BoardDAOImpl implements BoardDAO {
 			int totalCount = jt.queryForObject(sql.toString(), Integer.class);
 			return totalCount;
 		}
+		@Override
+		public int totalRecordCount(String bcategory) {
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) ");
+			sql.append("	from board ");
+			sql.append("	where bcategory=? ");
+			
+			int totalCount = jt.queryForObject(sql.toString(), Integer.class,bcategory);
+			return totalCount;
+		}
 }

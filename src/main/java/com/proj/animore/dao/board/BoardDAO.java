@@ -68,4 +68,7 @@ public interface BoardDAO {
 	
 	//게시판 전체 레코드 수
 	int totlaRecordCount();
+	
+	//게시판 카테고리 레코드 전체수
+	int totalRecordCount(String bcategory);
 }
