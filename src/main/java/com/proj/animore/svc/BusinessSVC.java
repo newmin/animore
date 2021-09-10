@@ -15,7 +15,7 @@ public interface BusinessSVC {
 	public BusinessLoadDTO findBusiByBnum(Integer bnum);
 	
 	//업체수정 by bnum
-	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO);
+	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO);
 	
 	//업체삭제 by bnum
 	public void deleteBusi(Integer bnum);
@@ -35,7 +35,8 @@ public interface BusinessSVC {
 	
 	//내업체 목록 
 	public List<BusinessLoadDTO> mybusiList(String id);
-
-
+	//내체찾기 by ID
+	public BusinessLoadDTO findBusiById(String id);
+	
 
 }

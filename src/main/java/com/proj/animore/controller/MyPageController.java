@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -23,6 +24,7 @@ import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
+import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.svc.BusinessSVC;
@@ -206,6 +208,61 @@ public String modifyMember(HttpServletRequest request,
 	   
 	   return "mypage/mypageGood";
    
+   }
+   //내업체 수정양식
+   @GetMapping("/mybusiModify")
+   public String mybusiModify(HttpServletRequest request,
+		      Model model) {
+	   HttpSession session = request.getSession(false);
+	      if(session == null || session.getAttribute("loginMember") == null){
+	    	  
+	        return "redirect:/login";
+	      }
+	      
+	      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	       
+	       String id = loginMember.getId();
+	       
+	      //내업체정보 가져오기
+	      BusinessLoadDTO businessLoadDTO = businessSVC.findBusiById(loginMember.getId());
+	      
+	      BusiModifyForm busiModifyForm = new BusiModifyForm();
+	      BeanUtils.copyProperties(businessLoadDTO, busiModifyForm);
+	      
+	      model.addAttribute("busiModifyForm",busiModifyForm);
+	      
+	      log.info(busiModifyForm.toString());
+	      
+	      
+	   
+	      return "/mypage/mybusiModify";
+   }
+   //내업체수정처리
+   @PatchMapping("/mybusiModify")
+   public String mybusiModify(@Valid @ModelAttribute BusiModifyForm busiModifyForm,
+         BindingResult bindingResult,
+         HttpServletRequest request) {
+	   
+         log.info("회원수정처리 호출됨");
+         HttpSession session = request.getSession(false);
+         LoginMember loginMember =
+               (LoginMember)session.getAttribute("loginMember");
+         
+         //세션이 없으면 로그인 페이지로 이동
+         if(loginMember == null) return "redirect:/login";
+         
+         
+         if(bindingResult.hasErrors()) {
+            log.info("errors={}",bindingResult);
+            return "mypage/busiModifyForm";
+         }
+         MemberDTO memberDTO = new MemberDTO();
+         BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
+         
+         BeanUtils.copyProperties(busiModifyForm, businessLoadDTO);
+         
+
+         return "redirect:/mypage/mypageModify";
    }
    
 }

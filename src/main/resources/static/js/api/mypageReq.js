@@ -324,11 +324,40 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 
 });
 
+//내업체수정 화면
+	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
+	$mypageModify.addEventListener('click',e=>{
+		e.preventDefault();
+		
+		const URL = `/mypage/mypageModify`;
+		
+		request.get(URL)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+			
+				//성공로직처리
+				console.log(res);
+				const data = res.data;
+				document.querySelector('.mypage_content_container').innerHTML = data;
+				
+				const $modifyBtn = document.querySelector('#modifyBtn');
+				$modifyBtn.addEventListener("click", modifyBtn); 
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			console.log (err.message);
+		});
+});
+
 function refreshModi(memberDTO){
-
-
 	let html ='';
-	// data.forEach(rec => {
+	
+	   // data.forEach(rec => {
 
 		html+="<div class=\"mypage_content_container\">";
 		

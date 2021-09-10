@@ -326,7 +326,7 @@ public class APIMypgeController {
 		
 		
 		List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(loginMember.getId());
-		
+		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiById(loginMember.getId());
 		
 		
 		StringBuffer html = new StringBuffer();
@@ -345,7 +345,7 @@ public class APIMypgeController {
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBaddress()+"</td>");
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBtel()+"</td>");
-		html.append("<td class='reply__cell'><a href='/mypage/mypageModify/"+rec.getBnum()+"'>"+"수정"+"</a></td>");
+		html.append("<td class='reply__cell'><a href='/mypage/mybusiModify'>"+"수정"+"</a></td>");
 		html.append("</tr>");
 		});
 		html.append("</table>");

@@ -14,8 +14,8 @@ public interface BusinessDAO {
 	//업체찾기 by bnum
 	public BusinessLoadDTO findBusiByBnum(Integer bnum);
 	
-	//업체수정 by bnum
-	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO);
+	//업체수정 by id
+	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO);
 	
 	//업체삭제 by bnum
 	public void deleteBusi(Integer bnum);
@@ -35,4 +35,7 @@ public interface BusinessDAO {
 
 	//업체목록조회 (병원태그포함)
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr);
+	
+	//내 업체찾기 by id
+	public BusinessLoadDTO findBusiById(String id);
 }
