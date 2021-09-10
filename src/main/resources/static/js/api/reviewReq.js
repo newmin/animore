@@ -470,3 +470,5 @@ function addReply(review){
 //리댓달기 버튼 이벤트
 let replyBtns = document.querySelectorAll('.review__replyBtn');
 replyBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
+
+

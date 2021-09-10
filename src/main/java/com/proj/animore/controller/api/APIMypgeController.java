@@ -163,7 +163,7 @@ public class APIMypgeController {
 		return result;
 	}
 	
-	//내정보 개안정보수정
+	//내정보 개안정보수정 처리
 	@PatchMapping("/mypageModify")
 	
 	public Result mypageModify(HttpServletRequest request,
@@ -214,17 +214,17 @@ public class APIMypgeController {
 		
 		
 		html.append("    <li><label for=\"nickname\">별칭</label></li>");
-		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"/></li>");
+		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"></li>");
 
 		
 		html.append("<li><label for=\"birth\">생년월일</label></li>");
-		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	");
+		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>");
 		
 
 		
 		
 		html.append("<li><label for=\"tel\">전화번호</label></li>");
-		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>");
+		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+"\"/></li>");
 		
 		
 		html.append("<li>");
@@ -243,7 +243,7 @@ public class APIMypgeController {
 		
 		return result;
 	}
-	
+	//개인정보수정화면
 	@GetMapping("/mypageModify")
 	public Result mypageModi (HttpServletRequest request){
 		HttpSession session = request.getSession(false);
@@ -288,7 +288,7 @@ public class APIMypgeController {
 		
 		
 		html.append("    <li><label for=\"nickname\">별칭</label></li>");
-		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"/></li>");
+		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"></li>");
 
 		
 		html.append("<li><label for=\"birth\">생년월일</label></li>");
@@ -313,12 +313,10 @@ public class APIMypgeController {
 		html.append("</div>");
 		
 		
-		
-		
 		return new Result("00","OK",html);
 
 	}
-	//업체목록
+	//내업체목록
 	@GetMapping("/mybusilist")
 	public Result mypagebusilist (HttpServletRequest request){
 		
@@ -328,7 +326,8 @@ public class APIMypgeController {
 		
 		
 		List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(loginMember.getId());
-
+		
+		
 		
 		StringBuffer html = new StringBuffer();
 		html.append("<h3 class='mypage_content_title'>내업체목록</h3>");
@@ -346,7 +345,7 @@ public class APIMypgeController {
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBaddress()+"</td>");
 		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBtel()+"</td>");
-		html.append(" <td><button>수정</button></td>");
+		html.append("<td class='reply__cell'><a href='/mypage/mypageModify/"+rec.getBnum()+"'>"+"수정"+"</a></td>");
 		html.append("</tr>");
 		});
 		html.append("</table>");
