@@ -72,8 +72,8 @@ const modiTextbox_f = e => {
 // 대댓글쓰기 버튼 누르면 대댓글 작성을 위한 div 생성해서 보이기 
 const reReTextbox_f = e => {
 
-	if(document.querySelector('boardForm__reReplyTextarea')) {
-		document.querySelector('div.boardForm__modiReplyTextarea').remove();
+	if(document.querySelector('div.boardForm__reReplyTextarea')) {
+		document.querySelector('div.boardForm__reReplyTextarea').remove();
 	}
 
 	const $rnum = e.target.dataset.rnum;
