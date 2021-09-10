@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.file.MetaOfUploadFile;
 import com.proj.animore.common.mail.MailService;
 import com.proj.animore.common.util.PasswordGeneratorCreator;
 import com.proj.animore.dto.BcategoryDTO;
 import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
-import com.proj.animore.dto.board.MetaOfUploadFile;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
@@ -106,7 +106,7 @@ public class MemberController {
 		BeanUtils.copyProperties(joinMemberForm,memberDTO);
 		
 		if(joinMemberForm.getImage()!=null) {
-			fileStore.setFilePath("D:/javaedu/download/animore/src/main/resources/static/img/upload/member/");		
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");		
 			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
 			memberDTO.setStore_fname(storedFile.getStore_fname());
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
