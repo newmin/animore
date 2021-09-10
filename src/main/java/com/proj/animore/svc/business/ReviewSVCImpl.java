@@ -1,10 +1,10 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.business;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proj.animore.dao.ReviewDAO;
+import com.proj.animore.dao.business.ReviewDAO;
 import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 

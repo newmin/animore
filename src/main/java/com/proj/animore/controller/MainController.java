@@ -19,9 +19,9 @@ import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BusinessSVC;
-import com.proj.animore.svc.FavoriteSVC;
-import com.proj.animore.svc.ReviewSVC;
+import com.proj.animore.svc.business.BusinessSVC;
+import com.proj.animore.svc.business.FavoriteSVC;
+import com.proj.animore.svc.business.ReviewSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
