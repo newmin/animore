@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.BusinessDAO;
-import com.proj.animore.dto.BusinessDTO;
-import com.proj.animore.dto.BusinessLoadDTO;
-import com.proj.animore.dto.HtagBusiListReq;
+import com.proj.animore.dto.business.BusinessDTO;
+import com.proj.animore.dto.business.BusinessLoadDTO;
+import com.proj.animore.dto.business.HtagBusiListReq;
 
 import lombok.RequiredArgsConstructor;
 

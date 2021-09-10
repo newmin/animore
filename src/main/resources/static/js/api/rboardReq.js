@@ -272,7 +272,7 @@ function refreshReply(data){
 					html += `<div style="width:50px"></div>`;
 				}
 			}
-		      html += `<div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>`;
+		      html += `<div class="boardForm__replyImgWrap"><img src="/img/upload/member/${rec.store_fname}" alt="" class="boardForm__proImg"></div>`;
 		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}">`;
 		      html += `  <div>`;
 		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;

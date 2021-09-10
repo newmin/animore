@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.proj.animore.dto.BusinessLoadDTO;
-import com.proj.animore.dto.FavoriteReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
+import com.proj.animore.dto.business.BusinessLoadDTO;
+import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;

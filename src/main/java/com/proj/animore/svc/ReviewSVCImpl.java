@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.ReviewDAO;
-import com.proj.animore.dto.ReviewDTO;
-import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.business.ReviewDTO;
+import com.proj.animore.dto.business.ReviewReq;
 
 import lombok.RequiredArgsConstructor;
 

@@ -2,8 +2,8 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
-import com.proj.animore.dto.ReviewDTO;
-import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.business.ReviewDTO;
+import com.proj.animore.dto.business.ReviewReq;
 
 public interface ReviewSVC {
 

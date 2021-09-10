@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.proj.animore.dto.ReviewDTO;
-import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.business.ReviewDTO;
+import com.proj.animore.dto.business.ReviewReq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko"
          xmlns:th="http://www.thymeleaf.org"
-         th:replace="~{template/templateSub::main(~{::title},~{::main},~{::script})}">
+         th:replace="~{/template/template::main(~{::title},~{::main},~{::script},~{::link})}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
   <script src="/js/board.js" defer></script>
   <script src="/js/api/ajaxCall.js"></script>
   <title>글목록</title>
@@ -20,14 +23,14 @@
 
       <div>
         <ul class="board__categorys">
-          <li><a href="/board/Q" class="board__category board__selectCategory" id="category_Q" >Q&A</a></li>
-          <li><a href="/board/M" class="board__category" id="category_M">벼룩시장</a></li>
-          <li><a href="/board/F" class="board__category" id="category_F">자유게시판</a></li>
-          <li><a href="/board/P" class="board__category" id="category_P">내새끼보세요</a></li>
+          <li><a href="#" th:href="@{/board/{cate}(cate=Q)}" class="board__category board__selectCategory" id="category_Q" >Q&A</a></li>
+          <li><a href="#" th:href="@{/board/{cate}(cate=M)}" class="board__category" id="category_M">벼룩시장</a></li>
+          <li><a href="#" th:href="@{/board/{cate}(cate=F)}" class="board__category" id="category_F">자유게시판</a></li>
+          <li><a href="#" th:href="@{/board/{cate}(cate=P)}" class="board__category" id="category_P">내새끼보세요</a></li>
         </ul>
       </div>
       <!-- Q&A -->
-   <div th:if="${bcategory} =='Q'">
+   <div th:if="${cate} =='Q'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -61,7 +64,7 @@
       
    </div>
       <!-- 벼룩시장 -->
-      <div th:if="${bcategory} =='M'">
+      <div th:if="${cate} =='M'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -90,7 +93,7 @@
    </div>
    
       <!-- 자유게시판 -->
-   <div th:if="${bcategory} =='F'">
+   <div th:if="${cate} =='F'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -121,7 +124,7 @@
     </div>
 
     <!-- 내새끼보세요 -->
-   <div th:if="${bcategory} =='P'">
+   <div th:if="${cate} =='P'">
     <div class="b_galarywrap board__table">
         <div class="b_galary_post" th:each="boardForm :${boardForm}">
           <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
@@ -135,7 +138,7 @@
       </div>
     </div>
      <div class="board__btns">
-        <button class="board__btn boardForm__addBtn" type="button">글쓰기</button>
+        <button class="board__btn boardForm__addBtn" type="button" th:data-cate =${cate}>글쓰기</button>
       </div>
 
       <div class="board__search">
@@ -147,38 +150,40 @@
         <input type="text" name="" id="" class="board__searchInput">
         <button type="button" class="searchBtn">검색</button>
       </div>
-    <div class="borad__pageBtn">
+
 		<div class="wrap-bbs-paging">
-			  <ul class="pagination pagination-sm justify-content-center">
-			  	<th:block th:if="${pc.prev}">
-				  	<li class="page-item">
-					    	<a class="page-link" href="#" th:href="@{|/board/${bcategory}/1|}"><i class="fas fa-angle-double-left"></i></a>
-					  </li>
-				  	<li class="page-item">
-					    	<a class="page-link" href="#" th:href="@{|/board/{bcateogry}?reqPage=${pc.startPage-1}|}"><i class="fas fa-angle-left"></i></a>
-					  </li>
-				</th:block>
-			    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
-				<li class="page-item active" aria-current="page"
-								th:if="${pc.rc.reqPage == pnum}">
-			      <span class="page-link" th:text="${pnum}">1</span>
-			    </li>							    
-			    <li class="page-item" 
-			    		th:if="${pc.rc.reqPage != pnum}">
-			    <a class="page-link" href="#" th:href="@{|/board/{bcategory}?reqPage=${pnum}|}" th:text="${pnum}">3</a>
-			    </li>
-			    </th:block>
-			    <th:block th:if="${pc.next}">
-				  	<li class="page-item">
-					    <a class="page-link" href="#" th:href="@{|/board/{bcateogry}?reqPage=${pc.endPage-1}|}"><i class="fas fa-angle-right"></i></a>
-					</li>
-				  	<li class="page-item">
-					    	<a class="page-link" href="#" th:href="@{|/board/{bcategory}?reqPage=${pc.finalEndPage}|}"><i class="fas fa-angle-double-right"></i></a>
-					</li>		
-				</th:block>
-			  </ul>
-			</div>
-      </div>
+							  <ul class="pagination pagination-sm justify-content-center">
+							  	<th:block th:if="${pc.prev}">
+								  	<li class="page-item">
+									    	<a class="page-link" href="#" th:href="@{/board/{cate}?reqPage=1(cate=${cate})}"><i class="fas fa-angle-double-left"></i></a>
+									  </li>
+								  	<li class="page-item">
+									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.startPage-1})}"><i class="fas fa-angle-left"></i></a>
+									  </li>
+								  </th:block>
+							    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
+							    	<th:block th:if="${pnum != 0}">
+	 									<li class="page-item active" aria-current="page"
+	 											th:if="${pc.rc.reqPage == pnum}">
+								      <span class="page-link" th:text="${pnum}">1</span>
+								    </li>							    
+								    <li class="page-item" 
+								    		th:if="${pc.rc.reqPage != pnum}">
+								    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pnum})}" th:text="${pnum}">3</a>
+								    </li>
+								    </th:block>
+							    </th:block>
+							    <th:block th:if="${pc.next}">
+								  	<li class="page-item">
+									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.endPage+1})}"><i class="fas fa-angle-right"></i></a>
+									  </li>
+								  	<li class="page-item">
+									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.finalEndPage})}"><i class="fas fa-angle-double-right"></i></a>
+									  </li>		
+									</th:block>
+							  </ul>
+							</div>
+
   </main>
 </body>
 

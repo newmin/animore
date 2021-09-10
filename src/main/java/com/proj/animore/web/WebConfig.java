@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
 							"/{bcategory}","/inquire/**","/search?**",
 							"/board/{bcategory}",
 							"/api/hospital",
-							"/bhospital/api");
+							"/bhospital/api",
+							"/board/search/**");
 						//   \" 변수명 \"
 	}
 	

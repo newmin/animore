@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.dto.BusinessLoadDTO;
-import com.proj.animore.dto.HtagBusiListReq;
+import com.proj.animore.dto.business.BusinessLoadDTO;
+import com.proj.animore.dto.business.HtagBusiListReq;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.BusinessSVC;
 

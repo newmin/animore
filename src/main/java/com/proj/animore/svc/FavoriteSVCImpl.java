@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.FavoriteDAO;
-import com.proj.animore.dto.FavoriteReq;
+import com.proj.animore.dto.business.FavoriteReq;
 
 import lombok.RequiredArgsConstructor;
 

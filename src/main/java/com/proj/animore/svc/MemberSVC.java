@@ -2,10 +2,10 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
-import com.proj.animore.dto.BcategoryDTO;
-import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
+import com.proj.animore.dto.business.BcategoryDTO;
+import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
 import com.proj.animore.form.ChangePwForm;

@@ -2,7 +2,7 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
-import com.proj.animore.dto.FavoriteReq;
+import com.proj.animore.dto.business.FavoriteReq;
 
 public interface FavoriteSVC {
 	
