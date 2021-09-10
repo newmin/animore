@@ -105,13 +105,16 @@ public class MemberController {
 		MemberDTO memberDTO = new MemberDTO();
 		BeanUtils.copyProperties(joinMemberForm,memberDTO);
 		
-		fileStore.setFilePath("d:/upload/member/");		
-		MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
-		log.info(joinMemberForm.getImage().toString());
-		memberDTO.setStore_fname(storedFile.getStore_fname());
-		memberDTO.setUpload_fname(storedFile.getUpload_fname());
-		memberDTO.setFsize(storedFile.getFsize());
-		memberDTO.setFtype(storedFile.getFtype());
+		if(joinMemberForm.getImage()!=null) {
+			fileStore.setFilePath("d:/upload/member/");		
+			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
+			memberDTO.setStore_fname(storedFile.getStore_fname());
+			memberDTO.setUpload_fname(storedFile.getUpload_fname());
+			memberDTO.setFsize(storedFile.getFsize());
+			memberDTO.setFtype(storedFile.getFtype());		
+		}
+		
+		memberDTO.setMtype("N");
 		
 		memberSVC.joinMember(memberDTO);
 		return "redirect:/";

@@ -21,7 +21,7 @@ create table member(
   pw varchar2 (16) not null,
   tel varchar2(13) not null,
   email varchar2(30) not null,
-  name varchar2(30) not null,
+  name varchar2(15) not null,
   nickname varchar2(30) not null,
   gender char(3) not null,
   address varchar2(150) not null,
@@ -32,14 +32,13 @@ create table member(
   udate timestamp,
   lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
   fsize varchar2(45),
-  ftype varchar2(50) default 'png',
-  store_fname varchar2(150) default 'puppy',
+  ftype varchar2(50),
+  store_fname varchar2(150),
   upload_fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
   constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),
-  constraint MEMBER_mtype_ck check(mtype in('A','N','S')),
-  constraint MEMBER_ftype_ck check(ftype in('jpg','png','gif','bmp'))  
+  constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
 );
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
 
