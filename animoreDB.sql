@@ -312,7 +312,7 @@ create sequence review_fnum_seq;
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy.png','image/png','16345');
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy.png2','image/png','16345');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy2.png','image/png','16345');
 -- 특수회원
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444-4444-4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');

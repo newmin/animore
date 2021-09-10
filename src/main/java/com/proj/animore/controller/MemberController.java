@@ -106,7 +106,7 @@ public class MemberController {
 		BeanUtils.copyProperties(joinMemberForm,memberDTO);
 		
 		if(joinMemberForm.getImage()!=null) {
-			fileStore.setFilePath("d:/upload/member/");		
+			fileStore.setFilePath("D:/javaedu/download/animore/src/main/resources/static/img/upload/member/");		
 			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
 			memberDTO.setStore_fname(storedFile.getStore_fname());
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
