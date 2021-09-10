@@ -95,10 +95,10 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public BoardReqDTO findBoardByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum,b.bgroup,b.bstep,b.bindent,m.store_fname");
-		sql.append("      from board b, member m ");
+		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum,b.bgroup,b.bstep,b.bindent,m.store_fname member_fname ");
+		sql.append("      from board b, member m");
 		sql.append("     where b.id =m.id ");
-		sql.append("         and b.bnum=? ");
+		sql.append("      and b.bnum=? ");
 		
 		BoardReqDTO boardReqDTO = 
 				jt.queryForObject(sql.toString(), 
@@ -236,7 +236,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append(" select t1.* ");
 		sql.append(" from(select row_number() over (order by bgroup desc, bstep asc) num, ");
 		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
-		sql.append("     from board b, member m ");
+		sql.append("     from board b, member m ,boardfile bf");
 		sql.append("     where b.id = m.id ");
 		sql.append("     and bcategory=?) t1 ");
 		sql.append(" where num between ? and ? ");

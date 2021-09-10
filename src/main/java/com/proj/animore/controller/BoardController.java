@@ -102,6 +102,7 @@ public class BoardController {
 			List<BoardReqDTO> list = boardSVC.list(cate,
 					pc2.getRc().getStartRec(),
 					pc2.getRc().getEndRec());
+			
 			model.addAttribute("boardForm",list);
 			
 			List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
@@ -152,7 +153,7 @@ public class BoardController {
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
-		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
+		//fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");	
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 		

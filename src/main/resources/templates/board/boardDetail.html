@@ -52,7 +52,7 @@
                   </div>
         </div>
        <div class="boardForm__infoContainer">
-        <img th:src="@{|/img/upload/member/*{store_fname}|} " alt="프로필사진" class="boardForm__proImg">
+        <img th:src="@{|/img/upload/member/*{member_fname}|} " alt="프로필사진" class="boardForm__proImg">
         <div class="boardForm__info">
             <span class="boardForm__Nickname" th:text="*{nickname}">닉네임</span>
             <div class="boardForm__info2">
@@ -61,7 +61,12 @@
             </div>
         </div>
        </div>
-       <div class="boardForm__contents"><p th:text="*{bcontent}"></p></div>
+       <div class="boardForm__contents">
+       	<th:block th:if="*{bcategory=='P'}" th:each="img : *{files}">
+       		<img th:src="@{|/img/upload/board/${img.store_fname}|} " alt="" />
+       	</th:block>
+       <p th:text="*{bcontent}"></p>
+       </div>
         <div class="boardForm__files">
 			<label for="file" class="file__title">첨부파일></label>
 			<div >
@@ -86,7 +91,7 @@
        <div class=" boardForm__text">댓글 <span class="boardForm__reply boardForm__text" th:text="|댓글수 ${reply.size}|"></span></div>
        <div class="boardForm__replyListWrap">
      		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
-           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{store_fname}|} " alt="" class="boardForm__proImg"></div>
+           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{member_fname}|} " alt="" class="boardForm__proImg"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
