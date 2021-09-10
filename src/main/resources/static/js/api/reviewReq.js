@@ -326,7 +326,14 @@ function refreshReview(data){
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
 		html += `	<div class="review__column">`;
-		html += ` 	<img class="review__profile" src="https://picsum.photos/id/10/50/50" alt="프로필사진">`;
+		// if(review.store_fname != null){ 
+		// 	html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
+		// } else{
+		// 	html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
+		// }
+		review.store_fname
+				 ? html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
+				 : html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
 		html += `	<div class="review__column">`;
