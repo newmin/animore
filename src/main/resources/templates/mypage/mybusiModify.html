@@ -47,47 +47,22 @@
                 </ul>
             </div>
             <div class="mypage_content_container">
-                <h3 class="mypage_content_title">개인 정보 수정</h3>
+                <h3 class="mypage_content_title">업체 정보 수정\</h3>
                 <hr>
-                <form class="main" action="" th:method="patch" th:object="${modifyForm}">
+                <form class="main" action="" th:method="patch" th:object="${busiModifyForm}">
                     <ul>
-                        <li><label for="id">아이디</label></li>
-                        <li><input type="text" th:field="*{id}" readonly="readonly" /></li>
-
-                        <li><label for="pw">비밀번호</label></li>
-                        <li><input type="password" th:field="*{pw}" /></li>
-                        <li>
-                            <div class="modify__row"><label for="name">이름</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="text" class="modify_input" th:field="*{name}"
-                                    required></div>
-                        </li>
-
-                        <li><label for="nickname">별칭</label></li>
-                        <li><input type="text" th:field="*{nickname}" /></li>
-
-                        <li><label for="birth">생년월일</label></li>
-                        <li><input type="date" th:field="*{birth}" value="*{birth}" /></li>
+                        <li><label for="id">업체명</label></li>
+                        <li><input type="text" th:field="*{bname}"/></li>
 
 
-                        <li><label for="tel">전화번호</label></li>
-                        <li><input type="tel" name="tel" th:field="*{tel}" /></li>
+                        <li><label for="nickname">업체주소</label></li>
+                        <li><input type="text" th:field="*{baddress}" /></li>
 
-                        <li>
-                            <div class="modify__row"><label for="email">연락가능 이메일</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="email" class="modify_input" th:field="*{email}"
-                                    required></div>
-                        </li>
+                        <li><label for="btel">전화번호</label></li>
+                        <li><input type="text" th:field="*{btel}"/></li>
 
-                        <li>
-                            <div class="modify__row"><label for="address">주소</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="text" class="modify_input" th:field="*{address}"
-                                    required></div>
-                        </li>
 
-                        <li><input type="submit" id="modifyBtn" value="회원정보 수정"></li>
+                        <li><input type="submit" id="busimodifyBtn" value="회원정보 수정"></li>
                     </ul>
                 </form>
             </div>

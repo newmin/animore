@@ -26,9 +26,10 @@ public class BusinessSVCImpl implements BusinessSVC {
 	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
 		return businessDAO.findBusiByBnum(bnum);
 	}
+	//내업체 수정
 	@Override
-	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessDTO businessDTO) {
-		return businessDAO.modifyBusi(bnum, businessDTO);
+	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO) {
+		return businessDAO.modifyBusi(id, businessDTO);
 	}
 	@Override
 	public void deleteBusi(Integer bnum) {
@@ -59,6 +60,11 @@ public class BusinessSVCImpl implements BusinessSVC {
 	@Override
 	public List<BusinessLoadDTO> busiListHospitalTag(String bcategory, HtagBusiListReq htblr) {
 		return businessDAO.busiListHospitalTag(bcategory, htblr);
+	}
+	//내업체 찾기
+	@Override
+	public BusinessLoadDTO findBusiById(String id) {
+		return businessDAO.findBusiById(id);
 	}
 	
 }
