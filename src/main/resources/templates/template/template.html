@@ -57,10 +57,10 @@
         <!-- TODO href th:href -->
         <li><span>게시판</span>
           <ul class="nav__board">
-            <li><a href="/board/Q">Q&A</a></li>
-            <li><a href="/board/F">자유게시판</a></li>
-            <li><a href="/board/M">벼룩시장</a></li>
-            <li><a href="/board/P">내새끼보세요</a></li>
+            <li><a href="#" th:href="@{/board/{cate}(cate=Q)}">Q&A</a></li>
+            <li><a href="#" th:href="@{/board/{cate}(cate=F)}">자유게시판</a></li>
+            <li><a href="#" th:href="@{/board/{cate}(cate=M)}">벼룩시장</a></li>
+            <li><a href="#" th:href="@{/board/{cate}(cate=P)}">내새끼보세요</a></li>
           </ul>
         </li>
         <li th:if="${session.loginMember == null}"><a href="/member/join">회원가입</a></li>

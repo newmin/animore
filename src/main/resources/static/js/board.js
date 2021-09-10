@@ -5,7 +5,8 @@
     const $addPostBtns = document.querySelectorAll('.boardForm__addBtn');
     for(let i=0; i<$addPostBtns.length; i++){
         $addPostBtns[i].addEventListener('click',e=>{
-            location.href="/board/";
+        const cate = e.target.dataset.cate
+            location.href=`/board?cate=${cate}`;
 
         });
     }
@@ -27,16 +28,18 @@
 }
   function SetMenu(){
   InitMenu(); //초기화
-   if (location.href == "http://localhost:8081/board/Q"){
+  const href = location.href.trim().split("/")[4];
+  console.log(href);
+   if (href.slice(0,1) == "Q"){
     ele_Q.classList.add('board__selectCategory');
   }
-  else if (location.href == "http://localhost:8081/board/M"){
+  else if (href.slice(0,1) == "M"){
     ele_M.classList.add('board__selectCategory');
   }
-  else if (location.href == "http://localhost:8081/board/F"){
+  else if (href.slice(0,1) == "F"){
     ele_F.classList.add('board__selectCategory');
   }
-   else if (location.href == "http://localhost:8081/board/P"){
+   else if (href.slice(0,1) == "P"){
     ele_P.classList.add('board__selectCategory');
   }
 

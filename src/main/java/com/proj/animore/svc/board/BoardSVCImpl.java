@@ -162,4 +162,10 @@ public class BoardSVCImpl implements BoardSVC {
 	public long totoalRecordCount() {
 		return boardDAO.totlaRecordCount();
 	}
+	
+	//카테고리별 전체 레코드 수
+	@Override
+	public int totalRecordCount(String bcategory) {
+		return boardDAO.totalRecordCount(bcategory);
+	}
 }

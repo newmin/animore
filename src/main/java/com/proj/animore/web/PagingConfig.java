@@ -14,9 +14,21 @@ public class PagingConfig {
 	static final int REC5 = 5;  //한페이지에 보여줄 레코드수
 	static final int PAGE5 = 5;	//한페이지에 보여줄 페이지수
 	
+	static final int REC8 = 8;  //한페이지에 보여줄 레코드수
+
+	
 	@Bean(name = "rec10")
 	public RecordCriteria rc10() {
 		return new RecordCriteria(REC10);
+	}
+	@Bean(name = "rec8")
+	public RecordCriteria rc8() {
+		return new RecordCriteria(REC8);
+	}
+	
+	@Bean(name = "pc10_2")
+	public PageCriteria pc10_2() {
+		return new PageCriteria(rc8(), PAGE10);
 	}
 	
 	@Bean(name = "pc10")
