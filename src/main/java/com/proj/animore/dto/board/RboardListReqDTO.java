@@ -21,4 +21,5 @@ public class RboardListReqDTO {
 	Integer rindent;			//댓글들여쓰기
 	Integer rgood;				//좋아요수
 	LocalDateTime rcdate;			//댓글작성일
+	String store_fname;
 }
