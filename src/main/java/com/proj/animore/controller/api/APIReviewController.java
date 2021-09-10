@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.dto.ReviewDTO;
-import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.business.ReviewDTO;
+import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.form.ReviewForm;

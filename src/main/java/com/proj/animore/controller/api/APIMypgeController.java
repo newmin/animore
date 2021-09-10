@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.dto.BusinessLoadDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.MypageReplyRes;
-import com.proj.animore.dto.ReviewReq;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
+import com.proj.animore.dto.business.BusinessLoadDTO;
+import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.Result;

@@ -22,10 +22,9 @@ import com.proj.animore.common.file.FileStore;
 import com.proj.animore.common.file.MetaOfUploadFile;
 import com.proj.animore.common.mail.MailService;
 import com.proj.animore.common.util.PasswordGeneratorCreator;
-import com.proj.animore.dto.BcategoryDTO;
-import com.proj.animore.dto.BusinessDTO;
 import com.proj.animore.dto.MemberDTO;
-
+import com.proj.animore.dto.business.BcategoryDTO;
+import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;

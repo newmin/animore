@@ -1,6 +1,6 @@
 package com.proj.animore.dao;
 
-import com.proj.animore.dto.BcategoryDTO;
+import com.proj.animore.dto.business.BcategoryDTO;
 
 public interface BcategoryDAO {
 

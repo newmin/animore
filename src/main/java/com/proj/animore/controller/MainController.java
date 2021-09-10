@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.proj.animore.dto.BusinessLoadDTO;
-import com.proj.animore.dto.FavoriteReq;
-import com.proj.animore.dto.ReviewReq;
+import com.proj.animore.dto.business.BusinessLoadDTO;
+import com.proj.animore.dto.business.FavoriteReq;
+import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.BusinessSVC;
