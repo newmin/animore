@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proj.animore.dto.board.MetaOfUploadFile;
-
 @Component
 public class FileStore {
 	//첨부파일이 저장될 파일시스템의 경로 application.properties에서 정의

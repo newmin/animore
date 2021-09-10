@@ -10,6 +10,18 @@ const modiTextbox_f = e => {
 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
 	}
+
+	// if(document.querySelector('div#boardForm__modiReplyTextarea')) {
+	// 	if(document.querySelector('div#boardForm__modiReplyTextarea').value){
+	// 		if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
+	// 			document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
+	// 			document.querySelector('div.boardForm__modiReplyTextarea').remove();
+	// 		}
+	// 	}else{
+	// 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
+	// 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
+	// 	}
+	// }
 	
 	//댓글번호
 	const $rnum = e.target.dataset.rnum;
@@ -44,9 +56,11 @@ const modiTextbox_f = e => {
 	//버튼에 이벤트 달아주기
 	//취소버튼 - 텍스트상자 제거하기, 원래댓글 보여주기
 	boardForm__modiReplyCancelBtn.addEventListener("click",e=>{
-		console.log("modiReplyCancelBtn");
-		$boardForm__modiReplyTextarea.remove();
-		$boardForm__replyTextContainer.classList.toggle('boardForm__hideReply');
+		if(confirm('취소하시겠습니까?')){
+			console.log("modiReplyCancelBtn");
+			$boardForm__modiReplyTextarea.remove();
+			$boardForm__replyTextContainer.classList.toggle('boardForm__hideReply');
+		}
 	});
 	
 	//등록버튼 - 댓글수정처리 이벤트 추가
@@ -57,6 +71,11 @@ const modiTextbox_f = e => {
 
 // 대댓글쓰기 버튼 누르면 대댓글 작성을 위한 div 생성해서 보이기 
 const reReTextbox_f = e => {
+
+	if(document.querySelector('boardForm__reReplyTextarea')) {
+		document.querySelector('div.boardForm__modiReplyTextarea').remove();
+	}
+
 	const $rnum = e.target.dataset.rnum;
 
 	//대댓글 달기 textbox 생성

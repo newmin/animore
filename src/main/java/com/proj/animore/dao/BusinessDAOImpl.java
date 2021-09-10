@@ -105,7 +105,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r ");
 		sql.append(" where b.bnum=c.bnum ");
-		sql.append("   and b.bnum=r.bnum ");
+		sql.append("   and b.bnum=r.bnum(+) ");
 		sql.append("   and "+bcategory+" = 'Y' ");
 		sql.append(" order by fdate desc nulls last ");
 		

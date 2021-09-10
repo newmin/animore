@@ -132,7 +132,7 @@ public class RboardDAOImpl implements RboardDAO{
 	public RboardListReqDTO findbyRnum(int bnum, int rnum) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood ");
+		sql.append(" select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,t1.store_fname");
 		sql.append(" from member t1, rboard t2 ");
 		sql.append(" where t1.id=t2.id ");
 		sql.append(" and rnum=? ");
@@ -196,8 +196,9 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
 //		sql.append("order by t2.rgroup desc, t2.rstep asc");	//원본
-//		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
-		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
+//		sql.append("order by t2.rgroup desc, t2.rstep desc, t2.rnum asc");
+		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
+//		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
 		
 		List<RboardListReqDTO> list =
 				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);

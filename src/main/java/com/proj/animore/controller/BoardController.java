@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.file.MetaOfUploadFile;
 import com.proj.animore.common.paging.PageCriteria;
 import com.proj.animore.common.paging.RecordCriteria;
 import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
-import com.proj.animore.dto.board.MetaOfUploadFile;
 import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;

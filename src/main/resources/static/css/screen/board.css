@@ -82,7 +82,7 @@
 	width:1100px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 25px 0;
 }
 
@@ -235,6 +235,8 @@
 }
 .boardForm__proImg{
     border-radius: 50%;
+    height:50px;
+    width:50px;
 }
 .boardForm__contents{
     height: 400px;
