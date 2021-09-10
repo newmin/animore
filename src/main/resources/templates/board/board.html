@@ -58,9 +58,7 @@
         </tr>
       </table>
 
-      <div class="borad__pageBtn">
-
-      </div>
+      
    </div>
       <!-- 벼룩시장 -->
       <div th:if="${bcategory} =='M'">
@@ -88,9 +86,7 @@
         </tr>
       </table>
 
-      <div class="borad__pageBtn">
-
-      </div>
+      
    </div>
    
       <!-- 자유게시판 -->
@@ -118,9 +114,7 @@
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
-      <div class="borad__pageBtn">
-
-      </div>
+      
 
     </div>
     
@@ -154,7 +148,38 @@
         <input type="text" name="" id="" class="board__searchInput">
         <button type="button" class="searchBtn">검색</button>
       </div>
-    
+    <div class="borad__pageBtn">
+		<div class="wrap-bbs-paging">
+			  <ul class="pagination pagination-sm justify-content-center">
+			  	<th:block th:if="${pc.prev}">
+				  	<li class="page-item">
+					    	<a class="page-link" href="#" th:href="@{|/board/${bcategory}/1|}"><i class="fas fa-angle-double-left"></i></a>
+					  </li>
+				  	<li class="page-item">
+					    	<a class="page-link" href="#" th:href="@{|/board/{bcateogry}?reqPage=${pc.startPage-1}|}"><i class="fas fa-angle-left"></i></a>
+					  </li>
+				</th:block>
+			    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
+				<li class="page-item active" aria-current="page"
+								th:if="${pc.rc.reqPage == pnum}">
+			      <span class="page-link" th:text="${pnum}">1</span>
+			    </li>							    
+			    <li class="page-item" 
+			    		th:if="${pc.rc.reqPage != pnum}">
+			    <a class="page-link" href="#" th:href="@{|/board/{bcategory}?reqPage=${pnum}|}" th:text="${pnum}">3</a>
+			    </li>
+			    </th:block>
+			    <th:block th:if="${pc.next}">
+				  	<li class="page-item">
+					    <a class="page-link" href="#" th:href="@{|/board/{bcateogry}?reqPage=${pc.endPage-1}|}"><i class="fas fa-angle-right"></i></a>
+					</li>
+				  	<li class="page-item">
+					    	<a class="page-link" href="#" th:href="@{|/board/{bcategory}?reqPage=${pc.finalEndPage}|}"><i class="fas fa-angle-double-right"></i></a>
+					</li>		
+				</th:block>
+			  </ul>
+			</div>
+      </div>
   </main>
 </body>
 

@@ -21,7 +21,7 @@ create table member(
   pw varchar2 (16) not null,
   tel varchar2(13) not null,
   email varchar2(30) not null,
-  name varchar2(30) not null,
+  name varchar2(15) not null,
   nickname varchar2(30) not null,
   gender char(3) not null,
   address varchar2(150) not null,
@@ -29,16 +29,17 @@ create table member(
   mtype char(1) not null,
   status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
-  udate timestamp DEFAULT systimestamp,
+  udate timestamp,
   lastlogin timestamp DEFAULT systimestamp, --마지막 로그인 시각
-  image blob,
   fsize varchar2(45),
   ftype varchar2(50),
-  fname varchar2(150),
+  store_fname varchar2(150),
+  upload_fname varchar2(150),
   mileage number(6) DEFAULT 0 not null,
   constraint MEMBER_ID_PK primary key(id),
   constraint MEMBER_STATUS_CK check(status in ('A','D','S','W')),
-  constraint MEMBER_mtype_ck check(mtype in('A','N','S'))
+  constraint MEMBER_mtype_ck check(mtype in('A','N','S')),
+  constraint MEMBER_ftype_ck check(ftype like 'image/%')  
 );
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
 
@@ -89,7 +90,7 @@ create table rboard(
   rgroup number(5) default 0 not null,
   rstep number(5) default 0 not null,
   rindent number(5) default 0 not null,
-  prid number(10),
+  prnum number(10),
   status char (1) default 'A' not null, --활성(A), 삭제(D)
   constraint RBOARD_RNUM_PK primary key(rnum),
   constraint rboard_bnum_FK foreign key(bnum) 
@@ -310,8 +311,8 @@ create sequence review_fnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N');
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy.png','image/png','16345');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy2.png','image/png','16345');
 -- 특수회원
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444-4444-4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');

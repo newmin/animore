@@ -200,10 +200,10 @@ public class APIMypgeController {
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
-		//html.append("<li>");
-		//html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-		//html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name=\"name\" id=\"name\" value= \""+memberDTO.getName()+"\"required></div>");
-		//html.append("</li>");
+		html.append("<li>");
+		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
+		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='name' id='name' value="+memberDTO.getName()+" required></div>");
+		html.append("</li>");
 
 		
 		html.append("    <li>");
@@ -274,10 +274,10 @@ public class APIMypgeController {
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
-		//html.append("<li>");
-		//html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-		//html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name=\"name\" id=\"name\" value= \""+memberDTO.getName()+"\"required></div>");
-		//html.append("</li>");
+		html.append("<li>");
+		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
+		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='name' id='name' value="+memberDTO.getName()+" required></div>");
+		html.append("</li>");
 
 		
 		html.append("    <li>");

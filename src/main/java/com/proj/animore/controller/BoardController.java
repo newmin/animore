@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.paging.PageCriteria;
+import com.proj.animore.common.paging.RecordCriteria;
+import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
@@ -35,6 +40,7 @@ import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.form.board.BoardForm;
 import com.proj.animore.form.board.ReplyForm;
+import com.proj.animore.form.board.modifyBoardForm;
 import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
@@ -51,6 +57,10 @@ public class BoardController {
 	private final RboardSVC rboardSVC;
 	private final GoodBoardSVC goodBoardSVC;
 	private final FileStore fileStore;
+	private final BoardUploadFileDAO boardUploadFileDAO;
+	@Autowired
+	@Qualifier("pc5")
+	private PageCriteria pc;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -65,18 +75,30 @@ public class BoardController {
 	//게시글 목록출력
 	@GetMapping("/{bcategory}")
 	public String boardList(@PathVariable String bcategory,
+							@RequestParam(required = false) Integer reqPage,
 							Model model) {
 	     if(bcategory.equals("Q"))   bcategory="Q";
 	     if(bcategory.equals("M"))   bcategory="M";
 	     if(bcategory.equals("F"))   bcategory="F";
 	     if(bcategory.equals("P"))   bcategory="P";
 		
-	     List<BoardReqDTO> list = boardSVC.list(bcategory);
+	   //요청페이지가 없으면 1페이지로
+		if(reqPage == null) reqPage = 1;
+		//사용자가 요청한 페이지번호
+		pc.getRc().setReqPage(reqPage);
+		//게시판 전체레코드수
+		pc.setTotalRec(boardSVC.totoalRecordCount());
+		//페이징 계산
+		pc.calculatePaging();
+		
+	     List<BoardReqDTO> list = boardSVC.list(bcategory,
+	    		 								pc.getRc().getStartRec(),
+	    		 								pc.getRc().getEndRec());
 	     model.addAttribute("boardForm",list);
 	     
 	    List<BoardReqDTO> nlist = boardSVC.noticeList(bcategory);
 	    model.addAttribute("notice",nlist);
-	     
+	    model.addAttribute("pc",pc);
 		return "board/board";
 	}
 	
@@ -102,6 +124,7 @@ public class BoardController {
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
+		fileStore.setFilePath("d:/upload/board/");
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 		
@@ -149,6 +172,8 @@ public class BoardController {
 		
 		//boardSVC.addBoard(loginMemberId,boardDTO);
 		log.info("boardForm:{}",boardForm);
+		
+		fileStore.setFilePath("d:/upload/board/");
 		
 		BoardDTO boardDTO = new BoardDTO();
 		//boardForm 의 값이 boardDTO에 복사됨
@@ -235,6 +260,7 @@ public class BoardController {
 		boardDTO.setBindent(pBoardDTO.getBindent());
 		
 		//첨부파일 메타정보 추출
+		fileStore.setFilePath("d:/upload/board/");
 		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(replyForm.getFiles());
 		//UploadFileDTO 변환	
 		boardDTO.setFiles(convert(storedFiles));
@@ -253,26 +279,37 @@ public class BoardController {
 	public String modifyPostForm(@PathVariable Integer bnum,
 								Model model) {
 		
-		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
-		log.info("boardForm:{}",boardReqDTO);
 		
-		model.addAttribute("boardForm",boardReqDTO);
-		log.info("files:{}",boardReqDTO.getFiles());
-		log.info("files:{}",boardReqDTO.getFiles().get(0).getUpload_fname());
-		
+		model.addAttribute("boardForm",boardSVC.findBoardByBnum(bnum));
+		log.info("boardForm:{}",boardSVC.findBoardByBnum(bnum));
 		return "board/modifyBoardForm";
 	}
 	
 	//게시글 수정 처리
-	@PatchMapping("/{bnum}")
+	@PatchMapping("/modify/{bnum}")
 	public String modifyPost(@PathVariable Integer bnum,
-							@ModelAttribute BoardForm boardFrom) {
-
+							@Valid @ModelAttribute modifyBoardForm modifyForm,
+							BindingResult bindingResult,
+							RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
+		
+		if(bindingResult.hasErrors()) {
+			return "board/modifyBoardForm";
+		}
+		
+		fileStore.setFilePath("d:/upload/board/");
 		BoardDTO boardDTO = new BoardDTO();
-		BeanUtils.copyProperties(boardFrom, boardDTO);
+		
+		//첨부파일 메타정보 추출
+		List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(modifyForm.getFiles());
+				
+		boardDTO.setFiles(convert(storedFiles));
+		
+		BeanUtils.copyProperties(modifyForm, boardDTO);
 		
 		
-		boardSVC.modifyBoard(bnum, boardDTO);
+		int modifyedBnum = boardSVC.modifyBoard(bnum, boardDTO);
+		redirectAttributes.addAttribute("bnum",modifyedBnum);
+
 		return "redirect:/board/post/{bnum}";
 		
 	}
@@ -285,6 +322,21 @@ public class BoardController {
 		
 		return new Result ("00","ok",bnum);
 	}
+	
+	//게시글첨부파일삭제
+	@ResponseBody
+	@DeleteMapping("/attach/{sfname}")
+	public Result deleteFile(@PathVariable String sfname) {
+		
+		fileStore.setFilePath("d:/upload/board/");
+		if(fileStore.deleteFile(sfname)) {
+			boardUploadFileDAO.deleteFileBySfname(sfname);
+		}else {
+		return new Result("01","nok","파일삭제실패!");
+		}
+		return new Result("00","ok","파일삭제성공!");
+	}
+	
 	//제목으로 게시글 검색
 	@ResponseBody
 	@GetMapping("/search/title/{bcategory}")

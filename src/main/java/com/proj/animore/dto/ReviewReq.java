@@ -17,4 +17,5 @@ public class ReviewReq {
 	private String nickname;
 	private LocalDate rvcdate;
 	private LocalDate rvudate;
+	private String store_fname;
 }

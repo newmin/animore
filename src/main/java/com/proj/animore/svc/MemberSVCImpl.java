@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dao.BcategoryDAO;
 import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
@@ -25,6 +26,7 @@ public class MemberSVCImpl implements MemberSVC {
 	private final MemberDAO memberDAO;
 	private final BusinessDAO businessDAO;
 	private final BcategoryDAO bcategoryDAO;
+	private final FileStore fileStore;
 	
 	//일반회원가입
 	@Override

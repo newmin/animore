@@ -7,13 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <script defer></script>
+    <script src="/js/modifyBoardForm.js" defer></script>
+    <script src="/js/api/ajaxCall.js"></script>
 <title>게시글작성</title>
 </head>
 <body>
 <main class="main ">
 	<!-- TODO 링크에 id값 넣기 -->
-	<form action=""  th:action="@{|/board/*{bnum}|}" th:method="patch"  th:object="${boardForm}">
+	<form action=""  th:method="patch"  th:object="${boardForm}" enctype="multipart/form-data">
 	<div class="addPost__container">
     <select th:field="*{bcategory}"  class="addPost__selectbox">
       <option value=""  selected>게시판명</option>
@@ -23,17 +24,29 @@
     </select>
     <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
+      
+     <div class="boardForm__files">
+		<label for="file" class="file__title">첨부파일></label>
+		<div>
+		<span th:each="file : *{files}">
+			<a class="file__content" th:href="@{|/attach/${file.store_fname}/${file.upload_fname}}|"
+			th:text="|/${file.upload_fname}|"></a>
+			<i class="fas fa-backspace" th:data-sfname="${file.store_fname}"></i>
+		</span>
+		</div>
+	</div>
+      
       <div class="addPost__icons">
-        <span class="filetype">
-           <span class="file-text" th:text="*{files.get(0).getUpload_fname()}"></span>
-        	<label for="files" class="file-btn">찾아보기</label>
-        <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
-        </span>
-      </div>
-      <div class="addPost__btns">
+      <span class="filetype">
+                <span class="file-text"></span>
+      <label for="files" class="file-btn">찾아보기</label>
+      <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
+      </span>
+    </div>
     <div class="addPost__btns">
-      <button type="button">취소</button>
+      <button type="button" th:data-bnum="*{bnum}" class="returnBtn">취소</button>
       <button type="submit">수정</button>
+ 
     </div>
     </div>
     </form>

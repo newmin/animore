@@ -34,11 +34,11 @@ const addBtn_f = e =>{
 		return;
 	}
 	
-	const URL = `/rboard/${$bnum}/${$id}`;
+	const URL = `/rboard/${$bnum}`;
 	const data = {
-//								 "rnum":$rnum,
+								//  "rnum":$rnum,
 								 "bnum":$bnum,
-								 "id":$id,
+								//  "id":$id,
 								 "rcontent":$rcontent.value,
 //								 "rgroup":$rgroup,
 //								 "rstep":$rstep
@@ -66,19 +66,22 @@ const addBtn_f = e =>{
 /* 대댓글 등록 */
 const replyReBtn_f = e =>{
 	console.log('replyReBtn_f');
+	const $rnum = e.target.dataset.rnum;
+	const $reRcontent = boardForm__reReplyTextarea.value;
 	
 	//댓글입력체크
-	if(!$reRcontent.value) {
+	if(!$reRcontent) {
 		alert("댓글 내용을 입력하세요");
 		return;
 	}
 	
-	const URL = `/rboard/${$bnum}/${$id}`;
+	const URL = `/rboard/${$bnum}/${$rnum}`;
 	const data = {
-//								 "rnum":$rnum,
+								//  "rnum":$rnum,
 								 "bnum":$bnum,
-								 "id":$id,
-								 "rcontent":$rcontent.value,
+								 "rnum":$rnum,
+								//  "id":$id,
+								 "rcontent":$reRcontent,
 //								 "rgroup":$rgroup,
 //								 "rstep":$rstep
 							 };
@@ -109,11 +112,11 @@ const modiBtn_f = e =>{
 	const $rnum = e.target.dataset.rnum;
 	const $rcontent_modi = document.querySelector("textarea#boardForm__modiReplyTextarea");
 	
-	const URL = `/rboard/${$bnum}/${$rnum}/${$id}`;
+	const URL = `/rboard/${$bnum}/${$rnum}`;
 	const data = {
 								 "rnum":$rnum,
 								 "bnum":$bnum,
-								 "id":$id,
+								//  "id":$id,
 								 "rcontent":$rcontent_modi.value,
 //								 "rgroup":$rgroup,
 //								 "rstep":$rstep
@@ -249,10 +252,6 @@ const allBtn_f = e =>{
 
 addBtn.addEventListener("click",addBtn_f);
 
-Array.from(replyReBtns).forEach(ele => {
-  ele.addEventListener("click",replyReBtn_f);
-});
-
 Array.from(delBtns).forEach(ele => {
   ele.addEventListener("click",delBtn_f);
 });
@@ -268,16 +267,23 @@ function refreshReply(data){
 	let html = '';
 	data.forEach(rec => {
 					html += `<div class="boardForm__replyContainer">`
+			if(rec.rindent > 0){
+				for(let i=0; i<rec.rindent; i++){
+					html += `<div style="width:50px"></div>`;
+				}
+			}
 		      html += `<div class="boardForm__replyImgWrap"><img src="https://picsum.photos/seed/picsum/50/50" alt="" class="boardForm__proImg"></div>`;
-		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">`;
+		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}">`;
 		      html += `  <div>`;
 		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
 		      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
 		      html += `    <div class="boardForm__Replywrap">`;
 		      html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
-		      html += `        <button class="boardForm__ReplyReBtn">답글쓰기</button>`;
-	if($id == rec.id){	html += `<button class="boardForm__modiReplyBtn" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">댓글수정</button>`; }
-	if($id == rec.id){	html += `<button class="boardForm__delReplyBtn" data-rnum="${rec.rnum}" data-rgroup="${rec.rgroup}" data-rstep="${rec.rstep}">댓글삭제</button>`; }
+		      html += `        <button class="boardForm__ReplyReBtn" data-rnum="${rec.rnum}">답글쓰기</button>`;
+			if($id == rec.id){
+					html += `<button class="boardForm__modiReplyBtn" data-rnum="${rec.rnum}">댓글수정</button>`;
+					html += `<button class="boardForm__delReplyBtn" data-rnum="${rec.rnum}">댓글삭제</button>`;
+			}
 		      html += `    </div>`;
 		      html += `  </div>`;
 		      html += `</div>`;
@@ -291,7 +297,7 @@ function refreshReply(data){
 	//대댓글달기, 수정, 삭제버튼
 	replyReBtns = document.querySelectorAll('button.boardForm__ReplyReBtn');
 	Array.from(replyReBtns).forEach(ele => {
-	  ele.addEventListener("click",replyReBtn_f);
+	  ele.addEventListener("click",reReTextbox_f);
 	});
 	modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 	Array.from(modiBtns).forEach(ele => {

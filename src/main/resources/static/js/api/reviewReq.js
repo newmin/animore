@@ -321,7 +321,7 @@ const delBtn_f = e => {
 // 리뷰 새로 고침
 function refreshReview(data){
 	let html ='';
-	html += `<div><p>리뷰수 : ${data.length}</p></div>`;
+	html += `<div class="review__cnt"><i class="far fa-comment-dots"></i><span>리뷰수 : ${data.length}</span></div>`;
 	html += `<section class="review">`;
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
