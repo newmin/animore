@@ -112,4 +112,4 @@ modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 Array.from(modiBtns).forEach(ele => {
 	ele.addEventListener("click", modiTextbox_f);
 });
-	
+ 
