@@ -189,7 +189,7 @@
 		      
 	      <section th:if="${session == null || session.loginMember == null}">
 	      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
-	      	<p><a th:href="@{/login}">바로 로그인하러 가기!!</a></p>
+	      	<p><a th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">바로 로그인하러 가기!!</a></p>
 	      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
 	      </section> 
 		      
