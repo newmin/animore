@@ -423,10 +423,68 @@ delBtns.forEach(ele=>ele.addEventListener('click',delBtn_f));
 modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 
 
+
+
 //회원리뷰에 사장님 댓글
 
+//댓글 등록 처리
 
+const addBtn_f = e=> {
+
+	const content = document.querySelector('.rvReply__content');
+	const rnum = e.target.dataset.rnum;
+
+		//리뷰입력체크
+		if(!content.value) {
+			alert("댓글 내용을 입력하세요");
+			return;
+	}	
+	//TODO 댓글 등록하는 폼만들고 해당값 입력
+	const URL = `/inquire/`;
+	const data = {
+			"rnum" : rnum,
+			"rvReply": content.value,
+													 };
+													 	
+	request.patch(URL,data)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == '00'){
+							//성공로직처리
+							const data = res.data;
+							//리뷰목록갱신
+							refreshReview(data);
+							//리뷰입력창 초기화
+							rcontent.value=null;
+							//등록후 별점도 초기화?
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+					alert(err.message);
+			});
+
+
+
+}
+
+
+
+
+//댓글폼 출력
 const replyBtns_f = e =>{
+
+	if(document.querySelector('.review__reply-form')!=null){
+		if(confirm('기존 작성 중인 내용은 삭제됩니다.')){
+			document.querySelector('.review__reply-form').remove()
+		} else {
+			return
+		}
+	}
 
 	const rnum = e.target.dataset.rnum;
 	const bid = $busi.id;
@@ -452,13 +510,15 @@ const replyBtns_f = e =>{
 			})
 }
 
+
+//댓글폼 출력 함수
 function addReply(review){
 	let html='';
 	html += `<div class="rvReply">`;
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
 	html += `	<textarea class="rvReply__content" name="rvReply" id="" cols="30" rows="10">${review.rvReply}</textarea>`;
 	html += `	<div class="rvReply__btns">`;
-	html += `		<button class="rvReply__btn rvReply__addBtn">확인</button>`;
+	html += `		<button class="rvReply__btn rvReply__addBtn" data-rnum="${review.rnum}"">확인</button>`;
 	html += `		<button class="rvReply__btn rvReply__cancle">취소</button>`;
 	html += `	</div>`;
 	html += `</div>`;
@@ -471,7 +531,8 @@ function addReply(review){
 	const addBtn = document.querySelector('.rvReply__addBtn');
 	const cancleBtn = document.querySelector('.rvReply__cancle');
 
-	// cancleBtn.addEventListener('click',)
+	cancleBtn.addEventListener('click',e=>replyForm.remove());
+	addBtn.addEventListener('click',addBtn_f);
 }
 
 //리댓달기 버튼 이벤트
