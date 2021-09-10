@@ -196,8 +196,9 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
 //		sql.append("order by t2.rgroup desc, t2.rstep asc");	//원본
-//		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
-		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
+//		sql.append("order by t2.rgroup desc, t2.rstep desc, t2.rnum asc");
+		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
+//		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
 		
 		List<RboardListReqDTO> list =
 				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);
