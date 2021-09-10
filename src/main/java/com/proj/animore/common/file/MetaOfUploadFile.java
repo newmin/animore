@@ -1,4 +1,4 @@
-package com.proj.animore.dto.board;
+package com.proj.animore.common.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
