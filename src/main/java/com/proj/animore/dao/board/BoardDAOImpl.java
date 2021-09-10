@@ -250,11 +250,13 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> bgoodList(String bcategory) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent ");
-		sql.append("  from board b, member m ");
-		sql.append("  where b.id = m.id ");
-		sql.append("   and bcategory=? ");
-		sql.append(" order by bgood desc ");
+		sql.append(" select t1.* ");
+		sql.append(" from(select row_number() over (order by bgood desc) num, ");
+		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
+		sql.append("     from board b, member m ");
+		sql.append("     where b.id = m.id ");
+		sql.append("     and bcategory=?) t1 ");
+		sql.append(" where num between 1 and 3 ");
 		List<BoardReqDTO> list = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardReqDTO.class),
 										bcategory);
@@ -325,12 +327,14 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardReqDTO> noticeList(String bcategory) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("select b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent, b.bstatus ");
-		sql.append("  from board b, member m ");
-		sql.append("  where b.id = m.id ");
-		sql.append("   and b.bstatus='Y' ");
-		sql.append("   and bcategory=? ");
-		sql.append(" order by bndate desc ");
+		sql.append("select t1.* ");
+		sql.append("   from   (select row_number() over (order by bndate desc) num, ");
+		sql.append("              b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent, b.bstatus ");
+		sql.append("        from board b, member m ");
+		sql.append("        where b.id = m.id ");
+		sql.append("        and b.bstatus='Y' ");
+		sql.append("        and bcategory=?) t1 ");
+		sql.append("where num between 1 and 3 ");
 
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 								new BeanPropertyRowMapper<>(BoardReqDTO.class),

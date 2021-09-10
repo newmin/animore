@@ -28,7 +28,7 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model) {
 		String bcategory ="Q";
-		List<BoardReqDTO> list = boardSVC.list(bcategory);
+		List<BoardReqDTO> list = boardSVC.bgoodList(bcategory);
 		model.addAttribute("post",list);
 		
 		return "index";
