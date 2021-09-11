@@ -62,8 +62,8 @@
         </div>
        </div>
        <div class="boardForm__contents">
-       	<th:block th:if="*{bcategory=='P'}" th:each="img : *{files}">
-       		<img th:src="@{|/img/upload/board/${img.store_fname}|} " alt="" />
+       	<th:block th:each="img : *{files}">
+       		<img th:src="@{|/img/upload/board/${img.store_fname}|}" alt="업로드파일" />
        	</th:block>
        <p th:text="*{bcontent}"></p>
        </div>
@@ -115,7 +115,7 @@
         <div class="boardForm__btns boardForm__underBtns">
             <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
             <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
-            <button type="button" class="boardForm__addBtn">글쓰기</button>
+            <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
         </div>
         </div>
     </main>

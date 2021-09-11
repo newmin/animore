@@ -176,10 +176,10 @@ public class BoardController {
 		
 		HttpSession session = request.getSession(false);
 
-			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-			if(loginMember == null) return "redirect:/login";
-			
-			boardForm.setBcategory(cate);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(loginMember == null) return "redirect:/login";
+		
+		boardForm.setBcategory(cate);
 			
 		return "board/addBoardForm";
 	}

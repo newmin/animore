@@ -49,6 +49,7 @@
 const $search_select = document.querySelector('.board__search_select');
 const $searchText = document.querySelector('.board__searchInput');
 const $searchBtn = document.querySelector('.searchBtn');
+const $searchBox = document.querySelector('.board__searchForm');
 
 const $url = document.location.href;
 /*제목으로게시글찾기*/
@@ -60,7 +61,7 @@ console.log("url:",URL);
 request.get(URL)
 		.then(res=>res.json())
 		.then(res=>{
-		if(res.rtcd==0){
+		if(res.rtcd=='00'){
 		const data = res.data;
     if($url.slice(-1,$url.length)=='P'){
       let html ='';
@@ -75,7 +76,7 @@ request.get(URL)
 		let html ='';
 		html += `    <tr> `;
           html += `      <th class="board__cell board__num">번호</th> `;
-          html += `      <th class="board__cell board__title">제목</th> `;
+          html += `      <th class="board__cell board__titles">제목</th> `;
           html += `      <th class="board__cell board__writer">작성자</th> `;
           html += `      <th class="board__cell board__hits">조회수</th> `;
           html += `      <th class="board__cell board__hearthits">좋아요</th> `;
@@ -93,10 +94,11 @@ request.get(URL)
   }else{
   		throw new Error(res.rtmsg);
   	}
-  	})
-  	.catch(err=>{
-		//오류로직 처리
+  })
+  .catch(err=>{
+    //오류로직 처리
 		console.log (err.message);
+    alert("검색 결과가 없습니다.");
 	});
   
   	
@@ -148,6 +150,7 @@ request.get(URL)
   	.catch(err=>{
 		//오류로직 처리
 		console.log (err.message);
+    alert("검색 결과가 없습니다.");
 	});
   
   	
@@ -199,22 +202,20 @@ request.get(URL)
   	.catch(err=>{
 		//오류로직 처리
 		console.log (err.message);
+    alert("검색 결과가 없습니다.");
 	});
   
   	
 
 };
 
-$searchBtn.addEventListener('click',e=>{
+$searchBox.addEventListener('submit',e=>{
+  e.preventDefault();
 console.log(`url은? ${$url.slice(-1,$url.length)}`);
 if($search_select.value == "btitle") {searchByBtitle();}
 if($search_select.value == "nickname") {searchByNickname()};
 if($search_select.value == "bcontent") {searchByBcontent()};
 });
 
-const $mypostBtn = document.querySelector('.board__myPostbtn');
-$mypostBtn.addEventListener('click',e=>{
-location.href='/mypage/mypost';
-});
 	
     
