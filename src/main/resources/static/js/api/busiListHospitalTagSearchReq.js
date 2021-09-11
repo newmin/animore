@@ -68,7 +68,7 @@ function refreshBusiList(data) {
     html+= `<li class="busi-list__row">`
     html+= `  <span class="busi-list__column busi-list__bname"><a href="/inquire/${rec.bnum}">${rec.bname}</a></span>`
     html+= `  <!-- <span class="busi-list__column busi-list__bname"><a href="/${rec.bcategory}/${rec.bnum}">${rec.bname}</a></span> -->`
-    html+= `  <span class="busi-list__column busi-list__distance">3cm</span>`
+    html+= `  <span class="busi-list__column busi-list__distance">${rec.distance}</span>`
     html+= `  <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i>`
 if(rec.bscore)    html+= `<span>${rec.bscore}</span></div>`
 else							html+= `<span></span></div>`
