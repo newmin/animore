@@ -10,18 +10,6 @@ const modiTextbox_f = e => {
 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
 	}
-
-	// if(document.querySelector('div#boardForm__modiReplyTextarea')) {
-	// 	if(document.querySelector('div#boardForm__modiReplyTextarea').value){
-	// 		if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
-	// 			document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
-	// 			document.querySelector('div.boardForm__modiReplyTextarea').remove();
-	// 		}
-	// 	}else{
-	// 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
-	// 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
-	// 	}
-	// }
 	
 	//댓글번호
 	const $rnum = e.target.dataset.rnum;
@@ -112,4 +100,3 @@ modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 Array.from(modiBtns).forEach(ele => {
 	ele.addEventListener("click", modiTextbox_f);
 });
- 
