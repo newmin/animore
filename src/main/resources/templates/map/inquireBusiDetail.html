@@ -87,10 +87,10 @@
 		        <div class="review__row" th:each="review :${review}" th:object="${review}" th:data-rnum="${review.rnum}">
 							<div class="review__column">
 							<th:block th:if="${review.store_fname != null }">
-								<img class="review__profile" th:src="@{|/img/upload/member/*{store_fname}|}" alt="프로필사진">
+								<img class="profile__sm" th:src="@{|/img/upload/member/*{store_fname}|}" alt="프로필사진">
 							</th:block>
 							<th:block th:if="${review.store_fname == null }">
-								<img class="review__profile" src="/img/upload/member/puppy.png" alt="프로필사진">
+								<img class="profile__sm" src="/img/upload/member/puppy.png" alt="프로필사진">
 							</th:block>
 								<span class="review__nickname" th:text="*{nickname}">닉네임</span>
 							</div>
