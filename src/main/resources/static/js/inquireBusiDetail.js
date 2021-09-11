@@ -41,10 +41,13 @@
 	  score=5
 	}
 
-	one.addEventListener('click',score1);
-	two.addEventListener('click',score2);
-	three.addEventListener('click',score3);
-	four.addEventListener('click',score4);
-	five.addEventListener('click',score5);
+	one?.addEventListener('click',score1);
+	two?.addEventListener('click',score2);
+	three?.addEventListener('click',score3);
+	four?.addEventListener('click',score4);
+	five?.addEventListener('click',score5);
 	
+	
+document.querySelector('.review__row').setAttribute('id','firstRow');
+
 	

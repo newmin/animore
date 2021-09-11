@@ -46,7 +46,7 @@
 			    <p class="busi-info__address" th:text="| > *{baddress}|">병원 > 울산시</p>
 			    <!-- <p th:text="|${bcategory} > *{baddress}|">병원 > 울산시</p> -->
 			    <!--임시 별점 확인-->
-			    <p style="color:sandybrown;">로그인 후 별점확인 리뷰 50</p>
+			    <p th:if="${session.loginMember==null}" style="color:sandybrown;">로그인 후 별점확인 <span th:text="|리뷰 수 : ${review.size}|">리뷰수</span></p>
 			    <div class="busi-info__btns">
 			      <!--링크해야됨-->
 				    <button class="busi-info__btn">업체정보</button>
@@ -160,7 +160,7 @@
 		      </section>
 				</section>
 				<section class="wrap" th:if="${session!=null && session.loginMember!=null}">
-						<div th:if="${review.size!=0}" class="review__up"><i class="fas fa-angle-up"></i></div>
+						<div th:if="${review.size>3}" class="review__up"><a href="#firstRow"><i class="fas fa-angle-up"></i></a></div>
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
