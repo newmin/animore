@@ -337,12 +337,6 @@ function refreshReview(data){
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
 		html += `	<div class="review__column">`;
-		html += `		<div>`
-		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
-		if(review.rvudate) {
-			html += `<span class="review__isUpdate">수정됨</span>`;
-		}
-		html += `		</div>`
 		html += `		<div class="review__main-text">`
 		switch(review.rscore){
 			case 1:
@@ -401,7 +395,25 @@ function refreshReview(data){
 			html += `			</p>`;
 			html += `		</div>`;
 		}
-		html += `		<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글</span></p>`;
+		
+		
+		html+= `<div class="review__reply">`
+			if($id==$busi.id && review.rvReply==null){
+				html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
+			}
+			if(review.rvReply){
+				html += `<p class="review__reply-text">└─>사장님 : ${review.rvReply}</p>`
+			}
+		html+= `</div>`
+
+		html += `		<div>`
+		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
+		if(review.rvudate) {
+			html += `<span class="review__isUpdate">수정됨</span>`;
+		}
+		html += `		</div>`
+
+
 		html += `		</div>`;
 		html += `	</div>`;
 		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
@@ -432,7 +444,9 @@ modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 const addBtn_f = e=> {
 
 	const content = document.querySelector('.rvReply__content');
-	const rnum = e.target.dataset.rnum;
+	const rnum = e.target.closest('.review__reply').querySelector('.review__replyBtn').dataset.rnum;
+	const bnum = $busi.bnum;
+	const bid = $busi.id;
 
 		//리뷰입력체크
 		if(!content.value) {
@@ -440,9 +454,10 @@ const addBtn_f = e=> {
 			return;
 	}	
 	//TODO 댓글 등록하는 폼만들고 해당값 입력
-	const URL = `/inquire/`;
+	const URL = `/inquire/rvreply?bid=${bid}`;
 	const data = {
 			"rnum" : rnum,
+			"bnum" : bnum,
 			"rvReply": content.value,
 													 };
 													 	
@@ -454,9 +469,6 @@ const addBtn_f = e=> {
 							const data = res.data;
 							//리뷰목록갱신
 							refreshReview(data);
-							//리뷰입력창 초기화
-							rcontent.value=null;
-							//등록후 별점도 초기화?
 					}else{
 						alert(res.rtmsg);
 						throw new Error(res.rtmsg);
@@ -518,7 +530,7 @@ function addReply(review){
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
 	html += `	<textarea class="rvReply__content" name="rvReply" id="" cols="30" rows="10">${review.rvReply}</textarea>`;
 	html += `	<div class="rvReply__btns">`;
-	html += `		<button class="rvReply__btn rvReply__addBtn" data-rnum="${review.rnum}"">확인</button>`;
+	html += `		<button class="rvReply__btn rvReply__addBtn">확인</button>`;
 	html += `		<button class="rvReply__btn rvReply__cancle">취소</button>`;
 	html += `	</div>`;
 	html += `</div>`;
