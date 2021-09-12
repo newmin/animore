@@ -1,3 +1,8 @@
+/**
+ * 업체목록-병원카테고리 페이지
+ * 병원태그 클릭시 검색결과 요청
+ */
+
 'use strict';
 
 const $hTags = document.querySelectorAll("input[type='checkbox']");
