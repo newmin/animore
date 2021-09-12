@@ -18,6 +18,7 @@ const regiBtn_f = e =>{
 	
 	const rcontent = document.querySelector('.reviewform .review__textarea');
 	const rscore = document.querySelector('.reviewform input[name="rscore"]:checked');
+	const files = document.querySelector('.review__files');
 
 	//리뷰입력체크
 	if(!rcontent.value) {
@@ -30,7 +31,8 @@ const regiBtn_f = e =>{
 			"bnum" : bnum,
 			"rcontent": rcontent.value,
 			"rscore" : rscore.value,
-			"id" : $id
+			"id" : $id,
+			"files" : files.files
 													 };
 													 	
 	request.post(URL,data)
@@ -323,6 +325,7 @@ function refreshReview(data){
 	let html ='';
 	html += `<div class="review__cnt"><i class="far fa-comment-dots"></i><span>리뷰수 : ${data.length}</span></div>`;
 	html += `<section class="review">`;
+	html += `<div id="firstRow"></div>`
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
 		//프로필

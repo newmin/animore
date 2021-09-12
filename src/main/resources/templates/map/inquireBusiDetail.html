@@ -15,7 +15,7 @@
 		const $busi = /*[[${busi}]]*/ null;	//업체목록
 		const $id = /*[[${session.loginMember?.id}]]*/ null; //아이디
 	</script>
-	<script src="/js/mapAPI3.js" defer></script>
+	<script src="/js/mapAPI2.js" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
  <script src="/js/api/ajaxCall.js" defer></script>
  <script src="/js/api/favorites.js" defer></script>
@@ -84,6 +84,7 @@
 					<div class="review__cnt"><i class="far fa-comment-dots"></i><span th:text="|리뷰수 : ${review.size}|"></span></div>
 					<!-- 로그인시에만 리뷰 출력 -->
 		      <section class="review" th:if="${session.loginMember != null}">
+		      <div id="firstRow"></div>
 		        <div class="review__row" th:each="review :${review}" th:object="${review}" th:data-rnum="${review.rnum}">
 							<div class="review__column">
 							<th:block th:if="${review.store_fname != null }">
@@ -160,7 +161,7 @@
 		      </section>
 				</section>
 				<section class="wrap" th:if="${session!=null && session.loginMember!=null}">
-						<div th:if="${review.size>3}" class="review__up"><a href="#firstRow"><i class="fas fa-angle-up"></i></a></div>
+						<div th:if="${review.size>3}" class="review__up"><a href="#firstRow" title="첫번쨰 리뷰로 이동"><i class="fas fa-angle-up"></i></a></div>
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
@@ -182,7 +183,10 @@
 		            <div class="review__contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
 		                <textarea rows="10" class="review__textarea" name="rcontent"></textarea>
-		                <button class="review__regist" type="button">등록</button>
+		                <div>
+			                <input type="file" class="review__files" name="files" multiple="multiple"/>
+			                <button class="review__regist" type="button">등록</button>
+		                </div>
 		            </div>   
 		        </form>
 		    </section>

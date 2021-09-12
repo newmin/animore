@@ -21,7 +21,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 	//리뷰등록
 	@Override
-	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
+	public int registReview(ReviewDTO reviewDTO) {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into review(rnum,bnum,rcontent,rscore,id) values(review_rnum_seq.nextval,?,?,?,?) ");
@@ -43,7 +43,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 		// 동일한 영수증으로 이미 리뷰를 작성한 경우
 		// (완)평점or내용이 비어있는 경우
 
-		return allReview(reviewDTO.getBnum());
+		return rnumCurrVal();
 	}
 
 	//업체별 리뷰조회(최신순)
@@ -167,4 +167,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return allReview(reviewReq.getBnum());
 	}
 
+
+	@Override
+	public int rnumCurrVal() {
+		String sql = "select REVIEW_RNUM_SEQ.currval from dual ";
+		int rnum = jdbcTemplate.update(sql);
+		return rnum;
+	}
 }
