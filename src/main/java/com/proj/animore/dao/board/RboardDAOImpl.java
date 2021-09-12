@@ -117,8 +117,7 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("update rboard ");
 		sql.append("   set rstep = rstep + 1 ");
 		sql.append(" where rgroup = ? ");
-//		sql.append("   and rstep < ? ");
-		sql.append("   and rstep > ? ");	//원본
+		sql.append("   and rstep > ? ");
 		
 		jt.update(sql.toString(), rgroup,rstep);
 	}
@@ -156,6 +155,7 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
 		sql.append("and id=? ");
+		sql.append("and status='A' ");
 		
 		jt.update(sql.toString(),
 										rboardDTO.getRcontent(), bnum, rnum, id);
@@ -172,10 +172,13 @@ public class RboardDAOImpl implements RboardDAO{
 	public List<RboardListReqDTO> del(int bnum, int rnum, String id) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("delete from rboard ");
+		sql.append("update rboard ");
+		sql.append("set status = 'D' ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
-		sql.append("and id=?");
+		sql.append("and id=? ");
+		sql.append("and status='A' ");
+		
 		
 		int result = 
 				jt.update(sql.toString(), bnum, rnum, id);
@@ -191,14 +194,11 @@ public class RboardDAOImpl implements RboardDAO{
 	public List<RboardListReqDTO> all(int bnum) {
 		log.info(String.valueOf(bnum));
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,store_fname ");
+		sql.append("select t2.rnum,t1.nickname,t2.id,decode(t2.status,'A',t2.rcontent,'==삭제된댓글입니다==') rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,t2.status,store_fname ");
 		sql.append("from member t1, rboard t2 ");
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
-//		sql.append("order by t2.rgroup desc, t2.rstep asc");	//원본
-//		sql.append("order by t2.rgroup desc, t2.rstep desc, t2.rnum asc");
 		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
-//		sql.append("order by t2.rgroup asc, t2.rstep desc, t2.rnum asc");
 		
 		List<RboardListReqDTO> list =
 				jt.query(sql.toString(), new BeanPropertyRowMapper<>(RboardListReqDTO.class), bnum);

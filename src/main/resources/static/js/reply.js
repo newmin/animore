@@ -13,11 +13,7 @@ const modiTextbox_f = e => {
 	
 	//댓글번호
 	const $rnum = e.target.dataset.rnum;
-	console.log("modiTextbox_f");
-	console.log(e);
-	console.log($rnum);
 	
-	//상위요소 더 깔끔하게 타게팅 하는거 찾아보기(배운거같음)
 	//버튼누르면 기존댓글 div에 댓글숨기기 클래스 토글(숨김)
 	const $boardForm__replyTextContainer = e.target.closest('.boardForm__replyTextContainer');
 	//수정전댓글내용
@@ -77,7 +73,7 @@ const reReTextbox_f = e => {
 			html +=`</div>`
 	$boardForm__reReplyTextarea.innerHTML = html;
 
-	//대댓글 붙일 댓글 밑에 대댓글 입력상자 나타나게 하기
+	//답글쓰기 버튼누른 댓글 밑에 입력상자 나타나게 하기
 	e.target.closest('.boardForm__replyContainer').after($boardForm__reReplyTextarea);
 
 	//버튼에 이벤트 달아주기
