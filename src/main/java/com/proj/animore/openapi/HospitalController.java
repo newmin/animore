@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api")
 public class HospitalController {
 
-	private final HospitalOpenAPI2 hospital;
+	private final HospitalOpenAPI hospital;
 	
 //	@ResponseBody
 	@GetMapping("/hospital")

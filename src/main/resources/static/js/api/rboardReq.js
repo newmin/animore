@@ -156,7 +156,7 @@ Array.from(delBtns).forEach(ele => {
   ele.addEventListener("click",delBtn_f);
 });
 
-/* 댓글목록새로고침 */
+/* 댓글목록갱신 */
 function refreshReply(data){
 	let html = '';
 	data.forEach(rec => {
