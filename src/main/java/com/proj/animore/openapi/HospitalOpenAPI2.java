@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -33,6 +32,7 @@ public class HospitalOpenAPI2 {
 	
 	private final JdbcTemplate jt;
 	private final static String SERVICE_KEY="pdkeiUGlzOckrCiEHJaFdSydNz6KL1Wpu7DnP1VQ7L%2B78Nw3mWnpIR0pNmMjZGkmmk82W6O%2B8NT3pjD6xavegA%3D%3D";
+	private static String htag = "";
 	
 	public List<Hospital> getHospital(HospitalParam hospitalParam) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder("http://data.ulsan.go.kr/rest/ulsananimal/getUlsananimalList"); /*URL*/
@@ -101,16 +101,13 @@ public class HospitalOpenAPI2 {
     
     
     StringBuffer sql = new StringBuffer();
-		sql.append("insert into business (bnum, bbnum, bname, baddress, btel) ");
-    sql.append(" values ( business_bnum_seq.nextval , ? , ? , ? , ? )");
-    
-    
+		sql.append("insert into business (bnum, bbnum, bname, baddress, btel ) ");
+    sql.append(" values ( business_bnum_seq.nextval , ? , ? , ? , ? ) ");
     
 		jt.batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				log.info("i:{}",i);
 				ps.setString(1, ((Hospital) hList2.get(i)).getEntId());
 				ps.setString(2, ((Hospital) hList2.get(i)).getTitle());
 				ps.setString(3, ((Hospital) hList2.get(i)).getAddress());

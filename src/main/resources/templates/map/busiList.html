@@ -7,17 +7,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>업체 리스트</title>
-<!-- 테스트코드시작 -->
 	<script th:inline="javascript">
 		const $busiList = /*[[${busiList}]]*/ null;	//업체목록
 	</script>
 	<script src="/js/api/ajaxCall.js"></script>
 	<script src="/js/mapAPI2.js" defer></script>
 	<script src="/js/api/busiListHospitalTagSearchReq.js" defer></script>
+	<script src="/js/admin/busiList.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
-<!-- 테스트코드끝 -->
 
-<!-- 원본 -->
 <!-- <script src="/js/mapAPI.js" defer></script> -->
 <!--네이버 API--> 
 <!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g6wou1itr9"></script> -->
@@ -57,7 +55,13 @@
             <!-- <p class="position__category" th:if="" th:text="${busiList.search is not null} ? |검색어 : ${busiList.search}|"></p> -->
           </div>
         </div>
-        <div class="position__column"></div>
+        <div class="position__column">
+        	<div th:if="${session?.loginMember?.mtype=='A' && bcategory == 'bhospital'}" style="text-align:center">
+        		<a href="/api/hospital?pageNo=1&numOfRows=100" class="busiList__hospitalDataDownloadBtn">
+        			<button class="board-best__btn" type="button">공공데이터요청</button>
+        		</a>
+        	</div>
+        </div>
       </section>
       
       <section class="busi-infomation">

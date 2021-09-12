@@ -19,7 +19,7 @@ public class HospitalController {
 
 	private final HospitalOpenAPI2 hospital;
 	
-	@ResponseBody
+//	@ResponseBody
 	@GetMapping("/hospital")
 	public String hospital(@ModelAttribute HospitalParam hospitalParam) throws IOException {
 //		String hospitalXML = hospital.getHospital(hospitalParam);
@@ -29,8 +29,9 @@ public class HospitalController {
 		hp.setNumOfRows(hospitalParam.getNumOfRows());
 		hp.setPageNo(hospitalParam.getPageNo());
 		
-		List<Hospital> hList = hospital.getHospital(hp);
+//		List<Hospital> hList = hospital.getHospital(hp);
+		hospital.getHospital(hp);
 		
-		return hList.toString();
+		return "redirect:/bhospital";
 	}
 }
