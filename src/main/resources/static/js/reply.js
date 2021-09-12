@@ -7,8 +7,15 @@
 const modiTextbox_f = e => {
 
 	if(document.querySelector('div.boardForm__modiReplyTextarea')) {
+		if(!confirm('댓글 수정을 취소하시겠습니까?'))	return;
 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
+	}
+	
+	if(document.querySelector('div.boardForm__reReplyTextarea')) {
+		if(boardForm__reReplyTextarea.value)
+			if(!confirm('답글 입력을 취소하시겠습니까?')) return;
+		document.querySelector('div.boardForm__reReplyTextarea').remove();
 	}
 	
 	//댓글번호
@@ -57,7 +64,15 @@ const modiTextbox_f = e => {
 const reReTextbox_f = e => {
 
 	if(document.querySelector('div.boardForm__reReplyTextarea')) {
+		if(boardForm__reReplyTextarea.value)
+			if(!confirm('답글 입력을 취소하시겠습니까?')) return;
 		document.querySelector('div.boardForm__reReplyTextarea').remove();
+	}
+
+	if(document.querySelector('div.boardForm__modiReplyTextarea')) {
+		if(!confirm('댓글 수정을 취소하시겠습니까?'))	return;
+		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
+		document.querySelector('div.boardForm__modiReplyTextarea').remove();
 	}
 
 	const $rnum = e.target.dataset.rnum;

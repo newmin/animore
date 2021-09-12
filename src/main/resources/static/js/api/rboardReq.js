@@ -111,7 +111,6 @@ const modiBtn_f = e =>{
 			if(res.rtcd == '00'){
 				//성공로직처리
 				const data = res.data;
-				//$boardForm__modiReplyTextarea.;	//수정로직 마치고 텍스트상자 제거(없어도 될듯한데 일단 넣어봤음)
 				refreshReply(data);				//댓글목록갱신
 				
 			}else{
@@ -127,7 +126,7 @@ const modiBtn_f = e =>{
 /* 댓글삭제처리 */
 const delBtn_f = e =>{
 
-	console.log(e.target);
+	if(!confirm('정말 삭제하시겠습니까?'))	return;
 	const $rnum = e.target.dataset.rnum;
 	
 	const URL = `/rboard/${$bnum}/${$rnum}`;
