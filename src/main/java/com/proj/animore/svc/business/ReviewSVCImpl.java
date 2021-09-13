@@ -18,37 +18,46 @@ public class ReviewSVCImpl implements ReviewSVC {
 	private final ReviewDAO reviewDAO;
 	private final ReviewFileDAO reviewFileDAO;
 	
+	//리뷰 등록
 	@Override
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
 		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());
 		return reviewDAO.allReview(reviewDTO.getBnum());
 	}
-
+	
+	//업체 조회(모든 리뷰)
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		return reviewDAO.allReview(bnum);
 	}
 
+	//내가 쓴 리뷰(마이페이지0
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		return reviewDAO.myReview(id);
 	}
 	
+	//리뷰 1개 조회(수정시 호출)
 	@Override
 	public ReviewReq findReview(int rnum) {
-		return reviewDAO.findReview(rnum);
+		ReviewReq review = reviewDAO.findReview(rnum);
+//		review.setFiles(reviewFileDAO.);
+		return review;
 	}
 
+	//리뷰 수정
 	@Override
 	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
 		return reviewDAO.updateReview(reviewDTO);
 	}
 
+	//리뷰 삭제
 	@Override
 	public List<ReviewReq> removeReview(int bnum, int rnum) {
 		return reviewDAO.removeReview(bnum, rnum);
 	}
+	
 	
 	@Override
 	public ReviewReq findRvReply(int rnum) {

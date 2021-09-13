@@ -77,17 +77,16 @@
 	        <ul class="busi-list">
 	          <li class="busi-list__row" th:each="busiList : ${busiList}">
 	            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
-	            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
-	            <span class="busi-list__column busi-list__distance">좌표오류.</span>
+	            <span class="busi-list__column busi-list__distance">좌표오류</span>
 	            <div class="busi-list__column busi-list__icons">
 	            	<th:block th:if="${session != null && session.loginMember != null}">
 		            	<i class="fas fa-star busi-list__star"></i>
-		            	<span th:text="${busiList.bscore}?:|미등록|"></span>	            	
+		            	<span th:text="${busiList.bscore}?:|리뷰없음|"></span>	            	
 	            	</th:block>
 	            	<th:block th:if="${session?.loginMember == null}">
 		            	<a th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">
 		            		<i class="fas fa-star busi-list__star"></i>
-	            			<span>로그인</span>
+	            			<span>로그인후 조회</span>
 	            		</a>
 	            	</th:block>
 	            </div>
