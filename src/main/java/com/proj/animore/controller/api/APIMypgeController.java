@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -165,7 +167,6 @@ public class APIMypgeController {
 	
 	//내정보 개안정보수정 처리
 	@PatchMapping("/mypageModify")
-	
 	public Result mypageModify(HttpServletRequest request,
 			@RequestBody ModifyForm modidyfyForm) { 
 		HttpSession session = request.getSession(false);
@@ -179,7 +180,6 @@ public class APIMypgeController {
 		MemberDTO memberDTO = memberSVC.findMemberById(id);
 		
 		Result result;
-		
 		
 		StringBuffer html = new StringBuffer();
 		
@@ -206,7 +206,7 @@ public class APIMypgeController {
 		html.append("</li>");
 
 		
-		html.append("    <li>");
+		html.append("  <li>");
 		html.append("      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>");
 		html.append("      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>");
 		html.append("    </li>");
@@ -257,9 +257,9 @@ public class APIMypgeController {
 	
 		StringBuffer html = new StringBuffer();
 		
-		html.append("<div class=\"mypage_content_container\">");
+		html.append("<div class='mypage_content_container'>");
 		
-		html.append("<h2 class=\"mypage_content_title\">즐겨 찾는 업체</h2>");
+		html.append("<h2 class='mypage_content_title'>즐겨 찾는 업체</h2>");
 		
 		html.append("<hr>");
 		
@@ -294,9 +294,7 @@ public class APIMypgeController {
 		html.append("<li><label for=\"birth\">생년월일</label></li>");
 		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	");
 		
-
-		
-		
+	
 		html.append("<li><label for=\"tel\">전화번호</label></li>");
 		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>");
 		
@@ -350,69 +348,13 @@ public class APIMypgeController {
 		html.append("</table>");
 		html.append("</div>");
 		
+		log.info(mybusiList.toString());
+		
 		Result result;
 		result = new Result("00","OK",html);
 		
 		return result;
 	}
-	
-	//개인업체수정양식
-	@GetMapping("/mybusiModify")
-	public Result mybusiModify (HttpServletRequest request){
-		HttpSession session = request.getSession(false);
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginMember:{}",loginMember);
-		
-		BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
-		
-		String id = loginMember.getId();
-		
-		businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
-	
-		StringBuffer html = new StringBuffer();
-		
-		html.append("<div class=\"mypage_content_container\">");
-		
-		html.append("<h3 class=\"mypage_content_title\">업체 정보 수정</h3>");
-		
-		html.append("<hr>");
-		
-		html.append(" <form class=\"main\" action=\"\" th:method=\"patch\" th:object=\"${busiModifyForm}\">");
-
-		
-		
-		html.append(" <ul>");
-		html.append("<li><label for=\"id\">업체명</label></li>");
-		html.append("<li><input type=\"text\" id ='bname' name ='bname' value="+businessLoadDTO.getBname()+"/></li>");
-		
-		html.append("<li><label for=\"nickname\">업체주소</label></li>");
-		html.append("<li><input type=\"text\" id ='bname' name ='bname' value="+businessLoadDTO.getBaddress()+"/></li>>");
-		
-		html.append("<li><label for=\"btel\">전화번호</label></li>");
-		html.append("<li><input type=\"tel\" id ='btel' name ='btel' value="+businessLoadDTO.getBtel()+"/></li>>");
-		
-		html.append("<li><input type=\"button\" value=\"업체수정\" id=\"busimodifyBtn\"></li>");
-		
-		html.append("</ul>");
-		html.append("</form >");
-		html.append("</div>");
-		
-		
-		return new Result("00","OK",html);
-
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	//내 좋아요 조회
 	@GetMapping("/mypageGood")
@@ -452,6 +394,41 @@ public class APIMypgeController {
 		
 		return result;
 	}
-	
-	
+	//업체수정양식
+//	@GetMapping("/mybusiModify/{bnum}")
+//	public Result<StringBuffer> mybusiModify (@PathVariable Integer bnum, HttpServletRequest request){
+//		
+//		HttpSession session = request.getSession(false);
+//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//		BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
+//		businessLoadDTO = businessSVC.findBusiByBnum(bnum);
+//		StringBuffer html = new StringBuffer();
+//		
+//		html.append("<div class='mypage_content_container'>");
+//		
+//		html.append("<h3 class='mypage_content_title'>업체정보수정</h3>");
+//		
+//		html.append("<hr>");
+//		
+//		html.append("<form class='main' method='post'><input type='hidden' name = '_method' value='patch'>");
+//		html.append("<ul>");
+//		html.append("<li><label for='bname'>업체명</label></li>");
+//		html.append("<li><input type='text' id ='bname' name ='bname' value="+businessLoadDTO.getBname()+"/></li>");
+//		
+//		html.append("<li><label for='baddress'>업체주소</label></li>");
+//		html.append("<li><input type='text' id ='baddress' name ='baddress' value="+businessLoadDTO.getBaddress()+"/></li>");
+//		
+//		html.append("<li><label for='btel'>전화번호</label></li>");
+//		html.append("<li><input type='tel' id ='btel' name ='btel' value="+businessLoadDTO.getBtel()+"/></li>");
+//		
+//		html.append("<li><input class='mypage_busimodify' data-bnum="+businessLoadDTO.getBnum()+" type='button' value='업체수정' id='busimodifyBtn'></li>");
+//		
+//		html.append("</ul>");
+//		html.append("</form>");
+//		html.append("</div>");
+//		
+//		Result<StringBuffer> result;
+//		result = new Result<StringBuffer>("00","OK",html);
+//		return result;
+//	}
 }

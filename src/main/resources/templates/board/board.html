@@ -127,62 +127,70 @@
    <div th:if="${cate} =='P'">
     <div class="b_galarywrap board__table">
         <div class="b_galary_post" th:each="boardForm :${boardForm}">
-          <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
-          <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title" th:text="${boardForm.btitle}">글제목</p></a></div>
+          <th:block th:unless="${boardForm.files.size() == 0}"> 
+         <a th:href="@{|/board/post/${boardForm.bnum}|}"> 
+          <img class="b_galary_img" src="#" th:src="@{|/img/upload/board/${boardForm.files[0].getStore_fname()}|}"></img> 
+         </a>
+		 </th:block>     
+          <th:block th:unless="${boardForm.files.size() != 0}"> 
+         <a th:href="@{|/board/post/${boardForm.bnum}|}"> 
+          <i class="fas fa-times"></i>
+         </a>
+		 </th:block>     
+          <p class="b_galary_title"  th:text="${boardForm.btitle}">글제목</p>
         </div>
-        
-      </div>
-      
-      <div class="borad__pageBtn">
-        
       </div>
     </div>
+    
+    
      <div class="board__btns">
         <button class="board__btn boardForm__addBtn" type="button" th:data-cate =${cate}>글쓰기</button>
       </div>
 
-      <div class="board__search">
-        <select name="search" id="" class="board__search_select">
-          <option value="btitle">제목</option>
-          <option value="nickname">작성자명</option>
-          <option value="bcontent">내용</option>
-        </select>
-        <input type="text" name="" id="" class="board__searchInput">
-        <button type="button" class="searchBtn">검색</button>
-      </div>
+      <form action="" class="board__searchForm">
+        <div class="board__search">
+          <select name="search" id="" class="board__search_select">
+            <option value="btitle">제목</option>
+            <option value="nickname">작성자명</option>
+            <option value="bcontent">내용</option>
+          </select>
+          <input type="text" name="" id="" class="board__searchInput">
+          <button type="submit" class="searchBtn">검색</button>
+        </div>
+      </form>
 
 		<div class="wrap-bbs-paging">
-							  <ul class="pagination pagination-sm justify-content-center">
-							  	<th:block th:if="${pc.prev}">
-								  	<li class="page-item">
-									    	<a class="page-link" href="#" th:href="@{/board/{cate}?reqPage=1(cate=${cate})}"><i class="fas fa-angle-double-left"></i></a>
-									  </li>
-								  	<li class="page-item">
-									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.startPage-1})}"><i class="fas fa-angle-left"></i></a>
-									  </li>
-								  </th:block>
-							    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
-							    	<th:block th:if="${pnum != 0}">
-	 									<li class="page-item active" aria-current="page"
-	 											th:if="${pc.rc.reqPage == pnum}">
-								      <span class="page-link" th:text="${pnum}">1</span>
-								    </li>							    
-								    <li class="page-item" 
-								    		th:if="${pc.rc.reqPage != pnum}">
-								    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pnum})}" th:text="${pnum}">3</a>
-								    </li>
-								    </th:block>
-							    </th:block>
-							    <th:block th:if="${pc.next}">
-								  	<li class="page-item">
-									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.endPage+1})}"><i class="fas fa-angle-right"></i></a>
-									  </li>
-								  	<li class="page-item">
-									    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.finalEndPage})}"><i class="fas fa-angle-double-right"></i></a>
-									  </li>		
-									</th:block>
-							  </ul>
-							</div>
+		  <ul class="pagination pagination-sm justify-content-center">
+		  	<th:block th:if="${pc.prev}">
+			  	<li class="page-item">
+				    	<a class="page-link" href="#" th:href="@{/board/{cate}?reqPage=1(cate=${cate})}"><i class="fas fa-angle-double-left"></i></a>
+				  </li>
+			  	<li class="page-item">
+				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.startPage-1})}"><i class="fas fa-angle-left"></i></a>
+				  </li>
+			  </th:block>
+		    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
+		    	<th:block th:if="${pnum != 0}">
+						<li class="page-item active" aria-current="page"
+								th:if="${pc.rc.reqPage == pnum}">
+			      <span class="page-link" th:text="${pnum}">1</span>
+			    </li>							    
+			    <li class="page-item" 
+			    		th:if="${pc.rc.reqPage != pnum}">
+			    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pnum})}" th:text="${pnum}">3</a>
+			    </li>
+			    </th:block>
+		    </th:block>
+		    <th:block th:if="${pc.next}">
+			  	<li class="page-item">
+				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.endPage+1})}"><i class="fas fa-angle-right"></i></a>
+				  </li>
+			  	<li class="page-item">
+				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.finalEndPage})}"><i class="fas fa-angle-double-right"></i></a>
+				  </li>		
+				</th:block>
+		  </ul>
+		</div>
 
   </main>
 </body>

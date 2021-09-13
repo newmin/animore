@@ -85,6 +85,7 @@ public class BoardController {
 //	     if(bcategory.equals("F"))   bcategory="F";
 //	     if(bcategory.equals("P"))   bcategory="P";
 		
+		 List<BoardReqDTO> list = null;
 		
 	   //요청페이지가 없으면 1페이지로
 		if(reqPage == null) reqPage = 1;
@@ -99,15 +100,17 @@ public class BoardController {
 			//페이징 계산
 			pc2.calculatePaging();
 			
-			List<BoardReqDTO> list = boardSVC.list(cate,
+			list = boardSVC.list(cate,
 					pc2.getRc().getStartRec(),
 					pc2.getRc().getEndRec());
+			
 			model.addAttribute("boardForm",list);
+			log.info("list:{}",list);
 			
 			List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
 			model.addAttribute("notice",nlist);
 			model.addAttribute("pc",pc2);
-			return "board/board";
+			
 			
 		}else {
 			log.info("그외카테고리클릭");
@@ -118,16 +121,18 @@ public class BoardController {
 		//페이징 계산
 		pc.calculatePaging();
 		
-	     List<BoardReqDTO> list = boardSVC.list(cate,
-	    		 								pc.getRc().getStartRec(),
-	    		 								pc.getRc().getEndRec());
-	     model.addAttribute("boardForm",list);
+	    list = boardSVC.list(cate,
+ 								pc.getRc().getStartRec(),
+ 								pc.getRc().getEndRec());
+	    
 	     
 	    List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
+	    model.addAttribute("boardForm",list);
 	    model.addAttribute("notice",nlist);
 	    model.addAttribute("pc",pc);
-		return "board/board";
+		
 	}
+		return "board/board";
 	}
 	
 	//게시글 조회
@@ -152,7 +157,7 @@ public class BoardController {
 		//조회시 조회수 하나씩 증가
 		boardSVC.upBhit(bnum);
 		
-		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");	
+		//fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");	
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		model.addAttribute("post",boardReqDTO);
 		
@@ -175,10 +180,10 @@ public class BoardController {
 		
 		HttpSession session = request.getSession(false);
 
-			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-			if(loginMember == null) return "redirect:/login";
-			
-			boardForm.setBcategory(cate);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(loginMember == null) return "redirect:/login";
+		
+		boardForm.setBcategory(cate);
 			
 		return "board/addBoardForm";
 	}

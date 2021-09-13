@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
@@ -211,8 +213,8 @@ public String modifyMember(HttpServletRequest request,
    
    }
    //내업체 수정양식
-   //@GetMapping("/mybusiModify")
-   public String mybusiModify(HttpServletRequest request,
+   @GetMapping("/mybusiModify/{bnum}")
+   public String mybusiModify(@PathVariable Integer bnum ,HttpServletRequest request,
 		      Model model) {
 	   HttpSession session = request.getSession(false);
 	      if(session == null || session.getAttribute("loginMember") == null){
@@ -227,26 +229,19 @@ public String modifyMember(HttpServletRequest request,
 	       
 	      //내업체정보 가져오기
 	       
+	            
+	       BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
+	       businessLoadDTO = businessSVC.findBusiByBnum(bnum);  
 	      
-//	       
-//	      BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
-//	      
-//	      BusiModifyForm busiModifyForm = new BusiModifyForm();
-//	      
-//	      BeanUtils.copyProperties(businessLoadDTO, busiModifyForm);
-//	      
-//	      model.addAttribute("busiModifyForm",busiModifyForm);
-//	      
-//	      log.info(busiModifyForm.toString());
-//	      
-	      
+	       model.addAttribute("mybusiModify", businessLoadDTO);
 	   
 	      return "/mypage/mybusiModify";
    }
    //내업체수정처리
-   @PatchMapping("/mybusiModify")
-   public String mybusiModify(@Valid @ModelAttribute BusiModifyForm busiModifyForm,
+   @PatchMapping("/mybusiModify/{bnum}")
+   public String mybusiModify(@PathVariable Integer bnum ,@Valid @ModelAttribute  BusiModifyForm busiModifyForm,
          BindingResult bindingResult,
+     	RedirectAttributes redirectAttributes,
          HttpServletRequest request) {
 	   
          log.info("회원수정처리 호출됨");
@@ -271,16 +266,12 @@ public String modifyMember(HttpServletRequest request,
          
          BeanUtils.copyProperties(busiModifyForm, businessLoadDTO);
          
-         businessSVC.modifyBusi(businessLoadDTO.getBnum(),businessLoadDTO);
+     	BusinessLoadDTO modibusiBnum = businessSVC.modifyBusi(bnum, businessLoadDTO);
+		redirectAttributes.addAttribute("bnum",modibusiBnum.getBnum());
          
         
-         
-//        BeanUtils.copyProperties(modifyForm, mdto);
-//         
-//         memberSVC.modifyMember(loginMember.getId(), mdto);
-//         log.info("=={},{}",loginMember.getId(), mdto);
 
-         return "redirect:/mypage/mybusiModify";
+         return "redirect:/mypage/mybusiModify/{bnum}";
    }
    
 }

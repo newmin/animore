@@ -57,6 +57,7 @@ public class MainController {
 		return "map/busiList";
 	}
 	
+	
 	//업체검색어 목록조회
 	@GetMapping("/search")
 	public String listBySearch(@RequestParam String search,Model model) {

@@ -39,14 +39,15 @@ public class BusinessDAOImpl implements BusinessDAO {
 	@Override
 	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bnum,bname,baddress,btel,openhours,id");
+		sql.append(" select bnum,bname,baddress,btel,openhours,id ");
 		sql.append(" from business ");
-		sql.append("where bnum = ? ");
+		sql.append(" where bnum = ? ");
+		
 		BusinessLoadDTO businessLoadDTO = jdbcTemplate.queryForObject(sql.toString(),
 				new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
 				bnum);
 		
-		
+		log.info(businessLoadDTO.toString());
 		return businessLoadDTO;
 	}
 
@@ -186,7 +187,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append(" select b.bname, b.baddress ,b.btel ");
+		sql.append(" select b.bname, b.baddress ,b.btel ,b.bnum");
 		sql.append(" from business b ");
 		sql.append("  where id = ?  ");
 		
