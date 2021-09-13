@@ -60,26 +60,39 @@
       
       <section class="busi-infomation">
         <!-- 업체리스트 -->
-        <ul class="busi-list">
           <!-- 리스트 구분 -->
-          <li class="busi-list__row">
-            <p class="busi-list__column busi-list__bname">업체명</p>
-            <p class="busi-list__column busi-list__distance">거리</p>
-            <p class="busi-list__column busi-list__score">평점</p>
-            <select class="busi-list__select" name="" id="">
-              <option value="">거리순</option>
-              <option value="">평점순</option>
-            </select>
-          </li>
-          <!-- 리스트 -->
-          <li class="busi-list__row" th:each="busiList : ${busiList}">
-            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
-            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
-            <span class="busi-list__column busi-list__distance">3cm</span>
-            <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i><span th:text="${busiList.bscore}"></span></div>
-          </li>
-        </ul>
-      
+          <div>
+	          <div class="busi-list__row">
+	            <p class="busi-list__column busi-list__bname">업체명</p>
+	            <p class="busi-list__column busi-list__distance">거리</p>
+	            <p class="busi-list__column busi-list__score">평점</p>
+	            <select class="busi-list__select" name="" id="">
+	              <option value="">거리순</option>
+	              <option value="">평점순</option>
+	            </select>
+	            <div class="busi-list__up"><a href="#firstRow" title="맨위로 이동"><i class="fas fa-angle-up"></i></a></div>
+	          </div>
+	          <!-- 리스트 -->
+	        <ul class="busi-list">
+	          <li class="busi-list__row" th:each="busiList : ${busiList}">
+	            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
+	            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
+	            <span class="busi-list__column busi-list__distance">좌표오류.</span>
+	            <div class="busi-list__column busi-list__icons">
+	            	<th:block th:if="${session != null && session.loginMember != null}">
+		            	<i class="fas fa-star busi-list__star"></i>
+		            	<span th:text="${busiList.bscore}?:|미등록|"></span>	            	
+	            	</th:block>
+	            	<th:block th:if="${session?.loginMember == null}">
+		            	<a th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">
+		            		<i class="fas fa-star busi-list__star"></i>
+	            			<span>로그인</span>
+	            		</a>
+	            	</th:block>
+	            </div>
+	          </li>
+	        </ul>
+        </div>
         <!-- 지도 -->
         <div id="map" class="map--lg">
 <!--           <div id="menu">
