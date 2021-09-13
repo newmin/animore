@@ -95,7 +95,7 @@
      		 	 <th:block th:if="${reply.rindent} > 0">
         	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" style="width:50px"></div>
 					 </th:block>
-           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{store_fname}|} " alt="" class="boardForm__proImg"></div>
+           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{member_fname}|} " alt="" class="boardForm__proImg"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
@@ -104,8 +104,10 @@
                     <th:block th:if="${reply.status == 'A'}">
                     	<div class="boardForm__Replycdate" th:text="${reply.rcdate}">작성일자</div>
 	                    <button class="boardForm__ReplyReBtn" th:data-rnum="${reply.rnum}">답글쓰기</button>
-	                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__modiReplyBtn" th:data-rnum="${reply.rnum}">댓글수정</button>
-	                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__delReplyBtn" th:data-rnum="${reply.rnum}">댓글삭제</button>
+	                    <th:block th:if="${(session.loginMember != null && (session.loginMember.id.equals(reply.id)||session.loginMember.mtype=='A'))}">
+		                    <button class="boardForm__modiReplyBtn" th:data-rnum="${reply.rnum}">댓글수정</button>
+		                    <button class="boardForm__delReplyBtn" th:data-rnum="${reply.rnum}">댓글삭제</button>
+	                    </th:block>
                     </th:block>
                 </div>
             	</div>

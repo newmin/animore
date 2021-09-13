@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/rboard")
 @RequiredArgsConstructor
 public class APIRboardController {
-
+	
 	private final RboardSVC rboardSVC;
 	
 //댓글등록처리   post
@@ -57,7 +57,7 @@ public class APIRboardController {
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
-
+		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rar,rboardDTO);
 		

@@ -15,7 +15,6 @@ public class RboardAddReq {
 	
 	@NotBlank
 	private String bnum;			//게시글번호
-	private String id;				//작성자id
 	@NotBlank
 	private String rcontent;	//댓글내용
 }
