@@ -64,7 +64,7 @@ public class APIReviewController {
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
 		
 		//첨부파일 등록
-		if(reviewForm.getFiles()!=null) {			
+		if(reviewForm.getFiles()!=null || reviewForm.getFiles().size()!=0) {			
 			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(reviewForm.getFiles());
 			reviewDTO.setFiles(convert(storedFiles));

@@ -18,6 +18,7 @@ const regiBtn_f = e =>{
 	
 	const rcontent = document.querySelector('.reviewform .review__textarea');
 	const rscore = document.querySelector('.reviewform input[name="rscore"]:checked');
+	const files = document.querySelector('.review__files');
 
 	//리뷰입력체크
 	if(!rcontent.value) {
@@ -30,7 +31,8 @@ const regiBtn_f = e =>{
 			"bnum" : bnum,
 			"rcontent": rcontent.value,
 			"rscore" : rscore.value,
-			"id" : $id
+			"id" : $id,
+			"files" : files.files
 													 };
 													 	
 	request.post(URL,data)
@@ -323,21 +325,24 @@ function refreshReview(data){
 	let html ='';
 	html += `<div class="review__cnt"><i class="far fa-comment-dots"></i><span>리뷰수 : ${data.length}</span></div>`;
 	html += `<section class="review">`;
+	html += `<div id="firstRow"></div>`
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
+		//프로필
 		html += `	<div class="review__column">`;
 		// if(review.store_fname != null){ 
-		// 	html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
+		// 	html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
 		// } else{
-		// 	html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
+		// 	html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
 		// }
 		review.store_fname
-				 ? html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
-				 : html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
+				 ? html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
+				 : html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
 		html += `	<div class="review__column">`;
 		html += `		<div class="review__main-text">`
+		//별점
 		switch(review.rscore){
 			case 1:
 				html += `			<div class="review__star-score">`;
@@ -385,6 +390,7 @@ function refreshReview(data){
 				html += `			</div>`;
 			break;
 		}
+		//내용 및 수정/삭제 버튼
 		html += `		<p class="review__content">${review.rcontent}</p>`;
 		if($id == review.id){
 			html += `		<div>`;
@@ -395,8 +401,7 @@ function refreshReview(data){
 			html += `			</p>`;
 			html += `		</div>`;
 		}
-		
-		
+		//사장님 댓글	
 		html+= `<div class="review__reply">`
 			if($id==$busi.id && review.rvReply==null){
 				html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
@@ -405,15 +410,12 @@ function refreshReview(data){
 				html += `<p class="review__reply-text">└─>사장님 : ${review.rvReply}</p>`
 			}
 		html+= `</div>`
-
 		html += `		<div>`
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
 		if(review.rvudate) {
 			html += `<span class="review__isUpdate">수정됨</span>`;
 		}
 		html += `		</div>`
-
-
 		html += `		</div>`;
 		html += `	</div>`;
 		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
@@ -479,12 +481,7 @@ const addBtn_f = e=> {
 					console.log(err.message);
 					alert(err.message);
 			});
-
-
-
 }
-
-
 
 
 //댓글폼 출력

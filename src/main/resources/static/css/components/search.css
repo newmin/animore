@@ -17,8 +17,11 @@
 .search__icon {
   font-size: 35px;
   background-color: var(--primary-light);
-  padding: 8px;
-  border-radius: 10px;
+  padding: 3.5px 8px;
+  border-radius: 5px;
+  border : 3px solid var(--primary);
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .search__input--sm{
@@ -36,4 +39,5 @@
   padding: 0px;
   background-color: inherit;
   border-radius: 0;
+  border : none;
 }

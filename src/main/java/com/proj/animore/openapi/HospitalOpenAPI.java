@@ -6,20 +6,35 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class HospitalOpenAPI {
-
-	private final static String SERVICE_KEY="pdkeiUGlzOckrCiEHJaFdSydNz6KL1Wpu7DnP1VQ7L%2B78Nw3mWnpIR0pNmMjZGkmmk82W6O%2B8NT3pjD6xavegA%3D%3D";
 	
-	public String getHospital(HospitalParam hospitalParam) throws IOException {
+	private final JdbcTemplate jt;
+	private final static String SERVICE_KEY="pdkeiUGlzOckrCiEHJaFdSydNz6KL1Wpu7DnP1VQ7L%2B78Nw3mWnpIR0pNmMjZGkmmk82W6O%2B8NT3pjD6xavegA%3D%3D";
+	private static String htag = "";
+	
+	public List<Hospital> getHospital(HospitalParam hospitalParam) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder("http://data.ulsan.go.kr/rest/ulsananimal/getUlsananimalList"); /*URL*/
 		
 		//요청파라미터
@@ -27,7 +42,8 @@ public class HospitalOpenAPI {
     urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("-", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
     urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(hospitalParam.getPageNo(), "UTF-8")); /*페이지번호*/
     urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(hospitalParam.getNumOfRows(), "UTF-8")); /*한 페이지 결과 수*/
-
+    
+    log.info("urlBuilder:{}",urlBuilder);
     URL url = new URL(urlBuilder.toString());
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     
@@ -54,14 +70,74 @@ public class HospitalOpenAPI {
     }
     rd.close();
     conn.disconnect();
-
-    //log.info(sb.toString());
     
     //xml to json
     int INDENT_FACTOR = 2;
     JSONObject xmlJSONObj = XML.toJSONObject(sb.toString());
-    String jsonPrettyString = xmlJSONObj.toString(INDENT_FACTOR);	//들여쓰기
     
-    return jsonPrettyString;
+    JSONObject jsonrfcOpenApi = xmlJSONObj.getJSONObject("rfcOpenApi");
+    JSONObject jsonbody = jsonrfcOpenApi.getJSONObject("body");
+    JSONObject jsondata = jsonbody.getJSONObject("data");
+    
+    JSONArray jsonArray = new JSONArray(jsondata.getJSONArray("list"));
+    log.info("jsonArray:{}",jsonArray);
+    log.info("jsonArrayLength:{}",jsonArray.length());
+//    for(int i=0; i<jsonArray.length(); i++) {
+//    	JSONObject jsonObject = jsonArray.getJSONObject(i);    	
+//    	log.info("jsonObject-title:{}",jsonObject.get("title"));
+//    }
+//    return xmlJSONObj;
+    
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.setSerializationInclusion(Include.NON_NULL);
+    
+    ArrayList hList = mapper.readValue(jsonArray.toString(), ArrayList.class);
+    List<Hospital> hList2 = mapper.convertValue(hList, new TypeReference<List<Hospital>>() {});
+    
+    
+    
+    String sqlGetStartSeq = "select business_bnum_seq.nextval from dual";
+    Integer startSeq = jt.queryForObject(sqlGetStartSeq, Integer.class) + 1;
+    
+    
+    StringBuffer sql = new StringBuffer();
+		sql.append("insert into business (bnum, bbnum, bname, baddress, btel ) ");
+    sql.append(" values ( business_bnum_seq.nextval , ? , ? , ? , ? ) ");
+    
+		jt.batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setString(1, ((Hospital) hList2.get(i)).getEntId());
+				ps.setString(2, ((Hospital) hList2.get(i)).getTitle());
+				ps.setString(3, ((Hospital) hList2.get(i)).getAddress());
+				ps.setString(4, ((Hospital) hList2.get(i)).getTel());
+			}
+			
+			@Override
+			public int getBatchSize() {
+				return hList2.size();
+			}
+		});
+		
+		
+		String sqlBcategoryInsert = "insert into bcategory (bnum, bhospital) values( ? , ? )";
+		jt.batchUpdate(sqlBcategoryInsert, new BatchPreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				log.info("startSeq+i:{}",startSeq+i);
+				ps.setInt(1, startSeq+i);
+				ps.setString(2, "Y");
+			}
+			
+			@Override
+			public int getBatchSize() {
+				return hList2.size();
+			}
+		});
+		
+    
+    return hList2;
 	}
 }

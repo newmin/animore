@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dto.board.RboardDTO;
 import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.LoginMember;
@@ -41,11 +40,10 @@ import lombok.extern.slf4j.Slf4j;
 public class APIRboardController {
 
 	private final RboardSVC rboardSVC;
-	private final FileStore fileStore;
 	
 //댓글등록처리   post
 	@PostMapping("/{bnum}")
-	public Result register(
+	public Result<List<RboardListReqDTO>> register(
 			@PathVariable int bnum,
 			@Valid @RequestBody RboardAddReq rar,
 			HttpServletRequest request) {
@@ -55,7 +53,7 @@ public class APIRboardController {
 		//요청의 세션 받기
 		HttpSession session = request.getSession(false);
 		
-		Result result;
+		Result<List<RboardListReqDTO>> result;
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
@@ -68,13 +66,13 @@ public class APIRboardController {
   	
   	
   	
-  	result = new Result("00","성공",replyList);
+  	result = new Result<List<RboardListReqDTO>>("00","성공",replyList);
   	return result;
 	}
 
 //대댓글작성처리
 	@PostMapping("/{bnum}/{rnum}")
-	public Result reReplyRegister(
+	public Result<List<RboardListReqDTO>> reReplyRegister(
 			@PathVariable("bnum") int bnum,
 			@PathVariable("rnum") int rnum,
 			@Valid @RequestBody RboardReReplyReq rrrr,
@@ -97,7 +95,7 @@ public class APIRboardController {
 		log.info("[rboardDTO:{}]",rboardDTO);
 		List<RboardListReqDTO> replyList = rboardSVC.addReReply(rboardDTO);
 		
-		return new Result("00","성공",replyList);
+		return new Result<List<RboardListReqDTO>>("00","성공",replyList);
 	}
 	
 	
@@ -128,7 +126,7 @@ public class APIRboardController {
 	
 //댓글수정처리 patch
 	@PatchMapping("/{bnum}/{rnum}")
-	public Result modify(
+	public Result<List<RboardListReqDTO>> modify(
 			@PathVariable int bnum,
 			@PathVariable int rnum,
 			@RequestBody RboardModiReq rmr,
@@ -143,7 +141,7 @@ public class APIRboardController {
 		BeanUtils.copyProperties(rmr,rboardDTO);
 		List<RboardListReqDTO> modifiedRboardDTO = rboardSVC.modify(bnum, rnum, loginMemberId, rboardDTO);
 		
-		Result result = new Result();
+		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (modifiedRboardDTO == null) {
 			result.setRtcd("01");
 			result.setRtmsg("존재하는 댓글이 없습니다.");
@@ -158,14 +156,19 @@ public class APIRboardController {
 
 // 엑셀파일에 삭제시 댓글번호 필요하다고 적어야함
 // 댓글삭제처리 delete
-	@DeleteMapping("/{bnum}/{rnum}/{id}")
-	public Result del(
+	@DeleteMapping("/{bnum}/{rnum}")
+	public Result<List<RboardListReqDTO>> del(
 			@PathVariable int bnum,
 			@PathVariable int rnum,
-			@PathVariable String id) {
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false); 
+
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String id = loginMember.getId();
 		
 		List<RboardListReqDTO> list = rboardSVC.del(bnum, rnum, id);
-		Result result = new Result();
+		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (1 == 0) {
 			result.setRtcd("01");
 			result.setRtmsg("삭제하고자 하는 댓글이 없습니다.");
@@ -180,9 +183,9 @@ public class APIRboardController {
 
 	// 댓글목록조회 by 게시글
 	@GetMapping("/{bnum}")
-	public Result all(@PathVariable int bnum) {
+	public Result<List<RboardListReqDTO>> all(@PathVariable int bnum) {
 		List<RboardListReqDTO> list = rboardSVC.all(bnum);
-		Result result = new Result();
+		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (list.size() == 0) {
 			result.setRtcd("01");
 			result.setRtmsg("댓글 정보가 없습니다.");

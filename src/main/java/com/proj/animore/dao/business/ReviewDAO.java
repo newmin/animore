@@ -8,7 +8,7 @@ import com.proj.animore.dto.business.ReviewReq;
 public interface ReviewDAO {
 
 	//리뷰등록
-	List<ReviewReq> registReview(ReviewDTO reviewDTO);
+	int registReview(ReviewDTO reviewDTO);
     //리뷰 전체 조회(업체상세페이지)
     List<ReviewReq> allReview(Integer bnum);
     //리뷰 조회(마이페이지 내리뷰)
@@ -23,4 +23,6 @@ public interface ReviewDAO {
     ReviewReq findRvReply(int rnum);
     //사장님 리뷰리댓등록
     List<ReviewReq> addRvReply(ReviewReq reviewReq);
+	//rnum추출
+	int rnumCurrVal();
 }

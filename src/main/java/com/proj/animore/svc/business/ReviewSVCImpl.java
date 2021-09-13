@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.business.ReviewDAO;
+import com.proj.animore.dao.business.ReviewFileDAO;
 import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 
@@ -15,10 +16,13 @@ import lombok.RequiredArgsConstructor;
 public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
+	private final ReviewFileDAO reviewFileDAO;
 	
 	@Override
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
-		return reviewDAO.registReview(reviewDTO);
+		int rnum = reviewDAO.registReview(reviewDTO);
+		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());
+		return reviewDAO.allReview(reviewDTO.getBnum());
 	}
 
 	@Override
