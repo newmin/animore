@@ -9,6 +9,7 @@
   <title>업체 리스트</title>
 	<script th:inline="javascript">
 		const $busiList = /*[[${busiList}]]*/ null;	//업체목록
+		const $id = /*[[${session.loginMember?.id}]]*/ null; //아이디
 	</script>
 	<script src="/js/api/ajaxCall.js"></script>
 	<script src="/js/mapAPI1.js" defer></script>
