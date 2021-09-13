@@ -61,9 +61,9 @@
 
 				<ul class="busi-detail__info-list">
 					<li><span th:text="|주소 : *{baddress}|">주소 : </span></li>
-					<li><span th:text="|영업시간 : *{openhours}|">영업시간 : </span></li>
+					<li><span>영업시간 : </span><span th:text="*{openhours}?:|영업시간을 등록하지 않았습니다.|"></span></li>
 					<li><span th:text="|연락처 : *{btel}|">연락처 : </span></li>
-					<li><span>SNS : </span></li>
+					<li><span>SNS : </span><span th:text="|미등록 업체|"></span></li>
 				</ul>
 
 				
