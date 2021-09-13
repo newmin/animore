@@ -47,7 +47,13 @@
 	four?.addEventListener('click',score4);
 	five?.addEventListener('click',score5);
 	
-/*document.querySelector('.review__up')?.addEventListener('click', 
-	document.querySelector('.review__row').setAttribute('id','firstRow'));*/
+	
+	
+	
+	/*document.querySelector('.review__row').setAttribute('id','firstRow')*/
+	const $rv = document.querySelector('.review');
+document.querySelector('.review__up')?.addEventListener('click', function(e){
+	$rv.scrollTop(rv[0].height)
+	});
 
 	
