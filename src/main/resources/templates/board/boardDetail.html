@@ -101,7 +101,7 @@
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
                 <div class="boardForm__ReplyContent" th:text="${reply.rcontent}">댓글내용</div>
                 <div class="boardForm__Replywrap">
-                    <th:block th:if="${reply.status != 'H'}">
+                    <th:block th:if="${reply.status == 'A'}">
                     	<div class="boardForm__Replycdate" th:text="${reply.rcdate}">작성일자</div>
 	                    <button class="boardForm__ReplyReBtn" th:data-rnum="${reply.rnum}">답글</button>
 	                    <th:block th:if="${(session.loginMember != null && (session.loginMember.id.equals(reply.id)||session.loginMember.mtype=='A'))}">
