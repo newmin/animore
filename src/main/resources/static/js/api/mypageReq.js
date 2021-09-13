@@ -1,6 +1,7 @@
 /**
  * 
  */
+ 
  //즐겨찾기
 	const $myFavorite = document.querySelector('a[href="/mypage/mypageFavorites"]');
 	$myFavorite.addEventListener('click',e=>{
@@ -26,31 +27,7 @@
 	});
 });
 
-//내업체목록
-const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
-	$mybusilist.addEventListener('click',e=>{
-	e.preventDefault();
-	
-	const URL = `/mypage/mybusilist`;
-	
-	request.get(URL)
-	.then(res=>res.json())
-	.then(res=>{
-		if(res.rtcd == '00'){
-			//성공로직처리
-			console.log(res);
-			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
-		}else{
-			throw new Error(res.rtmsg);
-		}
-	})
-	.catch(err=>{
-		//오류로직 처리
-		console.log (err.message);
-	});
 
-});
 
 
  //내가 쓴 리뷰
@@ -297,7 +274,6 @@ const modifyBtn = e =>{
 		$modifyBtn.addEventListener("click", modifyBtn); 
 };
 
-
 //회원탈퇴
 const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	$mypageDelMenu.addEventListener('click',e=>{
@@ -323,36 +299,33 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	});
 });
 
-
-
-//내업체수정 양식
-	const $modifyBusi = document.querySelector('.mypage__busi-modify');
+//내업체목록
+const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
+	$mybusilist.addEventListener('click',e=>{
+	e.preventDefault();
 	
-	$modifyBusi.addEventListener('click',e =>{
-		e.preventDefault();
-		
-		const URL = `/mypage/mybusiModify`;
-		
-		request.get(URL)
-		.then(res=>res.json())
-		.then(res=>{
-			if(res.rtcd == '00'){
-			
-				//성공로직처리
-				console.log(res);
-				const data = res.data;
-				document.querySelector('.mypage_content_container').innerHTML = data;
-				
-				
-			}else{
-				throw new Error(res.rtmsg);
-			}
-		})
-		.catch(err=>{
-			//오류로직 처리
-			console.log (err.message);
+	const URL = `/mypage/mybusilist`;
+	
+	request.get(URL)
+	.then(res=>res.json())
+	.then(res=>{
+		if(res.rtcd == '00'){
+			//성공로직처리
+			console.log(res);
+			const data = res.data;
+			document.querySelector('.mypage_content_container').innerHTML = data;
+		}else{
+			throw new Error(res.rtmsg);
+		}
+	})
+	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
 	});
+
 });
+
+
 
 function refreshModi(memberDTO){
 	let html ='';
@@ -411,3 +384,4 @@ function refreshModi(memberDTO){
 		html+="</form >";
 		html+="</div>";
 };
+
