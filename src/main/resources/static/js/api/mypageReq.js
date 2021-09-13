@@ -26,6 +26,33 @@
 	});
 });
 
+//내업체목록
+const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
+	$mybusilist.addEventListener('click',e=>{
+	e.preventDefault();
+	
+	const URL = `/mypage/mybusilist`;
+	
+	request.get(URL)
+	.then(res=>res.json())
+	.then(res=>{
+		if(res.rtcd == '00'){
+			//성공로직처리
+			console.log(res);
+			const data = res.data;
+			document.querySelector('.mypage_content_container').innerHTML = data;
+		}else{
+			throw new Error(res.rtmsg);
+		}
+	})
+	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+
+});
+
+
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
 
@@ -132,8 +159,6 @@ for(let i =0; i<$bcategorys.length; i++){
 		});
 });
 
-
-
 //안될시 타게팅만 새로 해주면 됨
 //내가쓴댓글
 const $mypageReplyMenu = document.querySelector('a[href="/mypage/mypageReply"]');
@@ -217,7 +242,7 @@ const $goodBoardList = document.querySelector('a[href="/mypage/mypageGood"]');
 		.catch(err=>{
 			//오류로직 처리
 			console.log (err.message);
-		});
+	});
 });
 
 
@@ -298,38 +323,15 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	});
 });
 
-//내업체목록
-const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
-	$mybusilist?.addEventListener('click',e=>{
-	e.preventDefault();
-	
-	const URL = `/mypage/mybusilist`;
-	
-	request.get(URL)
-	.then(res=>res.json())
-	.then(res=>{
-		if(res.rtcd == '00'){
-			//성공로직처리
-			console.log(res);
-			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
-		}else{
-			throw new Error(res.rtmsg);
-		}
-	})
-	.catch(err=>{
-		//오류로직 처리
-		console.log (err.message);
-	});
 
-});
 
-//내업 체수정 양식
-	const $mybusiModify = document.querySelector('a[href="/mypage/mybusiModify/"]');
-	$mybusiModify.addEventListener('click',e=>{
+//내업체수정 양식
+	const $modifyBusi = document.querySelector('.mypage__busi-modify');
+	
+	$modifyBusi.addEventListener('click',e =>{
 		e.preventDefault();
 		
-		const URL = `/mypage/mybusiModify/`;
+		const URL = `/mypage/mybusiModify`;
 		
 		request.get(URL)
 		.then(res=>res.json())
@@ -341,8 +343,6 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 				const data = res.data;
 				document.querySelector('.mypage_content_container').innerHTML = data;
 				
-				//const $modifyBtn = document.querySelector('#modifyBtn');
-				//$modifyBtn.addEventListener("click", modifyBtn); 
 				
 			}else{
 				throw new Error(res.rtmsg);
@@ -351,16 +351,11 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 		.catch(err=>{
 			//오류로직 처리
 			console.log (err.message);
-		});
+	});
 });
-
-
 
 function refreshModi(memberDTO){
 	let html ='';
-	
-	   // data.forEach(rec => {
-
 		html+="<div class=\"mypage_content_container\">";
 		
 		html+="<h2 class=\"mypage_content_title\">개인정보수정</h2>";
@@ -415,8 +410,4 @@ function refreshModi(memberDTO){
 		html+="</ul>";
 		html+="</form >";
 		html+="</div>";
-// });
 };
-
-
-

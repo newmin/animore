@@ -212,17 +212,17 @@ public String modifyMember(HttpServletRequest request,
    }
    //내업체 수정양식
    //@GetMapping("/mybusiModify")
-   public String mybusiModify(HttpServletRequest request,
-		      Model model) {
-	   HttpSession session = request.getSession(false);
-	      if(session == null || session.getAttribute("loginMember") == null){
-	    	  
-	        return "redirect:/login";
-	      }
-	      
-	      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-	       
-	       loginMember.getId();
+//   public String mybusiModify(HttpServletRequest request,
+//		      Model model) {
+//	   HttpSession session = request.getSession(false);
+//	      if(session == null || session.getAttribute("loginMember") == null){
+//	    	  
+//	        return "redirect:/login";
+//	      }
+//	      
+//	      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//	       
+//	       loginMember.getId();
 	      
 	       
 	      //내업체정보 가져오기
@@ -241,8 +241,8 @@ public String modifyMember(HttpServletRequest request,
 //	      
 	      
 	   
-	      return "/mypage/mybusiModify";
-   }
+//	      return "/mypage/mybusiModify";
+//   }
    //내업체수정처리
    @PatchMapping("/mybusiModify")
    public String mybusiModify(@Valid @ModelAttribute BusiModifyForm busiModifyForm,
