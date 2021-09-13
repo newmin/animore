@@ -172,7 +172,7 @@ function refreshReply(data){
 		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
 		      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
 		      html += `    <div class="boardForm__Replywrap">`;
-					if(rec.status == 'A'){
+					if(rec.status != 'H'){
 		      		html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
 							html += `        <button class="boardForm__ReplyReBtn" data-rnum="${rec.rnum}">답글쓰기</button>`;
 							if($id == rec.id){

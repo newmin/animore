@@ -65,6 +65,8 @@ public class RboardDAOImpl implements RboardDAO{
 		
 		//부모글의 rgrouop중 rstep이 부모글의 rstep보다 큰 게시글 rstep + 1
 		updateStep(rboardDTO.getRgroup(), rboardDTO.getRstep());
+		//부모글의 status를 'P'로 변경
+		updateReplyStatusP(rboardDTO.getPrnum());
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append(" INSERT INTO rboard ( ");
@@ -122,6 +124,17 @@ public class RboardDAOImpl implements RboardDAO{
 		jt.update(sql.toString(), rgroup,rstep);
 	}
 	
+	private void updateReplyStatusP(Integer prnum) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("update rboard ");
+		sql.append("   set status = 'P' ");
+		sql.append(" where rnum = ? ");
+		sql.append("   and status='A' ");
+		
+		jt.update(sql.toString(), prnum);
+	}
+	
+	
 	
 	/**
 	 * 댓글조회 by 댓글번호
@@ -154,11 +167,11 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("    rudate=systimestamp ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
-		sql.append("and id=? ");
-		sql.append("and status='A' ");
+//		sql.append("and id=? ");
+//		sql.append("and status='A' ");
 		
 		jt.update(sql.toString(),
-										rboardDTO.getRcontent(), bnum, rnum, id);
+										rboardDTO.getRcontent(), bnum, rnum/*, id*/);
 		
 		//수정후 댓글목록 갱신
 		List<RboardListReqDTO> list = all(bnum);
@@ -173,15 +186,17 @@ public class RboardDAOImpl implements RboardDAO{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("update rboard ");
-		sql.append("set status = 'D' ");
+		sql.append("set status = case ");
+		sql.append("    when status ='A' then 'H' ");
+		sql.append("    when status ='P' then 'D' ");
+		sql.append("end ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
-		sql.append("and id=? ");
-		sql.append("and status='A' ");
-		
+//		sql.append("and id=? ");
+//		sql.append("and status='A' ");
 		
 		int result = 
-				jt.update(sql.toString(), bnum, rnum, id);
+				jt.update(sql.toString(), bnum, rnum/*, id*/);
 		
 		List<RboardListReqDTO> list = all(bnum);
 		return list;
@@ -194,10 +209,11 @@ public class RboardDAOImpl implements RboardDAO{
 	public List<RboardListReqDTO> all(int bnum) {
 		log.info(String.valueOf(bnum));
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t2.rnum,t1.nickname,t2.id,decode(t2.status,'A',t2.rcontent,'==삭제된댓글입니다==') rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,t2.status,store_fname ");
+		sql.append("select t2.rnum,t1.nickname,t2.id,decode(t2.status,'D','==삭제된댓글입니다==',t2.rcontent) rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,t2.status,store_fname ");
 		sql.append("from member t1, rboard t2 ");
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");
+		sql.append("and not t2.status = 'H'");
 		sql.append("order by t2.rgroup asc, t2.rstep asc, rnum asc");
 		
 		List<RboardListReqDTO> list =
