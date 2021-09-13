@@ -1,10 +1,10 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.business;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proj.animore.dao.FavoriteDAO;
+import com.proj.animore.dao.business.FavoriteDAO;
 import com.proj.animore.dto.business.FavoriteReq;
 
 import lombok.RequiredArgsConstructor;

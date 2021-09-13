@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.HtagBusiListReq;
 import com.proj.animore.form.Result;
-import com.proj.animore.svc.BusinessSVC;
+import com.proj.animore.svc.business.BusinessSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

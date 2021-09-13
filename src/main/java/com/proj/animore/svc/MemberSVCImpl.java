@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.common.file.FileStore;
-import com.proj.animore.dao.BcategoryDAO;
-import com.proj.animore.dao.BusinessDAO;
 import com.proj.animore.dao.MemberDAO;
+import com.proj.animore.dao.business.BcategoryDAO;
+import com.proj.animore.dao.business.BusinessDAO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.dto.business.BcategoryDTO;

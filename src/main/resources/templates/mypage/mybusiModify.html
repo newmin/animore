@@ -47,22 +47,21 @@
                 </ul>
             </div>
             <div class="mypage_content_container">
-                <h3 class="mypage_content_title">업체 정보 수정\</h3>
+                <h3 class="mypage_content_title">업체 정보 수정</h3>
                 <hr>
                 <form class="main" action="" th:method="patch" th:object="${busiModifyForm}">
                     <ul>
                         <li><label for="id">업체명</label></li>
                         <li><input type="text" th:field="*{bname}"/></li>
 
-
                         <li><label for="nickname">업체주소</label></li>
                         <li><input type="text" th:field="*{baddress}" /></li>
 
-                        <li><label for="btel">전화번호</label></li>
-                        <li><input type="text" th:field="*{btel}"/></li>
+                        <li><label for="tel">전화번호</label></li>
+                        <li><input type="tel" name="btel" th:field="*{btel}" /></li>
+                        
 
-
-                        <li><input type="submit" id="busimodifyBtn" value="회원정보 수정"></li>
+                        <li><input type="submit" th:data-bnum="*{bnum}" id="busimodifyBtn" value="회원정보 수정"></li>
                     </ul>
                 </form>
             </div>

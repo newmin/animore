@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dto.board.RboardDTO;
 import com.proj.animore.dto.board.RboardListReqDTO;
 import com.proj.animore.form.LoginMember;
@@ -40,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class APIRboardController {
 
 	private final RboardSVC rboardSVC;
+	private final FileStore fileStore;
 	
 //댓글등록처리   post
 	@PostMapping("/{bnum}")

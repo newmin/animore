@@ -170,7 +170,15 @@
   width: 570px;
   display: flex;
   flex-direction: column;
+  justify-content : space-between;
   gap: 10px;
+}
+
+.review__main-text{
+	display: flex;
+	flex-direction: column;
+	gap : 10px;
+	margin-top : 5px;
 }
 
 .review__star-score{
@@ -187,6 +195,20 @@
 }
 .hidden{
   display: none;
+}
+
+.review__not-login{
+	display : flex;
+	flex-direction : column;
+	justify-content : center;
+	align-items : center;
+	gap : 10px;
+	height : 200px;
+	background-color: rgba(255,255,255,0.5);
+	font-size: 18px;
+}
+.review__to-login{
+	color : var(--secondary);
 }
 /* 리뷰 첨부이미지 */
 .review__column:last-child{

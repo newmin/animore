@@ -1,4 +1,4 @@
-package com.proj.animore.dao;
+package com.proj.animore.dao.business;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

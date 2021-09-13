@@ -1,9 +1,12 @@
 package com.proj.animore.controller.api;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.ui.Model;
@@ -17,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.file.MetaOfUploadFile;
+import com.proj.animore.dto.business.BusiUploadFileDTO;
 import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.form.ReviewForm;
-import com.proj.animore.svc.ReviewSVC;
+import com.proj.animore.svc.business.ReviewSVC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +40,12 @@ import lombok.extern.slf4j.Slf4j;
 public class APIReviewController {
 	
 	private final ReviewSVC reviewSVC;
+	private final FileStore fileStore;
 
 	//리뷰등록
 	@PostMapping("/")
-	public Result addReview(@RequestBody ReviewForm reviewForm, 
-													HttpServletRequest request) {
+	public Result addReview(@Valid @RequestBody ReviewForm reviewForm, 
+			HttpServletRequest request) throws IllegalStateException, IOException{
 		
 		Result result;
 		
@@ -56,19 +63,42 @@ public class APIReviewController {
 		ReviewDTO reviewDTO = new ReviewDTO();
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
 		
-		int bnum = reviewDTO.getBnum();
+		//첨부파일 등록
+		if(reviewForm.getFiles()!=null) {			
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
+			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(reviewForm.getFiles());
+			reviewDTO.setFiles(convert(storedFiles));
+		}
 		
-		List<ReviewReq> list = reviewSVC.registReview(bnum, id, reviewDTO);
+		List<ReviewReq> list = reviewSVC.registReview(reviewDTO);
 		
 		result = new Result("00","성공",list);
 	  	return result;
 	}
+	//메타정보 → 업로드 정보
+	private BusiUploadFileDTO convert(MetaOfUploadFile attatchFile) {
+		BusiUploadFileDTO uploadFileDTO = new BusiUploadFileDTO();
+		BeanUtils.copyProperties(attatchFile, uploadFileDTO);
+		return uploadFileDTO;
+	}
+	
+	//메타정보 → 업로드 정보
+	private List<BusiUploadFileDTO> convert(List<MetaOfUploadFile> uploadFiles) {
+		List<BusiUploadFileDTO> list = new ArrayList<>();
+
+		for(MetaOfUploadFile file : uploadFiles) {
+			BusiUploadFileDTO uploadFIleDTO = convert(file);
+			list.add( uploadFIleDTO );
+		}		
+		return list;
+	}
+	
+	
 	// //리뷰1개 호출(리뷰수정폼)
 	@GetMapping("/")
 	public Result findReview(@RequestParam int rnum,
-												  //  @RequestParam String id,
-													 HttpServletRequest request
-													 ) {
+//							 @RequestParam String id,
+							 HttpServletRequest request) {
 		Result result;											
 		//로그인x
 		HttpSession session = request.getSession(false);
@@ -76,22 +106,22 @@ public class APIReviewController {
 			result = new Result("01","로그인이 만료되었습니다.",null);
 			return result;
 		}												
-		//아이디값 다른 경우
-		// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		// if(!id.equals(loginMember.getId())){
-		// 	result = new Result("02","작성자의 아이디와 일치하지 않습니다.",null);
-		// 	return result;
-		// }
+//		//아이디값 다른 경우
+//		 LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//		 if(!id.equals(loginMember.getId())){
+//		 	result = new Result("02","작성자의 아이디와 일치하지 않습니다.",null);
+//		 	return result;
+//		 }
 
 		ReviewReq reviewReq	= reviewSVC.findReview(rnum);
 		result = new Result("00","성공",reviewReq);
 		return result;
 	}
 	
-	// //리뷰수정
+	 //리뷰수정
 	@PatchMapping("/")
 	public Result modiReview(@RequestBody ReviewReq reviewReq, 
-													 HttpServletRequest request) {
+							HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
 		if(session==null || session.getAttribute("loginMember") == null) {
@@ -110,9 +140,8 @@ public class APIReviewController {
 		ReviewDTO reviewDTO = new ReviewDTO();
 		BeanUtils.copyProperties(reviewReq,reviewDTO);
 		log.info(reviewDTO.toString());
-		int bnum = reviewDTO.getBnum();
 		
-		List<ReviewReq> list = reviewSVC.updateReview(bnum, id, reviewDTO);
+		List<ReviewReq> list = reviewSVC.updateReview(reviewDTO);
 		result = new Result("00","성공",list);
 		return result;
 	}
@@ -120,9 +149,9 @@ public class APIReviewController {
 	//리뷰삭제
 	@DeleteMapping("/")
 	public Result deleteReview(@RequestParam int bnum,
-														 @RequestParam int rnum,
-														//  @RequestParam String rid,
-														 HttpServletRequest request) {
+							 @RequestParam int rnum,
+							//  @RequestParam String rid,
+							 HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
 		if(session == null || session.getAttribute("loginMember") == null) {
@@ -170,8 +199,8 @@ public class APIReviewController {
 	//사장님 리뷰리댓 등록
 	@PatchMapping("/rvreply")
 	public Result addRvReply(@RequestParam String bid,
-														@RequestBody ReviewReq reviewReq,
-												  	HttpServletRequest request) {
+							 @RequestBody ReviewReq reviewReq,
+							 HttpServletRequest request) {
 		Result result;
 		//로그인 확인
 		HttpSession session = request.getSession(false);
@@ -185,11 +214,11 @@ public class APIReviewController {
 			result = new Result("02","해당 업체의 사업자 아이디와 일치하지 않습니다.",null);
 		}
 		
-		int bnum = reviewReq.getBnum();
-		int rnum = reviewReq.getBnum();
-		String rvReply = reviewReq.getRvReply();
+//		int bnum = reviewReq.getBnum();
+//		int rnum = reviewReq.getBnum();
+//		String rvReply = reviewReq.getRvReply();
 		
-		List<ReviewReq> list = reviewSVC.addRvReply(bnum,rnum,rvReply);
+		List<ReviewReq> list = reviewSVC.addRvReply(reviewReq);
 		result = new Result("00","성공",list);
 		return result;
 	}

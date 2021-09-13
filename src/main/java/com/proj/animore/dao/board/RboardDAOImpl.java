@@ -191,7 +191,7 @@ public class RboardDAOImpl implements RboardDAO{
 	public List<RboardListReqDTO> all(int bnum) {
 		log.info(String.valueOf(bnum));
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood ");
+		sql.append("select t2.rnum,t1.nickname,t1.id,t2.rcontent,t2.prnum,t2.rgroup,t2.rstep,t2.rindent,t2.rcdate,t2.rgood,store_fname ");
 		sql.append("from member t1, rboard t2 ");
 		sql.append("where t1.id=t2.id ");
 		sql.append("and t2.bnum=? ");

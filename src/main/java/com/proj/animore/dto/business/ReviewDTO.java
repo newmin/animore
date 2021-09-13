@@ -1,6 +1,7 @@
 package com.proj.animore.dto.business;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -15,4 +16,5 @@ public class ReviewDTO {
 	private LocalDate rvcdate;
 	private LocalDate rvudate;
 	
+	private List<BusiUploadFileDTO> files;
 }

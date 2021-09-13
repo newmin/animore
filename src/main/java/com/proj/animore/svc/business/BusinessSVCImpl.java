@@ -1,10 +1,10 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.business;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proj.animore.dao.BusinessDAO;
+import com.proj.animore.dao.business.BusinessDAO;
 import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.HtagBusiListReq;
@@ -28,8 +28,8 @@ public class BusinessSVCImpl implements BusinessSVC {
 	}
 	//내업체 수정
 	@Override
-	public BusinessLoadDTO modifyBusi(String id, BusinessDTO businessDTO) {
-		return businessDAO.modifyBusi(id, businessDTO);
+	public BusinessLoadDTO modifyBusi(Integer bnum, BusinessLoadDTO businessLoadDTO) {
+		return businessDAO.modifyBusi(bnum, businessLoadDTO);
 	}
 	@Override
 	public void deleteBusi(Integer bnum) {

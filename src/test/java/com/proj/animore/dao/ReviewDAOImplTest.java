@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.proj.animore.dao.business.ReviewDAOImpl;
+
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest

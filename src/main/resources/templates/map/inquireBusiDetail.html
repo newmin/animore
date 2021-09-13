@@ -95,10 +95,6 @@
 								<span class="review__nickname" th:text="*{nickname}">닉네임</span>
 							</div>
 							<div class="review__column">
-								<div>
-									<span class="review__date" th:text="|작성일자 : *{rvcdate}|">작성일자</span>
-									<span class="review__isUpdate" th:if="${review.rvudate!= null}" th:text="수정됨">수정됨</span>
-								</div>
 
 								<div class="review__main-text">
 									<th:block th:switch="*{rscore}">
@@ -147,12 +143,16 @@
 									</p>
 								</div>
 								<div class="review__reply">
-									<p><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글~ 답글느낌?</span></p>
 									<p th:if="${session.loginMember!=null && session.loginMember.id==busi.id && review.rvReply==null}" 
 											th:data-rnum="*{rnum}" class="review__replyBtn">리댓달기</p>
 									<p class="review__reply-text" th:if="*{rvReply}" th:text="|	└─>사장님 : *{rvReply}"></p>
 								</div>
 							</div>
+
+								<div>
+									<span class="review__date" th:text="|작성일자 : *{rvcdate}|">작성일자</span>
+									<span class="review__isUpdate" th:if="${review.rvudate!= null}" th:text="수정됨">수정됨</span>
+								</div>
 
 							</div>
 							<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>
@@ -160,7 +160,7 @@
 		      </section>
 				</section>
 				<section class="wrap" th:if="${session!=null && session.loginMember!=null}">
-						<div class="review__up"><i class="fas fa-angle-up"></i></div>
+						<div th:if="${review.size!=0}" class="review__up"><i class="fas fa-angle-up"></i></div>
 		        <form name="reviewForm" class="reviewform" method="post" action="#" th:action="@{|/inquire/*{bnum}|}">
 		            <p class="title_star">별점과 리뷰를 남겨주세요.</p>
 		            <div class="review_rating">
@@ -187,9 +187,9 @@
 		        </form>
 		    </section>
 		      
-	      <section th:if="${session == null || session.loginMember == null}">
+	      <section class="review__not-login" th:if="${session == null || session.loginMember == null}">
 	      	<p class="reivew__memberonly">리뷰가 보고싶다면?</p>
-	      	<p><a th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">바로 로그인하러 가기!!</a></p>
+	      	<p>바로 <a class="review__to-login" th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">로그인</a>하러 가기!!</p>
 	      	<p><a th:href="@{/member/join}">아직 애니모어 회원이 아니라면?</a></p>
 	      </section> 
 		      
