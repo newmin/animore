@@ -62,7 +62,7 @@
         </div>
        </div>
        <div class="boardForm__contents">
-       	<th:block th:each="img : *{files}">
+       	<th:block th:if ="*{files != null}" th:each="img : *{files}">
        		<img th:src="@{|/img/upload/board/${img.store_fname}|}" alt="업로드파일" />
        	</th:block>
        <p th:text="*{bcontent}"></p>
