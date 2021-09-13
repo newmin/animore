@@ -18,6 +18,7 @@ const regiBtn_f = e =>{
 	
 	const rcontent = document.querySelector('.reviewform .review__textarea');
 	const rscore = document.querySelector('.reviewform input[name="rscore"]:checked');
+	const files = document.querySelector('.review__files');
 
 	//리뷰입력체크
 	if(!rcontent.value) {
@@ -30,7 +31,8 @@ const regiBtn_f = e =>{
 			"bnum" : bnum,
 			"rcontent": rcontent.value,
 			"rscore" : rscore.value,
-			"id" : $id
+			"id" : $id,
+			"files" : files.files
 													 };
 													 	
 	request.post(URL,data)
@@ -323,27 +325,24 @@ function refreshReview(data){
 	let html ='';
 	html += `<div class="review__cnt"><i class="far fa-comment-dots"></i><span>리뷰수 : ${data.length}</span></div>`;
 	html += `<section class="review">`;
+	html += `<div id="firstRow"></div>`
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
+		//프로필
 		html += `	<div class="review__column">`;
 		// if(review.store_fname != null){ 
-		// 	html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
+		// 	html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
 		// } else{
-		// 	html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
+		// 	html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
 		// }
 		review.store_fname
-				 ? html += `<img class="review__profile" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
-				 : html += `<img class="review__profile" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
+				 ? html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
+				 : html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
 		html += `	<div class="review__column">`;
-		html += `		<div>`
-		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
-		if(review.rvudate) {
-			html += `<span class="review__isUpdate">수정됨</span>`;
-		}
-		html += `		</div>`
 		html += `		<div class="review__main-text">`
+		//별점
 		switch(review.rscore){
 			case 1:
 				html += `			<div class="review__star-score">`;
@@ -391,6 +390,7 @@ function refreshReview(data){
 				html += `			</div>`;
 			break;
 		}
+		//내용 및 수정/삭제 버튼
 		html += `		<p class="review__content">${review.rcontent}</p>`;
 		if($id == review.id){
 			html += `		<div>`;
@@ -401,7 +401,21 @@ function refreshReview(data){
 			html += `			</p>`;
 			html += `		</div>`;
 		}
-		html += `		<p class="review__reply"><i class="fas fa-level-up-alt fa-rotate-90"></i><span>사장님 : 사장님 댓글</span></p>`;
+		//사장님 댓글	
+		html+= `<div class="review__reply">`
+			if($id==$busi.id && review.rvReply==null){
+				html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
+			}
+			if(review.rvReply){
+				html += `<p class="review__reply-text">└─>사장님 : ${review.rvReply}</p>`
+			}
+		html+= `</div>`
+		html += `		<div>`
+		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
+		if(review.rvudate) {
+			html += `<span class="review__isUpdate">수정됨</span>`;
+		}
+		html += `		</div>`
 		html += `		</div>`;
 		html += `	</div>`;
 		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
@@ -423,10 +437,63 @@ delBtns.forEach(ele=>ele.addEventListener('click',delBtn_f));
 modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 
 
+
+
 //회원리뷰에 사장님 댓글
 
+//댓글 등록 처리
 
+const addBtn_f = e=> {
+
+	const content = document.querySelector('.rvReply__content');
+	const rnum = e.target.closest('.review__reply').querySelector('.review__replyBtn').dataset.rnum;
+	const bnum = $busi.bnum;
+	const bid = $busi.id;
+
+		//리뷰입력체크
+		if(!content.value) {
+			alert("댓글 내용을 입력하세요");
+			return;
+	}	
+	//TODO 댓글 등록하는 폼만들고 해당값 입력
+	const URL = `/inquire/rvreply?bid=${bid}`;
+	const data = {
+			"rnum" : rnum,
+			"bnum" : bnum,
+			"rvReply": content.value,
+													 };
+													 	
+	request.patch(URL,data)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == '00'){
+							//성공로직처리
+							const data = res.data;
+							//리뷰목록갱신
+							refreshReview(data);
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+					alert(err.message);
+			});
+}
+
+
+//댓글폼 출력
 const replyBtns_f = e =>{
+
+	if(document.querySelector('.review__reply-form')!=null){
+		if(confirm('기존 작성 중인 내용은 삭제됩니다.')){
+			document.querySelector('.review__reply-form').remove()
+		} else {
+			return
+		}
+	}
 
 	const rnum = e.target.dataset.rnum;
 	const bid = $busi.id;
@@ -452,6 +519,8 @@ const replyBtns_f = e =>{
 			})
 }
 
+
+//댓글폼 출력 함수
 function addReply(review){
 	let html='';
 	html += `<div class="rvReply">`;
@@ -471,7 +540,8 @@ function addReply(review){
 	const addBtn = document.querySelector('.rvReply__addBtn');
 	const cancleBtn = document.querySelector('.rvReply__cancle');
 
-	// cancleBtn.addEventListener('click',)
+	cancleBtn.addEventListener('click',e=>replyForm.remove());
+	addBtn.addEventListener('click',addBtn_f);
 }
 
 //리댓달기 버튼 이벤트

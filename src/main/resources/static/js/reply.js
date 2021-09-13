@@ -7,29 +7,20 @@
 const modiTextbox_f = e => {
 
 	if(document.querySelector('div.boardForm__modiReplyTextarea')) {
+		if(!confirm('댓글 수정을 취소하시겠습니까?'))	return;
 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
 	}
-
-	// if(document.querySelector('div#boardForm__modiReplyTextarea')) {
-	// 	if(document.querySelector('div#boardForm__modiReplyTextarea').value){
-	// 		if(confirm("이미 수정 중인 내용은 삭제됩니다.")){
-	// 			document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
-	// 			document.querySelector('div.boardForm__modiReplyTextarea').remove();
-	// 		}
-	// 	}else{
-	// 		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
-	// 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
-	// 	}
-	// }
+	
+	if(document.querySelector('div.boardForm__reReplyTextarea')) {
+		if(boardForm__reReplyTextarea.value)
+			if(!confirm('답글 입력을 취소하시겠습니까?')) return;
+		document.querySelector('div.boardForm__reReplyTextarea').remove();
+	}
 	
 	//댓글번호
 	const $rnum = e.target.dataset.rnum;
-	console.log("modiTextbox_f");
-	console.log(e);
-	console.log($rnum);
 	
-	//상위요소 더 깔끔하게 타게팅 하는거 찾아보기(배운거같음)
 	//버튼누르면 기존댓글 div에 댓글숨기기 클래스 토글(숨김)
 	const $boardForm__replyTextContainer = e.target.closest('.boardForm__replyTextContainer');
 	//수정전댓글내용
@@ -72,7 +63,15 @@ const modiTextbox_f = e => {
 // 대댓글쓰기 버튼 누르면 대댓글 작성을 위한 div 생성해서 보이기 
 const reReTextbox_f = e => {
 
-	if(document.querySelector('boardForm__reReplyTextarea')) {
+	if(document.querySelector('div.boardForm__reReplyTextarea')) {
+		if(boardForm__reReplyTextarea.value)
+			if(!confirm('답글 입력을 취소하시겠습니까?')) return;
+		document.querySelector('div.boardForm__reReplyTextarea').remove();
+	}
+
+	if(document.querySelector('div.boardForm__modiReplyTextarea')) {
+		if(!confirm('댓글 수정을 취소하시겠습니까?'))	return;
+		document.querySelector('div.boardForm__modiReplyTextarea').previousElementSibling.classList.toggle('boardForm__hideReply');
 		document.querySelector('div.boardForm__modiReplyTextarea').remove();
 	}
 
@@ -89,7 +88,7 @@ const reReTextbox_f = e => {
 			html +=`</div>`
 	$boardForm__reReplyTextarea.innerHTML = html;
 
-	//대댓글 붙일 댓글 밑에 대댓글 입력상자 나타나게 하기
+	//답글쓰기 버튼누른 댓글 밑에 입력상자 나타나게 하기
 	e.target.closest('.boardForm__replyContainer').after($boardForm__reReplyTextarea);
 
 	//버튼에 이벤트 달아주기
@@ -112,4 +111,3 @@ modiBtns = document.querySelectorAll('button.boardForm__modiReplyBtn');
 Array.from(modiBtns).forEach(ele => {
 	ele.addEventListener("click", modiTextbox_f);
 });
- 

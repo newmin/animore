@@ -4,8 +4,7 @@
 @import "variable.css";
 
 /* 컴포넌트 */
-@import "components/logo.css";
-@import "components/nav.css";
+@import "components/profile.css";
 @import "components/search.css";
 @import "components/toggleBtn.css";
 @import "components/template.css";
@@ -23,6 +22,7 @@
 @import "screen/favorite.css";
 @import "screen/myreview.css";
 @import "screen/reply.css";
+
 /* 폰트 */
 @import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");
 @font-face {

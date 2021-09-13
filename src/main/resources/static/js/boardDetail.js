@@ -17,7 +17,8 @@ for(let i=0; i<$listBtns.length; i++){
 //게시글등록버튼
 const $addBtn = document.querySelector('.boardForm__addBtn');
 $addBtn.addEventListener('click',e=>{
-    location.href='/board/';
+const cate = e.target.dataset.cate ;
+    location.href=`/board?cate=${cate}`;
 });
 
 

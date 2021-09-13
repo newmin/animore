@@ -1,10 +1,11 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.business;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proj.animore.dao.ReviewDAO;
+import com.proj.animore.dao.business.ReviewDAO;
+import com.proj.animore.dao.business.ReviewFileDAO;
 import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 
@@ -15,10 +16,13 @@ import lombok.RequiredArgsConstructor;
 public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
+	private final ReviewFileDAO reviewFileDAO;
 	
 	@Override
-	public List<ReviewReq> registReview(Integer bnum, String id, ReviewDTO reviewDTO) {
-		return reviewDAO.registReview(bnum, id, reviewDTO);
+	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
+		int rnum = reviewDAO.registReview(reviewDTO);
+		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());
+		return reviewDAO.allReview(reviewDTO.getBnum());
 	}
 
 	@Override
@@ -37,8 +41,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	}
 
 	@Override
-	public List<ReviewReq> updateReview(int bnum, String id, ReviewDTO reviewDTO) {
-		return reviewDAO.updateReview(bnum, id, reviewDTO);
+	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
+		return reviewDAO.updateReview(reviewDTO);
 	}
 
 	@Override
@@ -52,8 +56,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	}
 	
 	@Override
-	public List<ReviewReq> addRvReply(int bnum, int rnum, String rvReply) {
-		return reviewDAO.addRvReply(bnum, rnum, rvReply);
+	public List<ReviewReq> addRvReply(ReviewReq reviewReq) {
+		return reviewDAO.addRvReply(reviewReq);
 	}
 
 }

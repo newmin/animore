@@ -1,4 +1,4 @@
-package com.proj.animore.svc;
+package com.proj.animore.svc.business;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.proj.animore.dao;
+package com.proj.animore.dao.business;
 
 import java.util.List;
 

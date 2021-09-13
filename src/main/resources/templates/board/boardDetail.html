@@ -52,7 +52,7 @@
                   </div>
         </div>
        <div class="boardForm__infoContainer">
-        <img th:src="@{|/img/upload/member/*{store_fname}|} " alt="프로필사진" class="boardForm__proImg">
+        <img th:src="@{|/img/upload/member/*{member_fname}|} " alt="프로필사진" class="boardForm__proImg">
         <div class="boardForm__info">
             <span class="boardForm__Nickname" th:text="*{nickname}">닉네임</span>
             <div class="boardForm__info2">
@@ -61,7 +61,12 @@
             </div>
         </div>
        </div>
-       <div class="boardForm__contents"><p th:text="*{bcontent}"></p></div>
+       <div class="boardForm__contents">
+       	<th:block th:each="img : *{files}">
+       		<img th:src="@{|/img/upload/board/${img.store_fname}|}" alt="업로드파일" />
+       	</th:block>
+       <p th:text="*{bcontent}"></p>
+       </div>
         <div class="boardForm__files">
 			<label for="file" class="file__title">첨부파일></label>
 			<div >
@@ -86,16 +91,22 @@
        <div class=" boardForm__text">댓글 <span class="boardForm__reply boardForm__text" th:text="|댓글수 ${reply.size}|"></span></div>
        <div class="boardForm__replyListWrap">
      		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
+
+     		 	 <th:block th:if="${reply.rindent} > 0">
+        	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" style="width:50px"></div>
+					 </th:block>
            <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{store_fname}|} " alt="" class="boardForm__proImg"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
                 <div class="boardForm__ReplyContent" th:text="${reply.rcontent}">댓글내용</div>
                 <div class="boardForm__Replywrap">
-                    <div class="boardForm__Replycdate" th:text="${reply.rcdate}">작성일자</div>
-                    <button class="boardForm__ReplyReBtn">답글쓰기</button>
-                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__modiReplyBtn" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">댓글수정</button>
-                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__delReplyBtn" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">댓글삭제</button>
+                    <th:block th:if="${reply.status == 'A'}">
+                    	<div class="boardForm__Replycdate" th:text="${reply.rcdate}">작성일자</div>
+	                    <button class="boardForm__ReplyReBtn" th:data-rnum="${reply.rnum}">답글쓰기</button>
+	                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__modiReplyBtn" th:data-rnum="${reply.rnum}">댓글수정</button>
+	                    <button th:if="${session.loginMember != null && session.loginMember.id.equals(reply.id)}" class="boardForm__delReplyBtn" th:data-rnum="${reply.rnum}">댓글삭제</button>
+                    </th:block>
                 </div>
             	</div>
             </div>
@@ -110,7 +121,7 @@
         <div class="boardForm__btns boardForm__underBtns">
             <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
             <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
-            <button type="button" class="boardForm__addBtn">글쓰기</button>
+            <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
         </div>
         </div>
     </main>
