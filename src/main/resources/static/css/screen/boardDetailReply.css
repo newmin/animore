@@ -1,22 +1,44 @@
 @charset "UTF-8";
 
-
 .boardForm__ReplyReBtn,
 .boardForm__modiReplyBtn,
 .boardForm__delReplyBtn{
-
-	
+	background-color: white;
+	color: var(--primary-dark);
+	cursor: pointer;
+	border-radius:  5px;
+	border-width: 0px;
+	padding: 0;
+	margin-left:3px;
 }
 
-.boardForm__reReplyCancelBtn,
-.boardForm__reReplySubmitBtn,
-.boardForm__modiReplyCancelBtn,
-.boardForm__modiReplySubmitBtn{
-	
-	
+.boardForm__modiReplyBtn::before,
+.boardForm__modiReplyBtn::after{
+	content:" | ";
+	display: inline;
 }
 
-.boardForm__reReplyTextarea,
+#boardForm__reReplyCancelBtn,
+#boardForm__reReplySubmitBtn,
+#boardForm__modiReplyCancelBtn,
+#boardForm__modiReplySubmitBtn{
+	background-color: var(--primary-dark);
+	color: white;
+	cursor: pointer;
+	border-radius: 5px;
+	border-width: 0;
+}
+
+/* .boardForm__reReplyTextarea,
 .boardForm__modiReplyTextarea{
 	
+} */
+
+#boardForm__reReplyWrap{
+	width: 600px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: lightgray;
+	margin: 5px 0 5px 50px;
 }
+

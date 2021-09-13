@@ -174,10 +174,10 @@ function refreshReply(data){
 		      html += `    <div class="boardForm__Replywrap">`;
 					if(rec.status != 'H'){
 		      		html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
-							html += `        <button class="boardForm__ReplyReBtn" data-rnum="${rec.rnum}">답글쓰기</button>`;
+							html += `        <button class="boardForm__ReplyReBtn" data-rnum="${rec.rnum}">답글</button>`;
 							if($id == rec.id){
-									html += `<button class="boardForm__modiReplyBtn" data-rnum="${rec.rnum}">댓글수정</button>`;
-									html += `<button class="boardForm__delReplyBtn" data-rnum="${rec.rnum}">댓글삭제</button>`;
+									html += `<button class="boardForm__modiReplyBtn" data-rnum="${rec.rnum}">수정</button>`;
+									html += `<button class="boardForm__delReplyBtn" data-rnum="${rec.rnum}">삭제</button>`;
 							}
 					}
 		      html += `    </div>`;
