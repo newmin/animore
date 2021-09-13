@@ -62,7 +62,7 @@
         </div>
        </div>
        <div class="boardForm__contents">
-       	<th:block th:each="img : *{files}">
+       	<th:block th:if ="*{files != null}" th:each="img : *{files}">
        		<img th:src="@{|/img/upload/board/${img.store_fname}|}" alt="업로드파일" />
        	</th:block>
        <p th:text="*{bcontent}"></p>
@@ -95,7 +95,7 @@
      		 	 <th:block th:if="${reply.rindent} > 0">
         	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" style="width:50px"></div>
 					 </th:block>
-           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{store_fname}|} " alt="" class="boardForm__proImg"></div>
+           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{member_fname}|} " alt="" class="boardForm__proImg"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
