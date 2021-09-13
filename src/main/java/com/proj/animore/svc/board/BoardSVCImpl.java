@@ -121,6 +121,11 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public List<BoardReqDTO> list(String bcategory, int startRec, int endRec) {
 		List<BoardReqDTO> list = boardDAO.list(bcategory, startRec, endRec);
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setFiles(
+					boardUploadFileDAO.getFiles(list.get(i).getBnum()));
+		}
+		
 		return list;
 	}
 	//게시글전체목록(좋아요순나열)

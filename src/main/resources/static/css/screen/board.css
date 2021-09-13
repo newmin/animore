@@ -175,7 +175,17 @@ border-radius: 2px;
 .b_galary_title {
   text-align: center;
 }
-
+.b_galary_img{
+	width: 200px;
+	height:200px;
+}
+.b_galarywrap .fa-times{
+	width: 200px;
+	height:200px;
+	text-align: center;
+	line-height: 200px;
+	
+}
 /* 건강정보게시판 */
 /* .health_btns{
   display: flex;

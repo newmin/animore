@@ -127,13 +127,22 @@
    <div th:if="${cate} =='P'">
     <div class="b_galarywrap board__table">
         <div class="b_galary_post" th:each="boardForm :${boardForm}">
-          <div class="b_galary_img"><a th:href="@{|/board/post/${boardForm.bnum}|}">
-          <img src="https://picsum.photos/id/1/200/200" alt=""> <p class="b_galary_title" th:text="${boardForm.btitle}">글제목</p></a></div>
+          <th:block th:unless="${boardForm.files.size() == 0}"> 
+         <a th:href="@{|/board/post/${boardForm.bnum}|}"> 
+          <img class="b_galary_img" src="#" th:src="@{|/img/upload/board/${boardForm.files[0].getStore_fname()}|}"></img> 
+         </a>
+		 </th:block>     
+          <th:block th:unless="${boardForm.files.size() != 0}"> 
+         <a th:href="@{|/board/post/${boardForm.bnum}|}"> 
+          <i class="fas fa-times"></i>
+         </a>
+		 </th:block>     
+          <p class="b_galary_title"  th:text="${boardForm.btitle}">글제목</p>
         </div>
-        
-        
       </div>
     </div>
+    
+    
      <div class="board__btns">
         <button class="board__btn boardForm__addBtn" type="button" th:data-cate =${cate}>글쓰기</button>
       </div>
