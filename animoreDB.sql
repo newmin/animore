@@ -302,7 +302,7 @@ CREATE SEQUENCE goodboard_gnum_seq;
 CREATE SEQUENCE hboard_bnum_seq;
 CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
-CREATE SEQUENCE reviewfile_rnum_seq;
+CREATE SEQUENCE reviewfile_fnum_seq;
 CREATE SEQUENCE favorite_fnum_seq;
 CREATE SEQUENCE myani_mnum_seq;
 CREATE SEQUENCE profession_pnum_seq;
