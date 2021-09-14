@@ -30,7 +30,9 @@ if (navigator.geolocation) {
       // 마커와 인포윈도우를 표시합니다
       displayMarker(locPosition, message);
       
-      //document.querySelector('.position__locate').textContent = `내위치 : ${locPosition}`;    
+			// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+
     });
 
   
@@ -49,13 +51,13 @@ function displayMarker(locPosition, message) {
 }    
 
 
-// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
-searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+// // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+// searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
-// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'idle', function() {
-  searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-});
+// // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+// kakao.maps.event.addListener(map, 'idle', function() {
+//   searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+// });
 
 function searchAddrFromCoords(coords, callback) {
   // 좌표로 행정동 주소 정보를 요청합니다
@@ -115,7 +117,7 @@ function setMarkers($busiList){
 	      // 지도의 중심을 현재위치로 이동시킵니다
 	      // coords = '내위치';
 	      // map.setCenter(coords);
-	
+				
 	      var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
 	      // 클릭한 위치를 기준으로 선을 생성하고 지도위에 표시합니다
 	              clickLine = new kakao.maps.Polyline({
