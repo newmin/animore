@@ -3,7 +3,7 @@
 .boardForm__ReplyReBtn,
 .boardForm__modiReplyBtn,
 .boardForm__delReplyBtn{
-	background-color: white;
+	background-color: #f8f8f8;
 	color: var(--primary-dark);
 	cursor: pointer;
 	border-radius:  5px;
@@ -34,11 +34,15 @@
 	
 } */
 
+#boardForm__modiReplyWrap,
 #boardForm__reReplyWrap{
 	width: 600px;
 	padding: 10px;
 	border-radius: 5px;
 	background-color: lightgray;
-	margin: 5px 0 5px 50px;
+	margin: 5px 0;
+}
+#boardForm__reReplyWrap{
+	margin-left: 50px;
 }
 
