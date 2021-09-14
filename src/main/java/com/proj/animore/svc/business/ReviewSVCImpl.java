@@ -3,6 +3,7 @@ package com.proj.animore.svc.business;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dao.business.ReviewDAO;
 import com.proj.animore.dao.business.ReviewFileDAO;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+//@Transactional
 public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
@@ -32,7 +34,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 		return reviewDAO.allReview(bnum);
 	}
 
-	//내가 쓴 리뷰(마이페이지0
+	//내가 쓴 리뷰(마이페이지)
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		return reviewDAO.myReview(id);
@@ -42,7 +44,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public ReviewReq findReview(int rnum) {
 		ReviewReq review = reviewDAO.findReview(rnum);
-//		review.setFiles(reviewFileDAO.);
+		review.setFiles(reviewFileDAO.getReviewFiles(rnum));
 		return review;
 	}
 
@@ -55,6 +57,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	//리뷰 삭제
 	@Override
 	public List<ReviewReq> removeReview(int bnum, int rnum) {
+		reviewFileDAO.removeReviewFiles(rnum);
 		return reviewDAO.removeReview(bnum, rnum);
 	}
 	
@@ -67,6 +70,12 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> addRvReply(ReviewReq reviewReq) {
 		return reviewDAO.addRvReply(reviewReq);
+	}
+    //사장님 리뷰리댓 삭제
+	@Override
+	public List<ReviewReq> delRvReply(int bnum, int rnum) {
+		reviewDAO.delRvReply(rnum);
+		return reviewDAO.allReview(bnum);
 	}
 
 }

@@ -63,7 +63,7 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 	}
 	//리뷰 첨부파일 조회
 	@Override
-	public List<BusiUploadFileDTO> findReviewFile(int rnum) {
+	public List<BusiUploadFileDTO> getReviewFiles(int rnum) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select fnum,rnum,store_fname,upload_fname, ");
 		sql.append("       fsize,ftype,cdate,udate ");
@@ -79,13 +79,13 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 	}
 
 	@Override
-	public List<ReviewReq> updateReviewFile(ReviewDTO reviewDTO) {
+	public List<ReviewReq> updateReviewFiles(ReviewDTO reviewDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	//리뷰 첨부파일 전체 삭제(리뷰삭제)
 	@Override
-	public void removeReviewFile(int rnum) {
+	public void removeReviewFiles(int rnum) {
 		String sql = "delete from reviewfile where rnum = ? ";
 		jdbcTemplate.update(sql, rnum);
 	}

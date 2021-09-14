@@ -56,7 +56,7 @@ const regiBtn_f = e =>{
 							//리뷰입력창 초기화
 							rcontent.value=null;
 							//등록후 별점도 초기화?
-							document.getElementById('point5').setAttribute('checked','checked');
+							document.getElementById('point5').checked=true;
 					}else{
 						alert(res.rtmsg);
 						throw new Error(res.rtmsg);
@@ -336,24 +336,19 @@ function refreshReview(data){
 	let html ='';
 	html += `<div class="review__cnt"><i class="far fa-comment-dots"></i><span>리뷰수 : ${data.length}</span></div>`;
 	html += `<section class="review">`;
-	html += `<div id="firstRow"></div>`
 	data.forEach(review=>{
 		html += `<div class="review__row" data-rnum="${review.rnum}">`;
-		//프로필
+		/* 프로필 시작*/
 		html += `	<div class="review__column">`;
-		// if(review.store_fname != null){ 
-		// 	html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">`;
-		// } else{
-		// 	html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`
-		// }
 		review.store_fname
 				 ? html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
 				 : html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
+		/* 프로필 종료*/
 		html += `	<div class="review__column">`;
 		html += `		<div class="review__main-text">`
-		//별점
+		/*별점*/
 		switch(review.rscore){
 			case 1:
 				html += `			<div class="review__star-score">`;
@@ -401,7 +396,7 @@ function refreshReview(data){
 				html += `			</div>`;
 			break;
 		}
-		//내용 및 수정/삭제 버튼
+		/*내용 및 수정/삭제 버튼*/
 		html += `		<p class="review__content">${review.rcontent}</p>`;
 		if($id == review.id){
 			html += `		<div>`;
@@ -412,35 +407,56 @@ function refreshReview(data){
 			html += `			</p>`;
 			html += `		</div>`;
 		}
-		//사장님 댓글	
-		html+= `<div class="review__reply">`
-			if($id==$busi.id && review.rvReply==null){
-				html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
-			}
-			if(review.rvReply){
-				html += `<p class="review__reply-text">└─>사장님 : ${review.rvReply}</p>`
-			}
+			/* 사장님 댓글 시작	*/
+		html+= `<div class="review__reply" data-rnum="${review.rnum}">`
+		//리댓달기 버튼
+		if($id==$busi.id && review.rvReply==null){	
+			html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
+		}
+		//리댓 있을 시 출력
+		if(review.rvReply){
+			html += `<p class="review__reply-text">└─>사장님 : ${review.rvReply}</p>`
+			html += `<p class="review__ownerBtns">`
+			html +=	`	<span class="review__ownerModiBtn">수정</span>`
+			html +=	`	<span>|</span>`	
+			html +=	`	<span class="review__ownerDelBtn">삭제</span>`	
+			html +=	`</p>`	
+		}
 		html+= `</div>`
+			/* 사장님 댓글	종료 */
+		html += `		</div>`
 		html += `		<div>`
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
 		if(review.rvudate) {
-			html += `<span class="review__isUpdate">수정됨</span>`;
+			html += `			<span class="review__isUpdate">수정됨</span>`;
 		}
-		html += `		</div>`
 		html += `		</div>`;
 		html += `	</div>`;
+		/*첨부 파일 시작*/
 		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
+		/*첨부파일 종료*/
 		html += `</div>`;
+		/*각 리뷰row 종료*/
 	})
 	html += `</section>`;
+	/*리뷰 종료*/
 	document.querySelector('.review__container').innerHTML = html;
 			
 	//버튼 재호출 + 이벤트리스너 재등록
 	modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
-	modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
+	modiFrmBtns?.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 
 	delBtns = document.querySelectorAll('.review__del');		//삭제하기
-	delBtns.forEach(ele=>ele.addEventListener('click',delBtn_f));
+	delBtns?.forEach(ele=>ele.addEventListener('click',delBtn_f));
+	
+	/*사장님 버튼*/
+	//수정버튼
+	replyModiBtns = document.querySelectorAll('.review__ownerModiBtn')
+	replyModiBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
+	//삭제버튼
+	replyDelBtns = document.querySelectorAll('.review__ownerDelBtn')
+	replyDelBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
+	
 }
 //각 버튼 이벤트리스너 등록
 regiBtn.addEventListener('click',regiBtn_f);
@@ -457,9 +473,9 @@ modiFrmBtns.forEach(ele=>ele.addEventListener('click',modiFrmBtns_f));
 const addBtn_f = e=> {
 
 	const content = document.querySelector('.rvReply__content');
-	const rnum = e.target.closest('.review__reply').querySelector('.review__replyBtn').dataset.rnum;
+	const rnum = e.target.closest('.review__reply').dataset.rnum;
 	const bnum = $busi.bnum;
-	const bid = $busi.id;
+	const bid = $busi.id;//사장아이디
 
 		//리뷰입력체크
 		if(!content.value) {
@@ -505,6 +521,9 @@ const replyBtns_f = e =>{
 			return
 		}
 	}
+		const replyForm = document.createElement('div');
+		replyForm.classList.add('review__reply-form');
+		e.target.closest('.review__reply').append(replyForm);
 
 	const rnum = e.target.dataset.rnum;
 	const bid = $busi.id;
@@ -543,10 +562,7 @@ function addReply(review){
 	html += `	</div>`;
 	html += `</div>`;
 
-	const replyForm = document.createElement('div');
-	replyForm.classList.add('review__reply-form');
-	replyForm.innerHTML=html;
-	document.querySelector('.review__reply').append(replyForm);
+	document.querySelector('.review__reply-form').innerHTML=html;
 
 	const addBtn = document.querySelector('.rvReply__addBtn');
 	const cancleBtn = document.querySelector('.rvReply__cancle');
@@ -555,8 +571,51 @@ function addReply(review){
 	addBtn.addEventListener('click',addBtn_f);
 }
 
-//리댓달기 버튼 이벤트
+const replyDelBtns_f = e=> {
+
+	const rnum = e.target.closest('.review__reply').dataset.rnum;
+	const bnum = $busi.bnum;
+	const bid = $busi.id;//사장아이디
+
+		//리뷰입력체크
+		if(!content.value) {
+			alert("댓글 내용을 입력하세요");
+			return;
+	}	
+	//TODO 댓글 등록하는 폼만들고 해당값 입력
+	const URL = `/inquire/rvreply/del?bid=${bid}`;
+	const data = {
+			"rnum" : rnum,
+			"bnum" : bnum,
+													 };
+													 	
+	request.patch(URL,data)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == '00'){
+							//성공로직처리
+							const data = res.data;
+							//리뷰목록갱신
+							refreshReview(data);
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+					alert(err.message);
+			});
+}
+
+	/*사장님 버튼*/
+//등록버튼
 let replyBtns = document.querySelectorAll('.review__replyBtn');
 replyBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
-
-
+//수정버튼
+let replyModiBtns = document.querySelectorAll('.review__ownerModiBtn')
+replyModiBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
+//삭제버튼
+let replyDelBtns = document.querySelectorAll('.review__ownerDelBtn')
+replyDelBtns?.forEach(ele=>ele.addEventListener('click',replyDelBtns_f));

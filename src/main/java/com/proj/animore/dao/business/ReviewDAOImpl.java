@@ -166,6 +166,16 @@ public class ReviewDAOImpl implements ReviewDAO {
 		
 		return allReview(reviewReq.getBnum());
 	}
+	//사장님 리뷰리댓 삭제
+	@Override
+	public void delRvReply(int rnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update review ");
+		sql.append("   set rvReply = null ");
+		sql.append(" where rnum =? ");
+		jdbcTemplate.update(sql.toString(),rnum);
+		
+	}
 
 
 	@Override
