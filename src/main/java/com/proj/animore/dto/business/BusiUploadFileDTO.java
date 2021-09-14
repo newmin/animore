@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class BusiUploadFileDTO {
 	  private Integer fnum; 				//파일번호
-	  private Integer refer_num; 		//참조번호
+	  private Integer refer_num; 		//참조번호 //업체bnum //리뷰rnum
 	  private String store_fname; 	//서버보관 파일명 store_fname varchar2(50),
 	  private String upload_fname; 	//업로드 파일명 upload_fname varchar2(50),
 	  private String fsize;					//파일 크기 fsize varchar2(45),

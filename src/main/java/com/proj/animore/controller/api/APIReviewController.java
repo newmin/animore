@@ -6,10 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +42,8 @@ public class APIReviewController {
 
 	//리뷰등록
 	@PostMapping("/")
-	public Result addReview(@Valid @RequestBody ReviewForm reviewForm, 
+	public Result addReview(
+			@ModelAttribute ReviewForm reviewForm, 
 			HttpServletRequest request) throws IllegalStateException, IOException{
 		
 		Result result;
@@ -56,13 +55,10 @@ public class APIReviewController {
 			return result;
 		}
 		
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		String id = loginMember.getId();
-
 		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
-		
+				
 		//첨부파일 등록
 		if(reviewForm.getFiles()!=null || reviewForm.getFiles().size()!=0) {			
 			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
@@ -73,7 +69,7 @@ public class APIReviewController {
 		List<ReviewReq> list = reviewSVC.registReview(reviewDTO);
 		
 		result = new Result("00","성공",list);
-	  	return result;
+	 	return result;
 	}
 	//메타정보 → 업로드 정보
 	private BusiUploadFileDTO convert(MetaOfUploadFile attatchFile) {

@@ -18,7 +18,7 @@ const regiBtn_f = e =>{
 	
 	const rcontent = document.querySelector('.reviewform .review__textarea');
 	const rscore = document.querySelector('.reviewform input[name="rscore"]:checked');
-	const files = document.querySelector('.review__files');
+	const $files = document.querySelector('.review__files');
 
 	//리뷰입력체크
 	if(!rcontent.value) {
@@ -27,15 +27,25 @@ const regiBtn_f = e =>{
 	}	
 	
 	const URL = `/inquire/`;
-	const data = {
+/*	const data = {
 			"bnum" : bnum,
 			"rcontent": rcontent.value,
 			"rscore" : rscore.value,
-			"id" : $id,
-			"files" : files.files
-													 };
-													 	
-	request.post(URL,data)
+			"id" : $id //,
+			//"files" : files.files };*/
+
+	const formData = new FormData();
+	formData.append('bnum',bnum);
+	formData.append('rcontent',rcontent.value);
+	formData.append('rscore',rscore.value);
+	formData.append('id', $id);
+	for(let i=0; i<$files.files.length; i++){
+		console.log($files.files[i])
+		formData.append('files',$files.files[i]);
+		
+	}													 
+										 	
+	request.mpost(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
 					if(res.rtcd == '00'){

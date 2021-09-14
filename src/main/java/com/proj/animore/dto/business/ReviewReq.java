@@ -3,6 +3,10 @@ package com.proj.animore.dto.business;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.proj.animore.form.ReviewFile;
+
 import lombok.Data;
 
 @Data
@@ -19,5 +23,6 @@ public class ReviewReq {
 	private LocalDate rvcdate;
 	private LocalDate rvudate;
 	private String store_fname; //프로필 사진명
-	private List<BusiUploadFileDTO> files;
+	private List<MultipartFile> files;
+//	private List<ReviewFile> files;
 }

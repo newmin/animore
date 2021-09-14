@@ -20,6 +20,14 @@ const request = {
 		})
 	},
 	
+	mpost(url,formData) {
+		return fetch(url,{
+			method: 'POST',
+			headers:{},
+			body : formData
+		})
+	},
+		
 	patch(url,payload) {
 		return fetch(url,{
 			method: 'PATCH',

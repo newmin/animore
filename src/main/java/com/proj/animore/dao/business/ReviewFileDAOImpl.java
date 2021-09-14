@@ -36,8 +36,7 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 		sql.append("  ftype ");
 		sql.append(") ");
 		sql.append("values( ");
-		sql.append("  reviewfile_fnum_seq.nextval, ");
-		sql.append("  ?, ");
+		sql.append("  reviewfile_rnum_seq.nextval, ");
 		sql.append("  ?, ");
 		sql.append("  ?, ");
 		sql.append("  ?, ");
