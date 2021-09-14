@@ -307,4 +307,26 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 	
+	//마일리지증가
+	@Override
+	public int upMileage(String id, int mileage) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update member ");
+		sql.append(" set mileage = mileage + ? ");
+		sql.append(" where id= ? ");
+		
+		jdbcTemplate.update(sql.toString(), mileage, id);
+		return 0;
+	}
+	//마일리지감소
+	@Override
+	public int downMileage(String id, int mileage) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update member ");
+		sql.append(" set mileage = mileage - ? ");
+		sql.append(" where id= ? ");
+		
+		jdbcTemplate.update(sql.toString(), mileage, id);
+		return 0;
+	}
 }

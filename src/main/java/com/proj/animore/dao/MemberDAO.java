@@ -42,42 +42,40 @@ public interface MemberDAO {
 	//비밀번호변경처리
 	int changePW(ChangePwForm changePWForm);
 	
+	//마일리지증가
+	int upMileage(String id, int mileage);
 	
+	//마일리지감소
+	int downMileage(String id, int mileage);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * 로그인 체크
-	 * @param id
-	 * @param pw
-	 * @return
-	 */
+	//로그인체크
 	boolean isLogin(String id, String pw);
 	
-	/**
-	 * 탈퇴
-	 * @param email
-	 */
+	//탈퇴
 	void outMember(String id, String pw);
-	
+
+	//비밀번호찾기시 실행되는 비밀번호변경
 	void changePw(String id, String pw, String tmpPw);
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
