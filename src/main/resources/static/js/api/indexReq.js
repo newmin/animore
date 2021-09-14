@@ -47,7 +47,7 @@ html += `   </a>`;
 html += `      </div>`;
 html += `      <hr> `;
 html += `      <div class="good">`;
-html += `        <i class="far fa-heart"></i>`;
+html += `        <i class="fas fa-heart"></i>`;
 html += `        <span>좋아요 ${post.bgood}</span>`;
 html += `      </div>`;
 html += `    </div>`;

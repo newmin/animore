@@ -109,3 +109,6 @@
   margin-bottom: 20px;
   box-sizing: border-box;
 }
+.board-best .fa-heart{
+	color:red;
+}
