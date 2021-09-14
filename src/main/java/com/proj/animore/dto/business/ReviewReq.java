@@ -1,6 +1,7 @@
 package com.proj.animore.dto.business;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -17,5 +18,6 @@ public class ReviewReq {
 	private String nickname;
 	private LocalDate rvcdate;
 	private LocalDate rvudate;
-	private String store_fname;
+	private String store_fname; //프로필 사진명
+	private List<BusiUploadFileDTO> files;
 }

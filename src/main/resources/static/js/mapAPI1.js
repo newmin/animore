@@ -29,8 +29,12 @@ if (navigator.geolocation) {
       
       // 마커와 인포윈도우를 표시합니다
       displayMarker(locPosition, message);
-          
+      
+			// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+
     });
+
   
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
   
@@ -47,13 +51,13 @@ function displayMarker(locPosition, message) {
 }    
 
 
-// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
-searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+// // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+// searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
-// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'idle', function() {
-  searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-});
+// // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+// kakao.maps.event.addListener(map, 'idle', function() {
+//   searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+// });
 
 function searchAddrFromCoords(coords, callback) {
   // 좌표로 행정동 주소 정보를 요청합니다
@@ -69,13 +73,13 @@ let ccc = 0;
 // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
 function displayCenterInfo(result, status) {
   if (status === kakao.maps.services.Status.OK) {
-      var infoDiv = document.getElementById('centerAddr');
+      // var infoDiv = document.getElementById('centerAddr');
 
       for(var i = 0; i < result.length; i++) {
           // 행정동의 region_type 값은 'H' 이므로
           if (result[i].region_type === 'H') {
-              infoDiv.innerHTML = result[i].address_name;
-         			document.querySelector('.position__locate').textContent = `내위치 : ${result[i].address_name}`;
+              // infoDiv.innerHTML = result[i].address_name;
+							document.querySelector('.position__locate').textContent = `내위치 : ${result[i].address_name}`;
               break;
           }
       }
@@ -113,7 +117,7 @@ function setMarkers($busiList){
 	      // 지도의 중심을 현재위치로 이동시킵니다
 	      // coords = '내위치';
 	      // map.setCenter(coords);
-	
+				
 	      var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
 	      // 클릭한 위치를 기준으로 선을 생성하고 지도위에 표시합니다
 	              clickLine = new kakao.maps.Polyline({
@@ -157,9 +161,25 @@ function setMarkers($busiList){
 	        selectedMarker = null;
 	      });
 	
+				//거리 나타내기
 	      const $distance = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`).parentElement.nextElementSibling;
-	      $distance.textContent = distance + ' M';
+	      $distance.textContent = Math.round(distance/10)/100 + ' KM';
 	      
+	      //마우스 인아웃 마커표시
+/*	      const $listATag = document.querySelectorAll('.busi-list__row');
+	      $listATag.forEach(ele=>ele.addEventListener('mouseover', function(){
+	        // 업체목록에 마우스오버 이벤트를 등록합니다
+	        makeInfoWindow($busiList,index,distance);
+	        map.setCenter(coords);
+	        // 업체목록에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+	        infowindow.open(map, marker);
+	      }));
+	      $listATag.forEach(ele=>ele.addEventListener('mouseout', function(){
+	        // 업체목록에 마우스아웃 이벤트를 등록합니다
+	        // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+	        infowindow.close();
+	      }));*/
+	      //마우스 인아웃 마커표시
 	      const $listATag = document.querySelector(`a[href='/inquire/${$busiList[index].bnum}']`);
 	      $listATag.addEventListener('mouseover', function(){
 	        // 업체목록에 마우스오버 이벤트를 등록합니다

@@ -16,7 +16,7 @@
 	<script src="/js/api/busiListHospitalTagSearchReq.js" defer></script>
 	<script src="/js/admin/busiList.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
-	
+	<script src="/js/components/scrollUp.js" defer></script>
 </head>
 <body>
   <main class="main">
@@ -36,7 +36,7 @@
       	
         <div class="position__column">
           <div class="position__info">
-            <p class="position__locate">내위치 : 여기는 어디~~</p>
+            <p class="position__locate">내위치 : 좌표를 확인할 수 없습니다.</p>
             <p class="position__category" th:if="${bcategory == 'bhospital'}">동물병원</p>
             <p class="position__category" th:if="${bcategory == 'bpharmacy'}">약국</p>
             <p class="position__category" th:if="${bcategory == 'bhotel'}">호텔</p>
@@ -71,23 +71,22 @@
 	              <option value="">거리순</option>
 	              <option value="">평점순</option>
 	            </select>
-	            <div class="busi-list__up"><a href="#firstRow" title="맨위로 이동"><i class="fas fa-angle-up"></i></a></div>
+	            <div th:if="${busiList.size>=10}" class="scroll__up" title="맨위로 이동"><i class="fas fa-angle-up"></i></div>
 	          </div>
 	          <!-- 리스트 -->
 	        <ul class="busi-list">
 	          <li class="busi-list__row" th:each="busiList : ${busiList}">
 	            <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/inquire/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span>
-	            <!-- <span class="busi-list__column busi-list__bname"><a href="" th:href="@{|/${bcategory}/${busiList.bnum}|}" th:text="${busiList.bname}">업체명</a></span> -->
-	            <span class="busi-list__column busi-list__distance">좌표오류.</span>
+	            <span class="busi-list__column busi-list__distance">좌표오류</span>
 	            <div class="busi-list__column busi-list__icons">
 	            	<th:block th:if="${session != null && session.loginMember != null}">
 		            	<i class="fas fa-star busi-list__star"></i>
-		            	<span th:text="${busiList.bscore}?:|미등록|"></span>	            	
+		            	<span th:text="${busiList.bscore}?:|리뷰없음|"></span>	            	
 	            	</th:block>
 	            	<th:block th:if="${session?.loginMember == null}">
 		            	<a th:href="@{|/login?redirectUrl=${#httpServletRequest.requestURI}|}">
 		            		<i class="fas fa-star busi-list__star"></i>
-	            			<span>로그인</span>
+	            			<span>로그인후 조회</span>
 	            		</a>
 	            	</th:block>
 	            </div>
@@ -100,10 +99,10 @@
             <div><button id="currBtn">현재위치</button></div>
             <div><input type="text" name="" id="search"><button id='searchBtn'>검색</button></div>
           </div> -->
-          <div class="hAddr" style='z-index:1; position:absolute'>
-<!-- 		        <span class="title">지도중심기준 행정동 주소정보</span> -->
+<!--           <div class="hAddr" style='z-index:1; position:absolute'>
+ 		        <span class="title">지도중심기준 행정동 주소정보</span>
 		        <span id="centerAddr" style='display:block'></span>
-			    </div> 
+			    </div> --> 
         </div>
 
       </section>

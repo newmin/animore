@@ -46,6 +46,7 @@ const regiBtn_f = e =>{
 							//리뷰입력창 초기화
 							rcontent.value=null;
 							//등록후 별점도 초기화?
+							document.getElementById('point5').setAttribute('checked','checked');
 					}else{
 						alert(res.rtmsg);
 						throw new Error(res.rtmsg);
