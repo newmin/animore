@@ -160,6 +160,12 @@ Array.from(delBtns).forEach(ele => {
 function refreshReply(data){
 	let html = '';
 	data.forEach(rec => {
+		const $rcdate = getTimeStamp(rec.rcdate);
+		
+//		const $rcdate = rec.rcdate; 
+//		const ymd = $rcdate.substring(0,$rcdate.indexOf('T'));
+//		const hms = $rcdate.substring($rcdate.indexOf('T')+1,$rcdate.indexOf('.'));
+					
 					html += `<div class="boardForm__replyContainer">`
 			if(rec.rindent > 0){
 				for(let i=0; i<rec.rindent; i++){
@@ -173,7 +179,9 @@ function refreshReply(data){
 		      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
 		      html += `    <div class="boardForm__Replywrap">`;
 					if(rec.status == 'A'){
-		      		html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
+//		      		html += `        <div class="boardForm__Replycdate">${ymd} ${hms}</div>`;
+//		      		html += `        <div class="boardForm__Replycdate">${rec.rcdate}</div>`;
+		      		html += `        <div class="boardForm__Replycdate">${$rcdate}</div>`;
 							html += `        <button class="boardForm__ReplyReBtn" data-rnum="${rec.rnum}">답글</button>`;
 							if($id == rec.id){
 									html += `<button class="boardForm__modiReplyBtn" data-rnum="${rec.rnum}">수정</button>`;
@@ -206,4 +214,29 @@ function refreshReply(data){
 	
 	$rcontent.value="";
 	
+}
+
+function getTimeStamp(rcdate) {
+  var d = new Date(rcdate);
+  var s =
+    leadingZeros(d.getFullYear(), 4) + '-' +
+    leadingZeros(d.getMonth() + 1, 2) + '-' +
+    leadingZeros(d.getDate(), 2) + ' ' +
+
+    leadingZeros(d.getHours(), 2) + ':' +
+    leadingZeros(d.getMinutes(), 2) + ':' +
+    leadingZeros(d.getSeconds(), 2);
+
+  return s;
+}
+
+function leadingZeros(n, digits) {
+  var zero = '';
+  n = n.toString();
+
+  if (n.length < digits) {
+    for (let i = 0; i < digits - n.length; i++)
+      zero += '0';
+  }
+  return zero + n;
 }

@@ -1,6 +1,6 @@
 package com.proj.animore.dto.board;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class RboardListReqDTO {
 	Integer rstep;				//댓글단계
 	Integer rindent;			//댓글들여쓰기
 	Integer rgood;				//좋아요수
-	LocalDateTime rcdate;			//댓글작성일
+	Timestamp rcdate;			//댓글작성일
 	String status;
 	String store_fname;
 }
