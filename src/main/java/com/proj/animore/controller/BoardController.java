@@ -98,7 +98,7 @@ public class BoardController {
 		//사용자가 요청한 페이지번호
 		fc.getRc().setReqPage(reqPage);
 		
-		//검색어유무
+		//검색어유무(갤러리)
 		if((searchType == null || searchType.equals(""))
 				&&(keyword == null || keyword.equals(""))
 				&&(cate.equals("P"))) {
@@ -117,7 +117,7 @@ public class BoardController {
 			log.info("list:{}",list);
 
 			model.addAttribute("fc",fc2);
-			
+		//그 외 카테고리에서 전체목록	
 		}else if((searchType == null || searchType.equals(""))
 				&&(keyword == null || keyword.equals(""))) {
 

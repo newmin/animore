@@ -83,8 +83,15 @@
 }
 .board-best__img{
   margin-left: 5px;
+	width: 200px;
+	height:200px;
 }
-
+.board-best .fa-paw{
+	width: 200px;
+	height:200px;
+	text-align: center;
+	line-height: 200px;
+}
 .good{
   display: flex;
   font-size: 20px;

@@ -35,7 +35,15 @@ html += `        <div> `;
 html += `          <h1 class="board-best__title"><a href="/board/post/${post.bnum}" >${post.btitle}</a></h1>`;
 html += `          <p class="board-best__text" >${post.bcontent}</p>`;
 html += `        </div>`;
-html += `        <img class="board-best__img" src="https://picsum.photos/id/501/200/200" alt="">`;
+if(post.files.length != 0){
+html += `    <a href="{/board/post/${post.bnum}}"> `;
+html += `     <img class="b_galary_img board-best__img"  src="/img/upload/board/${post.files[0].store_fname}"></img> `;
+html += `    </a>`; 
+} else{
+html += `<a href="{/board/post/${post.bnum}}"> `;
+html += `    <i class="fas fa-paw"></i>`;
+html += `   </a>`;
+}
 html += `      </div>`;
 html += `      <hr> `;
 html += `      <div class="good">`;

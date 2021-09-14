@@ -54,7 +54,16 @@
             <h1 class="board-best__title"><a href="" th:href="@{|/board/post/${post.bnum}|}" th:text="${post.btitle}">게시글 제목</a></h1>
             <p class="board-best__text" th:text="${post.bcontent}">게시글 내용</p>
           </div>
-          <img class="board-best__img" src="https://picsum.photos/id/501/200/200" alt="">
+          <div th:unless="${post.files.size() == 0}"> 
+         <a th:href="@{|/board/post/${post.bnum}|}"> 
+          <img class="b_galary_img board-best__img"  src="#" th:src="@{|/img/upload/board/${post.files[0].getStore_fname()}|}"></img> 
+         </a>
+		 </div>    
+		 <th:block th:unless="${post.files.size() != 0}"> 
+         <a th:href="@{|/board/post/${post.bnum}|}"> 
+          <i class="fas fa-paw"></i>
+         </a>
+		 </th:block>   
         </div>
         <hr>
         <div class="good">

@@ -142,7 +142,12 @@ public class BoardSVCImpl implements BoardSVC {
 	//게시글전체목록(좋아요순나열)
 	@Override
 	public List<BoardReqDTO> bgoodList(String bcategory) {
-		return boardDAO.bgoodList(bcategory);
+		List<BoardReqDTO> list =boardDAO.bgoodList(bcategory);
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setFiles(
+					boardUploadFileDAO.getFiles(list.get(i).getBnum()));
+		}
+		return list;
 	}
 	
 	//댓글수조회
