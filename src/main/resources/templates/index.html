@@ -14,14 +14,11 @@
 <body>
 
   <main class="main">
-  
-  <button><a href="#" th:href="@{/logout}">세션제거하기</a></button>
-
    <!-- 검색창 -->
-  <form class="search" th:action="@{|/search?search=${search}|}">
-    <input class="search__input" name="search" type="text" placeholder="검색어를 입력해주세요(업체)" required="required">
-    <button class="search__icon"><i class="fas fa-search"></i></button>
-  </form>
+	  <form class="search" th:action="@{|/search?search=${search}|}">
+	    <input class="search__input" name="search" type="text" placeholder="검색어를 입력해주세요(업체)" required="required">
+	    <button class="search__icon"><i class="fas fa-search"></i></button>
+	  </form>
 
     <!-- 업체 카테고리 -->
     <section class="busi-category">
