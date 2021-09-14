@@ -194,7 +194,7 @@ public class BoardController {
 		HttpSession session = request.getSession(false);
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		if(loginMember == null) return "redirect:/login";
+		//if(loginMember != null) 
 		String id = loginMember.getId();
 		//해당회원이 해당글 좋아요여부확인
 		int isGoodBoard = goodBoardSVC.isGoodBoard(bnum, id);
@@ -232,7 +232,7 @@ public class BoardController {
 		HttpSession session = request.getSession(false);
 
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		if(loginMember == null) return "redirect:/login";
+		//if(loginMember == null) return "redirect:/login";
 		
 		boardForm.setBcategory(cate);
 			

@@ -20,10 +20,12 @@ public class WebConfig implements WebMvcConfigurer {
 							"/member/**","/join/**",
 							"/css/**","/js/**","/img/**",
 							"/{bcategory}","/inquire/**","/search?**",
-							"/board/{bcategory}",
+							"/board/P/**",
+							"/board/Q/**",
+							"/board/M/**",
+							"/board/F/**",
 							"/api/hospital",
-							"/bhospital/api/**",
-							"/board/search/**");
+							"/bhospital/api/**");
 						//   \" 변수명 \"
 	}
 	
