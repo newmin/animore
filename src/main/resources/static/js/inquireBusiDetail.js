@@ -46,8 +46,3 @@
 	three?.addEventListener('click',score3);
 	four?.addEventListener('click',score4);
 	five?.addEventListener('click',score5);
-	
-/*document.querySelector('.review__up')?.addEventListener('click', 
-	document.querySelector('.review__row').setAttribute('id','firstRow'));*/
-
-	

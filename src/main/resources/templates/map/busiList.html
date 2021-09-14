@@ -15,7 +15,7 @@
 	<script src="/js/api/busiListHospitalTagSearchReq.js" defer></script>
 	<script src="/js/admin/busiList.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
-	
+	<script src="/js/components/scrollUp.js" defer></script>
 </head>
 <body>
   <main class="main">
@@ -35,7 +35,7 @@
       	
         <div class="position__column">
           <div class="position__info">
-            <p class="position__locate">내위치 : 여기는 어디~~</p>
+            <p class="position__locate">내위치 : 좌표를 확인할 수 없습니다.</p>
             <p class="position__category" th:if="${bcategory == 'bhospital'}">동물병원</p>
             <p class="position__category" th:if="${bcategory == 'bpharmacy'}">약국</p>
             <p class="position__category" th:if="${bcategory == 'bhotel'}">호텔</p>
@@ -70,7 +70,7 @@
 	              <option value="">거리순</option>
 	              <option value="">평점순</option>
 	            </select>
-	            <div class="busi-list__up"><a href="#firstRow" title="맨위로 이동"><i class="fas fa-angle-up"></i></a></div>
+	            <div th:if="${busiList.size>=10}" class="scroll__up" title="맨위로 이동"><i class="fas fa-angle-up"></i></div>
 	          </div>
 	          <!-- 리스트 -->
 	        <ul class="busi-list">
