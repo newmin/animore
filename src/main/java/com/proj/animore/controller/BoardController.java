@@ -97,6 +97,7 @@ public class BoardController {
 		//log.info("cate,reqPage,searchType,keyword={}",cate,reqPage,searchType,keyword);
 		//사용자가 요청한 페이지번호
 		fc.getRc().setReqPage(reqPage);
+		fc2.getRc().setReqPage(reqPage);
 		
 		//검색어유무(갤러리)
 		if((searchType == null || searchType.equals(""))
@@ -109,8 +110,8 @@ public class BoardController {
 			
 			
 			list = boardSVC.list(cate,
-								fc.getRc().getStartRec(),
-								fc.getRc().getEndRec());
+								fc2.getRc().getStartRec(),
+								fc2.getRc().getEndRec());
 			
 			nlist = boardSVC.noticeList(cate);	
 			log.info("cate:{}",cate);
@@ -144,8 +145,8 @@ public class BoardController {
 			
 			list = boardSVC.list(new SearchDTO(
 					cate,
-					fc.getRc().getStartRec(),
-					fc.getRc().getEndRec(),
+					fc2.getRc().getStartRec(),
+					fc2.getRc().getEndRec(),
 					searchType,keyword)
 					);
 			

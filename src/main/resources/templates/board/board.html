@@ -129,7 +129,7 @@
         <div class="b_galary_post" th:each="boardForm :${boardForm}">
           <th:block th:unless="${boardForm.files.size() == 0}"> 
          <a th:href="@{|/board/post/${boardForm.bnum}|}"> 
-          <img class="b_galary_img" src="#" th:src="@{|/img/upload/board/${boardForm.files[0].getStore_fname()}|}"></img> 
+          <img class="b_galary_img" src="#" th:src="@{|/images/${boardForm.files[0].getStore_fname()}|}"></img> 
          </a>
 		 </th:block>     
           <th:block th:unless="${boardForm.files.size() != 0}"> 
