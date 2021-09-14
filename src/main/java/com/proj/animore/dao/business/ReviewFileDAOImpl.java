@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,7 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 
 	private final JdbcTemplate jdbcTemplate;
 	
+	//리뷰 파일 등록
 	@Override
 	public void registReviewFile(int rnum, List<BusiUploadFileDTO> files) {
 		StringBuffer sql = new StringBuffer();
@@ -60,11 +62,21 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 			}
 		});//batchUpdate
 	}
-
+	//리뷰 첨부파일 조회
 	@Override
-	public List<ReviewReq> findReviewFile(int rnum) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BusiUploadFileDTO> findReviewFile(int rnum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select fnum,rnum,store_fname,upload_fname, ");
+		sql.append("       fsize,ftype,cdate,udate ");
+		sql.append("  from reviewfile  ");
+		sql.append(" where rnum = ? ");
+		
+		List<BusiUploadFileDTO> list = 
+				jdbcTemplate.query( sql.toString(), 
+									new BeanPropertyRowMapper<>(BusiUploadFileDTO.class), 
+									rnum );
+		
+		return list;
 	}
 
 	@Override
@@ -72,11 +84,32 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//리뷰 첨부파일 전체 삭제(리뷰삭제)
 	@Override
-	public List<ReviewReq> removeReviewFile(int rnum) {
-		// TODO Auto-generated method stub
-		return null;
+	public void removeReviewFile(int rnum) {
+		String sql = "delete from reviewfile where rnum = ? ";
+		jdbcTemplate.update(sql, rnum);
 	}
 	
+	//첨부파일명 불러오기
+	@Override
+	public List<String> getStore_Fname(int rnum) {
+		
+		String sql = "select store_fname from reviewfile where rnum = ? ";
+		
+		List<String> store_fnames = 
+				jdbcTemplate.queryForList(sql, String.class, rnum);
+		
+		return store_fnames;
+	}
+	
+	//첨부파일 개별 삭제
+	@Override
+	public void removeEachFile(int fnum) {
+		
+		String sql = "delete from reviewfile where fnum = ? ";
+		
+		jdbcTemplate.update(sql, fnum);
+		
+	}
 }

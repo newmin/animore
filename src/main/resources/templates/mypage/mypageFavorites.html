@@ -45,12 +45,12 @@
             
             <li th:if= " ${mtype.equals('S')}" class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
             
-            <li><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
+            <li><a class="mypage__myFavolitBtn" href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
             
-            <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
+            <li class="mypage_aside_menu"><p href="/mypage/mypageReview" class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
             
+            <li class="mypage_aside_menu"><p href="/mypage/mypagePost" class="mypage__mypostBtn">내가 쓴 글</p></li>
             
-            <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
             <li class="mypage_aside_menu"><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
             
             <li class="mypage_aside_menu"><a href="/mypage/mypageGood" class="mypage__myGoodBtn">좋아요</a></li>

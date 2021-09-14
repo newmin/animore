@@ -33,7 +33,7 @@ const modiTextbox_f = e => {
 	
 	//댓글수정 textbox생성
 	let html = `<div id="boardForm__modiReplyWrap">`;
-			html +=`	<textarea name="rcontent_modi" cols="30" rows="3" id="boardForm__modiReplyTextarea" style="resize: none;"></textarea>`;
+			html +=`	<textarea name="rcontent_modi" cols="60" rows="3" id="boardForm__modiReplyTextarea" style="resize: none;"></textarea>`;
 			html +=`	<button id="boardForm__modiReplyCancelBtn">취소</button>`
 			html +=`	<button data-rnum="${$rnum}" id="boardForm__modiReplySubmitBtn">등록</button>`
 			html +=`</div>`
@@ -82,7 +82,7 @@ const reReTextbox_f = e => {
 	$boardForm__reReplyTextarea.classList.add("boardForm__reReplyTextarea");
 
 	let html = `<div id="boardForm__reReplyWrap">`;
-			html +=`	<textarea name="rcontent_reReply" cols="30" rows="3" id="boardForm__reReplyTextarea" style="resize: none;"></textarea>`;
+			html +=`	<textarea name="rcontent_reReply" cols="60" rows="3" id="boardForm__reReplyTextarea" placeholder='내용을 입력해주세요.' style="resize: none;"></textarea>`;
 			html +=`	<button id="boardForm__reReplyCancelBtn">취소</button>`
 			html +=`	<button data-rnum="${$rnum}" id="boardForm__reReplySubmitBtn">등록</button>`
 			html +=`</div>`

@@ -11,9 +11,14 @@ public interface ReviewFileDAO {
 	//리뷰파일등록
 	void registReviewFile(int rnum,List<BusiUploadFileDTO> files);
 	//리뷰파일조회
-	List<ReviewReq> findReviewFile(int rnum);
+	List<BusiUploadFileDTO> findReviewFile(int rnum);
 	//리뷰파일수정
 	List<ReviewReq> updateReviewFile(ReviewDTO reviewDTO);
 	//리뷰파일삭제
-	List<ReviewReq> removeReviewFile(int rnum);
+	void removeReviewFile(int rnum);
+	//첨부파일명 불러오기
+	List<String> getStore_Fname(int rnum);
+	//첨부파일 개별 삭제
+	void removeEachFile(int fnum);
+	
 }

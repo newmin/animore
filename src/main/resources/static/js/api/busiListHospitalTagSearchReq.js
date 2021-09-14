@@ -58,25 +58,23 @@ function refreshBusiList(data) {
 
   let html = "";
 
-  html+= `<!-- 리스트 구분 -->`
-  html+= `<li class="busi-list__row">`
-  html+= `  <p class="busi-list__column busi-list__bname">업체명</p>`
-  html+= `  <p class="busi-list__column busi-list__distance">거리</p>`
-  html+= `  <p class="busi-list__column busi-list__score">평점</p>`
-  html+= `  <select class="busi-list__select" name="" id="">`
-  html+= `    <option value="">거리순</option>`
-  html+= `    <option value="">평점순</option>`
-  html+= `  </select>`
-  html+= `</li>`
-  html+= `<!-- 리스트 -->`
   data.forEach(rec=>{
     html+= `<li class="busi-list__row">`
     html+= `  <span class="busi-list__column busi-list__bname"><a href="/inquire/${rec.bnum}">${rec.bname}</a></span>`
     html+= `  <!-- <span class="busi-list__column busi-list__bname"><a href="/${rec.bcategory}/${rec.bnum}">${rec.bname}</a></span> -->`
-    html+= `  <span class="busi-list__column busi-list__distance">${rec.distance}</span>`
-    html+= `  <div class="busi-list__column busi-list__icons"><i class="fas fa-star"></i>`
-if(rec.bscore)    html+= `<span>${rec.bscore}</span></div>`
-else							html+= `<span></span></div>`
+    html+= `  <span class="busi-list__column busi-list__distance">`
+                          if(rec.distance)  { html += `${rec.distance}</span>` }
+                          else { html += '좌표오류</span>' }
+    html+= `  <div class="busi-list__column busi-list__icons">`
+    if($id){
+      html+= `    <i class="fas fa-star busi-list__star"></i>`
+      if(rec.bscore) { html+=`<span>${rec.bscore}</span>` }
+      else { html+=`<span>미등록</span>` }
+    }else{
+      html+=`<a href="/login?redirectUrl=/bhospital"><i class="fas fa-star busi-list__star"></i>`
+      html+=`<span>로그인</span></a>`
+    }
+    html+= `</div>`
     html+= `</li>`
   });
 

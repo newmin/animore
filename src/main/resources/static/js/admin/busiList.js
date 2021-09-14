@@ -1,7 +1,7 @@
 /**
  * 
  */
-
+ 
 const $hDataDownloadBtn = document.querySelector('.busiList__hospitalDataDownloadBtn');
 
 $hDataDownloadBtn.addEventListener('click',e=>{

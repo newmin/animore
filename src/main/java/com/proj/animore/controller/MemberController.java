@@ -265,5 +265,4 @@ public class MemberController {
 		
 		return "/member/changePWSuccess";
 	}
-	
 }

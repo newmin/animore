@@ -36,12 +36,15 @@
                 <h2 class="mypage_aside_title">마이페이지</h2>
                 <ul class="mypage_aside_menu">
                     <!-- TODO th:href 등록 파일명'임의'표기-->
+                    
+                    <li class="mypage_aside_menu"><a class="mypage__myInfoBtn">내업체 목록</a></li>
+                    <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
                     <li><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
                     <li><a href="/mypage/mypageReview">내가 쓴 리뷰</a></li>
-                    <li><a href="/mypage/mypagePost.html">내가 쓴 글</a></li>
-                    <li><a href="/mypage/mypageReply.html">내가 쓴 댓글</a></li>
-                    <li><a href="/mypage/mypageGood.html">좋아요</a></li>
-                    <li><a href="/mypage/mypageCoupon.html">내 쿠폰</a></li>
+                    <li><a href="/mypage/mypagePost">내가 쓴 글</a></li>
+                    <li><a href="/mypage/mypageReply">내가 쓴 댓글</a></li>
+                    <li><a href="/mypage/mypageGood">좋아요</a></li>
+                    <li><a href="/mypage/mypageCoupon">내 쿠폰</a></li>
                     <li><a href="/mypage/mypageModify">회원 정보 수정</a></li>
                     <li><a href="/mypage/mypageDel.html">회원 탈퇴</a></li>
                 </ul>
@@ -49,7 +52,7 @@
             <div class="mypage_content_container">
                 <h3 class="mypage_content_title">업체 정보 수정</h3>
                 <hr>
-                <form class="main" action="" th:method="patch" th:object="${busiModifyForm}">
+                <form class="main" th:action="@{|/mypage/mybusiModify/${mybusiModify.bnum}|}" th:method="patch" th:object="${mybusiModify}">
                     <ul>
                         <li><label for="id">업체명</label></li>
                         <li><input type="text" th:field="*{bname}"/></li>
