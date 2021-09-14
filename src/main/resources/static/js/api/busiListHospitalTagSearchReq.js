@@ -69,10 +69,10 @@ function refreshBusiList(data) {
     if($id){
       html+= `    <i class="fas fa-star busi-list__star"></i>`
       if(rec.bscore) { html+=`<span>${rec.bscore}</span>` }
-      else { html+=`<span>미등록</span>` }
+      else { html+=`<span>리뷰없음</span>` }
     }else{
       html+=`<a href="/login?redirectUrl=/bhospital"><i class="fas fa-star busi-list__star"></i>`
-      html+=`<span>로그인</span></a>`
+      html+=`<span>로그인후 조회</span></a>`
     }
     html+= `</div>`
     html+= `</li>`
