@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
+import com.proj.animore.dto.board.SearchDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -135,57 +136,66 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle,int startRec, int endRec) {
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
-		sql.append("from board t1, member t2 ");
-		sql.append("where t1.id = t2.id ");
-		sql.append("and t1.btitle like  '%"+btitle+"%'");
-		sql.append("and t1.bcategory = ? ");
-		sql.append(" order by t1.bnum desc ");
+		sql.append("select b1.* ");
+		sql.append("from( select row_number()over(order by t1.bnum desc) num, ");
+		sql.append(" t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append(" from board t1, member t2 ");
+		sql.append(" where t1.id = t2.id ");
+		sql.append(" and t1.btitle like '%"+btitle+"%' ");
+		sql.append(" and t1.bcategory=?) b1 ");
+		sql.append(" where num between ? and ? ");
 
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcategory);
-//		btitle,bcategory);
+				bcategory,startRec,endRec);
+
 		return list;
 
 	}
 	//게시글검색(by nickname)
 	@Override
-	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname,int startRec, int endRec) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
-		sql.append("from board t1, member t2 ");
-		sql.append("where t1.id = t2.id ");
-		sql.append("and t2.nickname like  '%"+nickname+"%'");
-		sql.append("and t1.bcategory =? ");
-		sql.append(" order by t1.bnum desc ");
+		sql.append("select b1.* ");
+		sql.append("from( select row_number()over(order by t1.bnum desc) num, ");
+		sql.append(" t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append(" from board t1, member t2 ");
+		sql.append(" where t1.id = t2.id ");
+		sql.append(" and t1.btitle like '%"+nickname+"%' ");
+		sql.append(" and t1.bcategory=?) b1 ");
+		sql.append(" where num between ? and ? ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcategory);
+				bcategory,startRec,endRec);
 		return list;
 	}
 	//게시글검색(by bcontent)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent,int startRec, int endRec) {
 
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
-		sql.append("from board t1, member t2 ");
-		sql.append("where t1.id = t2.id ");
-		sql.append("and t1.bcontent like  '%"+bcontent+"%'");
-		sql.append("and t1.bcategory =? ");
-		sql.append(" order by t1.bnum desc ");
+		sql.append("select b1.* ");
+		sql.append("from( select row_number()over(order by t1.bnum desc) num, ");
+		sql.append(" t1.bnum,t2.nickname,t1.bcategory,t1.btitle,t2.id,t1.bcdate,t1.bhit,t1.bgood,t1.breply,t1.bcontent ");
+		sql.append(" from board t1, member t2 ");
+		sql.append(" where t1.id = t2.id ");
+		sql.append(" and t1.btitle like '%"+bcontent+"%' ");
+		sql.append(" and t1.bcategory=?) b1 ");
+		sql.append(" where num between ? and ? ");
+
+
 
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 				new BeanPropertyRowMapper<>(BoardReqDTO.class),
-				bcategory);
+				bcategory,startRec,endRec);
+		
 		return list;
 
 	}
@@ -244,6 +254,41 @@ public class BoardDAOImpl implements BoardDAO {
 		List<BoardReqDTO> list = jt.query(sql.toString(),
 										new BeanPropertyRowMapper<>(BoardReqDTO.class),
 										bcategory,startRec,endRec);
+		return list;
+	}
+	
+	//게시글 검색결과 목록
+	@Override
+	public List<BoardReqDTO> list(SearchDTO searchDTO) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select t1.* ");
+		sql.append(" from(select row_number() over (order by bgroup desc, bstep asc) num, ");
+		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
+		sql.append("     from board b, member m ");
+		sql.append("     where b.id = m.id ");
+		sql.append("     and bcategory=? ");
+
+		
+		switch(searchDTO.getSearchType()) {
+		case "btitle":
+			sql.append(" and b.btitle like '%" + searchDTO.getKeyword() + "%' ");
+			break;
+		case "nickname":
+			sql.append(" and m.nickname like '%" + searchDTO.getKeyword() + "%' ");
+			break;
+		case "bcontent":
+			sql.append(" and b.bcontent like '%" + searchDTO.getKeyword() + "%' ");
+			break;
+			
+			default:
+				break;
+		}
+		sql.append(") t1 ");
+		sql.append(" where num between ? and ? ");
+		log.info(sql.toString());
+		List<BoardReqDTO> list = jt.query(sql.toString(),
+										new BeanPropertyRowMapper<>(BoardReqDTO.class),
+										searchDTO.getBcategory(),searchDTO.getStartRec(),searchDTO.getEndRec());
 		return list;
 	}
 	//게시글전체목록 좋아요순 나열
@@ -380,4 +425,33 @@ public class BoardDAOImpl implements BoardDAO {
 			int totalCount = jt.queryForObject(sql.toString(), Integer.class,bcategory);
 			return totalCount;
 		}
+		//검색시 레코드 전체수
+		@Override
+		public int totalRecordCount(String bcategory,String searchType,String keyword) {
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) ");
+			sql.append("	from board b,member m ");
+			sql.append("	where bcategory=? ");
+			sql.append("     and b.id = m.id ");
+			
+			switch(searchType) {
+			case "btitle":
+				sql.append("	and b.btitle like '%" + keyword+ "%' ");
+				break;
+			case "nickname":
+				sql.append("	and m.nickname like '%" + keyword+ "%' ");
+				break;
+			case "bcontent":
+				sql.append("	and b.bcontent like '%" + keyword+ "%' ");
+				break;
+				
+				default:
+					break;
+			}
+
+			int totalCount = jt.queryForObject(sql.toString(), Integer.class,bcategory);
+			return totalCount;
+		}
+		
+
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
-import com.proj.animore.dto.board.GoodBoardDTO;
+import com.proj.animore.dto.board.SearchDTO;
 
 public interface BoardDAO {
 
@@ -24,13 +24,13 @@ public interface BoardDAO {
 	List<BoardReqDTO> findBoardById(String id);
 	
 	//게시글 조회(by btitle)
-	List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle);
+	List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle,int startRec, int endRec);
 	
 	//게시글 조회(by bcontent)
-	List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent);
+	List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent,int startRec, int endRec);
 	
 	//게시글 조회(by nickname)
-	List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname);
+	List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname,int startRec, int endRec);
 	
 	//게시글 수정
 	int modifyBoard(int bnum,BoardDTO boardDTO);
@@ -41,6 +41,9 @@ public interface BoardDAO {
 	//게시글 전체목록(by bcategory)
 	List<BoardReqDTO> list(String bcategory);
 	List<BoardReqDTO> list(String bcategory,int startRec, int endRec);
+	
+	//게시판 검색결과 목록
+	List<BoardReqDTO> list(SearchDTO searchDTO);
 	
 	//게시글 전체목록(좋아요순)
 	List<BoardReqDTO> bgoodList(String bcategory);
@@ -71,4 +74,7 @@ public interface BoardDAO {
 	
 	//게시판 카테고리 레코드 전체수
 	int totalRecordCount(String bcategory);
+	
+	//게시판 카테고리별 검색 레코드 총수
+	int totalRecordCount(String bcategory,String searchType,String keyword);
 }

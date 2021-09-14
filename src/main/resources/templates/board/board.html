@@ -30,7 +30,7 @@
         </ul>
       </div>
       <!-- Q&A -->
-   <div th:if="${cate} =='Q'">
+   <div th:if="${cate} !='P'">
       <table class="board__table">
         <tr>
           <th class="board__cell board__num">번호</th>
@@ -60,10 +60,10 @@
           <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
         </tr>
       </table>
-
+	</div>
       
-   </div>
-      <!-- 벼룩시장 -->
+   <!-- </div>
+      벼룩시장
       <div th:if="${cate} =='M'">
       <table class="board__table">
         <tr>
@@ -92,7 +92,7 @@
       
    </div>
    
-      <!-- 자유게시판 -->
+      자유게시판
    <div th:if="${cate} =='F'">
       <table class="board__table">
         <tr>
@@ -121,7 +121,7 @@
 
     </div>
     
-    </div>
+    </div> -->
 
     <!-- 내새끼보세요 -->
    <div th:if="${cate} =='P'">
@@ -149,49 +149,53 @@
 
       <form action="" class="board__searchForm">
         <div class="board__search">
-          <select name="search" id="" class="board__search_select">
-            <option value="btitle">제목</option>
-            <option value="nickname">작성자명</option>
-            <option value="bcontent">내용</option>
+          <select name="searchType" id="searchType" th:field="${fc.searchType}" class="board__search_select">
+            <option th:value="btitle">제목</option>
+            <option th:value="nickname">작성자명</option>
+            <option th:value="bcontent">내용</option>
           </select>
-          <input type="text" name="" id="" class="board__searchInput">
-          <button type="submit" class="searchBtn">검색</button>
+          <input type="text" name="keyword" id="keyword" th:field="${fc.keyword}" th:data-cate =${cate} class="board__searchInput">
+          <button type="button" id = "searchBtn" class="searchBtn" th:data-cate="${cate}">검색</button>
         </div>
       </form>
 
-		<div class="wrap-bbs-paging">
-		  <ul class="pagination pagination-sm justify-content-center">
-		  	<th:block th:if="${pc.prev}">
-			  	<li class="page-item">
-				    	<a class="page-link" href="#" th:href="@{/board/{cate}?reqPage=1(cate=${cate})}"><i class="fas fa-angle-double-left"></i></a>
-				  </li>
-			  	<li class="page-item">
-				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.startPage-1})}"><i class="fas fa-angle-left"></i></a>
-				  </li>
-			  </th:block>
-		    <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
-		    	<th:block th:if="${pnum != 0}">
-						<li class="page-item active" aria-current="page"
-								th:if="${pc.rc.reqPage == pnum}">
-			      <span class="page-link" th:text="${pnum}">1</span>
-			    </li>							    
-			    <li class="page-item" 
-			    		th:if="${pc.rc.reqPage != pnum}">
-			    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pnum})}" th:text="${pnum}">3</a>
-			    </li>
-			    </th:block>
-		    </th:block>
-		    <th:block th:if="${pc.next}">
-			  	<li class="page-item">
-				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.endPage+1})}"><i class="fas fa-angle-right"></i></a>
-				  </li>
-			  	<li class="page-item">
-				    	<a class="page-link" href="#" th:href="@{/board/{cate}(cate=${cate},reqPage=${pc.finalEndPage})}"><i class="fas fa-angle-double-right"></i></a>
-				  </li>		
-				</th:block>
-		  </ul>
-		</div>
 
+   <div class="wrap-bbs-paging">
+       <ul class="pagination pagination-sm justify-content-center board__paging">
+          <th:block th:if="${fc.prev}">
+             <li class="page-item">
+                  <a class="page-link" href="#" th:href="@{/board/{cate}/1/{searchType}/{keyword}(cate=${cate},searchType=${fc.searchType},keyword=${fc.keyword})}"><i class="fas fa-angle-double-left"></i></a>
+             </li>
+             <li class="page-item">
+                  <a class="page-link" href="#" th:href="@{/board/{cate}/{reqPage}/{searchType}/{keyword}(cate=${cate},reqPage=${fc.startPage-1},searchType=${fc.searchType},keyword=${fc.keyword})}"><i class="fas fa-angle-left"></i></a>
+             </li>
+          </th:block>
+         <th:block th:each="pnum : ${#numbers.sequence(fc.startPage,fc.endPage)}">
+            <th:block th:if="${pnum != 0}">
+               <li class="page-item active" aria-current="page"
+                     th:if="${fc.rc.reqPage == pnum}">
+              <span class="page-link" th:text="${pnum}">1</span>
+            </li>                         
+            <li class="page-item" 
+                  th:if="${fc.rc.reqPage != pnum}">
+               <a class="page-link" href="#" th:href="@{/board/{cate}/{reqPage}/{searchType}/{keyword}(cate=${cate},reqPage=${pnum},searchType=${fc.searchType},keyword=${fc.keyword})}" th:text="${pnum}">3</a>
+            </li>
+            </th:block>
+         </th:block>
+         <th:block th:if="${fc.next}">
+             <li class="page-item">
+                  <a class="page-link" href="#" th:href="@{/board/{cate}/{reqPage}/{searchType}/{keyword}(cate=${cate},reqPage=${fc.endPage+1},searchType=${fc.searchType},keyword=${fc.keyword})}"><i class="fas fa-angle-right"></i></a>
+             </li>
+             <li class="page-item">
+                  <a class="page-link" href="#" 
+                     th:href="@{/board/{cate}/{reqPage}/{searchType}/{keyword}(cate=${cate},reqPage=${fc.finalEndPage},searchType=${fc.searchType},keyword=${fc.keyword})}">
+                     <i class="fas fa-angle-double-right"></i>
+                  </a>
+             </li>      
+           </th:block>
+       </ul>
+     </div>
+                     
   </main>
 </body>
 

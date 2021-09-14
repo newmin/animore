@@ -11,6 +11,7 @@ import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
+import com.proj.animore.dto.board.SearchDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,18 +80,18 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	//게시글검색(by btitle)
 	@Override
-	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle) {
-		return boardDAO.findBoardByBtitle(bcategory,btitle);
+	public List<BoardReqDTO> findBoardByBtitle(String bcategory,String btitle,int startRec, int endRec) {
+		return boardDAO.findBoardByBtitle(bcategory,btitle,startRec,endRec);
 	}
 	//게시글검색(by bcontent)
 	@Override
-	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent) {
-		return boardDAO.findBoardByBcontent(bcategory,bcontent);
+	public List<BoardReqDTO> findBoardByBcontent(String bcategory,String bcontent,int startRec, int endRec) {
+		return boardDAO.findBoardByBcontent(bcategory,bcontent,startRec,endRec);
 	}
 	//게시글검색(by nickname)
 	@Override
-	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname) {
-		return boardDAO.findBoardByNickname(bcategory,nickname);
+	public List<BoardReqDTO> findBoardByNickname(String bcategory,String nickname,int startRec, int endRec) {
+		return boardDAO.findBoardByNickname(bcategory,nickname,startRec,endRec);
 	}
 	//게시글수정
 	@Override
@@ -126,6 +127,16 @@ public class BoardSVCImpl implements BoardSVC {
 					boardUploadFileDAO.getFiles(list.get(i).getBnum()));
 		}
 		
+		return list;
+	}
+	//게시글 검색결과 목록
+	@Override
+	public List<BoardReqDTO> list(SearchDTO searchDTO) {
+		List<BoardReqDTO> list = boardDAO.list(searchDTO);
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setFiles(
+					boardUploadFileDAO.getFiles(list.get(i).getBnum()));
+		}
 		return list;
 	}
 	//게시글전체목록(좋아요순나열)
@@ -173,4 +184,10 @@ public class BoardSVCImpl implements BoardSVC {
 	public int totalRecordCount(String bcategory) {
 		return boardDAO.totalRecordCount(bcategory);
 	}
+	//게시판 검색시 레코드 수
+	@Override
+	public int totalRecordCount(String bcategory, String searchType, String keyword) {
+		return boardDAO.totalRecordCount(bcategory, searchType, keyword);
+	}
+	
 }

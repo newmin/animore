@@ -33,9 +33,8 @@ public class RecordCriteria {
 	public int getReqPage() {
 		return reqPage;
 	}
-	
 	/**
-	 * 요청페이지를 입력받아 시작레코드 종료레코드를 구한다.
+	 * 요청페이지를 입력받아 시작레코드 종료레코드 구함
 	 * @param reqPage
 	 */
 	public void setReqPage(int reqPage) {

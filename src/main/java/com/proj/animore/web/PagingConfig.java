@@ -3,6 +3,7 @@ package com.proj.animore.web;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.proj.animore.common.paging.FindCriteria;
 import com.proj.animore.common.paging.PageCriteria;
 import com.proj.animore.common.paging.RecordCriteria;
 
@@ -42,5 +43,13 @@ public class PagingConfig {
 	@Bean(name = "pc5")
 	public PageCriteria pc5() {
 		return new PageCriteria(rc5(), PAGE5);
-	}	
+	}
+	@Bean
+	public FindCriteria fc10() {
+		return new FindCriteria(rc10(),PAGE10);
+	}
+	@Bean
+	public FindCriteria fc8() {
+		return new FindCriteria(rc8(),PAGE10);
+	}
 }

@@ -298,6 +298,10 @@ border-radius: 2px;
     border: none;
     padding: 5px;
 }
+.boardForm__img{
+	max-height: 500px;
+  max-width: 500px;
+}
 .boardForm__files{
   display: flex;
   height: 30px;

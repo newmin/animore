@@ -28,13 +28,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
 import com.proj.animore.common.file.MetaOfUploadFile;
-import com.proj.animore.common.paging.PageCriteria;
-import com.proj.animore.common.paging.RecordCriteria;
+import com.proj.animore.common.paging.FindCriteria;
 import com.proj.animore.dao.board.BoardUploadFileDAO;
 import com.proj.animore.dto.board.BoardDTO;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.dto.board.BoardUploadFileDTO;
 import com.proj.animore.dto.board.RboardListReqDTO;
+import com.proj.animore.dto.board.SearchDTO;
 import com.proj.animore.form.Code;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
@@ -59,11 +59,11 @@ public class BoardController {
 	private final FileStore fileStore;
 	private final BoardUploadFileDAO boardUploadFileDAO;
 	@Autowired
-	@Qualifier("pc10")
-	private PageCriteria pc;
+	@Qualifier("fc10")
+	private FindCriteria fc;
 	@Autowired
-	@Qualifier("pc10_2")
-	private PageCriteria pc2;
+	@Qualifier("fc8")
+	private FindCriteria fc2;
 	
 	@ModelAttribute("bcategoryCode")
 	public List<Code> bcategory(){
@@ -76,9 +76,13 @@ public class BoardController {
 	}
 
 	//페이징버튼클릭시 게시글 목록출력
-	@GetMapping("/{cate}")
-	public String boardpList(@PathVariable String cate,
-							@RequestParam(required = false) Integer reqPage,
+	@GetMapping({"/{cate}",
+				"{cate}/{reqPage}",
+				"{cate}/{reqPage}/{searchType}/{keyword}"})
+	public String boardpList(@PathVariable(required = false) String cate,
+							@PathVariable(required = false) Integer reqPage,
+							@PathVariable(required = false) String searchType,
+							@PathVariable(required = false) String keyword,
 							Model model) {
 //	     if(bcategory.equals("Q"))   bcategory="Q";
 //	     if(bcategory.equals("M"))   bcategory="M";
@@ -86,52 +90,98 @@ public class BoardController {
 //	     if(bcategory.equals("P"))   bcategory="P";
 		
 		 List<BoardReqDTO> list = null;
+		 List<BoardReqDTO> nlist = null;
 		
 	   //요청페이지가 없으면 1페이지로
 		if(reqPage == null) reqPage = 1;
+		//log.info("cate,reqPage,searchType,keyword={}",cate,reqPage,searchType,keyword);
+		//사용자가 요청한 페이지번호
+		fc.getRc().setReqPage(reqPage);
+		
+		//검색어유무
+		if((searchType == null || searchType.equals(""))
+				&&(keyword == null || keyword.equals(""))
+				&&(cate.equals("P"))) {
+			log.info("검색없는갤러리클릭!");
 
-		//갤러리타입일경우
-		if(cate.equals("P")) {
-			log.info("갤러리클릭!");
-			//사용자가 요청한 페이지번호
-			pc2.getRc().setReqPage(reqPage);
 			//게시판 전체레코드수
-			pc2.setTotalRec(boardSVC.totalRecordCount(cate));
-			//페이징 계산
-			pc2.calculatePaging();
+			fc2.setTotalRec(boardSVC.totalRecordCount(cate));
+			
 			
 			list = boardSVC.list(cate,
-					pc2.getRc().getStartRec(),
-					pc2.getRc().getEndRec());
+								fc.getRc().getStartRec(),
+								fc.getRc().getEndRec());
 			
-			model.addAttribute("boardForm",list);
+			nlist = boardSVC.noticeList(cate);	
+			log.info("cate:{}",cate);
 			log.info("list:{}",list);
+
+			model.addAttribute("fc",fc2);
 			
-			List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
-			model.addAttribute("notice",nlist);
-			model.addAttribute("pc",pc2);
-			
-			
-		}else {
-			log.info("그외카테고리클릭");
-		//사용자가 요청한 페이지번호
-		pc.getRc().setReqPage(reqPage);
+		}else if((searchType == null || searchType.equals(""))
+				&&(keyword == null || keyword.equals(""))) {
+
 		//게시판 전체레코드수
-		pc.setTotalRec(boardSVC.totalRecordCount(cate));
-		//페이징 계산
-		pc.calculatePaging();
+		fc.setTotalRec(boardSVC.totalRecordCount(cate));
 		
-	    list = boardSVC.list(cate,
- 								pc.getRc().getStartRec(),
- 								pc.getRc().getEndRec());
+		list = boardSVC.list(cate, 
+							fc.getRc().getStartRec(),
+							fc.getRc().getEndRec());
+		log.info("list:{}",list);
+		
+		nlist = boardSVC.noticeList(cate);	
+		
+		model.addAttribute("fc",fc);
+			
+		}else if
+		//갤러리타입일경우
+		 (cate.equals("P")) {
+			log.info("갤러리클릭!");
+
+			//게시판 전체레코드수
+			fc2.setTotalRec(boardSVC.totalRecordCount(cate, searchType, keyword));
+			
+			
+			list = boardSVC.list(new SearchDTO(
+					cate,
+					fc.getRc().getStartRec(),
+					fc.getRc().getEndRec(),
+					searchType,keyword)
+					);
+			
+			fc2.setSearchType(searchType);
+			fc2.setKeyword(keyword);
+			
+			
+			log.info("list:{}",list);
+
+			model.addAttribute("fc",fc2);
+			
+			
+		}else  {
+			log.info("그외카테고리클릭");
+
+		//게시판 전체레코드수
+		fc.setTotalRec(boardSVC.totalRecordCount(cate, searchType, keyword));
+
+		
+	    list = boardSVC.list(new SearchDTO(
+	    		cate,
+	    		fc.getRc().getStartRec(),
+	    		fc.getRc().getEndRec(),
+	    		searchType,keyword)
+	    		);
 	    
-	     
-	    List<BoardReqDTO> nlist = boardSVC.noticeList(cate);
-	    model.addAttribute("boardForm",list);
-	    model.addAttribute("notice",nlist);
-	    model.addAttribute("pc",pc);
+	  
+	    fc.setSearchType(searchType);
+		fc.setKeyword(keyword);
+		
+	    
+	    model.addAttribute("fc",fc);
 		
 	}
+		model.addAttribute("boardForm",list);
+		model.addAttribute("notice",nlist);
 		return "board/board";
 	}
 	
@@ -371,73 +421,129 @@ public class BoardController {
 		return new Result("00","ok","파일삭제성공!");
 	}
 	
-	//제목으로 게시글 검색
-	@ResponseBody
-	@GetMapping("/search/title/{bcategory}")
-	public Result searchByBtitle(@PathVariable String bcategory,
-								@RequestParam String btitle,
-								HttpServletRequest request) {
-		
-		List<BoardReqDTO> list = boardSVC.findBoardByBtitle(bcategory,btitle);
-		log.info("bcategory:{}",bcategory);
-		Result result = new Result();
-		if (list.size() == 0) {
-			result.setRtcd("01");
-			result.setRtmsg("게시글이 없습니다.");
-		} else {
-			result.setRtcd("00");
-			result.setRtmsg("성공");
-			result.setData(list);
-		}
-
-		log.info("result:{}",result);
-		return result;
-	}
-	//닉네임으로 게시글 검색
-	@ResponseBody
-	@GetMapping("/search/nickname/{bcategory}")
-	public Result searchByNickname(@PathVariable String bcategory,
-									@RequestParam String nickname,
-									HttpServletRequest request) {
-		
-		List<BoardReqDTO> list = boardSVC.findBoardByNickname(bcategory,nickname);
-		log.info("bcategory:{}",bcategory);
-		Result result = new Result();
-		if (list.size() == 0) {
-			result.setRtcd("01");
-			result.setRtmsg("게시글이 없습니다.");
-		} else {
-			result.setRtcd("00");
-			result.setRtmsg("성공");
-			result.setData(list);
-		}
-		
-		log.info("result:{}",result);
-		return result;
-	}
-	//본문으로 게시글 검색
-	@ResponseBody
-	@GetMapping("/search/content/{bcategory}")
-	public Result searchByBcontent(@PathVariable String bcategory,
-									@RequestParam String bcontent,
-									HttpServletRequest request) {
-		
-		List<BoardReqDTO> list = boardSVC.findBoardByBcontent(bcategory,bcontent);
-		log.info("bcategory:{}",bcategory);
-		Result result = new Result();
-		if (list.size() == 0) {
-			result.setRtcd("01");
-			result.setRtmsg("게시글이 없습니다.");
-		} else {
-			result.setRtcd("00");
-			result.setRtmsg("성공");
-			result.setData(list);
-		}
-		
-		log.info("result:{}",result);
-		return result;
-	}
-	
+//	//제목으로 게시글 검색
+//	@GetMapping("/{cate}/search/title")
+//	public String searchByBtitle(@PathVariable String cate,
+//								@RequestParam String btitle,
+//								@RequestParam(required = false) Integer reqPage,
+//								Model model) {
+//		List<BoardReqDTO> list = null;
+//		
+//		if(reqPage ==null) reqPage =1;
+//		
+//		//갤러리타입일경우
+//		if(cate.equals("P")) {
+//		log.info("갤러리클릭!");
+//		//사용자가 요청한 페이지번호
+//		pc2.getRc().setReqPage(reqPage);
+//		//게시판 전체레코드수
+//		pc2.setTotalRec(boardSVC.totalRecordCount(cate));
+//		//페이징 계산
+//		pc2.calculatePaging();
+//		
+//		list = boardSVC.findBoardByBtitle(cate, btitle, 
+//											pc2.getRc().getStartRec(),
+//											pc2.getRc().getEndRec());
+//		
+//		model.addAttribute("search",list);
+//		log.info("list:{}",list);
+//		
+//
+//		model.addAttribute("pc",pc2);
+//		
+//		
+//		}else {
+//			log.info("그외카테고리클릭");
+//		//사용자가 요청한 페이지번호
+//		pc.getRc().setReqPage(reqPage);
+//		//게시판 전체레코드수
+//		pc.setTotalRec(boardSVC.totalRecordCount(cate));
+//		//페이징 계산
+//		pc.calculatePaging();
+//		
+//		list = boardSVC.findBoardByBtitle(cate, btitle, 
+//				pc2.getRc().getStartRec(),
+//				pc2.getRc().getEndRec());
+//	    
+//	    
+//	    model.addAttribute("search",list);
+//	    model.addAttribute("pc",pc);
+//		
+//	}
+//		return "board/searchList";
+//	}
+//
+//	//닉네임으로 게시글 검색
+//	@ResponseBody
+//	@GetMapping("/search/nickname/{bcategory}")
+//	public Result2 searchByNickname(@PathVariable String bcategory,
+//									@RequestParam String nickname,
+//									@RequestParam(required = false) Integer reqPage,
+//									HttpServletRequest request) {
+//		
+//		//요청페이지가 없으면 1페이지로
+//		if(reqPage == null) reqPage = 1;
+//		//사용자가 요청한 페이지번호
+//		pc.getRc().setReqPage(reqPage);
+//		//게시판 전체레코드수
+//		pc.setTotalRec(boardSVC.totalRecordCountBybtitle(bcategory, nickname));
+//		//페이징 계산
+//		pc.calculatePaging(); 
+//		
+//		List<BoardReqDTO> list = boardSVC.findBoardByNickname(bcategory,nickname,
+//																pc.getRc().getStartRec(),
+//																pc.getRc().getEndRec());
+//		log.info("bcategory:{}",bcategory);
+//		Result2 result = new Result2();
+//		if (list.size() == 0) {
+//			result.setRtcd("01");
+//			result.setRtmsg("게시글이 없습니다.");
+//		} else {
+//			result.setRtcd("00");
+//			result.setRtmsg("성공");
+//			result.setData(list);
+//			result.setData2(pc);
+//		}
+//		
+//		log.info("result:{}",result);
+//		return result;
+//	}
+//	//본문으로 게시글 검색
+//	@ResponseBody
+//	@GetMapping("/search/content/{bcategory}")
+//	public Result2 searchByBcontent(@PathVariable String bcategory,
+//									@RequestParam String bcontent,
+//									@RequestParam(required = false) Integer reqPage,
+//									HttpServletRequest request) {
+//		
+//		//요청페이지가 없으면 1페이지로
+//		if(reqPage == null) reqPage = 1;
+//		//사용자가 요청한 페이지번호
+//		pc.getRc().setReqPage(reqPage);
+//		//게시판 전체레코드수
+//		pc.setTotalRec(boardSVC.totalRecordCountBybtitle(bcategory, bcontent));
+//		//페이징 계산
+//		pc.calculatePaging(); 
+//		
+//		List<BoardReqDTO> list = boardSVC.findBoardByBcontent(bcategory,bcontent,
+//															pc.getRc().getStartRec(),
+//															pc.getRc().getEndRec());
+//		log.info("bcategory:{}",bcategory);
+//		Result2 result = new Result2();
+//		if (list.size() == 0) {
+//			result.setRtcd("01");
+//			result.setRtmsg("게시글이 없습니다.");
+//		} else {
+//			result.setRtcd("00");
+//			result.setRtmsg("성공");
+//			result.setData(list);
+//			result.setData2(pc);
+//		}
+//		
+//		log.info("result:{}",result);
+//		return result;
+//	}
+//	
 	//좋아요클릭시
 	@ResponseBody
 	@GetMapping("/good/{bnum}")

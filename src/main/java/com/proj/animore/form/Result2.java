@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Result<T> {
+public class Result2<T> {
 	private String rtcd;
 	private String rtmsg;
 	private T data;
-	
+	private T data2;
 }
