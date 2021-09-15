@@ -50,6 +50,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 3px;
 }
 
 /* 업체리스트 및 지도 */
@@ -85,8 +88,16 @@
   margin-bottom: 10px;
 }
 
+.busi-list__row-title{
+	background-color: #B0BDCC;
+/* 	background-color: var(--primary); */
+	font-weight: 600;
+	
+}
+
 .busi-list .busi-list__row:hover{
 	background-color : #6498DF;
+/* 	background-color : #6498DF; */
 	transform : translateX(-20px);
 	transition : 0.5s;
 	/* position: relative;
@@ -110,6 +121,9 @@
   position: absolute;
   right: 0px;
   top: -25px;
+  background-color: var(--body-color);
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 /* 지도 */

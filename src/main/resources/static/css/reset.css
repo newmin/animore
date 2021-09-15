@@ -136,3 +136,7 @@ a {
 a:hover{
   color: inherit;
 }
+textarea{resize:none;}
+button {
+	font-family: inherit;
+}

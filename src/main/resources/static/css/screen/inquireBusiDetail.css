@@ -111,6 +111,9 @@
     background-color: white;
     width: 350px;
     height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
   }
   
   /* 지도 */
@@ -133,7 +136,7 @@
   overflow-x: hidden; 
 	overflow-y: scroll;
   -ms-overflow-style: none; 
-	max-height: 600px;
+	max-height: 700px;
 }
 .review::-webkit-scrollbar{ display:none; }
 
@@ -197,6 +200,19 @@
 }
 .review__userBtn{
   cursor: pointer;
+}
+.review__contents-btns{
+	display: flex;
+	justify-content: space-between;
+	padding: 0 1px;
+}
+.review__files{
+	border-bottom: 1px solid black;
+}
+.review__regist{
+	border: 1px solid var(--secondary-dark);
+	background-color : var(--secondary);
+	color : ivory;
 }
 .hidden{
   display: none;
