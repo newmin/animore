@@ -46,11 +46,14 @@ html += `   </a>`;
 }
 html += `      </div>`;
 html += `      <hr> `;
+html += `  <div class="good">`;
 html += `      <div class="good">`;
 html += `        <i class="fas fa-heart"></i>`;
 html += `        <span>좋아요 ${post.bgood}</span>`;
 html += `      </div>`;
+html += `           <div class="board-best__cdate">${post.bcdate}</div> `;
 html += `    </div>`;
+html += `   </div>`;
 html += `  </section>`;
 			});
 document.querySelector('.board-best').innerHTML = html;

@@ -104,7 +104,8 @@
 }
 
 .board-best__row{
-  width: var(--main-row-width);
+ /*  width: var(--main-row-width); */
+  width: 1000px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   padding:  10px;
   margin-bottom: 20px;
@@ -112,6 +113,7 @@
 }
 .board-best .fa-heart{
 	color:red;
+	font-size:0.9em;
 }
 .board-best .good{
 	display:flex;
@@ -119,7 +121,8 @@
 }
 .board-best-good {
 	display:flex;
-	align-items: center;
+	width:220px;
+
 }
 
 /* 반응형 웹 처리 */

@@ -49,24 +49,25 @@
 .board__table {
   width: 100%;
   text-align: center;
-  border-top: 1px solid #444444;
-  border-collapse: collapse;
 }
-.board__table tr, td{
-  border-bottom: 1px solid black;
-}
+
 .board__table th {
   height: 30px;
   font-weight: bold;
+  font-size:1.1em;
   line-height: 30px;
 }
 .board__cell {
-  border: 1px solid rgba(0, 0, 0, 0.5);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.5); 
+   padding-top:1px;
   height:22px;
   line-height:22px;
 }
 .notice__cell{
   font-weight: bold;
+}
+.notice__cell .fa-star{
+	color:var(--yellow);
 }
 .board__table th:nth-child(3) {
   width: 10%;
@@ -271,10 +272,17 @@ border-radius: 2px;
  	/*width:1100px;*/
  	align-items: flex-start;
  }
+ .boardForm__category{
+ font-style: italic;
+ font-size: 0.9em;
+ }
+ .boardForm__category a{
+ text-decoration: underline;
+ }
  .boardForm__btns button{
  border:none;
  outline: 0.5px solid rgba(0, 0, 0, 0.1);
- height: 25px;
+ height: 30px;
  width: 50px;
  }
  .boardForm button:hover{
@@ -418,13 +426,14 @@ border-radius: 2px;
     border-bottom: solid 1px var(--primary-dark);
     width:500px;
     height:30px;
-    padding:5px;
-    margin: 5px;
+    margin:5px 0 5px 0;
 	background-color: inherit;
 }
 
 .addPost__icons {
-  width: 450px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .addPost__icons .filetype {
@@ -480,15 +489,19 @@ border-radius: 2px;
   *margin-left: 4px;
 }
 .addPost__content{
-    background-color: lightgray;
+    background-color: rgba(0, 0, 0, 0.03);
     border: none;
     border-radius: 5px;
     height: 350px;
     width:1100px;
+    padding: 10px 10px 0 10px;
 }
-.addPost__btns{
-    display: flex;
-    justify-content: space-between;
-    padding:10px 0px 50px 0px;
-    
+.addPost__btns button{
+  border:none;
+  outline: 0.5px solid rgba(0, 0, 0, 0.1);
+  height: 30px;
+  width: 50px;  
+}
+.addPost__btns:hover{
+  cursor: pointer;
 }

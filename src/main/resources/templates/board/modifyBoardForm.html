@@ -42,11 +42,10 @@
       <label for="files" class="file-btn">찾아보기</label>
       <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
       </span>
-    </div>
     <div class="addPost__btns">
       <button type="button" th:data-bnum="*{bnum}" class="returnBtn">취소</button>
       <button type="submit">수정</button>
- 
+    </div>
     </div>
     </div>
     </form>
