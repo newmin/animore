@@ -1,22 +1,17 @@
 @charset "UTF-8";
 
-  
-
-
-
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: auto) {
+/*  On small screens, set height to 'auto' for sidenav and grid */
+/*@media screen and (max-width: auto) {
   .sidenav {
     height: auto;   
   }
   .row.content {height:auto;} 
-}
+} */
   
   /*별점2*/
   .wrap{
     max-width: 1200px;
-    background-color: #fff;
+    background-color: rgba(0,0,0,0.03);
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -58,10 +53,10 @@
     margin-left: 3px;
   }
   .busi-info__btns{
-    /* position: sticky;
-    top: 50px; */
     display: flex;
     gap : 5px;
+    /* position: sticky;
+    top: 50px; */
   }
   .busi-info__btn{
     width : 70px;
@@ -120,7 +115,7 @@
   /* Set gray background color and 100% height */
   .map {
     padding-top: 20px;
-    background-color: #f1f1f1;
+    background-color: #f1f1f1;	
     width: 400px;
     height: 500px;
   }

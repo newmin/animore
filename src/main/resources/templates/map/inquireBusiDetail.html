@@ -149,7 +149,7 @@
 								</div>
 								<div class="review__reply" th:data-rnum="*{rnum}">
 									<p th:if="${session.loginMember!=null && session.loginMember.id==busi.id && review.rvReply==null}" 
-											th:data-rnum="*{rnum}" class="review__replyBtn">리댓달기</p>
+											th:data-rnum="*{rnum}" class="review__replyBtn">답글달기</p>
 									<th:block th:if="*{rvReply}">
 										<p class="review__reply-text" th:text="|	└─>사장님 : *{rvReply}"></p>
 										<p class="review__ownerBtns">

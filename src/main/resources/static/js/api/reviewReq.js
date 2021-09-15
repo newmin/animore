@@ -411,7 +411,7 @@ function refreshReview(data){
 		html+= `<div class="review__reply" data-rnum="${review.rnum}">`
 		//리댓달기 버튼
 		if($id==$busi.id && review.rvReply==null){	
-			html += `<p data-rnum="${review.rnum}" class="review__replyBtn">리댓달기</p>`
+			html += `<p class="review__replyBtn">답글달기</p>`
 		}
 		//리댓 있을 시 출력
 		if(review.rvReply){
@@ -450,12 +450,15 @@ function refreshReview(data){
 	delBtns?.forEach(ele=>ele.addEventListener('click',delBtn_f));
 	
 	/*사장님 버튼*/
+	//등록버튼
+	replyBtns = document.querySelectorAll('.review__replyBtn');
+	replyBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
 	//수정버튼
 	replyModiBtns = document.querySelectorAll('.review__ownerModiBtn')
 	replyModiBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
 	//삭제버튼
 	replyDelBtns = document.querySelectorAll('.review__ownerDelBtn')
-	replyDelBtns?.forEach(ele=>ele.addEventListener('click',replyBtns_f));
+	replyDelBtns?.forEach(ele=>ele.addEventListener('click',replyDelBtns_f));
 	
 }
 //각 버튼 이벤트리스너 등록
@@ -525,7 +528,7 @@ const replyBtns_f = e =>{
 		replyForm.classList.add('review__reply-form');
 		e.target.closest('.review__reply').append(replyForm);
 
-	const rnum = e.target.dataset.rnum;
+	const rnum = e.target.closest('.review__reply').dataset.rnum;
 	const bid = $busi.id;
 
 	const URL = `/inquire/rvreply?rnum=${rnum}&bid=${bid}`;
@@ -538,6 +541,9 @@ const replyBtns_f = e =>{
 							const data = res.data;
 							//리댓폼 출력
 							addReply(data);
+							//수정시, 기존 내용부분 숨김처리
+							e.target.closest('.review__reply').querySelector('.review__reply-text')?.classList.add('hidden');
+							e.target.closest('.review__reply').querySelector('.review__ownerBtns')?.classList.add('hidden');
 					}else{
 							throw new Error(res.rtmsg);
 					}
@@ -562,26 +568,28 @@ function addReply(review){
 	html += `	</div>`;
 	html += `</div>`;
 
-	document.querySelector('.review__reply-form').innerHTML=html;
-
+	const replyForm = document.querySelector('.review__reply-form')
+	replyForm.innerHTML=html;
+	//등록버튼-등록처리
 	const addBtn = document.querySelector('.rvReply__addBtn');
-	const cancleBtn = document.querySelector('.rvReply__cancle');
-
-	cancleBtn.addEventListener('click',e=>replyForm.remove());
 	addBtn.addEventListener('click',addBtn_f);
+	//취소버튼
+	const cancleBtn = document.querySelector('.rvReply__cancle');
+	cancleBtn.addEventListener('click',e=>{
+		//숨김한 기존 내용 보이기
+		e.target.closest('.review__reply').querySelector('.review__reply-text')?.classList.remove('hidden');
+		e.target.closest('.review__reply').querySelector('.review__ownerBtns')?.classList.remove('hidden');
+		//수정폼 삭제
+		replyForm.remove();
+		});
 }
-
+//사장님 답글 삭제(리뷰의 리댓값 null로 수정)
 const replyDelBtns_f = e=> {
 
 	const rnum = e.target.closest('.review__reply').dataset.rnum;
 	const bnum = $busi.bnum;
 	const bid = $busi.id;//사장아이디
 
-		//리뷰입력체크
-		if(!content.value) {
-			alert("댓글 내용을 입력하세요");
-			return;
-	}	
 	//TODO 댓글 등록하는 폼만들고 해당값 입력
 	const URL = `/inquire/rvreply/del?bid=${bid}`;
 	const data = {
