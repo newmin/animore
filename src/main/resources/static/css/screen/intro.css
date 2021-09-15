@@ -121,3 +121,24 @@
 	display:flex;
 	align-items: center;
 }
+
+/* 반응형 웹 처리 */
+@media screen and (max-width: 1200px) {
+
+}
+
+@media screen and (max-width: 992px) {
+	.busi-category__btn>a{
+		font-size: 30px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+
+}
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (min-width: 600px) {
+
+}

@@ -186,3 +186,38 @@ footer{
 .footer{
   margin-top: 100px;
 }
+
+
+/* 반응형 웹 처리 */
+@media screen and (max-width: 1200px) {
+	.nav__category-text{
+		visibility: hidden;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.nav__column:nth-child(2){
+		width : auto;
+	}
+.nav__column:last-child {
+	padding : 0;
+}
+}
+
+@media screen and (max-width: 768px) {
+	.search__input--sm{
+		width: 200px;
+	}
+	.nav__btn {
+	margin : 0;
+}
+
+}
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (min-width: 600px) {
+
+}
+
+
