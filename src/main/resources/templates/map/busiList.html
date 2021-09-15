@@ -11,12 +11,12 @@
 		const $busiList = /*[[${busiList}]]*/ null;	//업체목록
 		const $id = /*[[${session.loginMember?.id}]]*/ null; //아이디
 	</script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
 	<script src="/js/api/ajaxCall.js"></script>
-	<script src="/js/mapAPI1.js" defer></script>
 	<script src="/js/api/busiListHospitalTagSearchReq.js" defer></script>
 	<script src="/js/admin/busiList.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e10ff7f10f2e2a5c378bec9b4870e36b&libraries=services"></script>
 	<script src="/js/components/scrollUp.js" defer></script>
+	<script src="/js/mapAPI1.js" defer></script>
 </head>
 <body>
   <main class="main">

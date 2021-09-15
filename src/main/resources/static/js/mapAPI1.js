@@ -27,6 +27,13 @@ if (navigator.geolocation) {
       locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
       
+    	//페이지 로드완료시 지도가 절반 잘려서 나오는 버그로 인해 추가됨
+			//해당이슈 관련 참고글 https://devtalk.kakao.com/t/topic/67269/2
+			setTimeout(() => {
+			  map.relayout();
+			  map.setCenter(locPosition);
+			}, 200);
+      
       // 마커와 인포윈도우를 표시합니다
       displayMarker(locPosition, message);
       
@@ -34,7 +41,6 @@ if (navigator.geolocation) {
 			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
     });
-
   
 } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
   

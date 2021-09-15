@@ -31,6 +31,13 @@ var geocoder = new kakao.maps.services.Geocoder();
       // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
       map.setCenter(coords);
 
+			//페이지 로드완료시 지도가 절반 잘려서 나오는 버그로 인해 추가됨
+			//해당이슈 관련 참고글 https://devtalk.kakao.com/t/topic/67269/2
+			setTimeout(() => {
+			  map.relayout();
+			  map.setCenter(coords);
+			}, 200);
+
       // // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
       // // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
       // var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
