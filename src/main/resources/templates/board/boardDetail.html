@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/template/template::main(~{::title},~{::main},~{::script},_)}">
+      th:replace="~{/template/template::main(~{::title},~{::main},~{::script},~{::link})}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="/js/boardDetail.js" defer></script>
   <script src="/js/api/rboardReq.js" defer></script>
   <script src="/js/reply.js" defer></script>
@@ -88,12 +88,12 @@
        </div>
 
        <!-- 댓글 -->
-       <div class=" boardForm__text">댓글 <span class="boardForm__reply boardForm__text" th:text="|댓글수 ${reply.size}|"></span></div>
+       <div class=" boardForm__text"><span class="boardForm__reply boardForm__text" th:text="|댓글수 ${reply.size}|"></span></div>
        <div class="boardForm__replyListWrap">
      		 <div class="boardForm__replyContainer" th:each="reply : ${reply}">
 
      		 	 <th:block th:if="${reply.rindent} > 0">
-        	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" style="width:50px"></div>
+        	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" class="boardForm__replyIndent"></div>
 					 </th:block>
            <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{member_fname}|} " alt="" class="boardForm__proImg"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">

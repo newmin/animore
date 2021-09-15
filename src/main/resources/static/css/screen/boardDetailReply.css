@@ -1,9 +1,47 @@
 @charset "UTF-8";
 
+.boardForm__replyContainer{
+	margin: 5px 0 5px 0;	
+}
+
+.boardForm__replyTextContainer {
+	margin-left: 5px;
+}
+.boardForm__ReplyContent{
+	padding : 5px 0;
+}
+
+.boardForm__reply.boardForm__text{
+	font-weight: bold;
+}
+
+.boardForm__Replycdate{
+	font-size: 13px;
+	color: var(--primary);
+}
+
+.boardForm__replyIndent{
+	width: 40px;
+	position: inherit;
+}
+
+.boardForm__replyImgWrap{
+	display:flex;
+	position:static;
+}
+.boardForm__replyIndent+.boardForm__replyImgWrap::before{
+	font-family: 'Material Icons';
+  content: "subdirectory_arrow_right";
+  -webkit-font-feature-settings: 'liga';
+	display: block;
+	position: relative;
+	right: 5px;
+}
+
 .boardForm__ReplyReBtn,
 .boardForm__modiReplyBtn,
 .boardForm__delReplyBtn{
-	background-color: #f8f8f8;
+	background-color: var(--body-color);
 	color: var(--primary-dark);
 	cursor: pointer;
 	border-radius:  5px;
