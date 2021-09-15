@@ -66,8 +66,8 @@
 
 				<ul class="busi-detail__info-list">
 					<li><span th:text="|주소 : *{baddress}|">주소 : </span></li>
-					<li><span>영업시간 : </span><span th:text="*{openhours}?:|영업시간을 등록하지 않았습니다.|"></span></li>
 					<li><span th:text="|연락처 : *{btel}|">연락처 : </span></li>
+					<li><span>영업시간 : </span><span th:text="*{openhours}?:|영업시간을 등록하지 않았습니다.|"></span></li>
 					<li><span>SNS : </span><span th:text="|미등록 업체|"></span></li>
 				</ul>
 
@@ -224,7 +224,7 @@
 		            <div class="review__contents">
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
 		                <textarea rows="10" class="review__textarea" name="rcontent"></textarea>
-		                <div>
+		                <div class="review__contents-btns">
 			                <input type="file" class="review__files" name="files" multiple="multiple"/>
 			                <button class="review__regist" type="button">등록</button>
 		                </div>
