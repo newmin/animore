@@ -1,4 +1,4 @@
-package com.proj.animore.dao;
+package com.proj.animore.dao.board;
 
 import java.util.List;
 
