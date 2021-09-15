@@ -300,6 +300,7 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
 		sql.append("     from board b, member m ");
 		sql.append("     where b.id = m.id ");
+		sql.append("     and b.bcdate > sysdate-7 ");
 		sql.append("     and bcategory=?) t1 ");
 		sql.append(" where num between 1 and 3 ");
 		List<BoardReqDTO> list = jt.query(sql.toString(),
