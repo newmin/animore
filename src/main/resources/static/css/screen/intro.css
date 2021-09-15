@@ -113,3 +113,11 @@
 .board-best .fa-heart{
 	color:red;
 }
+.board-best .good{
+	display:flex;
+	justify-content: space-between;
+}
+.board-best-good {
+	display:flex;
+	align-items: center;
+}
