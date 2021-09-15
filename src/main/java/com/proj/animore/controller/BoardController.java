@@ -92,6 +92,7 @@ public class BoardController {
 		 List<BoardReqDTO> list = null;
 		 List<BoardReqDTO> nlist = null;
 		
+		 fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");
 	   //요청페이지가 없으면 1페이지로
 		if(reqPage == null) reqPage = 1;
 		//log.info("cate,reqPage,searchType,keyword={}",cate,reqPage,searchType,keyword);
