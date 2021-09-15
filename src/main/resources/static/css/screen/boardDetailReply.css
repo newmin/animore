@@ -48,6 +48,10 @@
 	border-width: 0px;
 	padding: 0;
 	margin-left:3px;
+/*
+	outline: none;
+	height: fit-content; width: fit-content;
+	*/
 }
 
 .boardForm__modiReplyBtn::before,
@@ -60,24 +64,28 @@
 #boardForm__reReplySubmitBtn,
 #boardForm__modiReplyCancelBtn,
 #boardForm__modiReplySubmitBtn{
-	background-color: var(--primary-dark);
+	background-color: var(--primary);
 	color: white;
 	cursor: pointer;
 	border-radius: 5px;
 	border-width: 0;
+/*
+	outline: none;
+	height: fit-content; width: fit-content;
+	*/
 }
 
-/* .boardForm__reReplyTextarea,
-.boardForm__modiReplyTextarea{
-	
-} */
+#boardForm__reReplyTextarea,
+#boardForm__modiReplyTextarea{
+	border: 1px solid var(--border-lightgray);
+}
 
 #boardForm__modiReplyWrap,
 #boardForm__reReplyWrap{
 	width: 600px;
 	padding: 10px;
 	border-radius: 5px;
-	background-color: lightgray;
+	background-color: rgba(0, 0, 0, 0.03);
 	margin: 5px 0;
 }
 #boardForm__reReplyWrap{
