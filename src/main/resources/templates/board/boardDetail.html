@@ -16,6 +16,12 @@
 <body>
     <main class="main" th:object="${post}" >
     	<div class="boardForm" th:data-bnum="*{bnum}">
+    	<div class="boardForm__category">게시판>
+		    <a href="#" th:if ="*{bcategory == 'Q'}" th:href="@{/board/{cate}(cate=Q)}" >Q&A</a>
+		    <a href="#" th:if ="*{bcategory == 'F'}" th:href="@{/board/{cate}(cate=F)}" >자유게시판</a>
+		    <a href="#" th:if ="*{bcategory == 'M'}" th:href="@{/board/{cate}(cate=M)}" >벼룩시장</a>
+		    <a href="#" th:if ="*{bcategory == 'P'}" th:href="@{/board/{cate}(cate=P)}" >내새끼보세요</a>
+		</div>
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
