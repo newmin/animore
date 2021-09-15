@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?a">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
   <script src="/js/board.js" defer></script>
@@ -62,66 +62,7 @@
       </table>
 	</div>
       
-   <!-- </div>
-      벼룩시장
-      <div th:if="${cate} =='M'">
-      <table class="board__table">
-        <tr>
-          <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__titles">제목</th>
-          <th class="board__cell board__writer">작성자</th>
-          <th class="board__cell board__hits">조회</th>
-          <th class="board__cell board__hearthits">좋아요</th>
-        </tr>
-        <tr th:each="notice :${notice}">
-          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
-          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
-          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
-          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
-        </tr>
-        <tr th:each="boardForm :${boardForm}">
-          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-          <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
-          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
-          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
-        </tr>
-      </table>
-
-      
-   </div>
-   
-      자유게시판
-   <div th:if="${cate} =='F'">
-      <table class="board__table">
-        <tr>
-          <th class="board__cell board__num">번호</th>
-          <th class="board__cell board__titles">제목</th>
-          <th class="board__cell board__writer">작성자</th>
-          <th class="board__cell board__hits">조회</th>
-          <th class="board__cell board__hearthits">좋아요</th>
-        </tr>
-        <tr th:each="notice :${notice}">
-          <td class="board__cell board__num notice__cell" th:text="${notice.bnum}">1</td>
-          <td class="board__cell board__title notice__cell" ><a th:href="@{|/board/post/${notice.bnum}|}" th:text="|<공지>${notice.btitle}|"></a></td>
-          <td class="board__cell board__writer notice__cell" th:text="${notice.nickname}"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits notice__cell" th:text="${notice.bhit}">30</td>
-          <td class="board__cell board__hearthits notice__cell" th:text="${notice.bgood}">10</td>
-        </tr>
-        <tr th:each="boardForm :${boardForm}">
-          <td class="board__cell board__num" th:text="${boardForm.bnum}">1</td>
-         <td class="board__cell board__title" ><a th:href="@{|/board/post/${boardForm.bnum}|}" th:text="${boardForm.btitle}"></a></td>
-          <td class="board__cell board__writer" th:text="${boardForm.nickname}"><a href="#">작성자</a></td>
-          <td class="board__cell board__hits" th:text="${boardForm.bhit}">30</td>
-          <td class="board__cell board__hearthits" th:text="${boardForm.bgood}">10</td>
-        </tr>
-      </table>
-      
-
-    </div>
-    
-    </div> -->
+  
 
     <!-- 내새끼보세요 -->
    <div th:if="${cate} =='P'">
@@ -144,7 +85,7 @@
     
     
      <div class="board__btns">
-        <button class="board__btn boardForm__addBtn" type="button" th:data-cate =${cate}>글쓰기</button>
+        <button class="board__btn boardForm__addBtn" type="button" th:data-cate =${cate}><i class="fas fa-pen"></i>글쓰기</button>
       </div>
 
       <form action="" class="board__searchForm">
@@ -172,7 +113,7 @@
           </th:block>
          <th:block th:each="pnum : ${#numbers.sequence(fc.startPage,fc.endPage)}">
             <th:block th:if="${pnum != 0}">
-               <li class="page-item active" aria-current="page"
+               <li class="page-item active" id="active_page" aria-current="page"
                      th:if="${fc.rc.reqPage == pnum}">
               <span class="page-link" th:text="${pnum}">1</span>
             </li>                         
