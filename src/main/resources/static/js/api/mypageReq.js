@@ -60,6 +60,8 @@ myReview.addEventListener('click',review);
 const $mypostBtn = document.querySelector('.mypage__mypostBtn');
 let $contents = document.querySelector('.mypage_content_container');
 
+
+
 $mypostBtn.addEventListener('click',e=>{
 //alert('내글보기버튼 클릭');
 const URL =`/mypage/mypost`;
@@ -244,6 +246,8 @@ const modifyBtn = e =>{
 		$modifyBtn.addEventListener("click", modifyBtn); 
 };
 
+
+
 //회원탈퇴
 const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	$mypageDelMenu.addEventListener('click',e=>{
@@ -268,6 +272,76 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 		console.log (err.message);
 	});
 });
+
+//비밀번호 변경양식
+	const $myPwModi = document.querySelector('a[href="/mypage/mypagePwModify"]');
+
+	$myPwModi.addEventListener('click',e=>{
+	e.preventDefault();
+	
+	const URL = `/mypage/mypagePwModify`;
+	
+	request.get(URL)
+	.then(res=>res.json())
+	.then(res=>{
+		if(res.rtcd == '00'){
+			//성공로직처리
+			console.log(res);
+			const data = res.data;
+			document.querySelector('.mypage_content_container').innerHTML = data;
+			
+				const $changPw = document.querySelector('#changPw');
+				$changPw.addEventListener("click", changPw); 
+		}else{
+			throw new Error(res.rtmsg);
+		}
+	})
+	.catch(err=>{
+		//오류로직 처리
+		console.log (err.message);
+	});
+
+});
+
+//비밀번호 변경처리
+
+const changPw = e =>{
+	e.preventDefault();
+	
+	const $id = id.value;
+	const $pw = pw.value;
+	const $pwChk =pwChk.value;
+	
+	
+	
+	const URL = `/mypage/mypagePwModify`;
+	const data = {
+								 "id":$id,
+								 "pw":$pw,
+								 "pwChk":$pwChk
+							 };
+	
+	request.patch(URL,data)
+		.then(res=>res.json())
+		.then(res=>{
+			if(res.rtcd == '00'){
+				//성공로직처리
+				const data = res.data;
+					refreshPwchange(data);	
+				
+				
+			}else{
+				throw new Error(res.rtmsg);
+			}
+		})
+		.catch(err=>{
+			//오류로직 처리
+			alert(err.message);
+		});
+		
+		const $changPw = document.querySelector('#changPw');
+		$changPw.addEventListener("click", changPw); 
+};
 
 
 //내업체목록
@@ -295,6 +369,32 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 	});
 
 });
+
+function refreshPwchange(memberDTO){
+let html ='';
+
+html+="<h2 class=\"mypage_content_title\">개인정보수정</h2>";
+
+html+="<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">";
+
+html+="<hr>";
+
+html+="<hr>";
+
+html+="<ul>";
+html+="<li><label for=\"id\">아이디</label></li>";
+html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly='readonly'/></li>";
+html+="<li><label for=\"pw\">현재 비밀번호</label></li>";
+html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
+html+="<li><label for=\"pw2\">새로운 비밀번호</label></li>";
+html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
+html+="<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>";
+html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
+html+="<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>";
+html+="</form>";
+html+="</ul>";
+html+="</div>";
+};
 
 function refreshModi(memberDTO){
 	let html ='';
@@ -353,4 +453,3 @@ function refreshModi(memberDTO){
 		html+="</form >";
 		html+="</div>";
 }; 	
-	

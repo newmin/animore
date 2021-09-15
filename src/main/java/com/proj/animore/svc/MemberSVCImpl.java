@@ -108,7 +108,7 @@ public class MemberSVCImpl implements MemberSVC {
 	//비밀번호 변경
 	@Override
 	public int changePW(ChangePwForm changePWForm) {
-		return memberDAO.changePW(changePWForm);
+		return memberDAO.changePw(changePWForm);
 	}
 	
 	

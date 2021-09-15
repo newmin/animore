@@ -203,17 +203,16 @@ public class MemberDAOImpl implements MemberDAO {
 
 	//비밀번호 변경
 	@Override
-	public int changePW(ChangePwForm changePWForm) {
+	public int changePw(ChangePwForm changePwForm) {
 		
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("update member ");
 		sql.append("   set pw=?, udate=systimestamp ");
 		sql.append(" where id=? ");
-		sql.append("   and status='A' ");
+		sql.append("   and pw = ? ");
 		
-		int result = jdbcTemplate.update(sql.toString(), changePWForm.getPw(), changePWForm.getId());
-		
+		int result = jdbcTemplate.update(sql.toString(),changePwForm.getId(),changePwForm.getPw(), changePwForm.getPwChk() );
 		return result;
 	}
 	

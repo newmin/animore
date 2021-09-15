@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.dto.business.ReviewReq;
+import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.Result;
@@ -184,10 +188,8 @@ public class APIMypgeController {
 	
 		StringBuffer html = new StringBuffer();
 		
-		html.append("<div class='mypage_content_container'>");
-		
 		html.append("<h2 class='mypage_content_title'>즐겨 찾는 업체</h2>");
-		
+		html.append("<div class='mypage_content_container'>");
 		html.append("<hr>");
 		
 		html.append("<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
@@ -197,7 +199,13 @@ public class APIMypgeController {
 		html.append("<li><label for=\"id\">아이디</label></li>");
 		html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>");
 		
-		html.append("<li><label for=\"pw\">비밀번호</label></li>");
+		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
+		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+		
+		html.append("<li><label for=\"pw\">새로운 비밀번호</label></li>");
+		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+		
+		html.append("<li><label for=\"pw\">새로운 비밀번호 확인</label></li>");
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
@@ -249,20 +257,21 @@ public class APIMypgeController {
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
+		
 		MemberDTO memberDTO2 = new MemberDTO();
 		BeanUtils.copyProperties(modidyfyForm, memberDTO2);
 		
 		String id = loginMember.getId();
 		memberSVC.modifyMember(id, memberDTO2);
 		MemberDTO memberDTO = memberSVC.findMemberById(id);
-		
+
 		Result result;
 		
 		StringBuffer html = new StringBuffer();
 		
-		html.append("<div class=\"mypage_content_container\">");
 		
 		html.append("<h2 class=\"mypage_content_title\">즐겨 찾는 업체</h2>");
+		html.append("<div class=\"mypage_content_container\">");
 		
 		html.append("<hr>");
 		
@@ -320,46 +329,7 @@ public class APIMypgeController {
 		
 		return result;
 	}
-	
-	//비밀번호 변경
-		@GetMapping("/mypagePwModify")
-		public Result mypagePwModify(HttpServletRequest request) {
-			HttpSession session = request.getSession(false);
-			Result result;
-			
-			StringBuffer html = new StringBuffer();
-			
-			result = new Result("00","OK",html);
-			
-			return result;
-		}
-		
-	
-	@GetMapping("/mypageDel")
-	public Result mypageDel(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		Result result;
-		
-		StringBuffer html = new StringBuffer();
-		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content'>");
-		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
-		html.append("    <h1 class='findId__title'></h1>");
-		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
-		html.append("    <div class='findId__form'>");
-		html.append("      <span class='findId__text'>비밀번호 확인</span>");
-		html.append("      <input class='findId__input' type='text' name='pw'>");
-		html.append("    </div>");
-		html.append("    <button class='findId__btn' type='submit'>회원탈퇴</button>");
-		html.append("  </form>");
-		html.append("</div>");
-		
-		result = new Result("00","OK",html);
-		
-		return result;
-	}
-//	
+
 //	//즐겨찾기
 //	@GetMapping("/mypageFavorites")
 //	public Result favoritelist (HttpServletRequest request){
@@ -537,5 +507,105 @@ public class APIMypgeController {
 //			result = new Result("00","성공",businessLoadDTO);
 //			return result;
 //		}
-//	
+	
+	//비밀번호 변경
+	@GetMapping("/mypagePwModify")
+	public Result mypage__mypwBtn(HttpServletRequest request) {
+		
+	HttpSession session = request.getSession(false);
+	LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	log.info("loginMember:{}",loginMember);
+	
+	MemberDTO memberDTO = new MemberDTO();
+	
+	String id = loginMember.getId();
+	memberDTO = memberSVC.findMemberById(id);
+
+	
+	
+	StringBuffer html = new StringBuffer();
+	
+	html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
+	html.append("<hr>");
+	html.append("<div class='mypage_content_container'>");
+	
+	html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
+
+	html.append("<ul>");
+	html.append("<li><label for=\"id\">아이디</label></li>");
+	html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly='readonly'/></li>");
+	
+	html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
+	html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+	
+	html.append("<li><label for=\"pw2\">새로운 비밀번호</label></li>");
+	html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
+	
+	html.append("<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>");
+	html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
+	
+	
+	html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
+	
+	html.append("</form >");
+	html.append("</ul>");
+	html.append("</div>");
+	
+	Result result;
+	
+	result = new Result("00","OK",html);
+	
+	return result;
+	
+	}
+	//비밀번호 수정처리
+	@PatchMapping("/mypagePwModify")
+	public Result mypageModify(@Valid @ModelAttribute ChangePwForm changePwForm,
+			BindingResult bindingResult,
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
+		
+
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		log.info("loginMember:{}",loginMember);
+		
+		
+		
+		
+		
+		Result result;
+		
+		StringBuffer html = new StringBuffer();
+		
+		html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
+		html.append("<hr>");
+		html.append("<div class='mypage_content_container'>");
+		
+		html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
+
+		html.append("<ul>");
+		html.append("<li><label for=\"id\">아이디</label></li>");
+		html.append("<li><input type=\"text\" id ='id' name ='id' value="+loginMember.getId()+" readonly='readonly'/></li>");
+		
+		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
+		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+		
+		html.append("<li><label for=\"pw2\">새로운 비밀번호</label></li>");
+		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
+		
+		html.append("<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>");
+		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
+		
+		
+		html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
+		
+		html.append("</form >");
+		html.append("</ul>");
+		html.append("</div>");
+		
+		result = new Result("00","OK",html);
+		
+		return result;
+	}
 }

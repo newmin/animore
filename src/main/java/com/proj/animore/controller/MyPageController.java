@@ -314,5 +314,4 @@ public String modifyMember(HttpServletRequest request,
 
          return "redirect:/mypage/mybusiModify/{bnum}";
    }
-   
 }

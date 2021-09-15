@@ -40,7 +40,7 @@ public interface MemberDAO {
 	ChangePwForm findPw(FindPwForm findPwForm);
 
 	//비밀번호변경처리
-	int changePW(ChangePwForm changePWForm);
+	int changePw(ChangePwForm changePwForm);
 	
 	//마일리지증가
 	int upMileage(String id, int mileage);
@@ -56,6 +56,7 @@ public interface MemberDAO {
 
 	//비밀번호찾기시 실행되는 비밀번호변경
 	void changePw(String id, String pw, String tmpPw);
+
 }
 	
 	
