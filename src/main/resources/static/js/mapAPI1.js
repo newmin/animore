@@ -217,7 +217,7 @@ function setMarkers($busiList){
 	    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 	    var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">'+
 	                      '<div><a href="/inquire/'+$busiList[index].bnum+'">'+$busiList[index].bname+'</a></div>'+
-	                      '<div><span>거리 : '+distance+' M</span></div>'+
+	                      '<div><span>거리 : '+Math.round(distance/10)/100+' KM</span></div>'+
 	                    '</div>'
 	
 	        // ,iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
