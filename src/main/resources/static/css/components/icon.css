@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+.fa-heart{
+	color : var(--red);
+}

@@ -60,8 +60,8 @@
   left : 30px;
   top : var(--nav-height);
   width: 160px;
-  /* border : 1px solid rgba(0,0,0,0.5); */
-/*   background-color: var(--body-color); */
+  background-color: var(--body-color);
+  border : 1px solid rgba(0,0,0,0.1);
 } 
 .nav__categoryBtn{
 	height : 100%;
@@ -146,9 +146,10 @@
 .nav__btns li:first-child:hover .nav__board {
   display: block;
   position: absolute;
-  top: 30px;
+  top: 32px;
   left: 45px;
-  background-color : inherit;
+  background-color : var(--body-color);
+  border: 1px solid rgba(0,0,0,0.1);
 }
 .nav__board:hover .nav__btn{
 	color: var(--secondary);	

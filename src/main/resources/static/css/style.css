@@ -9,6 +9,7 @@
 @import "components/toggleBtn.css";
 @import "components/template.css";
 @import "components/scrollUP.css";
+@import "components/icon.css";
 /* 스크린 */
 @import "screen/intro.css";
 @import "screen/login.css";

@@ -16,11 +16,6 @@
 <body>
     <main class="main" th:object="${post}" >
     	<div class="boardForm" th:data-bnum="*{bnum}">
-            <div class="boardForm__btns">
-                <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
-                <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
-                <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
-            </div>
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
@@ -44,9 +39,14 @@
                         <span class="slider round" th:data-bnum="*{bnum}"></span>
                   </label>
                   </div>
+            <div class="boardForm__btns">
+                <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+                <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
+                <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
+            </div>
         </div>
        <div class="boardForm__infoContainer">
-        <img th:src="@{|/img/upload/member/*{member_fname}|} " alt="프로필사진" class="boardForm__proImg">
+        <img th:src="@{|/img/upload/member/*{member_fname}|} " alt="프로필사진" class="profile__sm">
         <div class="boardForm__info">
             <span class="boardForm__Nickname" th:text="*{nickname}">닉네임</span>
             <div class="boardForm__info2">
@@ -108,7 +108,7 @@
             </div>
           </div>
         </div>
-        <form class="boardForm__AddReplyContainer"></form>
+        <form class="boardForm__AddReplyContainer">
 
                 <textarea class="boardForm__AddReplyContent"name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea>    
             <button class="boardForm__AddReplyBtn" type="button">등록</button>
