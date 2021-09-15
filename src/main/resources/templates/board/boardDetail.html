@@ -114,7 +114,7 @@
             <button class="boardForm__AddReplyBtn" type="button">등록</button>
 
         </form>
-        <div class="boardForm__btns ">
+        <div class="boardForm__btns bottom_btns">
             <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
             <button class="boardForm__modifyBtn" 
             		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
