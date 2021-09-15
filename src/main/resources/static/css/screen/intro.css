@@ -104,7 +104,8 @@
 }
 
 .board-best__row{
-  width: var(--main-row-width);
+ /*  width: var(--main-row-width); */
+  width: 1000px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   padding:  10px;
   margin-bottom: 20px;
