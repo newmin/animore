@@ -291,12 +291,12 @@ public class BoardDAOImpl implements BoardDAO {
 										searchDTO.getBcategory(),searchDTO.getStartRec(),searchDTO.getEndRec());
 		return list;
 	}
-	//게시글전체목록 좋아요순 나열
+	//게시글전체목록 조회수순 나열
 	@Override
 	public List<BoardReqDTO> bgoodList(String bcategory) {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" select t1.* ");
-		sql.append(" from(select row_number() over (order by bgood desc) num, ");
+		sql.append(" from(select row_number() over (order by bhit desc) num, ");
 		sql.append("       b.bnum,b.bhit,b.bgood,b.btitle,b.id,m.nickname,b.bcdate,b.bcategory,b.breply,b.bcontent,b.bgroup,b.bstep,b.bindent ");
 		sql.append("     from board b, member m ");
 		sql.append("     where b.id = m.id ");
