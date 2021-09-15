@@ -49,6 +49,46 @@ public class MyPageController {
    private final BusinessSVC businessSVC;
    private final GoodBoardSVC goodBoardSVC;
    
+   
+   //회원탈퇴처리
+   @DeleteMapping("/mypagePwModify")
+   public String changePW(
+         @RequestParam String pw,
+         HttpServletRequest request,
+         Model model) {
+      log.info("회원탈퇴");
+      
+      Map<String, String> errors = new HashMap<>();
+      
+      if(pw == null || pw.trim().length() == 0) {
+         errors.put("pw", "비밀번호를 입력하세요");
+         model.addAttribute("errors", errors);
+//         return "mypage/memberOutForm";
+         return null;
+      }
+      
+      HttpSession session = request.getSession(false);
+      if(session == null) return "redirect:/login";
+      
+      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+      //회원존재유무 확인
+      if(memberSVC.isMemember(loginMember.getId(), pw)) {
+         //탈퇴
+         memberSVC.outMember(loginMember.getId(), pw);
+      }else {
+         errors.put("global", "비밀번호가 잘못되었습니다.");
+         model.addAttribute("errors", errors);
+      }
+      
+      if(!errors.isEmpty()) {
+//         return "mypage/memberOutForm";
+         return null;
+      }
+      
+      session.invalidate();
+      
+      return "redirect:/";
+   }
    //즐겨찾기 목록
    @GetMapping("/mypageFavorites")
    public String mypage(HttpServletRequest request,
@@ -189,8 +229,9 @@ public String modifyMember(HttpServletRequest request,
 
 	      return "mypage/mybusilist";
 		}
+   
    //좋아요
-   //@GetMapping("/mypageGood")
+  // @GetMapping("/mypageGood")
    public String mypageGood(HttpServletRequest request,
 		      Model model){
 	   HttpSession session = request.getSession(false);

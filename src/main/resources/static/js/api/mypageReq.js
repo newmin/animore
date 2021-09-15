@@ -1,35 +1,6 @@
 /**
  * 
  */
- 
- //즐겨찾기
-	const $myFavorite = document.querySelector('a[href="/mypage/mypageFavorites"]');
-	$myFavorite.addEventListener('click',e=>{
-	e.preventDefault();
-	
-	const URL = `/mypage/mypageFavorites`;
-	
-	request.get(URL)
-	.then(res=>res.json())
-	.then(res=>{
-		if(res.rtcd == '00'){
-			//성공로직처리
-			console.log(res);
-			const data = res.data;
-			document.querySelector('.favorite__table').innerHTML = data;
-		}else{
-			throw new Error(res.rtmsg);
-		}
-	})
-	.catch(err=>{
-		//오류로직 처리
-		console.log (err.message);
-	});
-});
-
-
-
-
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
 
@@ -222,7 +193,6 @@ const $goodBoardList = document.querySelector('a[href="/mypage/mypageGood"]');
 	});
 });
 
-
 //개인정보 수정처리
 
 const modifyBtn = e =>{
@@ -299,6 +269,7 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 	});
 });
 
+
 //내업체목록
 const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 	$mybusilist.addEventListener('click',e=>{
@@ -324,8 +295,6 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 	});
 
 });
-
-
 
 function refreshModi(memberDTO){
 	let html ='';
@@ -383,5 +352,5 @@ function refreshModi(memberDTO){
 		html+="</ul>";
 		html+="</form >";
 		html+="</div>";
-};
-
+}; 	
+	
