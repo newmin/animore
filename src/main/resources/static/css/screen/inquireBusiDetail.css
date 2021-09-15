@@ -201,6 +201,10 @@
 .review__userBtn{
   cursor: pointer;
 }
+.review__date{
+	font-size: 13px;
+	color: var(--primary);
+}
 .review__contents-btns{
 	display: flex;
 	justify-content: space-between;
