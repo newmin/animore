@@ -6,22 +6,22 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  height: 130px;
+ /*  height: 220px; */
 }
-.logo__text{
+/* .logo__text{
   font-size: 50px;
   font-weight: 600;
-}
+} */
 
-.logo__img{
-  width: 50px;
-  height: 50px;
+/* .logo__img{
+  width: 500px;
+  height: 220px;
 }
-
-.logo:hover .logo__img{
+ */
+/* .logo:hover .logo__img{
 	transform: rotateY(1turn) rotateX(2turn);
   transition: 3s ease-out;
-}
+} */
 
 
 /* 헤더 네브바 */

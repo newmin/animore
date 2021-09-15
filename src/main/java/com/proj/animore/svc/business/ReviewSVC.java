@@ -21,6 +21,8 @@ public interface ReviewSVC {
     List<ReviewReq> removeReview(int bnum, int rnum);
     //사장님 이전 리뷰리댓 조회
     ReviewReq findRvReply(int rnum);
-    //사장님 리뷰리댓등록
+    //사장님 리뷰리댓 등록
     List<ReviewReq> addRvReply(ReviewReq reviewReq);
+    //사장님 리뷰리댓 삭제
+    List<ReviewReq> delRvReply(int bnum, int rnum);
 }

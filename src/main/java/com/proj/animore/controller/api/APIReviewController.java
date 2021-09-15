@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/inquire")
+@Transactional
 public class APIReviewController {
 	
 	private final ReviewSVC reviewSVC;
@@ -54,6 +56,9 @@ public class APIReviewController {
 			result = new Result("01","로그인이 만료되었어요 다시 로그인해주세요.",null);
 			return result;
 		}
+		
+//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String id = ((LoginMember)session.getAttribute("loginMember")).getId();
 		
 		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
@@ -215,6 +220,29 @@ public class APIReviewController {
 //		String rvReply = reviewReq.getRvReply();
 		
 		List<ReviewReq> list = reviewSVC.addRvReply(reviewReq);
+		result = new Result("00","성공",list);
+		return result;
+	}
+	
+	//사장님 리뷰리댓 삭제
+	@PatchMapping("/rvreply/del")
+	public Result delRvReply(@RequestParam String bid,
+							 @RequestBody ReviewReq reviewReq,
+							 HttpServletRequest request) {
+		Result result;
+		//로그인 확인
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("loginMember")==null) {
+			result = new Result("01","로그인이 만료되었습니다.",null);
+			return result;
+		}
+		//아이디 일치 여부
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(!loginMember.getId().equals(bid)) {
+			result = new Result("02","해당 업체의 사업자 아이디와 일치하지 않습니다.",null);
+		}
+		
+		List<ReviewReq> list = reviewSVC.delRvReply(reviewReq.getBnum(),reviewReq.getRnum());
 		result = new Result("00","성공",list);
 		return result;
 	}

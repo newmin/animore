@@ -23,6 +23,8 @@ public interface ReviewDAO {
     ReviewReq findRvReply(int rnum);
     //사장님 리뷰리댓등록
     List<ReviewReq> addRvReply(ReviewReq reviewReq);
+    //사장님 리뷰리댓 삭제
+    void delRvReply(int rnum);
 	//rnum추출
 	int rnumCurrVal();
 }

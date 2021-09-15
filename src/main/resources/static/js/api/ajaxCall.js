@@ -36,6 +36,14 @@ const request = {
 		})
 	},
 	
+	mpatch(url,formData) {
+		return fetch(url,{
+			method: 'PATCH',
+			headers:{},
+			body : formData
+		})
+	},
+	
 	delete(url){
 		return fetch(url, {method: 'DELETE'});
 	}

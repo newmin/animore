@@ -147,10 +147,17 @@
 										<span th:data-rnum="*{rnum}" th:data-id="*{id}" class="review__userBtn review__del">삭제</span>
 									</p>
 								</div>
-								<div class="review__reply">
+								<div class="review__reply" th:data-rnum="*{rnum}">
 									<p th:if="${session.loginMember!=null && session.loginMember.id==busi.id && review.rvReply==null}" 
 											th:data-rnum="*{rnum}" class="review__replyBtn">리댓달기</p>
-									<p class="review__reply-text" th:if="*{rvReply}" th:text="|	└─>사장님 : *{rvReply}"></p>
+									<th:block th:if="*{rvReply}">
+										<p class="review__reply-text" th:text="|	└─>사장님 : *{rvReply}"></p>
+										<p class="review__ownerBtns">
+											<span class="review__ownerModiBtn">수정</span>
+											<span>|</span>
+											<span class="review__ownerDelBtn">삭제</span>
+										</p>
+									</th:block>
 								</div>
 							</div>
 

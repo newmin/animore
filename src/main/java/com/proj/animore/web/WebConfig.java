@@ -25,7 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
 							"/board/M/**",
 							"/board/F/**",
 							"/api/hospital",
-							"/bhospital/api/**");
+							"/bhospital/api/**",
+							"/images/**");
 						//   \" 변수명 \"
 	}
 	
