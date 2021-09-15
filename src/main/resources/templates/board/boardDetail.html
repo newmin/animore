@@ -16,17 +16,11 @@
 <body>
     <main class="main" th:object="${post}" >
     	<div class="boardForm" th:data-bnum="*{bnum}">
-        <div class="boardForm__btns">
-            <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
-            <button class="boardForm__modifyBtn" 
-            		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
-            		th:data-bnum="*{bnum}">수정</button>
-            <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
-            <button class="boardForm__delBtn" th:if="${session.loginMember != null && 
-            										session.loginMember.id.equals(post.id)}"
-            							th:data-bnum="*{bnum}"
-            							th:data-bcategory="*{bcategory}">삭제</button>
-        </div>
+            <div class="boardForm__btns">
+                <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+                <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
+                <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
+            </div>
         <div class="boardForm__titleContainer">
             <div class="boardForm__title" th:text="*{btitle}">제목명</div>
                    <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
@@ -114,16 +108,22 @@
             </div>
           </div>
         </div>
-        <form class="boardForm__AddReplyContainer">
+        <form class="boardForm__AddReplyContainer"></form>
 
                 <textarea class="boardForm__AddReplyContent"name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요."></textarea>    
             <button class="boardForm__AddReplyBtn" type="button">등록</button>
 
         </form>
-        <div class="boardForm__btns boardForm__underBtns">
-            <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
-            <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
-            <button type="button" class="boardForm__addBtn" th:data-cate="*{bcategory}">글쓰기</button>
+        <div class="boardForm__btns ">
+            <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
+            <button class="boardForm__modifyBtn" 
+            		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
+            		th:data-bnum="*{bnum}">수정</button>
+            <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
+            <button class="boardForm__delBtn" th:if="${session.loginMember != null && 
+            										session.loginMember.id.equals(post.id)}"
+            							th:data-bnum="*{bnum}"
+            							th:data-bcategory="*{bcategory}">삭제</button>
         </div>
         </div>
     </main>
