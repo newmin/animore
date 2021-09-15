@@ -11,7 +11,7 @@
   --secondary-dark : #AF846C;
   --secondary-text : #000000;
 
-  --nav-height : 30px;
+  --nav-height : 35px;
 
   --main-row-width : 850px;
   --form-size : 400px;
@@ -21,4 +21,6 @@
 
   --yellow : #FAE100;
   --red : #DC4E41;
+  
+  --body-color : #F8F8F8;
 }

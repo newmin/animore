@@ -39,6 +39,12 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+    font-family: 'ELAND_Choice_M';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* 글씨체 정해둔거 있음. 사용한 굵기 600 400 */
 body {
@@ -46,10 +52,11 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
     font-family: RIDIBatang;
     font-family: BBTreeGB;
-    background-color: #F8F8F8;
+    font-family: ELAND_Choice_M;
+    background-color: var(--body-color);
     
     /* position sticky 적용 */
-    overflow-y:scroll;
+    /* overflow-y:scroll; */
 }
 
 .main{

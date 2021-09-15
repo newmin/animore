@@ -50,6 +50,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 3px;
 }
 
 /* 업체리스트 및 지도 */
@@ -110,6 +113,9 @@
   position: absolute;
   right: 0px;
   top: -25px;
+  background-color: var(--body-color);
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 /* 지도 */
