@@ -111,9 +111,6 @@
   margin-left: 30px;
   cursor: pointer;
 }
-.nav__btn.myinfoBtn{
-	width:auto;
-}
 .nav__board-p{
   position: relative;
 }
