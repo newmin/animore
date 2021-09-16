@@ -64,8 +64,6 @@ public class APIRboardController {
 		//저장하고 댓글목록 갱신하기 위해 리스트에 담음
   	List<RboardListReqDTO> replyList = rboardSVC.register(bnum, loginMemberId, rboardDTO);
   	
-  	
-  	
   	result = new Result<List<RboardListReqDTO>>("00","성공",replyList);
   	return result;
 	}
@@ -109,8 +107,14 @@ public class APIRboardController {
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		
 		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
+		
+//		//요청자 id, 댓글작성자 id 같지 않으면
+//		if(!loginMember.getId().equals(rboardReqDTO.getId()));
+//			return new Result("","","");
+		
 		Result result = new Result();
 		if (rboardReqDTO == null) {
 			result.setRtcd("01");
@@ -133,9 +137,15 @@ public class APIRboardController {
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false); 
-		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
+		
+		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
+		
+		//요청자 id, 댓글작성자 id 같지 않으면
+		if(!loginMember.getId().equals(rboardReqDTO.getId())) {
+			return new Result("01","댓글작성자가 수정할 수 있습니다.","댓글작성자가 수정할 수 있습니다.");
+		}
 		
 		RboardDTO rboardDTO = new RboardDTO();
 		BeanUtils.copyProperties(rmr,rboardDTO);
@@ -143,7 +153,7 @@ public class APIRboardController {
 		
 		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (modifiedRboardDTO == null) {
-			result.setRtcd("01");
+			result.setRtcd("02");
 			result.setRtmsg("존재하는 댓글이 없습니다.");
 		} else {
 			result.setRtcd("00");
@@ -163,14 +173,20 @@ public class APIRboardController {
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false); 
-
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
+		
+		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
+		
+		//요청자 id, 댓글작성자 id 같지 않으면
+		if(!loginMember.getId().equals(rboardReqDTO.getId())) {
+			return new Result("01","댓글작성자가 삭제할 수 있습니다.","댓글작성자가 삭제할 수 있습니다.");
+		}
 		
 		List<RboardListReqDTO> list = rboardSVC.del(bnum, rnum, id);
 		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (1 == 0) {
-			result.setRtcd("01");
+			result.setRtcd("02");
 			result.setRtmsg("삭제하고자 하는 댓글이 없습니다.");
 			result.setData(null);
 		} else {
@@ -188,7 +204,7 @@ public class APIRboardController {
 		Result<List<RboardListReqDTO>> result = new Result<List<RboardListReqDTO>>();
 		if (list.size() == 0) {
 			result.setRtcd("01");
-			result.setRtmsg("댓글 정보가 없습니다.");
+			result.setRtmsg("게시글에 댓글 정보가 없습니다.");
 		} else {
 			result.setRtcd("00");
 			result.setRtmsg("성공");
