@@ -96,7 +96,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public BoardReqDTO findBoardByBnum(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum,b.bgroup,b.bstep,b.bindent,m.store_fname member_fname ");
+		sql.append(" select b.bcategory,b.btitle,b.id,m.nickname,b.bcdate,b.bhit,b.bgood,b.breply,b.bcontent,b.bnum,b.bgroup,b.bstep,b.bindent,m.store_fname ");
 		sql.append("      from board b, member m");
 		sql.append("     where b.id =m.id ");
 		sql.append("      and b.bnum=? ");

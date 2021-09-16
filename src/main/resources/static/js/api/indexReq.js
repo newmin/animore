@@ -37,7 +37,7 @@ html += `          <p class="board-best__text" >${post.bcontent}</p>`;
 html += `        </div>`;
 if(post.files.length != 0){
 html += `    <a href="{/board/post/${post.bnum}}"> `;
-html += `     <img class="b_galary_img board-best__img"  src="/img/upload/board/${post.files[0].store_fname}"></img> `;
+html += `     <img class="b_galary_img board-best__img"  src="/images/${post.files[0].store_fname}"></img> `;
 html += `    </a>`; 
 } else{
 html += `<a href="{/board/post/${post.bnum}}"> `;

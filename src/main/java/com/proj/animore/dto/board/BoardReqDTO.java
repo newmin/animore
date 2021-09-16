@@ -29,7 +29,7 @@ public class BoardReqDTO {
 	private LocalDate bndate;
 	private LocalDate bcdate;
 	private LocalDate budate;
-	private String member_fname;
+	private String store_fname;
 	
 	private List<BoardUploadFileDTO> files;
 	}
