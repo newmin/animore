@@ -92,12 +92,12 @@
 		      <section class="review" th:if="${session.loginMember != null}">
 		        <div class="review__row" th:each="review :${review}" th:object="${review}" th:data-rnum="${review.rnum}">
 							<div class="review__column">
-							<th:block th:if="${review.store_fname != null }">
-								<img class="profile__sm" th:src="@{|/img/upload/member/*{store_fname}|}" alt="프로필사진">
-							</th:block>
-							<th:block th:if="${review.store_fname == null }">
-								<img class="profile__sm" src="/img/upload/member/puppy.png" alt="프로필사진">
-							</th:block>
+								<th:block th:if="${review.store_fname != null }">
+									<img class="profile__sm" th:src="@{|/img/upload/member/*{store_fname}|}" alt="프로필사진">
+								</th:block>
+								<th:block th:if="${review.store_fname == null }">
+									<img class="profile__sm" src="/img/upload/member/puppy.png" alt="프로필사진">
+								</th:block>
 								<span class="review__nickname" th:text="*{nickname}">닉네임</span>
 							</div>
 							<div class="review__column">
@@ -169,7 +169,7 @@
 
 							</div>
 							<!-- 리뷰첨부사진 -->
-							<div class="review__column">
+							<div class="review__column review__imgs">
 								<th:block th:each="rvImgs : ${review.files}">
 									<img class="review__img" th:src="@{|/images/${rvImgs.store_fname}}" alt="첨부 이미지" />
 								</th:block>

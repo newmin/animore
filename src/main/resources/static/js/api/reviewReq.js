@@ -79,13 +79,15 @@ const modiFrmBtns_f = e=> {
 			modiForms.forEach(ele=>ele.remove());
 		}
 	}
-	//새로운 수정폼, 기존 리뷰 아래 생성
+	//텍스트 수정폼, 기존 리뷰 아래 생성
 	const modiForm = document.createElement('div');
 	modiForm.classList.add('review__modiForm');
 	e.target.closest('.review__column').append(modiForm);
-	// e.target.closest('.review__column').append('<div class="review__modiForm"></div>');
-	//원래 내용은 숨김처리
-	e.target.closest('.review__main-text').classList.add('hidden');
+	//이미지 수정폼, 새로운 열로 생성
+	const $review_modi_img = document.createElement('div');
+	$review_modi_img.classList.add('review__img-modiForm');
+	const $row = e.target.closest('.review__row');
+	$row.append($review_modi_img);
 	
 	const rnum = e.target.dataset.rnum;
 	const rid = e.target.dataset.id;
@@ -99,8 +101,12 @@ const modiFrmBtns_f = e=> {
 					if(res.rtcd == "00"){
 							//성공로직처리
 							const data = res.data;
+							//원래 내용은 숨김처리
+							e.target.closest('.review__main-text').classList.add('hidden');
+							$row.querySelector('.review__imgs').classList.add('hidden');
 							//리뷰폼띄우기
 							reviewModiForm(data);
+							reviewImgModiForm(data);
 					}else{
 							throw new Error(res.rtmsg);
 					}
@@ -203,9 +209,56 @@ function reviewModiForm(review) {
 	const cancleBtn = document.querySelector('.review__modiCancle');		//수정취소
 	modiBtn.addEventListener('click', modiBtn_f);
 	cancleBtn.addEventListener('click',e=>{ 
+		//텍스트 수정폼 되돌리기
 		document.querySelector('.review__modiForm').remove()
 		document.querySelectorAll('.review__main-text').forEach(ele=>ele.classList.remove('hidden'));
+		//이미지 수정폼 되돌리기
+		document.querySelector('.review__img-modiForm').remove();
+		document.querySelectorAll('.review__imgs').forEach(ele=>ele.classList.remove('hidden'));
 	});
+}
+
+//리뷰사진 X버튼 클릭시 사진 삭제
+const review_img_delBtn_f = e=>{
+	const $fnum = e.target.dataset.fnum;
+	const $rnum = e.target.dataset.rnum;
+	
+	const URL = `/inquire/del?fnum=${$fnum}&rnum=${$rnum}`;
+	
+	request.delete(URL)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == "00"){
+							//성공로직처리
+							const data = res.data;
+							//댓글목록갱신
+							reviewImgModiForm(data);
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+					alert(err.message);
+			});
+	
+}
+
+function reviewImgModiForm(review){
+	let html = '';
+		review.files.forEach(img=>{
+			html+=`     <div class="review__modi-img">`;
+			html+=`       <img class="review__img" src="/images/${img.store_fname}" alt="첨부이미지">`;
+			html+=`       <i data-fnum=${img.fnum} data-rnum=${review.rnum} class="fas fa-times-circle review_img_delBtn"></i>`;
+			html+=`     </div>`;
+		})
+	//html삽입
+	document.querySelector('.review__img-modiForm').innerHTML = html;
+	//이벤트 등록
+	document.querySelectorAll('.review_img_delBtn').forEach(ele=>
+	ele.addEventListener('click',review_img_delBtn_f));
 }
 
 //평점수정 함수
@@ -433,7 +486,7 @@ function refreshReview(data){
 		html += `		</div>`;
 		html += `	</div>`;
 		/*첨부 파일 시작*/
-		html += `	<div class="review__column">`;
+		html += `	<div class="review__column review__imgs">`;
   	review.files.forEach(imgs=>{
     	html+=`     <img class="review__img" src="/images/${imgs.store_fname}}" alt="첨부 이미지" />`;
     });

@@ -65,7 +65,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
 		reviewDAO.updateReview(reviewDTO);
-		reviewFileDAO.registReviewFile(reviewDTO.getRnum(), reviewDTO.getFiles());
+		/* reviewFileDAO.registReviewFile(reviewDTO.getRnum(), reviewDTO.getFiles()); */
 		return allReview(reviewDTO.getBnum());
 	}
 
@@ -75,6 +75,12 @@ public class ReviewSVCImpl implements ReviewSVC {
 		reviewDAO.removeReview(rnum);
 		reviewFileDAO.removeReviewFiles(rnum);
 		return allReview(bnum);
+	}
+	//리뷰파일낱개삭제
+	@Override
+	public ReviewReq delReviewImg(int rnum,int fnum) {
+		reviewFileDAO.removeEachFile(fnum);
+		return findReview(rnum);
 	}
 	
 	

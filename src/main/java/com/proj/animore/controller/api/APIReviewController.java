@@ -173,6 +173,23 @@ public class APIReviewController {
 		result = new Result("00","성공",list);
 		return result;
 	}
+//리뷰첨부파일 삭제
+@DeleteMapping("/del")
+public Result deleteReviewAttach(@RequestParam int fnum,
+																@RequestParam int rnum,
+																//  @RequestParam String rid,
+																 HttpServletRequest request) {
+	Result result;
+	HttpSession session = request.getSession(false);
+	if(session == null || session.getAttribute("loginMember") == null) {
+	result = new Result("01","로그인이 만료되었어요. 다시 로그인해주세요.",null);
+	return result;
+	}
+
+	ReviewReq reviewReq = reviewSVC.delReviewImg(rnum,fnum);
+	result = new Result("00","성공",reviewReq);
+	return result;
+}
 	
 	//사장님 리뷰리댓 등록/수정폼
 	@GetMapping("/rvreply")

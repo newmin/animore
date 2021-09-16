@@ -233,7 +233,10 @@
 /* 리뷰 첨부이미지 */
 .review__column:last-child{
   width: 44%;
-  grid-template-columns: repeat(2, 50%);
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5px; 
+  
 }
 .review__img{
 /* 	width : 50%; */
@@ -241,4 +244,17 @@
 }
 .reviewForm__checked{
 	color : var(--yellow);
+}
+
+/* 리뷰 수정 */
+.review__modi-img{
+	position: relative;
+}
+.review_img_delBtn{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+.review_img_delBtn:hover {
+	color : var(--red);
 }

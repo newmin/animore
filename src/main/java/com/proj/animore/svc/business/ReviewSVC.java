@@ -19,6 +19,8 @@ public interface ReviewSVC {
     List<ReviewReq> updateReview(ReviewDTO reviewDTO);
     //리뷰삭제
     List<ReviewReq> removeReview(int bnum, int rnum);
+    //리뷰파일 개별 삭제
+    ReviewReq delReviewImg(int rnum, int fnum);
     //사장님 이전 리뷰리댓 조회
     ReviewReq findRvReply(int rnum);
     //사장님 리뷰리댓 등록
