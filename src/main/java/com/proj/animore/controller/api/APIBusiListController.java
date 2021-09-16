@@ -23,19 +23,7 @@ public class APIBusiListController {
 	
 	@GetMapping("/bhospital/api")
 	public Result<List<BusinessLoadDTO>> bhospitalTagSearch(
-			@RequestParam("nightcare") boolean nightcare,
-			@RequestParam("visitcare") boolean visitcare,
-			@RequestParam("dental") boolean dental,
-			@RequestParam("holidayopen") boolean holidayopen,
-			@RequestParam("rareani") boolean rareani) {
-		
-		HtagBusiListReq htblr = new HtagBusiListReq();
-		
-		htblr.setNightcare(nightcare);
-		htblr.setVisitcare(visitcare);
-		htblr.setDental(dental);
-		htblr.setHolidayopen(holidayopen);
-		htblr.setRareani(rareani);
+			HtagBusiListReq htblr) {
 		
 		List<BusinessLoadDTO> list = businessSVC.busiListHospitalTag("bhospital", htblr);
 		log.info("hTagBusiList:{}",list);
