@@ -56,21 +56,26 @@ public class MyPageController {
    private final GoodBoardSVC goodBoardSVC;
    private final FileStore fileStore;
    
-   //프로필 사진 불러오기 
-   @GetMapping("")
+   //프로필 사진 등록
+   @PostMapping
    @Transactional
    public String mypageProfile(@Valid @ModelAttribute ProfileForm profileForm,
 		   BindingResult bindingResult,
 		   HttpServletRequest request,
 		   RedirectAttributes redirectAttributes) throws IllegalStateException, IOException{
-	   List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(profileForm.getFiles());
+	   
 	   
 	HttpSession session = request.getSession(false);
 		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String loginMemberId = loginMember.getId();
+		MemberDTO memberDTO = new MemberDTO();
 	   
-	   MemberDTO memberDTO = new MemberDTO();
+		if(profileForm.getFiles()!=null || profileForm.getFiles().size()!=0) {			
+			fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");
+			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(profileForm.getFiles());
+			memberDTO.setUpload_fname(loginMemberId);
+		}
 	   return null;
 	   
 	   
