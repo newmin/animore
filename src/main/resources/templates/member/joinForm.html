@@ -34,7 +34,7 @@
             
             <!-- TODO 추가한 부분인데 사용할거면 css 손봐야되고, 안쓸거면 지우셔도 됩니다 -->
             <h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
-            <h1 th:if="${mtype} == 'S'">특수회원가입양식</h1>
+            <h1 th:if="${mtype} == 'S'">사업자회원가입양식</h1>
             
      				<div th:errors="*{global}" th:errorclass="field-msg">
 								<p th:each="err : ${#fields.globalErrors()}"
@@ -124,14 +124,7 @@
             
             <div th:if="${mtype} == 'S'">
             <!-- 특수회원전용정보 -->
-               <h3 class="joinform__title">특수회원전용정보</h3>
-               <hr>
-               <h3 class="joinform__title">자격증정보</h3>
-               <ul class="joinform">
-                  <li><div class="joinform__row"><label for="licenseno">자격증번호</label></div>               <input class="joinform__input" type="text" name="licenseno" id="licenseno" /></li>
-                  <li><div class="joinform__row"><label for="image">자격증사진</label></div>                     <input class="joinform__input" type="file" name="image" id="image" /></li>
-               </ul>
-               
+             
                <h3 class="joinform__title">사업자정보</h3>
                <hr>
                <ul class="joinform">
