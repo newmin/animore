@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,6 +17,7 @@ import com.proj.animore.dto.board.RboardDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 public class RboardDAOImplTest {
 	
@@ -21,6 +25,7 @@ public class RboardDAOImplTest {
 	private RboardDAO rdao;
 	
 	@Test
+	@Order(1)
 	@DisplayName("댓글등록")
 	@Disabled
 	void register() {
@@ -40,6 +45,7 @@ public class RboardDAOImplTest {
 	}
 	
 	@Test
+	@Order(2)
 	@DisplayName("댓글조회 by 댓글번호")
 	@Disabled
 	void findbyRnum() {
@@ -48,6 +54,7 @@ public class RboardDAOImplTest {
 	}
 	
 	@Test
+	@Order(3)
 	@DisplayName("댓글수정처리")
 	@Disabled
 	void modify() {
@@ -69,19 +76,21 @@ public class RboardDAOImplTest {
 	}
 	
 	@Test
-	@DisplayName("댓글삭제처리")
-	@Disabled
-	void del() {
-		
-		
-//		log.info("rList:{}",rdao.del(1, 6, "normal@zxc.c"));	//틀린아이디,	삭제안되고 목록갱신만됨
-		log.info("rList:{}",rdao.del(1, 6, "normal@zxc.com"));	//맞는아이디,	삭제되고 목록갱신됨
-	}
-	
-	@Test
+	@Order(4)
 	@DisplayName("댓글목록")
 	void all() {
 		// 1번 게시글의 댓글목록
 		log.info("rList:{}",rdao.all(1));
 	}
+
+	@Test
+	@Order(5)
+	@DisplayName("댓글삭제처리")
+	@Disabled
+	void del() {
+		
+//		log.info("rList:{}",rdao.del(1, 6, "normal@zxc.c"));	//틀린아이디,	삭제안되고 목록갱신만됨
+		log.info("rList:{}",rdao.del(1, 6, "normal@zxc.com"));	//맞는아이디,	삭제되고 목록갱신됨
+	}
+	
 }
