@@ -68,7 +68,9 @@ $heart.addEventListener('click',e=>{
             .then(res=>{
                    if(res.rtcd =='00'){
                        if(confirm("게시글을 삭제하시겠습니까?")) location.href=`/board/${e.target.dataset.bcategory}`;
-                   }
+                   }else{
+						alert(res.rtmsg);
+					}
                    throw new Error(res.rtmsg);
                 })
                 .catch(err=>{

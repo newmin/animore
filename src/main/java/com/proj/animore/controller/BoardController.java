@@ -232,8 +232,8 @@ public class BoardController {
 		
 		HttpSession session = request.getSession(false);
 
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		if(loginMember == null) return "redirect:/login";
+		//LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		if(session == null) return "redirect:/login";
 		
 		boardForm.setBcategory(cate);
 			
@@ -302,8 +302,8 @@ public class BoardController {
 							HttpServletRequest request) {
 		ReplyForm replyForm = new ReplyForm();
 		
-//		//세션에서 회원정보 가져오기
-//		HttpSession session = request.getSession(false);
+		//세션에서 회원정보 가져오기
+//		HttpSession session = request.getSession(false);		
 //		if(session != null && session.getAttribute("loginMember") != null) {
 //			LoginMember loginMember =
 //						(LoginMember)session.getAttribute("loginMember");
@@ -311,6 +311,7 @@ public class BoardController {
 //			replyForm.setId(loginMember.getId());
 //		}
 		BoardReqDTO pBoardDTO = boardSVC.findBoardByBnum(bnum);
+		if(pBoardDTO.getBcategory().equals('Q')) {
 		
 		replyForm.setPbnum(pBoardDTO.getBnum());
 		replyForm.setBcategory(pBoardDTO.getBcategory());
@@ -319,6 +320,8 @@ public class BoardController {
 		model.addAttribute("replyForm",replyForm);
 		
 		return "board/replyForm";
+		}
+		return "redirect:/board/Q";	
 	}
 	//답글작성처리
 	@PostMapping("/reply/{bnum}")
@@ -363,12 +366,22 @@ public class BoardController {
 	//게시글수정양식출력
 	@GetMapping("/modify/{bnum}")
 	public String modifyPostForm(@PathVariable Integer bnum,
-								Model model) {
+								Model model,
+								HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
 		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
 		
-		model.addAttribute("boardForm",boardSVC.findBoardByBnum(bnum));
+		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
+		
+		if(loginMemberId.equals(boardReqDTO.getId())) {
+		
+		model.addAttribute("boardForm",boardReqDTO);
 		log.info("boardForm:{}",boardSVC.findBoardByBnum(bnum));
 		return "board/modifyBoardForm";
+		}
+		return "index";
 	}
 	
 	//게시글 수정 처리
@@ -402,11 +415,21 @@ public class BoardController {
 	//게시글 삭제처리
 	@ResponseBody
 	@DeleteMapping("/{bnum}")
-	public Result deletePost(@PathVariable Integer bnum) {
+	public Result deletePost(@PathVariable Integer bnum,
+								HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
+		
+		BoardReqDTO delBoard = boardSVC.findBoardByBnum(bnum);
+		if(loginMemberId.equals(delBoard.getId())) {
 		
 		boardSVC.deleteBoard(bnum);
 		
 		return new Result ("00","ok",bnum);
+		} 
+		return new Result("01","nok","불분명한 접근입니다.");
 	}
 	
 	//게시글첨부파일삭제
