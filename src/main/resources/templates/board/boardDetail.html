@@ -22,10 +22,7 @@
 		    <a href="#" th:if ="*{bcategory == 'M'}" th:href="@{/board/{cate}(cate=M)}" >벼룩시장</a>
 		    <a href="#" th:if ="*{bcategory == 'P'}" th:href="@{/board/{cate}(cate=P)}" >내새끼보세요</a>
 		</div>
-        <div class="boardForm__titleContainer">
-            <div class="boardForm__title" th:text="*{btitle}">제목명</div>
-                   <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
-                   <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
+		       <div class="boardForm__noticebox" th:if="${session.loginMember != null && 
                    								session.loginMember.id.equals('admin@animore.com')&&
                    								notice == false &&
                    								post.bcategory != 'P'}">
@@ -45,6 +42,12 @@
                         <span class="slider round" th:data-bnum="*{bnum}"></span>
                   </label>
                   </div>
+        <div class="boardForm__titleContainer">
+            <div class="boardForm__title" th:text="*{btitle}">제목명</div>
+                   <!--TODO 프로필사진 클래스명 같은걸로 통일해도..?-->
+                   
+                   
+                 
             <div class="boardForm__btns">
                 <button type="button" class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
                 <button type="button" class="boardForm__replyReBtn" th:if="${session.loginMember != null && post.bcategory == 'Q'}" th:data-bnum="*{bnum}">답글</button>
@@ -61,6 +64,8 @@
             </div>
         </div>
        </div>
+
+                  
        <div class="boardForm__contents">
        	<th:block th:if ="*{files != null}" th:each="img : *{files}">
        		<img class="boardForm__img" th:src="@{|/images/${img.store_fname}|}" alt="업로드파일" />

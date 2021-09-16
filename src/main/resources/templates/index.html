@@ -56,7 +56,7 @@
           </div>
           <div th:unless="${post.files.size() == 0}"> 
          <a th:href="@{|/board/post/${post.bnum}|}"> 
-          <img class="b_galary_img board-best__img"  src="#" th:src="@{|/img/upload/board/${post.files[0].getStore_fname()}|}"></img> 
+          <img class="b_galary_img board-best__img"  src="#" th:src="@{|/images/${post.files[0].getStore_fname()}|}"></img> 
          </a>
 		 </div>    
 		 <th:block th:unless="${post.files.size() != 0}"> 

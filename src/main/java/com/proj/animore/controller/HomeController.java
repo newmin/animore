@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dto.board.BoardReqDTO;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.board.BoardSVC;
@@ -25,8 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	private final BoardSVC boardSVC;
+	private final FileStore fileStore;
+	
 	@GetMapping("/")
 	public String home(Model model) {
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");
 		String bcategory ="Q";
 		List<BoardReqDTO> list = boardSVC.bgoodList(bcategory);
 		model.addAttribute("post",list);
@@ -36,6 +40,7 @@ public class HomeController {
 	@GetMapping("/main/{bcategory}")
 	@ResponseBody
 	public Result bestPost(@PathVariable String bcategory) {
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/board/");
 		List<BoardReqDTO> list = boardSVC.bgoodList(bcategory);
 		Result result = new Result();
 		log.info("bcategory{}:",bcategory);

@@ -1,7 +1,6 @@
 package com.proj.animore.form;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Email;
@@ -13,6 +12,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.proj.animore.dto.board.BoardUploadFileDTO;
 
 import lombok.Data;
 
@@ -30,7 +31,9 @@ public class JoinMemberForm {
   private String pw;
   @NotBlank
   private String pw2;
+  
   private MultipartFile image;
+  //private MetaOfUploadFile image;
   @NotBlank
   @Size(max=5)
   private String name;
@@ -50,5 +53,8 @@ public class JoinMemberForm {
    @NotBlank
   private String address;
   
+   
   private List<String> myAni;
+  
+  
 }

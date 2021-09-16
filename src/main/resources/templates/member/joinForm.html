@@ -55,8 +55,9 @@
     </li>
     <li>
       <div class="joinform__row"><label for="pw">비밀번호</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input class="joinform__input" type="password" th:field="*{pw}" required/></div>
+      <div class="joinform__row"><input class="joinform__input" type="password" placeholder="영문,숫자,특수문자 조합으로 9~12자리로 설정하시오" th:field="*{pw}" required/></div>
     </li>
+    <p th:if="${#fields.hasErrors('pw')}" th:errors="*{pw}" class="field-errmsg" >Incorrect date</p>
     <li>
       <div class="joinform__row"><label for="pw2">비밀번호 재확인</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row"><input type="password" class="joinform__input" th:field="*{pw2}" th:errorclass="field-error" required><p class="error__pw2"></p></div>
@@ -67,7 +68,7 @@
     	<!-- <p th:errors="*{pw2}" th:errorclass="field-msg">비밀번호오류</p> -->
     </li>
     <li>
-      <div class="joinform__row"><label for="image">프로필사진</label></div>
+      <div class="joinform__row"><label for="image">프로필사진</label><span class="joinform__required-mark">*</span></div>
       <div class="joinform__row"><input type="file" class="joinform__input" th:field="*{image}"></div>
     </li>
     <li>

@@ -314,7 +314,8 @@ border-radius: 2px;
 }
 .boardForm__noticebox{
 	display:flex;
-	flex-direction: row;
+	flex-direction: column;
+	align-items: flex-end;
 }
 .boardForm__proImg{
     border-radius: 50%;
@@ -434,6 +435,7 @@ border-radius: 2px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-top: 7px;
 }
 
 .addPost__icons .filetype {
