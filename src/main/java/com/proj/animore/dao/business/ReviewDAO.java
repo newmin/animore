@@ -22,7 +22,7 @@ public interface ReviewDAO {
     //사장님 이전 리뷰리댓 조회
     ReviewReq findRvReply(int rnum);
     //사장님 리뷰리댓등록
-    List<ReviewReq> addRvReply(ReviewReq reviewReq);
+    void addRvReply(ReviewReq reviewReq);
     //사장님 리뷰리댓 삭제
     void delRvReply(int rnum);
 	//rnum추출
