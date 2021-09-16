@@ -2,6 +2,7 @@ package com.proj.animore.svc;
 
 import java.util.List;
 
+import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.dto.business.BcategoryDTO;
@@ -45,12 +46,8 @@ public interface MemberSVC {
 	//비밀번호 찾기
 	ChangePwForm findPw(FindPwForm findPwForm);
 
-	//비밀번호 변경처리
-	int changePW(ChangePwForm changePWForm);
-	
-	
-	
-	
+	//비밀번호 변경처리 
+	MemberDTO changePW(String id,ChangPwReq changPwReq);
 	
 	/**
 	 * 회원 유무체크

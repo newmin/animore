@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
@@ -203,7 +204,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	//비밀번호 변경
 	@Override
-	public int changePw(ChangePwForm changePwForm) {
+	public MemberDTO changePW(String id,ChangPwReq changPwReq) {
 		
 		StringBuffer sql = new StringBuffer();
 		
@@ -212,38 +213,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sql.append(" where id=? ");
 		sql.append("   and pw = ? ");
 		
-		int result = jdbcTemplate.update(sql.toString(),changePwForm.getId(),changePwForm.getPw(), changePwForm.getPwChk() );
-		return result;
+		jdbcTemplate.update(sql.toString(),changPwReq.getPwChk(),id, changPwReq.getPw() );
+		return findMemberById(id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
