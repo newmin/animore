@@ -29,7 +29,7 @@
         </div>
         <div class="mypage_profile_usertypeicon">
           <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
-          <img th:if="${session.loginMember.mtype=='B'}" src="/img/btype.png" alt="사업자회원유형" >
+          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
         </div>
         <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
           Tester1
