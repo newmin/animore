@@ -7,7 +7,7 @@
 //const $id = html에서 호출	//아이디
 const bnum = document.querySelector('.selected-busi').dataset.bnum;		//업체번호
 //  버튼
-const regiBtn = document.querySelector('.review__regist');  //등록하기
+let regiBtn = document.querySelector('.review__regist');  //등록하기
 let modiFrmBtns = document.querySelectorAll('.review__modi-frm'); //수정폼띄우기
 let delBtns = document.querySelectorAll('.review__del');		//삭제하기
 
@@ -54,9 +54,7 @@ const regiBtn_f = e =>{
 							//리뷰목록갱신
 							refreshReview(data);
 							//리뷰입력창 초기화
-							rcontent.value=null;
-							//등록후 별점도 초기화?
-							document.getElementById('point5').checked=true;
+							//review_input_init();
 					}else{
 						alert(res.rtmsg);
 						throw new Error(res.rtmsg);
@@ -68,6 +66,100 @@ const regiBtn_f = e =>{
 					alert(err.message);
 			});
 };
+
+/*	//리뷰 등록별점
+	let one = document.querySelector('.one');
+	let two = document.querySelector('.two');
+	let three = document.querySelector('.three');
+	let four = document.querySelector('.four');
+	let five = document.querySelector('.five');
+
+
+	let star = document.querySelectorAll('.reviewForm__score');
+
+	let score=0;
+	
+	function score1(){
+	  star.forEach(ele=>ele.classList.remove('reviewForm__checked'));
+	  one.classList.add('reviewForm__checked');
+	  score=1
+	}
+	function score2(){
+	  score1();
+	  two.classList.add('reviewForm__checked');
+	  score=2
+	}
+	function score3(){
+	  score2();
+	  three.classList.add('reviewForm__checked');
+	  score=3
+	}
+	function score4(){
+	  score3();
+	  four.classList.add('reviewForm__checked');
+	  score=4
+	}
+	function score5(){
+	  score4();
+	  five.classList.add('reviewForm__checked');
+	  score=5
+	}
+
+	one?.addEventListener('click',score1);
+	two?.addEventListener('click',score2);
+	three?.addEventListener('click',score3);
+	four?.addEventListener('click',score4);
+	five?.addEventListener('click',score5);
+
+//등록후 등록란 초기화
+function review_input_init(){
+	let html =``;
+  html+=`  <form name="reviewForm" class="reviewform" method="post" action="#" enctype="multipart/form-data">`;
+  html+=`      <p class="title_star">별점과 리뷰를 남겨주세요.</p>`;
+  html+=`      <div class="review_rating">`;
+  html+=`          <p class="warning_msg">별점을 선택해 주세요.</p>`;
+  html+=`          <div class="rscore">`;
+  html+=`              <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 radio 적용 -->`;
+  html+=`              <input type="radio" name="rscore" id="point1" value="1" title="1점" hidden>`;
+  html+=`              <label for="point1"><i class="fas fa-star reviewForm__score one reviewForm__checked"></i></label>`;
+  html+=`              <input type="radio" name="rscore" id="point2" value="2" title="2점" hidden>`;
+  html+=`              <label for="point2"><i class="fas fa-star reviewForm__score two reviewForm__checked"></i></label>`;
+  html+=`              <input type="radio" name="rscore" id="point3" value="3" title="3점" hidden>`;
+  html+=`              <label for="point3"><i class="fas fa-star reviewForm__score three reviewForm__checked"></i></label>`;
+  html+=`              <input type="radio" name="rscore" id="point4" value="4" title="4점" hidden>`;
+  html+=`              <label for="point4"><i class="fas fa-star reviewForm__score four reviewForm__checked"></i></label>`;
+  html+=`              <input type="radio" name="rscore" id="point5" value="5" title="5점" hidden checked>`;
+  html+=`              <label for="point5"><i class="fas fa-star reviewForm__score five reviewForm__checked"></i></label>`;
+  html+=`          </div>`;
+  html+=`      </div>`;
+  html+=`      <!-- 리뷰등록란 -->`;
+  html+=`      <div class="review__contents">`;
+  html+=`          <div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
+  html+=`          <textarea rows="10" class="review__textarea" name="rcontent"></textarea>`;
+  html+=`          <div class="review__contents-btns">`;
+  html+=`            <input type="file" class="review__files" name="files" multiple="multiple"/>`;
+  html+=`            <button class="review__regist" type="button">등록</button>`;
+  html+=`          </div>`;
+  html+=`      </div>   `;
+  html+=`  </form>`;
+  
+  document.querySelector('.review__regi-input').innerHTML=html;
+  //이벤트 재등록
+  regiBtn = document.querySelector('.review__regist');  //등록하기
+  regiBtn?.addEventListener('click',regiBtn_f);
+  //별점 함수
+   one = document.querySelector('#point1');
+	 two = document.querySelector('#point2');
+	 three = document.querySelector('#point3');
+	 four = document.querySelector('#point4');
+	 five = document.querySelector('#point5');
+	star = document.querySelectorAll('.reviewForm__score');
+	one?.addEventListener('click',score1);
+	two?.addEventListener('click',score2);
+	three?.addEventListener('click',score3);
+	four?.addEventListener('click',score4);
+	five?.addEventListener('click',score5);
+}*/
 
 //수정폼 버튼 클릭시, 수정폼+수정버튼 출력
 const modiFrmBtns_f = e=> {

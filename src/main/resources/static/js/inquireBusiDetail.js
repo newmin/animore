@@ -3,12 +3,12 @@
  */
  'use strict';
 
-	//리뷰 등록별점
-	const one = document.querySelector('.one');
-	const two = document.querySelector('.two');
-	const three = document.querySelector('.three');
-	const four = document.querySelector('.four');
-	const five = document.querySelector('.five');
+		//리뷰 등록별점
+	let one = document.querySelector('.one');
+	let two = document.querySelector('.two');
+	let three = document.querySelector('.three');
+	let four = document.querySelector('.four');
+	let five = document.querySelector('.five');
 
 
 	const star = document.querySelectorAll('.reviewForm__score');
