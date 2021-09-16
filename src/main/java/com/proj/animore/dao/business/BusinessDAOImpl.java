@@ -92,6 +92,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append("where b.bnum=c.bnum  ");
 		sql.append("  and b.bnum=r.bnum(+)	  ");
 		sql.append("  and "+bcategory+" = 'Y'  ");
+		sql.append(" order by r.bscore desc nulls last ");
 		
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
 					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
@@ -110,7 +111,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 		sql.append(" where b.bnum=c.bnum ");
 //		sql.append("   and b.bnum=r.bnum(+) ");
 		sql.append("   and "+bcategory+" = 'Y'  ");
-		sql.append("order by fdate desc nulls last ");
+		sql.append("order by fdate desc , r.bscore desc nulls last ");
 		
 		List<BusinessLoadDTO> list = jdbcTemplate.query(sql.toString(),
 				   new BeanPropertyRowMapper<>(BusinessLoadDTO.class));
