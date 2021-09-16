@@ -50,8 +50,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		StringBuffer sql = new StringBuffer();
-		// TODO 리뷰는 수정일시를 저장하기보다, boolean으로 받아서 true라면 '수정됨'을 표시하는 안건
-		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname,rvudate, rvReply,store_fname ");
+		sql.append("select rv.id,rv.rnum,rv.rcontent,rscore,rvcdate,rnum,m.nickname,rvudate, rvReply,m.store_fname ");
 		sql.append("  from review rv, member m ");
 		sql.append(" where bnum = ? ");
 		sql.append("   and rv.id=m.id ");
@@ -106,14 +105,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 	
 	//리뷰수정
 	@Override
-	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
+	public void updateReview(ReviewDTO reviewDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rcontent = ?, ");
 		sql.append("   	   rscore =?, ");
 		sql.append("   	   rvudate = systimestamp ");
 		sql.append(" where rnum = ? ");
-		//sql.append("   and id =? ");
 
 		jdbcTemplate.update(sql.toString(), 
 							reviewDTO.getRcontent(), 
@@ -125,12 +123,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 		//수정 중 업체가 삭제된 경우? 업체정보(bnum)를 찾을 수 없는 경우
 		//수정된 폼에서 내용or평점의 값이 비어있는 경우
 		
-
-		return allReview(reviewDTO.getBnum());
 	}
 	//리뷰삭제
 	@Override
-	public List<ReviewReq> removeReview(int bnum, int rnum) {
+	public void removeReview(int rnum) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("delete from review ");
 		sql.append(" where rnum = ? ");
@@ -141,7 +137,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 		//접속만료 등 id값을 찾을 수 없는 경우
 		//업체삭제 등 bnum을 찾을 수 없는 경우
 		
-		return allReview(bnum);
 	}
 	
   //사장님 이전 리뷰리댓 조회
@@ -179,9 +174,9 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 
 	@Override
-	public int rnumCurrVal() {
+	public Integer rnumCurrVal() {
 		String sql = "select REVIEW_RNUM_SEQ.currval from dual ";
-		int rnum = jdbcTemplate.update(sql);
+		int rnum = jdbcTemplate.queryForObject(sql,Integer.class);
 		return rnum;
 	}
 }

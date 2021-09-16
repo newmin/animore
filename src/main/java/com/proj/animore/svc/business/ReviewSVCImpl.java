@@ -11,9 +11,11 @@ import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 //@Transactional
 public class ReviewSVCImpl implements ReviewSVC {
 
@@ -24,20 +26,31 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
+		
 		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());
-		return reviewDAO.allReview(reviewDTO.getBnum());
+		
+		return allReview(reviewDTO.getBnum());
 	}
 	
 	//업체 조회(모든 리뷰)
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
-		return reviewDAO.allReview(bnum);
+		List<ReviewReq> list = reviewDAO.allReview(bnum);
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum()));
+		}
+		return list;
 	}
 
 	//내가 쓴 리뷰(마이페이지)
 	@Override
 	public List<ReviewReq> myReview(String id) {
-		return reviewDAO.myReview(id);
+		List<ReviewReq> list = reviewDAO.myReview(id);
+		/*
+		 * for(int i=0; i<list.size(); i++) {
+		 * list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum())); }
+		 */
+		return list;
 	}
 	
 	//리뷰 1개 조회(수정시 호출)
@@ -51,14 +64,17 @@ public class ReviewSVCImpl implements ReviewSVC {
 	//리뷰 수정
 	@Override
 	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
-		return reviewDAO.updateReview(reviewDTO);
+		reviewDAO.updateReview(reviewDTO);
+		reviewFileDAO.registReviewFile(reviewDTO.getRnum(), reviewDTO.getFiles());
+		return allReview(reviewDTO.getBnum());
 	}
 
 	//리뷰 삭제
 	@Override
 	public List<ReviewReq> removeReview(int bnum, int rnum) {
+		reviewDAO.removeReview(rnum);
 		reviewFileDAO.removeReviewFiles(rnum);
-		return reviewDAO.removeReview(bnum, rnum);
+		return allReview(bnum);
 	}
 	
 	

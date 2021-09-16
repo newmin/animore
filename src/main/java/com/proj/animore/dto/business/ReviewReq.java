@@ -24,6 +24,4 @@ public class ReviewReq {
 	private LocalDate rvudate;
 	private String store_fname; //프로필 사진명
 	private List<BusiUploadFileDTO> files;
-//	private List<MultipartFile> files;
-//	private List<ReviewFile> files;
 }

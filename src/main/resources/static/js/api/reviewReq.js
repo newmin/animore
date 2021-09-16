@@ -433,7 +433,11 @@ function refreshReview(data){
 		html += `		</div>`;
 		html += `	</div>`;
 		/*첨부 파일 시작*/
-		html += `	<div class="review__column"><img class="review__img" src="https://picsum.photos/id/93/180/130" alt="리뷰첨부사진"></div>`;
+		html += `	<div class="review__column">`;
+  	review.files.forEach(imgs=>{
+    	html+=`     <img class="review__img" src="/images/${imgs.store_fname}}" alt="첨부 이미지" />`;
+    });
+    html += `	</div>`;
 		/*첨부파일 종료*/
 		html += `</div>`;
 		/*각 리뷰row 종료*/

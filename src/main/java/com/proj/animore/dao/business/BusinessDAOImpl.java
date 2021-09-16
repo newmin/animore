@@ -47,7 +47,6 @@ public class BusinessDAOImpl implements BusinessDAO {
 				new BeanPropertyRowMapper<>(BusinessLoadDTO.class),
 				bnum);
 		
-		log.info(businessLoadDTO.toString());
 		return businessLoadDTO;
 	}
 
