@@ -27,11 +27,12 @@
         
         <a href="mypageProfile"><button class="mypageProfile">프로필 수정</button></a>
         </div>
-        <div class="mypage_profile_nickname">
-          Tester1
-        </div>
         <div class="mypage_profile_usertypeicon">
-          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형" >
+          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
+          <img th:if="${session.loginMember.mtype=='B'}" src="/img/btype.png" alt="사업자회원유형" >
+        </div>
+        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+          Tester1
         </div>
         <div class="mypage_profile_mileage">
           마일리지: 1000p
