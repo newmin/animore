@@ -169,10 +169,10 @@ function refreshReply(data){
 					html += `<div class="boardForm__replyContainer">`
 			if(rec.rindent > 0){
 				for(let i=0; i<rec.rindent; i++){
-					html += `<div style="width:50px"></div>`;
+					html += `<div class="boardForm__replyIndent"></div>`;
 				}
 			}
-		      html += `<div class="boardForm__replyImgWrap"><img src="/img/upload/member/${rec.store_fname}" alt="" class="boardForm__proImg"></div>`;
+		      html += `<div class="boardForm__replyImgWrap"><img src="/img/upload/member/${rec.store_fname}" alt="프로필사진" class="boardForm__proImg profile__sm"></div>`;
 		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}">`;
 		      html += `  <div>`;
 		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
