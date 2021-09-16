@@ -23,6 +23,10 @@
   font-weight: 600;
 }
 
+.login__ad{
+	cursor: pointer;
+}
+
 .link a{
   margin: 30px 5px;
 }
