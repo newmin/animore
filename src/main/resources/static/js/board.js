@@ -6,7 +6,8 @@
     for(let i=0; i<$addPostBtns.length; i++){
         $addPostBtns[i].addEventListener('click',e=>{
         const cate = e.target.dataset.cate
-            location.href=`/board?cate=${cate}`;
+        if($id){location.href=`/board?cate=${cate}`}
+        else{location.href=`/login?redirectUrl=/board?cate=${cate}`};
 
         });
     }
