@@ -28,13 +28,12 @@
 }
 
 .mypage_profile_nickname{
-  font-size: 30px;
-  margin-left: 100px;
+  font-size: 20px;
 }
 
 .mypage_profile_usertypeicon{
   height: 50px; width: 50px;
-  margin-left: 10px;
+  margin-left: 50px;
 }
 .mypage_profile_usertypeicon img{
   height: 100%; width: 100%;
