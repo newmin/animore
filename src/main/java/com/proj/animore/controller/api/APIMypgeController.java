@@ -200,13 +200,7 @@ public class APIMypgeController {
 		html.append("<li><label for=\"id\">아이디</label></li>");
 		html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>");
 		
-		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-		
-		html.append("<li><label for=\"pw\">새로운 비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-		
-		html.append("<li><label for=\"pw\">새로운 비밀번호 확인</label></li>");
+		html.append("<li><label for=\"pw\">비밀번호</label></li>");
 		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
 		
 		
@@ -254,7 +248,8 @@ public class APIMypgeController {
 	//내정보 개안정보수정 처리
 	@PatchMapping("/mypageModify")
 	public Result mypageModify(HttpServletRequest request,
-			@RequestBody ModifyForm modidyfyForm) { 
+			@RequestBody ModifyForm modidyfyForm,
+			BindingResult bindingResult) { 
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
@@ -265,7 +260,14 @@ public class APIMypgeController {
 		String id = loginMember.getId();
 		memberSVC.modifyMember(id, memberDTO2);
 		MemberDTO memberDTO = memberSVC.findMemberById(id);
-
+		
+		
+		if(!memberDTO.getPw().equals(modidyfyForm.getPw())) {
+			bindingResult.reject("pw","현재 비밀번호가 일치하지 않습니다.");
+			return new Result("01","비밀번호가 일치하지 않아 수정할 수 없습니다.",null);
+		}
+		
+		
 		Result result;
 		
 		StringBuffer html = new StringBuffer();
@@ -560,34 +562,43 @@ public class APIMypgeController {
 	}
 	//비밀번호 수정처리
 	@PatchMapping("/mypagePwModify")
-	public Result mypagePwModify(@Valid @ModelAttribute ChangePwForm changePwForm,
+	public Result mypagePwModify(@Valid @RequestBody ChangePwForm changePwForm,
 			BindingResult bindingResult,
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
-
+		
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
-		//todo이전 비밀번호 같은지 확인
 		
-		//새 비밀번호 확인
-//		if(!changePwForm.getPwChk().equals(changePwForm.getPwChk2())) {
-//			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
-//		}
-//		//이전 비밀번호와 변경할 비밀번호가 동일한지 체크
-//		if(changePwForm.getPw().equals(changePwForm.getPwChk())) {
-//			
-//			bindingResult.reject("error.member.changePw", "이전 비밀번호와 동일합니다.");
-//		}
 		ChangPwReq changPwReq = new ChangPwReq();
 		
 		BeanUtils.copyProperties(changePwForm,changPwReq);
 		
 		MemberDTO memberDTO = memberSVC.changePW(loginMember.getId(), changPwReq);
+		//todo이전 비밀번호 같은지 확인
+		if(!memberDTO.getPw().equals(changePwForm.getPw())) {
+			bindingResult.reject("pwChk","현재 비밀번호가 일치하지 않습니다.");
+			return new Result("03","현재 비밀번호가 일치하지 않습니다.",null);
+		}
+		Result result;
+		//새 비밀번호 확인
+		if(!changePwForm.getPwChk().equals(changePwForm.getPwChk2())) {
+			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
+			return new Result("01","새비밀번호 확인이 일치하지 않습니다.",null);
+		}
+		//이전 비밀번호와 변경할 비밀번호가 동일한지 체크
+		if(changePwForm.getPw().equals(changePwForm.getPwChk())) {
+			
+			bindingResult.reject("error.member.changePw", "이전 비밀번호와 동일합니다.");
+			return new Result("02","이전 비밀번호와 동일합니다.",null);
+
+			
+		}
+		
 		log.info(changePwForm.toString());
 		log.info(changPwReq.toString());
 		
-		Result result;
 		
 		StringBuffer html = new StringBuffer();
 		

@@ -1,5 +1,6 @@
 package com.proj.animore.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.proj.animore.common.file.FileStore;
+import com.proj.animore.common.file.MetaOfUploadFile;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
@@ -30,6 +35,7 @@ import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
+import com.proj.animore.form.ProfileForm;
 import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.business.BusinessSVC;
@@ -48,8 +54,29 @@ public class MyPageController {
    private final MemberSVC memberSVC;
    private final BusinessSVC businessSVC;
    private final GoodBoardSVC goodBoardSVC;
+   private final FileStore fileStore;
    
-   
+   //프로필 사진 불러오기 
+   @GetMapping("")
+   @Transactional
+   public String mypageProfile(@Valid @ModelAttribute ProfileForm profileForm,
+		   BindingResult bindingResult,
+		   HttpServletRequest request,
+		   RedirectAttributes redirectAttributes) throws IllegalStateException, IOException{
+	   List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(profileForm.getFiles());
+	   
+	HttpSession session = request.getSession(false);
+		
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		String loginMemberId = loginMember.getId();
+	   
+	   MemberDTO memberDTO = new MemberDTO();
+	   return null;
+	   
+	   
+	   
+   }
+
    //회원탈퇴처리
    @DeleteMapping("/mypagePwModify")
    public String changePW(

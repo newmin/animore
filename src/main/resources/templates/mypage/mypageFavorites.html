@@ -23,13 +23,15 @@
      <!-- 프로필정보 -->
       <div class="mypage_profile_container">
         <div class="mypage_profile_profileimg">
-          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+        <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+        
+        <a href="mypageProfile"><button class="mypageProfile">프로필 수정</button></a>
         </div>
         <div class="mypage_profile_nickname">
           Tester1
         </div>
         <div class="mypage_profile_usertypeicon">
-          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
+          <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형" >
         </div>
         <div class="mypage_profile_mileage">
           마일리지: 1000p
@@ -41,15 +43,16 @@
           <h2 class="mypage_aside_title">마이페이지</h2>
           <ul class="mypage_aside_menu">
             <!-- TODO th:href 등록 파일명'임의'표기-->
-            <li  th:if= "${mtype.equals('S')}" class="mypage_aside_menu"><a href="/mypage/mybusilist" class="mypage__myInfoBtn">내업체 목록</a></li>
+            <li class="mypage_aside_menu mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
+            
+            <li th:if= "${mtype.equals('S')}" class="mypage_aside_menu"><a href="/mypage/mybusilist" class="mypage__myInfoBtn">내업체 목록</a></li>
             
             <li th:if= " ${mtype.equals('S')}" class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
             
-            <li><a class="mypage__myFavolitBtn" href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+  
             
-            <li class="mypage_aside_menu"><a href="/mypage/mypageReview" class="mypage__myReviewBtn">내가 쓴 리뷰</a></li>
-            
-            <li class="mypage_aside_menu"><a href="/mypage/mypagePost" class="mypage__mypostBtn">내가 쓴 글</a></li>
+            <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
+            <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
             
             <li class="mypage_aside_menu"><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
             
