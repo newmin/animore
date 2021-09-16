@@ -2,6 +2,7 @@ package com.proj.animore.dao;
 
 import java.util.List;
 
+import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
@@ -40,7 +41,7 @@ public interface MemberDAO {
 	ChangePwForm findPw(FindPwForm findPwForm);
 
 	//비밀번호변경처리
-	int changePw(ChangePwForm changePwForm);
+	MemberDTO changePW(String id,ChangPwReq changPwReq);
 	
 	//마일리지증가
 	int upMileage(String id, int mileage);

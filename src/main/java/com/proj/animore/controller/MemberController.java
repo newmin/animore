@@ -180,7 +180,7 @@ public class MemberController {
     //1)임의의 비밀번호 생성
     String tmpPw = PasswordGeneratorCreator.generator(7);
     
-    //2)임시비밀번호로 회원의 비밀번호 변경
+//    //2)임시비밀번호로 회원의 비밀번호 변경
     memberSVC.changePw(findPwForm.getEmail(), changePwForm.getPw(), tmpPw);
 
     //생성된 비밀번호 이메일 전송
@@ -227,14 +227,14 @@ public class MemberController {
 	 * @param changePWForm
 	 * @return
 	 */
-	@GetMapping("/findPW/{id}")
-	public String changePWForm(
-			@ModelAttribute ChangePwForm changePWForm,
-			@PathVariable String id) {
-		
-		
-		return "member/changePWForm";
-	}
+//	@GetMapping("/findPW/{id}")
+//	public String changePWForm(
+//			@ModelAttribute ChangePwForm changePWForm,
+//			@PathVariable String id) {
+//		
+//		
+//		return "member/changePWForm";
+//	}
 
 	/**
 	 * 비밀번호변경처리
@@ -242,27 +242,27 @@ public class MemberController {
 	 * @param id
 	 * @return
 	 */
-	@PatchMapping("/findPW/{id}")
-	public String changePW(
-			@PathVariable String id,
-			@Valid @ModelAttribute ChangePwForm changePWForm,
-			BindingResult bindingResult) {
-		
-		if(!changePWForm.getPw().equals(changePWForm.getPwChk())) {
-			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
-			return "member/changePWForm";
-		}
-		
-		int result = memberSVC.changePW(changePWForm);
-		if(result == 0) {
-			return "member/changePWForm";
-		}
-		
-		return "redirect:/member/changePWSuccess";
-	}
-	@GetMapping("/changePWSuccess")
-	public String changePWSuccess() {
-		
-		return "/member/changePWSuccess";
-	}
+//	@PatchMapping("/findPW/{id}")
+//	public String changePW(
+//			@PathVariable String id,
+//			@Valid @ModelAttribute ChangePwForm changePWForm,
+//			BindingResult bindingResult) {
+//		
+//		if(!changePWForm.getPw().equals(changePWForm.getPwChk())) {
+//			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
+//			return "member/changePWForm";
+//		}
+//		
+//		int result = memberSVC.changePW(id,changePWForm);
+//		if(result == 0) {
+//			return "member/changePWForm";
+//		}
+//		
+//		return "redirect:/member/changePWSuccess";
+//	}
+//	@GetMapping("/changePWSuccess")
+//	public String changePWSuccess() {
+//		
+//		return "/member/changePWSuccess";
+//	}
 }

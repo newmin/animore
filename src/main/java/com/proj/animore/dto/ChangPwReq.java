@@ -1,12 +1,13 @@
-package com.proj.animore.form;
+package com.proj.animore.dto;
 
 import lombok.Data;
 
 @Data
-public class ChangePwForm {
+public class ChangPwReq {
+	
 	private String id;
 	private String pw;
-	private String pwChk;
+	private	String pwChk;
 	private String pwChk2;
-	
+
 }

@@ -275,9 +275,8 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 
 //비밀번호 변경양식
 	const $myPwModi = document.querySelector('a[href="/mypage/mypagePwModify"]');
-
 	$myPwModi.addEventListener('click',e=>{
-	e.preventDefault();
+	//e.preventDefault();
 	
 	const URL = `/mypage/mypagePwModify`;
 	
@@ -288,8 +287,8 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 			//성공로직처리
 			console.log(res);
 			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
-			
+			//document.querySelector('.mypage_content_container').innerHTML = data;
+			refreshPwchange(data);	
 				const $changPw = document.querySelector('#changPw');
 				$changPw.addEventListener("click", changPw); 
 		}else{
@@ -304,21 +303,21 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 });
 
 //비밀번호 변경처리
-
 const changPw = e =>{
-	e.preventDefault();
-	
-	const $id = id.value;
-	const $pw = pw.value;
-	const $pwChk =pwChk.value;
+	console.log('수정처리');
+
+	const $pw = document.getElementById('pw');
+	const $pwChk =document.getElementById('pwChk');
+	const $pwChk2 =document.getElementById('pwChk2');
 	
 	
 	
 	const URL = `/mypage/mypagePwModify`;
 	const data = {
-								 "id":$id,
-								 "pw":$pw,
-								 "pwChk":$pwChk
+							
+								 "pw":$pw.value,
+								 "pwChk":$pwChk.value,
+								 "pwChk2":$pwChk2.value
 							 };
 	
 	request.patch(URL,data)
@@ -346,7 +345,7 @@ const changPw = e =>{
 
 //내업체목록
 const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
-	$mybusilist.addEventListener('click',e=>{
+	$mybusilist?.addEventListener('click',e=>{
 	e.preventDefault();
 	
 	const URL = `/mypage/mybusilist`;
@@ -383,22 +382,24 @@ html+="<hr>";
 
 html+="<ul>";
 html+="<li><label for=\"id\">아이디</label></li>";
-html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly='readonly'/></li>";
+html+="<li><input type=\"text\" id ='id' name ='id' value=${memberDTO.id} readonly='readonly'/></li>";
 html+="<li><label for=\"pw\">현재 비밀번호</label></li>";
 html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
 html+="<li><label for=\"pw2\">새로운 비밀번호</label></li>";
 html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
 html+="<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>";
-html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
-html+="<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>";
-html+="</form>";
+html+="<li><input type=\"password\" name='pwChk2' id = 'pwChk' \"/></li>";
+html+="<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw2\"></li>";
 html+="</ul>";
-html+="</div>";
+html+="</form>";
+//html+="</div>";
+
+document.querySelector('.mypage_content_container').innerHTML = html;
 };
 
 function refreshModi(memberDTO){
 	let html ='';
-		html+="<div class=\"mypage_content_container\">";
+		//html+="<div class=\"mypage_content_container\">";
 		
 		html+="<h2 class=\"mypage_content_title\">개인정보수정</h2>";
 		
@@ -451,5 +452,5 @@ function refreshModi(memberDTO){
 		
 		html+="</ul>";
 		html+="</form >";
-		html+="</div>";
+		//html+="</div>";
 }; 	

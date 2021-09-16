@@ -9,6 +9,7 @@ import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dao.business.BcategoryDAO;
 import com.proj.animore.dao.business.BusinessDAO;
+import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.dto.business.BcategoryDTO;
@@ -107,12 +108,9 @@ public class MemberSVCImpl implements MemberSVC {
 
 	//비밀번호 변경
 	@Override
-	public int changePW(ChangePwForm changePWForm) {
-		return memberDAO.changePw(changePWForm);
+	public MemberDTO changePW(String id,ChangPwReq changPwReq) {
+		return memberDAO.changePW(id, changPwReq);
 	}
-	
-	
-	
 	
 	
 	//회원 우무체크
@@ -127,6 +125,7 @@ public class MemberSVCImpl implements MemberSVC {
 		memberDAO.outMember(id, pw);
 		
 	}
+
 	
 //비밀번호변경(이메일로 임시비밀번호 발급 기능 사용시, 생성된 임시비밀번호를 비밀번호찾기 신청한 회원정보에 업데이트하는 메소드)
 	@Override

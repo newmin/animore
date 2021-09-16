@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.MypageReplyRes;
 import com.proj.animore.dto.board.BoardReqDTO;
@@ -523,88 +524,101 @@ public class APIMypgeController {
 
 	
 	
-	StringBuffer html = new StringBuffer();
-	
-	html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
-	html.append("<hr>");
-	html.append("<div class='mypage_content_container'>");
-	
-	html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-
-	html.append("<ul>");
-	html.append("<li><label for=\"id\">아이디</label></li>");
-	html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly='readonly'/></li>");
-	
-	html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
-	html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-	
-	html.append("<li><label for=\"pw2\">새로운 비밀번호</label></li>");
-	html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
-	
-	html.append("<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>");
-	html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
-	
-	
-	html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
-	
-	html.append("</form >");
-	html.append("</ul>");
-	html.append("</div>");
+//	StringBuffer html = new StringBuffer();
+//	
+//	html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
+//	html.append("<hr>");
+//	html.append("<div class='mypage_content_container'>");
+//	
+//	html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
+//
+//	html.append("<ul>");
+//	html.append("<li><label for=\"id\">아이디</label></li>");
+//	html.append("<li><input type=\"text\" id ='id' name ='id' value="+loginMember.getId()+" readonly='readonly'/></li>");
+//	
+//	html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
+//	html.append("<li><input type=\"password\" name=\"pw\" id = \"pw\" \"/></li>");
+//	
+//	html.append("<li><label for=\"pwChk\">새로운 비밀번호</label></li>");
+//	html.append("<li><input type=\"password\" name=\"pwChk\" id = \"pwChk\" \"/></li>");
+//	
+//	html.append("<li><label for=\"pwChk2\">새로운 비밀번호 확인</label></li>");
+//	html.append("<li><input type=\"password\" name=\"pwChk2\" id = \"pwChk2\" \"/></li>");
+//	
+//	
+//	html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
+//	html.append("</ul>");
+//	html.append("</form >");
+//	html.append("</div>");
 	
 	Result result;
 	
-	result = new Result("00","OK",html);
+	result = new Result("00","OK",memberDTO);
 	
 	return result;
 	
 	}
 	//비밀번호 수정처리
 	@PatchMapping("/mypagePwModify")
-	public Result mypageModify(@Valid @ModelAttribute ChangePwForm changePwForm,
+	public Result mypagePwModify(@Valid @ModelAttribute ChangePwForm changePwForm,
 			BindingResult bindingResult,
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession(false);
-		
 
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
+		//todo이전 비밀번호 같은지 확인
 		
+		//새 비밀번호 확인
+//		if(!changePwForm.getPwChk().equals(changePwForm.getPwChk2())) {
+//			bindingResult.reject("pwChk","새 비밀번호 확인이 일치하지 않습니다.");
+//		}
+//		//이전 비밀번호와 변경할 비밀번호가 동일한지 체크
+//		if(changePwForm.getPw().equals(changePwForm.getPwChk())) {
+//			
+//			bindingResult.reject("error.member.changePw", "이전 비밀번호와 동일합니다.");
+//		}
+		ChangPwReq changPwReq = new ChangPwReq();
 		
+		BeanUtils.copyProperties(changePwForm,changPwReq);
 		
-		
+		MemberDTO memberDTO = memberSVC.changePW(loginMember.getId(), changPwReq);
+		log.info(changePwForm.toString());
+		log.info(changPwReq.toString());
 		
 		Result result;
 		
 		StringBuffer html = new StringBuffer();
 		
-		html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content_container'>");
+//		html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
+//		html.append("<hr>");
+//		html.append("<div class='mypage_content_container'>");
+//		
+//		html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
+//
+//		html.append("<ul>");
+//		html.append("<li><label for=\"id\">아이디</label></li>");
+//		html.append("<li><input type=\"text\" id ='id' name ='pwChk' value="+loginMember.getId()+" readonly='readonly'/></li>");
+//		
+//		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
+//		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
+//		
+//		html.append("<li><label for=\"pwChk\">현재 비밀번호</label></li>");
+//		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
+//		
+//		html.append("<li><label for=\"pwChk2\">현재 비밀번호</label></li>");
+//		html.append("<li><input type=\"password\" name='pwChk2' id = 'pwChk2' \"/></li>");
+//		
+//		
+//		html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
+//		
+//		html.append("</ul>");
+//		html.append("</form >");
+//		
+//		html.append("</div>");
 		
-		html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-
-		html.append("<ul>");
-		html.append("<li><label for=\"id\">아이디</label></li>");
-		html.append("<li><input type=\"text\" id ='id' name ='id' value="+loginMember.getId()+" readonly='readonly'/></li>");
-		
-		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-		
-		html.append("<li><label for=\"pw2\">새로운 비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
-		
-		html.append("<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>");
-		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
-		
-		
-		html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
-		
-		html.append("</form >");
-		html.append("</ul>");
-		html.append("</div>");
-		
-		result = new Result("00","OK",html);
+		result = new Result("00","OK",memberDTO);
 		
 		return result;
 	}
