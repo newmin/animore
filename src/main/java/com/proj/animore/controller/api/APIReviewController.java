@@ -141,7 +141,7 @@ public class APIReviewController {
 		ReviewDTO reviewDTO = new ReviewDTO();
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
 		log.info(reviewDTO.toString());
-		
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 		List<ReviewReq> list = reviewSVC.updateReview(reviewDTO);
 		result = new Result("00","성공",list);
 		return result;

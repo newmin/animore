@@ -206,23 +206,40 @@
 	border-bottom: 1px solid black;
 }
 
-.rvReply__addBtn,
-.review__modi{
+/* .rvReply__addBtn,
+.review__modi
+{
 	border: 1px solid var(--primary-dark);
 	background-color : var(--primary);
 	color : var(--primary-text);	
-}
-.rvReply__cancle,
+} */
+/* .rvReply__cancle,
 .review__modiCancle{
 	border: 1px solid var(--secondary-dark);
 	background-color : var(--secondary);
 	color : var(--secondary-text);	
+} */
+.review__modiBtns{
+	display: flex;
+	justify-content: space-between;
 }
-
+.rvReply__addBtn,
+.review__modi,
+.review__fileBtn{
+	border: 1px solid var(--primary-dark);
+	background-color : var(--primary);
+	color : ivory;
+	padding : 3px 8px;
+	border-radius: 5px;
+}
+.rvReply__cancle,
+.review__modiCancle,
 .review__regist{
 	border: 1px solid var(--secondary-dark);
 	background-color : var(--secondary);
 	color : ivory;
+	padding : 3px 8px;
+	border-radius: 5px;
 }
 .hidden{
   display: none;
@@ -272,10 +289,22 @@
 }
 .review__modiForm .review__contents{
 	display: flex;
-	align-items: flex-end;
+	flex-direction : column;
+	/* align-items: flex-end; */
 	gap : 5px;
 }
 
 .inquireBusiDetail textarea:focus{
 	outline: none;
+}
+.review__img-modiForm{
+	position: relative;
+}
+.file-btn{
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+	border: 1px solid var(--primary);
+	color : var(--primary-dark);
+	padding : 10px 5px;
 }

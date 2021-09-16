@@ -290,9 +290,11 @@ function reviewModiForm(review) {
 	} 
 	html += `<div class="review__contents">`;
 	html += `	<div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
-	html += `	<textarea cols="30" rows="10" class="review__textarea-modi" name="rcontent">${review.rcontent}</textarea>`;
-	html += `	<button data-rnum="${review.rnum}" class="review__modi" type="button">수정</button>`;
-	html += `	<button class="review__modiCancle" type="button">취소</button>`;
+	html += `	<textarea cols="50" rows="10" class="review__textarea-modi" name="rcontent">${review.rcontent}</textarea>`;
+	html += ` <div class="review__modiBtns">`
+	html += `		<button data-rnum="${review.rnum}" class="review__modi" type="button">수정</button>`;
+	html += `		<button class="review__modiCancle" type="button">취소</button>`;
+	html += ` </div>`
 	html += `</div>`;
 
 	document.querySelector('.review__modiForm').innerHTML = html;
@@ -346,8 +348,8 @@ function reviewImgModiForm(review){
 			html+=`       <i data-fnum=${img.fnum} data-rnum=${review.rnum} class="fas fa-times-circle review_img_delBtn"></i>`;
 			html+=`     </div>`;
 		})
-		html+=`	 <label for="files" class="file-btn">사진추가</label>`;
-		html+=`		<input type="file" hidden name="files" id="files" value="files" multiple onchange="uploadChange(this);">`
+		html+=`	 <label for="modi_files" class="file-btn">사진추가</label>`;
+		html+=`		<input class="review__modi-file" type="file" hidden name="files" id="modi_files" value="files" multiple onchange="uploadChange(this);">`
 	//html삽입
 	document.querySelector('.review__img-modiForm').innerHTML = html;
 	//이벤트 등록
@@ -411,6 +413,7 @@ const modiBtn_f = e =>{
   const rnum = e.target.dataset.rnum;
 	const modiContent = document.querySelector('.review__textarea-modi');
 	const modiRscore = document.querySelector('.review__modiForm input:checked');
+	const $files = document.querySelector('.review__modi-file');
 	
 	//리뷰입력체크
 	if(!modiContent.value) {
@@ -432,14 +435,12 @@ const modiBtn_f = e =>{
 	formData.append('rcontent',modiContent.value);
 	formData.append('rscore',modiRscore.value);
 	formData.append('id', $id);
-	if(!$files.files){
-		for(let i=0; i<$files.files.length; i++){
-			console.log($files.files[i])
-			formData.append('files',$files.files[i]);
-		}
+	for(let i=0; i<$files.files.length; i++){
+		console.log($files.files[i])
+		formData.append('files',$files.files[i]);
 	}
 	
-	request.patch(URL,formData)
+	request.mpatch(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
 					if(res.rtcd == '00'){
