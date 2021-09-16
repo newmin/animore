@@ -95,7 +95,7 @@
      		 	 <th:block th:if="${reply.rindent} > 0">
         	   <div th:each="cnt : ${#numbers.sequence(1,reply.rindent)}" class="boardForm__replyIndent"></div>
 					 </th:block>
-           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/*{member_fname}|} " alt="" class="boardForm__proImg"></div>
+           <div class="boardForm__replyImgWrap"><img th:src="@{|/img/upload/member/${reply.store_fname}|} " alt="프로필사진" class="boardForm__proImg profile__sm"></div>
            <div class="boardForm__replyTextContainer" th:data-rnum="${reply.rnum}" th:data-rgroup="${reply.rgroup}" th:data-rstep="${reply.rstep}">
            		<div>
                 <div class="boardForm__ReplyNickname" th:text="${reply.nickname}">닉네임</div>
