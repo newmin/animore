@@ -25,7 +25,7 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 	
 	//리뷰 파일 등록
 	@Override
-	public void registReviewFile(int rnum, List<BusiUploadFileDTO> files) {
+	public void registReviewFile(List<BusiUploadFileDTO> files) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into reviewfile ( ");
 		sql.append("  fnum, ");
@@ -48,7 +48,7 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
-				ps.setInt(1, rnum);
+				ps.setInt(1, files.get(i).getRefer_num());
 				ps.setString(2, files.get(i).getStore_fname());
 				ps.setString(3, files.get(i).getUpload_fname());
 				ps.setString(4, files.get(i).getFsize());

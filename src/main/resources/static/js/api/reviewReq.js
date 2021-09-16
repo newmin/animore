@@ -42,7 +42,6 @@ const regiBtn_f = e =>{
 	for(let i=0; i<$files.files.length; i++){
 		console.log($files.files[i])
 		formData.append('files',$files.files[i]);
-		
 	}													 
 										 	
 	request.mpost(URL,formData)
@@ -347,6 +346,8 @@ function reviewImgModiForm(review){
 			html+=`       <i data-fnum=${img.fnum} data-rnum=${review.rnum} class="fas fa-times-circle review_img_delBtn"></i>`;
 			html+=`     </div>`;
 		})
+		html+=`	 <label for="files" class="file-btn">사진추가</label>`;
+		html+=`		<input type="file" hidden name="files" id="files" value="files" multiple onchange="uploadChange(this);">`
 	//html삽입
 	document.querySelector('.review__img-modiForm').innerHTML = html;
 	//이벤트 등록
@@ -418,15 +419,27 @@ const modiBtn_f = e =>{
 	}	
 	
 	const URL = `/inquire/`;
-	const data = {
+/*	const data = {
 			"bnum": bnum,
 			"rnum": rnum,
 			"rcontent": modiContent.value,
 			"rscore" : modiRscore.value,
 			"id" : $id
-													 };
+													 };*/
+	const formData = new FormData();
+	formData.append('bnum',bnum);
+	formData.append('rnum',rnum);
+	formData.append('rcontent',modiContent.value);
+	formData.append('rscore',modiRscore.value);
+	formData.append('id', $id);
+	if(!$files.files){
+		for(let i=0; i<$files.files.length; i++){
+			console.log($files.files[i])
+			formData.append('files',$files.files[i]);
+		}
+	}
 	
-	request.patch(URL,data)
+	request.patch(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
 					if(res.rtcd == '00'){

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.animore.dao.business.ReviewDAO;
 import com.proj.animore.dao.business.ReviewFileDAO;
+import com.proj.animore.dto.business.BusiUploadFileDTO;
 import com.proj.animore.dto.business.ReviewDTO;
 import com.proj.animore.dto.business.ReviewReq;
 
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-//@Transactional
+@Transactional
 public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
@@ -24,10 +25,17 @@ public class ReviewSVCImpl implements ReviewSVC {
 	
 	//리뷰 등록
 	@Override
+	@Transactional
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
-		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());		
+		reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));		
 		return allReview(reviewDTO.getBnum());
+	}
+	
+	private List<BusiUploadFileDTO> convert(Integer rnum,List<BusiUploadFileDTO> files){
+		for(BusiUploadFileDTO bdto : files) {bdto.setRefer_num(rnum);}
+		
+		return files;
 	}
 	
 	//업체 조회(모든 리뷰)
@@ -43,10 +51,10 @@ public class ReviewSVCImpl implements ReviewSVC {
 	//내가 쓴 리뷰(마이페이지)
 	@Override
 	public List<ReviewReq> myReview(String id) {
-		List<ReviewReq> list = reviewDAO.myReview(id);
+	  List<ReviewReq> list = reviewDAO.myReview(id);
 	  for(int i=0; i<list.size(); i++) {
-	  list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum())); }
-		return list;
+		list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum())); }
+	  return list;
 	}
 	
 	//리뷰 1개 조회(수정시 호출)

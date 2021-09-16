@@ -121,7 +121,7 @@ public class APIReviewController {
 	
 	 //리뷰수정
 	@PatchMapping("/")
-	public Result modiReview(@RequestBody ReviewReq reviewReq, 
+	public Result modiReview(@RequestBody ReviewForm reviewForm, 
 							HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
@@ -132,14 +132,14 @@ public class APIReviewController {
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
 
-		if(!loginMember.getId().equals(reviewReq.getId())){
+		if(!loginMember.getId().equals(reviewForm.getId())){
 			result = new Result("02","해당 리뷰작성자와의 아이디가 일치하지 않습니다.",null);
 			return result;
 		}
 		
 		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
-		BeanUtils.copyProperties(reviewReq,reviewDTO);
+		BeanUtils.copyProperties(reviewForm,reviewDTO);
 		log.info(reviewDTO.toString());
 		
 		List<ReviewReq> list = reviewSVC.updateReview(reviewDTO);

@@ -9,7 +9,7 @@ import com.proj.animore.dto.business.ReviewReq;
 public interface ReviewFileDAO {
 
 	//리뷰파일등록
-	void registReviewFile(int rnum,List<BusiUploadFileDTO> files);
+	void registReviewFile(List<BusiUploadFileDTO> files);
 	//리뷰파일조회
 	List<BusiUploadFileDTO> getReviewFiles(int rnum);
 	//리뷰파일수정
