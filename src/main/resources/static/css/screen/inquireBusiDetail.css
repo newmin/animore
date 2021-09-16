@@ -187,18 +187,15 @@
 .review__star-score{
   color: var(--yellow);
 }
-
+.review__date,
 .review__isUpdate,
 .review__userBtns{
   color: var(--primary);
   font-weight: 400;
+  font-size: 15px;
 }
 .review__userBtn{
   cursor: pointer;
-}
-.review__date{
-	font-size: 13px;
-	color: var(--primary);
 }
 .review__contents-btns{
 	display: flex;
@@ -208,6 +205,20 @@
 .review__files{
 	border-bottom: 1px solid black;
 }
+
+.rvReply__addBtn,
+.review__modi{
+	border: 1px solid var(--primary-dark);
+	background-color : var(--primary);
+	color : var(--primary-text);	
+}
+.rvReply__cancle,
+.review__modiCancle{
+	border: 1px solid var(--secondary-dark);
+	background-color : var(--secondary);
+	color : var(--secondary-text);	
+}
+
 .review__regist{
 	border: 1px solid var(--secondary-dark);
 	background-color : var(--secondary);
@@ -257,4 +268,9 @@
 }
 .review_img_delBtn:hover {
 	color : var(--red);
+}
+.review__modiForm .review__contents{
+	display: flex;
+	align-items: flex-end;
+	gap : 5px;
 }

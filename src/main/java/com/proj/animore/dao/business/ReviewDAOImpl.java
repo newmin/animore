@@ -152,14 +152,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 	
   //사장님 리뷰리댓등록
 	@Override
-	public List<ReviewReq> addRvReply(ReviewReq reviewReq) {
+	public void addRvReply(ReviewReq reviewReq) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update review ");
 		sql.append("   set rvReply =? ");
 		sql.append(" where rnum =? ");
 		jdbcTemplate.update(sql.toString(),reviewReq.getRvReply(),reviewReq.getRnum());
 		
-		return allReview(reviewReq.getBnum());
 	}
 	//사장님 리뷰리댓 삭제
 	@Override

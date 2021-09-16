@@ -26,9 +26,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
-		
-		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());
-		
+		reviewFileDAO.registReviewFile(rnum, reviewDTO.getFiles());		
 		return allReview(reviewDTO.getBnum());
 	}
 	
@@ -46,10 +44,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		List<ReviewReq> list = reviewDAO.myReview(id);
-		/*
-		 * for(int i=0; i<list.size(); i++) {
-		 * list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum())); }
-		 */
+	  for(int i=0; i<list.size(); i++) {
+	  list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum())); }
 		return list;
 	}
 	
@@ -88,16 +84,17 @@ public class ReviewSVCImpl implements ReviewSVC {
 	public ReviewReq findRvReply(int rnum) {
 		return reviewDAO.findRvReply(rnum);
 	}
-	
+	//사장님 답글 등록
 	@Override
 	public List<ReviewReq> addRvReply(ReviewReq reviewReq) {
-		return reviewDAO.addRvReply(reviewReq);
+		reviewDAO.addRvReply(reviewReq);
+		return allReview(reviewReq.getBnum());
 	}
     //사장님 리뷰리댓 삭제
 	@Override
 	public List<ReviewReq> delRvReply(int bnum, int rnum) {
 		reviewDAO.delRvReply(rnum);
-		return reviewDAO.allReview(bnum);
+		return allReview(bnum);
 	}
 
 }

@@ -86,6 +86,7 @@ const modiFrmBtns_f = e=> {
 	//이미지 수정폼, 새로운 열로 생성
 	const $review_modi_img = document.createElement('div');
 	$review_modi_img.classList.add('review__img-modiForm');
+	$review_modi_img.classList.add('review__column');
 	const $row = e.target.closest('.review__row');
 	$row.append($review_modi_img);
 	
@@ -477,13 +478,13 @@ function refreshReview(data){
 		}
 		html+= `</div>`
 			/* 사장님 댓글	종료 */
-		html += `		</div>`
-		html += `		<div>`
+		html += `		<div>`//작성일시작
 		html += `			<span class="review__date">작성일자 : ${review.rvcdate}</span>`;
 		if(review.rvudate) {
 			html += `			<span class="review__isUpdate">수정됨</span>`;
 		}
-		html += `		</div>`;
+		html += `		</div>`;//작성일 종료
+		html += `		</div>`//메인텍스트 종료
 		html += `	</div>`;
 		/*첨부 파일 시작*/
 		html += `	<div class="review__column review__imgs">`;
