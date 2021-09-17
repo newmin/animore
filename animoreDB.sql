@@ -251,7 +251,7 @@ CREATE SEQUENCE review_rnum_seq;
 CREATE SEQUENCE reviewfile_fnum_seq;
 CREATE SEQUENCE favorite_fnum_seq;
 create sequence boardfile_fnum_seq;
-create sequence business_fnum_seq;
+create sequence businessfile_fnum_seq;
 create sequence review_fnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)

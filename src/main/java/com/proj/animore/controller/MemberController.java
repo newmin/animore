@@ -1,6 +1,7 @@
 package com.proj.animore.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,12 @@ import com.proj.animore.common.mail.MailService;
 import com.proj.animore.common.util.PasswordGeneratorCreator;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.business.BcategoryDTO;
+import com.proj.animore.dto.business.BusiUploadFileDTO;
 import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
+import com.proj.animore.form.JoinBusinessForm;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.svc.MemberSVC;
 
@@ -67,8 +70,10 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/join/{mtype}")
-	public String joinForm(@ModelAttribute JoinMemberForm joinMemberForm, HttpServletRequest request,
-			@PathVariable("mtype") String mtype, Model model) {
+	public String joinForm(@ModelAttribute JoinMemberForm joinMemberForm,
+												@ModelAttribute JoinBusinessForm joinBusinessForm,
+												HttpServletRequest request,
+												@PathVariable("mtype") String mtype, Model model) {
 		HttpSession session = request.getSession(false);
 
 		// 로그인한 상태(세션있음)로 회원가입양식 페이지 요청시 메인페이지로 보냄
@@ -114,7 +119,6 @@ public class MemberController {
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
 			memberDTO.setFsize(storedFile.getFsize());
 			memberDTO.setFtype(storedFile.getFtype());	
-			
 		} 
 		
 		memberSVC.joinMember(memberDTO);
@@ -123,10 +127,54 @@ public class MemberController {
 
 	// TODO 전문가 회원가입
 	@PostMapping("/join/S")
-	public String join2(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO) {
+	public String join2(@Valid @ModelAttribute JoinMemberForm joinMemberForm,
+									@Valid @ModelAttribute JoinBusinessForm joinBusinessForm,
+										BcategoryDTO bcategoryDTO)  throws IllegalStateException, IOException {
+		
+		MemberDTO memberDTO = new MemberDTO();
+		BeanUtils.copyProperties(joinMemberForm,memberDTO) ;
+		
+		memberDTO.setMtype("S");
+		
+		if(!joinMemberForm.getFile().isEmpty()) {
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");		
+			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getFile());
+			memberDTO.setStore_fname(storedFile.getStore_fname());
+			memberDTO.setUpload_fname(storedFile.getUpload_fname());
+			memberDTO.setFsize(storedFile.getFsize());
+			memberDTO.setFtype(storedFile.getFtype());	
+		} 
+		
+		BusinessDTO businessDTO = new BusinessDTO();
+		BeanUtils.copyProperties(joinBusinessForm,businessDTO);
+		
+		if(!joinBusinessForm.getFiles().isEmpty() || joinBusinessForm.getFiles().size()>0) {
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/business/");		
+			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(joinBusinessForm.getFiles());
+			businessDTO.setFiles(convert(storedFiles));
+		} 
+		
 		memberSVC.joinMember(memberDTO, businessDTO, bcategoryDTO);
 		return "redirect:/";
 	}
+	
+	//메타정보 → 업로드 정보
+	private BusiUploadFileDTO convert(MetaOfUploadFile attatchFile) {
+		BusiUploadFileDTO uploadFileDTO = new BusiUploadFileDTO();
+		BeanUtils.copyProperties(attatchFile, uploadFileDTO);
+		return uploadFileDTO;
+	}
+	
+	private List<BusiUploadFileDTO> convert(List<MetaOfUploadFile> uploadFiles) {
+		List<BusiUploadFileDTO> list = new ArrayList<>();
+
+		for(MetaOfUploadFile file : uploadFiles) {
+			BusiUploadFileDTO uploadFIleDTO = convert(file);
+			list.add( uploadFIleDTO );
+		}		
+		return list;
+	}
+	
 
 	@GetMapping("/{id}")
 	public String mypage() {
