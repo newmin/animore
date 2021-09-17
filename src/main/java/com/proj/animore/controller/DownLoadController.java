@@ -36,6 +36,7 @@ public class DownLoadController {
    @ResponseBody //http응답 메세지 바디에 직접내용쓰기
    @GetMapping("/images/{fname}")
    public Resource downLoadImage(@PathVariable String fname) throws MalformedURLException  {
+  	  
       Resource resource = new UrlResource("file:"+fileStore.getFullPath(fname));
       return resource;
    }
