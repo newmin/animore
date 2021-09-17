@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.dto.business.ReviewReq;
@@ -35,7 +36,8 @@ public class MainController {
 	private final ReviewSVC reviewSVC;
 	private final BusinessSVC businessSVC;
 	private final FavoriteSVC favoriteSVC;
-
+	private final FileStore fileStore;		
+	
 	// (카테고리별)업체목록 조회
 	@GetMapping("/{bcategory}")
 	public String list(@PathVariable String bcategory, HttpServletRequest request, Model model) {
@@ -77,6 +79,7 @@ public class MainController {
 	public String inquire(
 			// @PathVariable String bcategory,
 			@PathVariable int bnum, HttpServletRequest request, Model model) {
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/business/");
 		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);
 		model.addAttribute("busi", businessLoadDTO);
 
@@ -88,7 +91,6 @@ public class MainController {
 			FavoriteReq isFavor = favoriteSVC.isFavorite(bnum, id);
 			model.addAttribute("favor", isFavor);
 		}
-
 		List<ReviewReq> rvlist = reviewSVC.allReview(bnum);
 		model.addAttribute("review", rvlist);
 

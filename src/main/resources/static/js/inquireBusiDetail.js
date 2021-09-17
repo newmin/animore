@@ -13,3 +13,5 @@ function uploadChange(file) {
 	  }
 	}
 }
+
+document.querySelector('.carousel-item').classList.add('active');

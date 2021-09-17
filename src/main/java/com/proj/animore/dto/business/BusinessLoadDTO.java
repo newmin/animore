@@ -1,6 +1,7 @@
 package com.proj.animore.dto.business;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -33,5 +34,6 @@ public class BusinessLoadDTO {
 	private String dental;
 	
 	private String search; //검색어
+	private List<BusiUploadFileDTO> files;
 
 }
