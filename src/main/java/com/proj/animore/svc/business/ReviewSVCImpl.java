@@ -34,6 +34,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 		int rnum = reviewDAO.registReview(reviewDTO);
 		if(reviewDTO.getFiles() !=null && reviewDTO.getFiles().size() > 0) {		
 			reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));
+			memberDAO.upMileage(reviewDTO.getId(), 150);
+			return allReview(reviewDTO.getBnum());
 		}
 		memberDAO.upMileage(reviewDTO.getId(), 100);
 		return allReview(reviewDTO.getBnum());
