@@ -1,5 +1,7 @@
 package com.proj.animore.dto.business;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -16,5 +18,7 @@ public class BusinessDTO {
 	private String visitcare;
 	private String holidayopen;
 	private String dental;
+	
+	List<BusiUploadFileDTO> files;
 	
 }

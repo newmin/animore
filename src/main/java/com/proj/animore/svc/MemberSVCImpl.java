@@ -9,10 +9,12 @@ import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dao.business.BcategoryDAO;
 import com.proj.animore.dao.business.BusinessDAO;
+import com.proj.animore.dao.business.BusinessFileDAO;
 import com.proj.animore.dto.ChangPwReq;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.ProfessionDTO;
 import com.proj.animore.dto.business.BcategoryDTO;
+import com.proj.animore.dto.business.BusiUploadFileDTO;
 import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.form.FindIdForm;
 import com.proj.animore.form.FindPwForm;
@@ -26,6 +28,7 @@ public class MemberSVCImpl implements MemberSVC {
 	
 	private final MemberDAO memberDAO;
 	private final BusinessDAO businessDAO;
+	private final BusinessFileDAO businessFileDAO;
 	private final BcategoryDAO bcategoryDAO;
 	private final FileStore fileStore;
 	
@@ -40,9 +43,19 @@ public class MemberSVCImpl implements MemberSVC {
 	@Transactional
 	public void joinMember(MemberDTO memberDTO, BusinessDTO businessDTO, BcategoryDTO bcategoryDTO) {
 		memberDAO.joinMember(memberDTO);
-		businessDAO.joinBusi(businessDTO);
+		int bnum = businessDAO.joinBusi(businessDTO);
+		if(businessDTO.getFiles() !=null && businessDTO.getFiles().size() > 0) {		
+			businessFileDAO.addBusiFile(convert(bnum, businessDTO.getFiles()));
+		}
 		bcategoryDAO.addBcategory(bcategoryDTO);
 	}
+	
+	private List<BusiUploadFileDTO> convert(Integer bnum,List<BusiUploadFileDTO> files){
+		for(BusiUploadFileDTO bdto : files) {bdto.setRefer_num(bnum);}
+		return files;
+	}
+	
+	
 	//TODO 전문가 회원가입
 	@Override
 	public void joinMember(MemberDTO memberDTO, ProfessionDTO professionDTO) {
