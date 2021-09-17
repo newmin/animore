@@ -1,6 +1,7 @@
 package com.proj.animore.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
 import com.proj.animore.common.file.MetaOfUploadFile;
+import com.proj.animore.dao.UpLoadFileDAO;
 import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.UpLoadFileDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
@@ -54,33 +57,9 @@ public class MyPageController {
    private final MemberSVC memberSVC;
    private final BusinessSVC businessSVC;
    private final GoodBoardSVC goodBoardSVC;
+   private final UpLoadFileDAO upLoadFileDAO;
    private final FileStore fileStore;
-   
-   //프로필 사진 등록
-   @PostMapping
-   @Transactional
-   public String mypageProfile(@Valid @ModelAttribute ProfileForm profileForm,
-		   BindingResult bindingResult,
-		   HttpServletRequest request,
-		   RedirectAttributes redirectAttributes) throws IllegalStateException, IOException{
-	   
-	   
-	HttpSession session = request.getSession(false);
-		
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		String loginMemberId = loginMember.getId();
-		MemberDTO memberDTO = new MemberDTO();
-	   
-		if(profileForm.getFiles()!=null || profileForm.getFiles().size()!=0) {			
-			fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");
-			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(profileForm.getFiles());
-			memberDTO.setUpload_fname(loginMemberId);
-		}
-	   return null;
-	   
-	   
-	   
-   }
+	//메타정보 → 업로드 정보
 
    //회원탈퇴처리
    @DeleteMapping("/mypagePwModify")
@@ -121,10 +100,25 @@ public class MyPageController {
       
       return "redirect:/";
    }
+   //프로필 조회
+   @GetMapping("/profile")
+	public String profileEditForm( HttpSession session, Model model ) {
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		log.info("loginmember:{}",loginMember);
+		MemberDTO memberDTO = memberSVC.findMemberById(loginMember.getId());
+		UpLoadFileDTO upLoadFileDTO = upLoadFileDAO.getFileByRid(String.valueOf(loginMember.getId()));
+		
+		ProfileForm profileForm = new ProfileForm();
+		profileForm.setNickname(memberDTO.getNickname());
+		profileForm.setSavedImgFile(upLoadFileDTO);
+		
+		model.addAttribute("profileForm", profileForm);
+		return "mypage/profileEditForm";
+	}
    //즐겨찾기 목록
    @GetMapping("/mypageFavorites")
    public String mypage(HttpServletRequest request,
-         Model model) {
+         Model model) throws IllegalStateException, IOException { 
             
       HttpSession session = request.getSession(false);
       if(session == null || session.getAttribute("loginMember") == null){
@@ -133,13 +127,38 @@ public class MyPageController {
        LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
        String id = loginMember.getId();
        log.info(id);
+       MemberDTO memberDTO = new MemberDTO();
+       memberDTO = memberSVC.findMemberById(id);
+       UpLoadFileDTO upLoadFileDTO = upLoadFileDAO.getFileByRid(id);
+       ProfileForm profileForm = new ProfileForm();
+       profileForm.setSavedImgFile(upLoadFileDTO);
 
        List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(id);
+       model.addAttribute("profileForm", profileForm);
        model.addAttribute("mtype",loginMember.getMtype());
        model.addAttribute("Favorite",favoritelist);
+       model.addAttribute("profile",memberDTO.getId());
+       log.info(profileForm.toString());
+       log.info(memberDTO.toString());
+       log.info(loginMember.toString());
 
-      return "mypage/mypageFavorites";
-   }
+     
+      
+      
+  	//첨부파일 등록
+  	       if(profileForm.getFile() !=null && profileForm.getFile().getSize() > 0) {			
+  			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
+  			MetaOfUploadFile storedFiles = fileStore.storeFile(profileForm.getFile());
+  			memberDTO.setFile(convert(storedFiles));
+	}
+     return "mypage/mypageFavorites";
+  }	
+	//메타정보 → 업로드 정보
+	private UpLoadFileDTO convert(MetaOfUploadFile attatchFile) {
+		UpLoadFileDTO uploadFileDTO = new UpLoadFileDTO();
+		BeanUtils.copyProperties(attatchFile, uploadFileDTO);
+		return uploadFileDTO;
+	}
 
    //회원탈퇴처리
    @DeleteMapping("/mypageDel")
@@ -205,6 +224,7 @@ public String modifyMember(HttpServletRequest request,
    
    return "/mypage/mypageModify";
 }
+
    
    //개인정보 수정처리
 //   @PatchMapping("/mypageModify")
@@ -237,6 +257,8 @@ public String modifyMember(HttpServletRequest request,
          log.info("=={},{}",loginMember.getId(), mdto);
 
          return "redirect:/mypage/mypageModify";
+         
+         
    }
    
    //내업체 목록

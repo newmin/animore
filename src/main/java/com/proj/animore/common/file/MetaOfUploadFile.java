@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MetaOfUploadFile {
-	  private String store_fname; 	
+	  private String store_fname;
 	  private String upload_fname; 	
 	  private String fsize;					
 	  private String ftype;	

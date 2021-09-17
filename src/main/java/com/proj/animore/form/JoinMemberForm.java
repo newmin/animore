@@ -32,7 +32,7 @@ public class JoinMemberForm {
   @NotBlank
   private String pw2;
   
-  private MultipartFile image;
+  private MultipartFile file;
   //private MetaOfUploadFile image;
   @NotBlank
   @Size(max=5)

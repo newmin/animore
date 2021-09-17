@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @Component
 public class FileStore {
 	//첨부파일이 저장될 파일시스템의 경로 application.properties에서 정의
@@ -23,6 +24,9 @@ public class FileStore {
 		public String getFullPath(String fileName) {
 			return filePath + fileName;
 		}
+		
+
+		
 		
 		/**
 		 * 멀티파트파일 여러개 저장
@@ -67,6 +71,7 @@ public class FileStore {
 			
 			return new MetaOfUploadFile(storeFileName,originalFileName,  fsize, ftype);
 		}
+
 		
 		// 업로드파일명에서 확장자 추출
 		private String extractExt(String originalFilename) {
