@@ -40,7 +40,7 @@ import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.Result;
 import com.proj.animore.form.board.BoardForm;
 import com.proj.animore.form.board.ReplyForm;
-import com.proj.animore.form.board.modifyBoardForm;
+import com.proj.animore.form.board.ModifyBoardForm;
 import com.proj.animore.svc.board.BoardSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.board.RboardSVC;
@@ -387,7 +387,7 @@ public class BoardController {
 	//게시글 수정 처리
 	@PatchMapping("/modify/{bnum}")
 	public String modifyPost(@PathVariable Integer bnum,
-							@Valid @ModelAttribute modifyBoardForm modifyForm,
+							@Valid @ModelAttribute ModifyBoardForm modifyForm,
 							BindingResult bindingResult,
 							RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
 		
