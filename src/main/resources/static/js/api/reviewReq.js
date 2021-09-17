@@ -357,7 +357,7 @@ function reviewImgModiForm(review){
 			html+=`     </div>`;
 		})
 		html+=`	 <label for="modi_files" class="file-btn">사진추가</label>`;
-		html+=`		<input class="review__modi-file" type="file" hidden name="files" id="modi_files" value="files" multiple onchange="uploadChange(this);">`
+		html+=`		<input class="review__modi-file" type="file" hidden name="files"  id="modi_files" value="files" multiple onchange="uploadChange(this);">`
 	//html삽입
 	document.querySelector('.review__img-modiForm').innerHTML = html;
 	//이벤트 등록
@@ -448,7 +448,7 @@ const modiBtn_f = e =>{
 		formData.append('files',$files.files[i]);
 	}
 	
-	request.mpatch(URL,formData)
+	request.mpost(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
 					if(res.rtcd == '00'){

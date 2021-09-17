@@ -13,7 +13,7 @@ public interface ReviewFileDAO {
 	//리뷰파일조회
 	List<BusiUploadFileDTO> getReviewFiles(int rnum);
 	//리뷰파일수정
-	List<ReviewReq> updateReviewFiles(ReviewDTO reviewDTO);
+	void updateReviewFiles(List<BusiUploadFileDTO> files);
 	//리뷰파일삭제
 	void removeReviewFiles(int rnum);
 	//첨부파일명 불러오기

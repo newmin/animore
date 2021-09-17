@@ -72,7 +72,8 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
 		reviewDAO.updateReview(reviewDTO);
-		/* reviewFileDAO.registReviewFile(reviewDTO.getRnum(), reviewDTO.getFiles()); */
+//		 reviewFileDAO.updateReviewFiles(reviewDTO.getFiles()); 
+		 reviewFileDAO.registReviewFile(reviewDTO.getFiles()); 
 		return allReview(reviewDTO.getBnum());
 	}
 

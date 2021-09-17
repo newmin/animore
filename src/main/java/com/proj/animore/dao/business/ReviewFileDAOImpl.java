@@ -79,9 +79,31 @@ public class ReviewFileDAOImpl implements ReviewFileDAO {
 	}
 
 	@Override
-	public List<ReviewReq> updateReviewFiles(ReviewDTO reviewDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateReviewFiles(List<BusiUploadFileDTO> files) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update reviewfile ");
+		sql.append("  set store_fname=?,  ");
+		sql.append("  upload_fname=?, ");
+		sql.append("  fsize=?,  ");
+		sql.append("  ftype=? ");
+		sql.append("  where rnum =? ");
+
+		jdbcTemplate.batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setString(1, files.get(i).getStore_fname());
+				ps.setString(2, files.get(i).getUpload_fname());
+				ps.setString(3, files.get(i).getFsize());
+				ps.setString(4, files.get(i).getFtype());
+				ps.setInt(5, files.get(i).getRefer_num());
+			}
+
+			@Override
+			public int getBatchSize() {
+				return files.size();
+			}
+		});//batchUpdate
 	}
 	//리뷰 첨부파일 전체 삭제(리뷰삭제)
 	@Override
