@@ -9,6 +9,7 @@
 
 const $bnum= document.querySelector('div.boardForm').dataset.bnum;	//게시글번호
 const $id= document.querySelector('li[data-id]').dataset.id;			//회원아이디
+const $postWriterId = document.querySelector('.boardForm__Nickname').textContent;	//게시글 글쓴이 닉네임
 
 const $rcontent= document.querySelector('textarea.boardForm__AddReplyContent'); //댓글입력텍스트상자
 const $boardForm__reply = document.querySelector('.boardForm__reply');
@@ -175,7 +176,11 @@ function refreshReply(data){
 		      html += `<div class="boardForm__replyImgWrap"><img src="/img/upload/member/${rec.store_fname}" alt="프로필사진" class="boardForm__proImg profile__sm"></div>`;
 		      html += `	<div class="boardForm__replyTextContainer" data-rnum="${rec.rnum}">`;
 		      html += `  <div>`;
-		      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
+		      if($postWriterId == rec.nickname){
+			      html += `    <div class="boardForm__ReplyNickname boardForm__ReplyPostWriter">${rec.nickname}</div>`;
+		      }else{
+			      html += `    <div class="boardForm__ReplyNickname">${rec.nickname}</div>`;
+			    }
 		      html += `    <div class="boardForm__ReplyContent">${rec.rcontent}</div>`;
 		      html += `    <div class="boardForm__Replywrap">`;
 					if(rec.status == 'A'){
