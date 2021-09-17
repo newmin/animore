@@ -101,21 +101,7 @@ create table rboard(
                                 ON DELETE CASCADE
 );
 
---건강정보
-create table hboard(
-  bnum number(8),
-  hcategory varchar2(12) not null,
-  btitle varchar2(150) not null,
-  id varchar2(40) not null,
-  bcdate timestamp DEFAULT systimestamp not null,
-  budate timestamp DEFAULT systimestamp,
-  bhit number(5) DEFAULT 0 not null,
-  bgood number(5) DEFAULT 0 not null,
-  bcontent clob not null,
-  constraint HBOARD_BNUM_PK primary key(bnum),
-  constraint hboard_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
-  constraint hboard_hcategory_ck check(hcategory in('질병사전','행동사전'))
-);
+
 
 --좋아요게시글
 create table goodboard(
@@ -168,16 +154,7 @@ udate timestamp,
 constraint businessfile_fnum_pk primary key(fnum),
 constraint businessfile_bnum_fk foreign key(bnum)references business(bnum) on delete cascade
 );
---전문가
-create table profession(
-  pnum number(8),
-  id varchar2(40),
-  licenseno varchar2(20) not null,
-  constraint PROFESSION_PNUM_PK primary key(pnum),
-  constraint profession_id_FK foreign key(id) 
-                                references member(id)
-                                ON DELETE CASCADE
-);
+
 
 --업체카테고리
 create table bcategory(
@@ -255,29 +232,7 @@ create table favorite(
                                  ON DELETE CASCADE
 );
 
---키우는 동물
-create table myani(
-  ID varchar2(40),
-  ANIMAL varchar(30),
-  MNUM number(10),
-  constraint myani_MNUM_PK primary key(MNUM),
-  constraint myani_id_FK foreign key(ID) 
-                                 references member(id)
-                                 ON DELETE CASCADE
-);
 
---쿠폰
-create table coupon(
-  cnum number(10),
-  id varchar2(40),
-  price number(5),
-  cflag char(1) DEFAULT 'Y',
-  constraint coupon_PK primary key(cnum),
-  constraint coupon_FK foreign key(id)
-                              references member(id)
-                              ON DELETE CASCADE,
-  constraint coupon_cflag_ck check(cflag in('Y','N'))
-);
 
 --시퀀스 삭제
 DROP SEQUENCE BOARD_BNUM_SEQ;
@@ -299,14 +254,10 @@ drop sequence review_fnum_seq;
 CREATE SEQUENCE BOARD_BNUM_SEQ;
 CREATE SEQUENCE rboard_rnum_seq;
 CREATE SEQUENCE goodboard_gnum_seq;
-CREATE SEQUENCE hboard_bnum_seq;
 CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
 CREATE SEQUENCE reviewfile_fnum_seq;
 CREATE SEQUENCE favorite_fnum_seq;
-CREATE SEQUENCE myani_mnum_seq;
-CREATE SEQUENCE profession_pnum_seq;
-CREATE SEQUENCE coupon_cnum_seq;
 create sequence boardfile_fnum_seq;
 create sequence business_fnum_seq;
 create sequence review_fnum_seq;
