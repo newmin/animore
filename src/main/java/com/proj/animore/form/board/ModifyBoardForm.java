@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 @Data
-public class modifyBoardForm {
+public class ModifyBoardForm {
 	private int bnum;
 	private int pbnum;
 	private String id;
