@@ -311,7 +311,7 @@ public class BoardController {
 //			replyForm.setId(loginMember.getId());
 //		}
 		BoardReqDTO pBoardDTO = boardSVC.findBoardByBnum(bnum);
-		if(pBoardDTO.getBcategory().equals('Q')) {
+		if(pBoardDTO.getBcategory().equals("Q")) {
 		
 		replyForm.setPbnum(pBoardDTO.getBnum());
 		replyForm.setBcategory(pBoardDTO.getBcategory());

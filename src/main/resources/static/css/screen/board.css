@@ -463,7 +463,7 @@ border-radius: 2px;
   z-index: 10;
 }
 
-.addPost__icons .filetype .file-select {
+.addPost__icons .filetype .addpost_file-select {
   position: absolute;
   top: 0;
   right: 0;
@@ -479,7 +479,7 @@ border-radius: 2px;
   background-color: #fff;
 }
 
-.addPost__icons .filetype .file-text + .file-btn {
+.addPost__icons .filetype .file-text + .addpost_file-btn {
   display: inline-block;
   background-color: var(--primary);
   height: 30px;
