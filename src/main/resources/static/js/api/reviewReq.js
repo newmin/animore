@@ -75,7 +75,11 @@ function review_input_init(){
   html+=`          <div class="warning_msg">5자 이상으로 작성해 주세요.</div>`;
   html+=`          <textarea rows="10" class="review__textarea" name="rcontent"></textarea>`;
   html+=`          <div class="review__contents-btns">`;
-  html+=`            <input type="file" class="review__files" name="files" multiple="multiple"/>`;
+  html+=`					 <div>`
+  html+=`						 <label for="files" class="review__fileBtn">사진등록</label>`
+  html+=`						 <span class="file-text"></span>`
+  html+=`            <input type="file" class="review__files" accept="image/*" name="files" multiple="multiple" hidden onchange="uploadChange(this);"/>`;
+  html+=`						</div>`
   html+=`            <button class="review__regist" type="button">등록</button>`;
   html+=`          </div>`;
   html+=`      </div>   `;
@@ -512,7 +516,7 @@ function refreshReview(data){
 		html += `	<div class="review__column">`;
 		review.store_fname
 				 ? html += `<img class="profile__sm" src="/img/upload/member/${review.store_fname}" alt="프로필사진">` 
-				 : html += `<img class="profile__sm" src="/img/upload/member/puppy.png" alt="기본프로필사진">`;
+				 : html += `<img class="profile__sm" src="/img/upload/member/puppy2.png" alt="기본프로필사진">`;
 		html += `		<span class="review__nickname">${review.nickname}</span>`;
 		html += ` </div>`;
 		/* 프로필 종료*/

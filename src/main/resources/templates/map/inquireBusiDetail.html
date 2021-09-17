@@ -95,9 +95,6 @@
 								<th:block th:if="${review.store_fname != null }">
 									<img class="profile__sm" th:src="@{|/img/upload/member/*{store_fname}|}" alt="프로필사진">
 								</th:block>
-								<th:block th:if="${review.store_fname == null }">
-									<img class="profile__sm" src="/img/upload/member/puppy.png" alt="프로필사진">
-								</th:block>
 								<span class="review__nickname" th:text="*{nickname}">닉네임</span>
 							</div>
 							<div class="review__column">
@@ -202,8 +199,11 @@
 		                <div class="warning_msg">5자 이상으로 작성해 주세요.</div>
 		                <textarea rows="10" class="review__textarea" name="rcontent"></textarea>
 		                <div class="review__contents-btns">
-		                	<label for="files" class="review__fileBtn">사진등록</label>
-			                <input type="file" class="review__files" id="files" name="files" accept="image/*" multiple="multiple" hidden/>
+		                	<div>
+			                	<label for="files" class="review__fileBtn">사진등록</label>
+			                	<span class="file-text"></span>
+				                <input type="file" class="review__files" id="files" name="files" accept="image/*" multiple="multiple" hidden onchange="uploadChange(this);"/>
+		                	</div>
 			                <button class="review__regist" type="button">등록</button>
 		                </div>
 		            </div>   

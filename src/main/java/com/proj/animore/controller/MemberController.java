@@ -105,16 +105,17 @@ public class MemberController {
 		MemberDTO memberDTO = new MemberDTO();
 		BeanUtils.copyProperties(joinMemberForm,memberDTO);
 		
-		if(joinMemberForm.getImage()!=null) {
+		memberDTO.setMtype("N");
+		
+		if(!joinMemberForm.getFile().isEmpty()) {
 			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");		
-			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getImage());
+			MetaOfUploadFile storedFile = fileStore.storeFile(joinMemberForm.getFile());
 			memberDTO.setStore_fname(storedFile.getStore_fname());
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
 			memberDTO.setFsize(storedFile.getFsize());
-			memberDTO.setFtype(storedFile.getFtype());		
-		}
-		
-		memberDTO.setMtype("N");
+			memberDTO.setFtype(storedFile.getFtype());	
+			
+		} 
 		
 		memberSVC.joinMember(memberDTO);
 		return "redirect:/";
