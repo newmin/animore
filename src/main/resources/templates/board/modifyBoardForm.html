@@ -22,7 +22,7 @@
 			th:value="${ele.code}" th:text="${ele.decode}">
 	</option>
     </select>
-    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요." maxlength="50">
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
       
      <div class="boardForm__files">

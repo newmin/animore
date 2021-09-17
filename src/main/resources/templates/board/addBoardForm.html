@@ -22,7 +22,7 @@
 	</option>
     </select>
     <p th:errors="*{bcategory}" th:errorclass="field-errmsg"></p>
-    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요." maxlength="50">
     <p th:errors="*{btitle}" th:errorclass="field-errmsg"></p>
     <p th:errors="*{bcontent}" th:errorclass="field-errmsg"></p>
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
