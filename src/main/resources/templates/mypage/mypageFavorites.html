@@ -23,26 +23,28 @@
      <!-- 프로필정보 -->
      <form th:object="${profileForm}"  enctype="multipart/form-data" action="/mypage/mypageFavorites" th:method="${patch}">
       <div class="mypage_profile_container" id="profileInfo">
- 					<ul>
-	      				<li>
-	      				  <input type="file" name="file" id="imgFile" style="display:none; " >
-	      					<div id="dropbox">
-	      						<img th:src="@{|imges/${profileForm.store_fname}|}" alt="이미지" id="profileImg" draggable="false"/>
-	      					</div>
-	      				</li>		
-	      				<li>
-	      					<button type="button" class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn">변경</button>
-	      				</li>
-	      			</ul>
-        <div class="mypage_profile_usertypeicon">
-          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
-          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
-        </div>
-        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+				<ul class="mypage_profile">
+   				<li>
+   				  <input type="file" name="file" id="imgFile" style="display:none; " >
+   					<div id="dropbox">
+   						<img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지" id="profileImg" draggable="false"/>
+   					</div>
+   				</li>		
+   				<li>
+   					<span class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn">변경</span>
+   				</li>
+   			</ul>
+        <div class="mypage_profile_userType">
+	        <div class="mypage_profile_usertypeicon">
+	          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
+	          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
+	        </div>
+	        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+	        </div>
         </div>
        
         <div class="mypage_profile_mileage">
-        	<span th:text="${profileForm.mileage}">마일리지</span>
+        	<span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
         </div>
       </div>
       </form>

@@ -131,7 +131,7 @@ public class MyPageController {
 	   BeanUtils.copyProperties(profileForm,memberDTO);
 		
 	   if(!profileForm.getFile().isEmpty()) {
-			fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");		
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");		
 			MetaOfUploadFile storedFile = fileStore.storeFile(profileForm.getFile());
 			memberDTO.setStore_fname(storedFile.getStore_fname());
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
