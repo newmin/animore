@@ -354,22 +354,22 @@ insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'F','요즘 털빠짐이 심하네요..','user@test.com','제 머리에서요ㅠㅠ',BOARD_BNUM_SEQ.currval,0,0);
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'P','인형에 진심인 우리애들','user@test.com','이미 인형 그 자체',BOARD_BNUM_SEQ.currval,0,0);
 -- 댓글
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'user@test.com','10불러봅니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'user@test.com','힘내요~',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'user@test.com','그 작던 쪼꼬미들 맞냐',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'normal@zxc.com','엌ㅋㅋ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'user@test.com','언제나 감사합니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'normal@zxc.com','-판매완료-',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'user@test.com','아직 안팔렸습니다. 윗댓 누구냐ㅡㅡ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'normal@zxc.com','"모"자람이 없으시네요',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'user@test.com','10불러봅니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'user@test.com','힘내요~',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'user@test.com','그 작던 쪼꼬미들 맞냐',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'normal@zxc.com','엌ㅋㅋ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'user@test.com','언제나 감사합니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'normal@zxc.com','-판매완료-',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'user@test.com','아직 안팔렸습니다. 윗댓 누구냐ㅡㅡ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'normal@zxc.com','"모"자람이 없으시네요',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1,0);
 
 --즐겨찾기
 insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'normal@zxc.com');

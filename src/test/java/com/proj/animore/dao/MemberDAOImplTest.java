@@ -88,10 +88,4 @@ public class MemberDAOImplTest {
 		log.info(id);
 		
 	}
-	
-//	@Test
-//	@DisplayName("")
-//	void 
-	
-	
 }
