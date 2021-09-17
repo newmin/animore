@@ -73,7 +73,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO findMemberById(String id) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname,upload_fname,store_fname,ftype,fsize ");
+		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname,upload_fname,store_fname,ftype,fsize,mileage ");
 		sql.append("from member ");
 		sql.append("where id= ? ");
 

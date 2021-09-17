@@ -26,10 +26,10 @@ public class MemberDTO {
   private String email;
   private String address;
   private String mtype;
+  private int  mileage;
   private String upload_fname; //사용자가 첨부한 파일명
   private String store_fname;  //DB에 저장될 파일명(중복방지를 위해 임의의 명칭으로 등록)
   private String fsize;		//파일 크기 fsize default puppy
   private String ftype;		//유형 check in('jpg','png','gif','bmp') default png
-  private UpLoadFileDTO file;
   
 }
