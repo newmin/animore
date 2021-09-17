@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -60,8 +61,18 @@ public class BusinessFileDAOImpl implements BusinessFileDAO {
 
 	@Override
 	public List<BusiUploadFileDTO> getBusiFiles(int bnum) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer sql = new StringBuffer();
+		sql.append("select fnum,bnum,store_fname,upload_fname, ");
+		sql.append("       fsize,ftype,cdate,udate ");
+		sql.append("  from businessfile  ");
+		sql.append(" where bnum = ? ");
+		
+		List<BusiUploadFileDTO> list = 
+				jdbcTemplate.query( sql.toString(), 
+									new BeanPropertyRowMapper<>(BusiUploadFileDTO.class), 
+									bnum );
+		
+		return list;
 	}
 
 	@Override

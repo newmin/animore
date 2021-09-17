@@ -22,11 +22,11 @@
  <script src="/js/api/reviewReq.js" defer></script>
  <script src="/js/inquireBusiDetail.js" defer></script>
  <script src="/js/components/scrollUp.js" defer></script>
+ <script src="/js/components/watchOriginImg.js" defer></script>
  <!-- 부트스트랩 -->
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
- <script src="/js/components/watchOriginImg.js" defer></script>
  <title>업체조회</title>
 </head>
 <body>
@@ -70,6 +70,30 @@
 					<li><span th:text="|연락처 : *{btel}|">연락처 : </span></li>
 					<li><span>영업시간 : </span><span th:text="*{openhours}?:|영업시간을 등록하지 않았습니다.|"></span></li>
 					<li><span>SNS : </span><span th:text="|미등록 업체|"></span></li>
+					<div class="busi__imgs" th:if="${busi.files != null && busi.files.size()>0}">
+						<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+					  <div class="carousel-indicators">
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					  </div>
+					  <div class="carousel-inner">
+						 <th:block th:each="imgs : *{files}">
+						    <div class="carousel-item ">
+						      <img th:src="@{|/img/upload/business/${imgs.store_fname}|}" class="d-block busi__img" alt="첨부사진">
+						    </div>
+						 	</th:block>
+					  </div>
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>
+					</div>
 				</ul>
 
 				

@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class HospitalOpenAPI {
+public class APIHospitalOpenAPI {
 	
 	private final JdbcTemplate jt;
 	private final static String SERVICE_KEY="pdkeiUGlzOckrCiEHJaFdSydNz6KL1Wpu7DnP1VQ7L%2B78Nw3mWnpIR0pNmMjZGkmmk82W6O%2B8NT3pjD6xavegA%3D%3D";

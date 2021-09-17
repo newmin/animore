@@ -10,46 +10,44 @@
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/api/ajaxCall.js"></script>
   <script src="/js/api/mypageReq.js" defer></script>
-    <script src="/js/profileEdit.js" defer></script>
+  <script src="/js/profileEdit.js" defer></script>
+    
   <!-- <script src="/js/mypage.js" defer></script> -->
-  
-  
-  
+
   <title>마이페이지</title>
+
 </head>
 <body>
-
   <!-- 메인 시작 -->
   <main class="main">
      <!-- 프로필정보 -->
-      <div class="mypage_profile_container" id="profileInfo" th:object="${profileForm}" th:data-cate="*{savedImgFile?.code}" th:data-sfname="*{savedImgFile?.store_fname}">
- 					<ul>
-	      				<li>
-	      				  <input type="file" name="file" id="imgFile" accept="image/*">
-	      					<div id="dropbox">
-	      						<img src="#" alt="이미지" id="profileImg" draggable="false"
-	      								 th:if="*{savedImgFile}"
-												 th:src="@{/attach/view/{code}/{sfname}(code=*{savedImgFile.code},sfname=*{savedImgFile.store_fname})}" />
-	      						<img src="#" alt="이미지" id="profileImg" draggable="false"
-	      								 th:unless="*{savedImgFile}"
-												 th:src="@{/img/noprofile.jpg}" />
-	      					</div>
-	      				</li>		
-	      				<li>
-	      					<button type="button" class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn" >변경</button>
-	      				</li>
-	      			</ul>	
-        
-        <div class="mypage_profile_usertypeicon">
-          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
-          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
+     <form th:object="${profileForm}"  enctype="multipart/form-data" action="/mypage/mypageFavorites" th:method="${patch}">
+      <div class="mypage_profile_container" id="profileInfo">
+				<ul class="mypage_profile">
+   				<li>
+   				  <input type="file" name="file" id="imgFile" style="display:none; " >
+   					<div id="dropbox">
+   						<img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지" id="profileImg" draggable="false"/>
+   					</div>
+   				</li>		
+   				<li>
+   					<span class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn">변경</span>
+   				</li>
+   			</ul>
+        <div class="mypage_profile_userType">
+	        <div class="mypage_profile_usertypeicon">
+	          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
+	          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
+	        </div>
+	        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+	        </div>
         </div>
-        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
-        </div>
+       
         <div class="mypage_profile_mileage">
-          마일리지: 1000p
+        	<span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
         </div>
       </div>
+      </form>
       <!-- 프로필정보 끝 -->
       <div class="mypage_container2">
         <div class="mypage_aside_container">
@@ -65,8 +63,6 @@
             <li th:if= "${mtype.equals('S')}" class="mypage_aside_menu"><a href="/mypage/mybusilist" class="mypage__myInfoBtn">내업체 목록</a></li>
             
             <li th:if= " ${mtype.equals('S')}" class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
-            
-  
             
             <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
             <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
@@ -105,11 +101,7 @@
     </main>
     
   <!-- 메인 끝 -->
-
   <!-- 푸터 -->
-
-
-
   <!-- 푸터 끝 -->
 </body>
 </html>

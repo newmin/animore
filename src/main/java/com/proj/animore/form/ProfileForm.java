@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.UpLoadFileDTO;
 
 import lombok.Data;
@@ -12,9 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileForm {
 	
-	String rid;
-	String nickname;
-	private UpLoadFileDTO savedImgFile;
+	
+	private String id;
+	private String nickname;
+	private int mileag;
 	private MultipartFile file;
 	
 }

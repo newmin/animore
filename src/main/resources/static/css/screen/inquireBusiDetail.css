@@ -308,3 +308,14 @@
 	color : var(--primary-dark);
 	padding : 10px 5px;
 }
+.busi__imgs{
+	display: flex;
+	gap : 5px;
+	flex-wrap: wrap;
+	max-height : 100px; 
+	
+}
+.busi__img{
+	width: 340px;
+	height: 220px;
+}
