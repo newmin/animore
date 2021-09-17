@@ -69,7 +69,6 @@ const changeImage = files => {
 						 .then(res=>res.json())
 						 .then(res=>changeImage_h(res,reader))
 						 .catch(err=>console.log('Error:', err));					
-
 		//변경							
 		}else{
 			console.log('변경');

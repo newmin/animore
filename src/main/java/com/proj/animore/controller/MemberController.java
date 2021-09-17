@@ -113,9 +113,8 @@ public class MemberController {
 			memberDTO.setStore_fname(storedFile.getStore_fname());
 			memberDTO.setUpload_fname(storedFile.getUpload_fname());
 			memberDTO.setFsize(storedFile.getFsize());
-			memberDTO.setFtype(storedFile.getFtype());	
-			
-		} 
+			memberDTO.setFtype(storedFile.getFtype());
+		}
 		
 		memberSVC.joinMember(memberDTO);
 		return "redirect:/";

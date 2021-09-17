@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
@@ -36,6 +38,7 @@ import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.form.BusiModifyForm;
+import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.ProfileForm;
@@ -101,23 +104,45 @@ public class MyPageController {
       return "redirect:/";
    }
    //프로필 조회
-   @GetMapping("/profile")
-	public String profileEditForm( HttpSession session, Model model ) {
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginmember:{}",loginMember);
-		MemberDTO memberDTO = memberSVC.findMemberById(loginMember.getId());
-		UpLoadFileDTO upLoadFileDTO = upLoadFileDAO.getFileByRid(String.valueOf(loginMember.getId()));
-		
-		ProfileForm profileForm = new ProfileForm();
-		profileForm.setNickname(memberDTO.getNickname());
-		profileForm.setSavedImgFile(upLoadFileDTO);
-		
-		model.addAttribute("profileForm", profileForm);
-		return "mypage/profileEditForm";
-	}
+//   @GetMapping("/profile")
+//	public String profileEditForm( HttpSession session, Model model ) {
+//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//		log.info("loginmember:{}",loginMember);
+//		MemberDTO memberDTO = memberSVC.findMemberById(loginMember.getId());
+//		UpLoadFileDTO upLoadFileDTO = upLoadFileDAO.getFileByRid(String.valueOf(loginMember.getId()));
+//		
+//		ProfileForm profileForm = new ProfileForm();
+//		profileForm.setNickname(memberDTO.getNickname());
+//		profileForm.setSavedImgFile(upLoadFileDTO);
+//		
+//		model.addAttribute("profileForm", profileForm);
+//		return "mypage/profileEditForm";
+//	}
+   
    //즐겨찾기 목록
+   @PatchMapping("/mypageFavorites")
+   public String mypageProfile(@Valid @ModelAttribute ProfileForm profileForm,
+		    HttpServletRequest request,
+			BindingResult bindingResult)throws IllegalStateException, IOException {
+	   
+	   MemberDTO memberDTO = new MemberDTO();
+	   HttpSession session = request.getSession(false);
+	   
+	   BeanUtils.copyProperties(profileForm,memberDTO);
+		
+	   if(!profileForm.getFile().isEmpty()) {
+			fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");		
+			MetaOfUploadFile storedFile = fileStore.storeFile(profileForm.getFile());
+			memberDTO.setStore_fname(storedFile.getStore_fname());
+			memberDTO.setUpload_fname(storedFile.getUpload_fname());
+			memberDTO.setFsize(storedFile.getFsize());
+			memberDTO.setFtype(storedFile.getFtype());
+		}
+	   return "mypage/mypageFavorites";
+   }
+   
    @GetMapping("/mypageFavorites")
-   public String mypage(HttpServletRequest request,
+   public String mypage( @ModelAttribute  ProfileForm profileForm, HttpServletRequest request,
          Model model) throws IllegalStateException, IOException { 
             
       HttpSession session = request.getSession(false);
@@ -128,29 +153,21 @@ public class MyPageController {
        String id = loginMember.getId();
        log.info(id);
        MemberDTO memberDTO = new MemberDTO();
+       
+       
        memberDTO = memberSVC.findMemberById(id);
-       UpLoadFileDTO upLoadFileDTO = upLoadFileDAO.getFileByRid(id);
-       ProfileForm profileForm = new ProfileForm();
-       profileForm.setSavedImgFile(upLoadFileDTO);
-
+       fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");
        List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(id);
        model.addAttribute("profileForm", profileForm);
        model.addAttribute("mtype",loginMember.getMtype());
        model.addAttribute("Favorite",favoritelist);
-       model.addAttribute("profile",memberDTO.getId());
-       log.info(profileForm.toString());
-       log.info(memberDTO.toString());
-       log.info(loginMember.toString());
+       
+		
+       
+	   model.addAttribute("profileForm", memberDTO);
+	   log.info(memberDTO.getStore_fname());
+	   
 
-     
-      
-      
-  	//첨부파일 등록
-  	       if(profileForm.getFile() !=null && profileForm.getFile().getSize() > 0) {			
-  			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
-  			MetaOfUploadFile storedFiles = fileStore.storeFile(profileForm.getFile());
-  			memberDTO.setFile(convert(storedFiles));
-	}
      return "mypage/mypageFavorites";
   }	
 	//메타정보 → 업로드 정보
@@ -194,7 +211,6 @@ public class MyPageController {
 //         return "mypage/memberOutForm";
          return null;
       }
-      
       session.invalidate();
       
       return "redirect:/";
@@ -332,6 +348,7 @@ public String modifyMember(HttpServletRequest request,
 	   
 	      return "/mypage/mybusiModify";
    }
+   
    //내업체수정처리
    @PatchMapping("/mybusiModify/{bnum}")
    public String mybusiModify(@PathVariable Integer bnum ,@Valid @ModelAttribute  BusiModifyForm busiModifyForm,
@@ -363,9 +380,7 @@ public String modifyMember(HttpServletRequest request,
          
      	BusinessLoadDTO modibusiBnum = businessSVC.modifyBusi(bnum, businessLoadDTO);
 		redirectAttributes.addAttribute("bnum",modibusiBnum.getBnum());
-         
-        
-
+		
          return "redirect:/mypage/mybusiModify/{bnum}";
    }
 }
