@@ -3,7 +3,7 @@
  */
  'use strict';
 
-		//리뷰 등록별점
+/*		//리뷰 등록별점
 	let one = document.querySelector('.one');
 	let two = document.querySelector('.two');
 	let three = document.querySelector('.three');
@@ -45,4 +45,4 @@
 	two?.addEventListener('click',score2);
 	three?.addEventListener('click',score3);
 	four?.addEventListener('click',score4);
-	five?.addEventListener('click',score5);
+	five?.addEventListener('click',score5);*/
