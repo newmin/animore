@@ -147,6 +147,7 @@ const regiBtn_f = e =>{
 	request.mpost(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
+					console.log('0',res);
 					if(res.rtcd == '00'){
 							//성공로직처리
 							const data = res.data;
@@ -156,12 +157,13 @@ const regiBtn_f = e =>{
 							review_input_init();
 					}else{
 						alert(res.rtmsg);
+						console.log('1',res.rtmsg);
 						throw new Error(res.rtmsg);
 					}
 			})
 			.catch(err=>{
 					//오류로직 처리
-					console.log(err.message);
+					console.log('2',err.message);
 					alert(err.message);
 			});
 };
@@ -351,13 +353,13 @@ const review_img_delBtn_f = e=>{
 function reviewImgModiForm(review){
 	let html = '';
 		review.files.forEach(img=>{
-			html+=`     <div class="review__modi-img">`;
+			html+=`     <div class="review__modi-img" name="files">`;
 			html+=`       <img class="review__img" src="/images/${img.store_fname}" alt="첨부이미지">`;
 			html+=`       <i data-fnum=${img.fnum} data-rnum=${review.rnum} class="fas fa-times-circle review_img_delBtn"></i>`;
 			html+=`     </div>`;
 		})
 		html+=`	 <label for="modi_files" class="file-btn">사진추가</label>`;
-		html+=`		<input class="review__modi-file" type="file" hidden name="files"  id="modi_files" value="files" multiple onchange="uploadChange(this);">`
+		html+=`		<input class="review__modi-file" type="file" value="${review.files}"  name="files"  id="modi_files"  multiple onchange="uploadChange(this);">`
 	//html삽입
 	document.querySelector('.review__img-modiForm').innerHTML = html;
 	//이벤트 등록
@@ -448,7 +450,7 @@ const modiBtn_f = e =>{
 		formData.append('files',$files.files[i]);
 	}
 	
-	request.mpost(URL,formData)
+	request.mpatch(URL,formData)
 			.then(res=>res.json())
 			.then(res=>{
 					if(res.rtcd == '00'){
@@ -603,7 +605,7 @@ function refreshReview(data){
 		/*첨부 파일 시작*/
 		html += `	<div class="review__column review__imgs">`;
   	review.files.forEach(imgs=>{
-    	html+=`     <img class="review__img" src="/images/${imgs.store_fname}}" alt="첨부 이미지" />`;
+    	html+=`     <img class="review__img" src="/images/${imgs.store_fname}" alt="첨부 이미지" />`;
     });
     html += `	</div>`;
 		/*첨부파일 종료*/

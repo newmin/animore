@@ -65,11 +65,11 @@ public class APIReviewController {
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
 				
 		//첨부파일 등록
-		//if(reviewForm.getFiles()!=null || reviewForm.getFiles().size()!=0) {			
+		if(reviewForm.getFiles() !=null && reviewForm.getFiles().size() > 0) {			
 			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(reviewForm.getFiles());
 			reviewDTO.setFiles(convert(storedFiles));
-		//}
+		}
 		
 		List<ReviewReq> list = reviewSVC.registReview(reviewDTO);
 		
@@ -121,8 +121,10 @@ public class APIReviewController {
 	
 	 //리뷰수정
 	@PatchMapping("/")
-	public Result modiReview(@RequestBody ReviewForm reviewForm, 
-							HttpServletRequest request) {
+	public Result modiReview(@ModelAttribute ReviewForm reviewForm, 
+							HttpServletRequest request) throws IllegalStateException, IOException{
+		
+		log.info("reviewForm:{}",reviewForm);
 		Result result;
 		HttpSession session = request.getSession(false);
 		if(session==null || session.getAttribute("loginMember") == null) {
@@ -138,10 +140,16 @@ public class APIReviewController {
 		}
 		
 		//리뷰작성폼→리뷰DTO
+		//리뷰작성폼→리뷰DTO
 		ReviewDTO reviewDTO = new ReviewDTO();
 		BeanUtils.copyProperties(reviewForm,reviewDTO);
-		log.info(reviewDTO.toString());
-		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
+				
+		//첨부파일 등록
+		if(reviewForm.getFiles() !=null && reviewForm.getFiles().size() > 0) {	
+			fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
+			List<MetaOfUploadFile> storedFiles = fileStore.storeFiles(reviewForm.getFiles());
+			reviewDTO.setFiles(convert(storedFiles));
+		}
 		List<ReviewReq> list = reviewSVC.updateReview(reviewDTO);
 		result = new Result("00","성공",list);
 		return result;
@@ -185,7 +193,7 @@ public Result deleteReviewAttach(@RequestParam int fnum,
 	result = new Result("01","로그인이 만료되었어요. 다시 로그인해주세요.",null);
 	return result;
 	}
-
+	fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 	ReviewReq reviewReq = reviewSVC.delReviewImg(rnum,fnum);
 	result = new Result("00","성공",reviewReq);
 	return result;
