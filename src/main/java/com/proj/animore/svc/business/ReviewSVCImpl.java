@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dao.business.ReviewDAO;
 import com.proj.animore.dao.business.ReviewFileDAO;
 import com.proj.animore.dto.business.BusiUploadFileDTO;
@@ -22,13 +23,15 @@ public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
 	private final ReviewFileDAO reviewFileDAO;
+	private final MemberDAO memberDAO;
 	
 	//리뷰 등록
 	@Override
 	@Transactional
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
-		reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));		
+		reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));	
+		memberDAO.upMileage(reviewDTO.getId(), 100);
 		return allReview(reviewDTO.getBnum());
 	}
 	
