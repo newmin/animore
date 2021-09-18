@@ -13,9 +13,9 @@
 }
 
 .profile__lg{
-/*   width: px;
-  height: px;
-  border-radius: %; */
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
 }
 
 .profile__sm-square{

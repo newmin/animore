@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proj.animore.common.file.FileStore;
 import com.proj.animore.dao.business.BusinessDAO;
+import com.proj.animore.dao.business.BusinessFileDAO;
 import com.proj.animore.dto.business.BusinessDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.HtagBusiListReq;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class BusinessSVCImpl implements BusinessSVC {
 
 	private final BusinessDAO businessDAO;
+	private final BusinessFileDAO businessFileDAO;
+	private final FileStore fileStore;
 	
 	@Override
 	public void joinBusi(BusinessDTO businessDTO) {
@@ -24,7 +28,10 @@ public class BusinessSVCImpl implements BusinessSVC {
 	}
 	@Override
 	public BusinessLoadDTO findBusiByBnum(Integer bnum) {
-		return businessDAO.findBusiByBnum(bnum);
+		BusinessLoadDTO businessLoadDTO = businessDAO.findBusiByBnum(bnum);
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/business/");
+		businessLoadDTO.setFiles(businessFileDAO.getBusiFiles(bnum));
+		return businessLoadDTO;
 	}
 	//내업체 수정
 	@Override

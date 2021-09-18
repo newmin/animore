@@ -2,15 +2,11 @@
 drop table reviewfile;
 drop table businessfile;
 drop table boardfile;
-drop table coupon;
-drop table profession;
-drop table Myani;
 drop table favorite;
 drop table REVIEW;
 drop table BCATEGORY;
 drop table BUSINESS;
 drop table GOODBOARD;
-drop table HBOARD;
 drop table RBOARD;
 drop table BOARD;
 drop table member;
@@ -101,21 +97,7 @@ create table rboard(
                                 ON DELETE CASCADE
 );
 
---건강정보
-create table hboard(
-  bnum number(8),
-  hcategory varchar2(12) not null,
-  btitle varchar2(150) not null,
-  id varchar2(40) not null,
-  bcdate timestamp DEFAULT systimestamp not null,
-  budate timestamp DEFAULT systimestamp,
-  bhit number(5) DEFAULT 0 not null,
-  bgood number(5) DEFAULT 0 not null,
-  bcontent clob not null,
-  constraint HBOARD_BNUM_PK primary key(bnum),
-  constraint hboard_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
-  constraint hboard_hcategory_ck check(hcategory in('질병사전','행동사전'))
-);
+
 
 --좋아요게시글
 create table goodboard(
@@ -168,16 +150,7 @@ udate timestamp,
 constraint businessfile_fnum_pk primary key(fnum),
 constraint businessfile_bnum_fk foreign key(bnum)references business(bnum) on delete cascade
 );
---전문가
-create table profession(
-  pnum number(8),
-  id varchar2(40),
-  licenseno varchar2(20) not null,
-  constraint PROFESSION_PNUM_PK primary key(pnum),
-  constraint profession_id_FK foreign key(id) 
-                                references member(id)
-                                ON DELETE CASCADE
-);
+
 
 --업체카테고리
 create table bcategory(
@@ -255,42 +228,16 @@ create table favorite(
                                  ON DELETE CASCADE
 );
 
---키우는 동물
-create table myani(
-  ID varchar2(40),
-  ANIMAL varchar(30),
-  MNUM number(10),
-  constraint myani_MNUM_PK primary key(MNUM),
-  constraint myani_id_FK foreign key(ID) 
-                                 references member(id)
-                                 ON DELETE CASCADE
-);
 
---쿠폰
-create table coupon(
-  cnum number(10),
-  id varchar2(40),
-  price number(5),
-  cflag char(1) DEFAULT 'Y',
-  constraint coupon_PK primary key(cnum),
-  constraint coupon_FK foreign key(id)
-                              references member(id)
-                              ON DELETE CASCADE,
-  constraint coupon_cflag_ck check(cflag in('Y','N'))
-);
 
 --시퀀스 삭제
 DROP SEQUENCE BOARD_BNUM_SEQ;
 DROP SEQUENCE rboard_rnum_seq;
 DROP SEQUENCE goodboard_gnum_seq;
-DROP SEQUENCE hboard_bnum_seq;
 DROP SEQUENCE business_bnum_seq;
 DROP SEQUENCE review_rnum_seq;
 DROP SEQUENCE reviewfile_fnum_seq;
 DROP SEQUENCE favorite_fnum_seq;
-DROP SEQUENCE myani_mnum_seq;
-DROP SEQUENCE profession_pnum_seq;
-DROP SEQUENCE coupon_cnum_seq;
 drop sequence boardfile_fnum_seq;
 drop sequence business_fnum_seq;
 drop sequence review_fnum_seq;
@@ -299,21 +246,17 @@ drop sequence review_fnum_seq;
 CREATE SEQUENCE BOARD_BNUM_SEQ;
 CREATE SEQUENCE rboard_rnum_seq;
 CREATE SEQUENCE goodboard_gnum_seq;
-CREATE SEQUENCE hboard_bnum_seq;
 CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
 CREATE SEQUENCE reviewfile_fnum_seq;
 CREATE SEQUENCE favorite_fnum_seq;
-CREATE SEQUENCE myani_mnum_seq;
-CREATE SEQUENCE profession_pnum_seq;
-CREATE SEQUENCE coupon_cnum_seq;
 create sequence boardfile_fnum_seq;
-create sequence business_fnum_seq;
+create sequence businessfile_fnum_seq;
 create sequence review_fnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy.png','image/png','16345');
+insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy2.png','image/png','16345');
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy2.png','image/png','16345');
 -- 특수회원
 insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
@@ -354,22 +297,22 @@ insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'F','요즘 털빠짐이 심하네요..','user@test.com','제 머리에서요ㅠㅠ',BOARD_BNUM_SEQ.currval,0,0);
 insert into board(BNUM,BCATEGORY,BTITLE,ID,BCONTENT,bgroup,bstep,bindent) values(BOARD_BNUM_SEQ.nextval,'P','인형에 진심인 우리애들','user@test.com','이미 인형 그 자체',BOARD_BNUM_SEQ.currval,0,0);
 -- 댓글
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'user@test.com','10불러봅니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'user@test.com','힘내요~',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'user@test.com','그 작던 쪼꼬미들 맞냐',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'normal@zxc.com','엌ㅋㅋ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'user@test.com','언제나 감사합니다',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'normal@zxc.com','-판매완료-',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'user@test.com','아직 안팔렸습니다. 윗댓 누구냐ㅡㅡ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'normal@zxc.com','"모"자람이 없으시네요',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1,0);
-insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'normal@zxc.com','뭔데',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,1,'user@test.com','돈드리겠습니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'normal@zxc.com','님선',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,2,'user@test.com','10불러봅니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'normal@zxc.com','ㅍㅇㅌ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,3,'user@test.com','힘내요~',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'normal@zxc.com','가슴이 웅장해진다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,4,'user@test.com','그 작던 쪼꼬미들 맞냐',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'normal@zxc.com','엌ㅋㅋ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,5,'user@test.com','언제나 감사합니다',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'normal@zxc.com','-판매완료-',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,6,'user@test.com','아직 안팔렸습니다. 윗댓 누구냐ㅡㅡ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'normal@zxc.com','"모"자람이 없으시네요',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,7,'user@test.com','너어는....',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'normal@zxc.com','너무 귀여워요ㅠㅠ',1,1,0);
+--insert into rboard(RNUM,BNUM,ID,RCONTENT,RGROUP,RSTEP,rindent) values(rboard_RNUM_seq.nextval,8,'user@test.com','네가 더',1,1,0);
 
 --즐겨찾기
 insert into favorite(fnum, bnum, id) values(favorite_fnum_seq.nextval, 1, 'normal@zxc.com');

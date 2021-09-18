@@ -22,7 +22,7 @@
 	</option>
     </select>
     <p th:errors="*{bcategory}" th:errorclass="field-errmsg"></p>
-    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요.">
+    <input class="addPost__title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요." maxlength="50">
     <p th:errors="*{btitle}" th:errorclass="field-errmsg"></p>
     <p th:errors="*{bcontent}" th:errorclass="field-errmsg"></p>
       <textarea class="addPost__content" th:field="*{bcontent}" cols="60" rows="10"></textarea>
@@ -40,7 +40,7 @@
     <div class="addPost__icons">
       <span class="filetype">
                 <span class="file-text"></span>
-      <label for="files" class="file-btn">찾아보기</label>
+      <label for="files" class="addpost_file-btn">찾아보기</label>
       <span class="file-select"><input type="file" hidden th:field="*{files}" multiple onchange="uploadChange(this);"></span>
       </span>
     <div class="addPost__btns">

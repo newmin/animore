@@ -4,14 +4,19 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.proj.animore.dto.MemberDTO;
+import com.proj.animore.dto.UpLoadFileDTO;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ProfileForm {
 	
-	String id;
-	String nickname;
-	private List<MultipartFile> files; //첨부파일
-
+	
+	private String id;
+	private String nickname;
+	private int mileag;
+	private MultipartFile file;
+	
 }

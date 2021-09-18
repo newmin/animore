@@ -38,6 +38,11 @@
 	right: 5px;
 }
 
+.boardForm__ReplyNickname.boardForm__ReplyPostWriter::before{
+	content:"글쓴이 ";
+	color:var(--primary);
+}
+
 .boardForm__ReplyReBtn,
 .boardForm__modiReplyBtn,
 .boardForm__delReplyBtn{

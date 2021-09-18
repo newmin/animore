@@ -10,47 +10,59 @@
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/api/ajaxCall.js"></script>
   <script src="/js/api/mypageReq.js" defer></script>
+  <script src="/js/profileEdit.js" defer></script>
+    
   <!-- <script src="/js/mypage.js" defer></script> -->
-  
-  
-  
+
   <title>마이페이지</title>
+
 </head>
 <body>
-
   <!-- 메인 시작 -->
   <main class="main">
      <!-- 프로필정보 -->
-      <div class="mypage_profile_container">
-        <div class="mypage_profile_profileimg">
-        <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
-        
-        <a href="mypageProfile"><button class="mypageProfile">프로필 수정</button></a>
+     <form th:object="${profileForm}"  enctype="multipart/form-data" action="/mypage/mypageFavorites" th:method="${patch}">
+      <div class="mypage_profile_container" id="profileInfo">
+				<ul class="mypage_profile">
+   				<li>
+   				  <input type="file" name="file" id="imgFile" style="display:none; " >
+   					<div id="dropbox">
+   						<img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지" id="profileImg" draggable="false"/>
+   					</div>
+   				</li>		
+   				<li>
+   					<span class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn">변경</span>
+   				</li>
+   			</ul>
+        <div class="mypage_profile_userType">
+	        <div class="mypage_profile_usertypeicon">
+	          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
+	          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
+	        </div>
+	        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+	        </div>
         </div>
-        <div class="mypage_profile_usertypeicon">
-          <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형" >
-          <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형" >
-        </div>
-        <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
-          Tester1
-        </div>
+       
         <div class="mypage_profile_mileage">
-          마일리지: 1000p
+        	<span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
         </div>
       </div>
+      </form>
       <!-- 프로필정보 끝 -->
       <div class="mypage_container2">
         <div class="mypage_aside_container">
           <h2 class="mypage_aside_title">마이페이지</h2>
           <ul class="mypage_aside_menu">
+          
+          
+          
+          
             <!-- TODO th:href 등록 파일명'임의'표기-->
             <li class="mypage_aside_menu mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn" th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
             
             <li th:if= "${mtype.equals('S')}" class="mypage_aside_menu"><a href="/mypage/mybusilist" class="mypage__myInfoBtn">내업체 목록</a></li>
             
             <li th:if= " ${mtype.equals('S')}" class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
-            
-  
             
             <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내가 쓴 리뷰</p></li>
             <li class="mypage_aside_menu"><p class="mypage__mypostBtn">내가 쓴 글</p></li>
@@ -71,23 +83,6 @@
         <div class="mypage_content_container">
         
           <h2 class="mypage_content_title">즐겨 찾는 업체</h2>
-          
-       <!--  <div class="mypage_content">
-            <ul>
-              <li><input type="checkbox" name="bcategory_all" id="bcategory_all"><label for="bcategory_all">전체</label></li>
-              <li><input type="checkbox" name="bhospital" id="bhospital"><label for="bhospital">병원</label></li>
-              <li><input type="checkbox" name="bpharmacy" id="bpharmacy"><label for="bpharmacy">약국</label></li>
-              <li><input type="checkbox" name="bhotel" id="bhotel"><label for="bhotel">호텔</label></li>
-              <li><input type="checkbox" name="bkindergarden" id="bkindergarden"><label for="bkindergarden">유치원</label></li>
-              <li><input type="checkbox" name="bfood" id="bfood"><label for="bfood">식당.카페</label></li>
-              <li><input type="checkbox" name="btraining" id="btraining"><label for="btraining">훈련소</label></li>
-              <li><input type="checkbox" name="bshop" id="bshop"><label for="bshop">용품점</label></li>
-              <li><input type="checkbox" name="bplayground" id="bplayground"><label for="bplayground">놀이터</label></li>
-              <li><input type="checkbox" name="bhairshop" id="bhairshop"><label for="bhairshop">미용실</label></li>
-              <li><input type="checkbox" name="betc" id="betc"><label for="betc">기타</label></li>
-            </ul>
-          </div> -->
-          
           <hr>
  		<table class="favorite__table">
          <tr class="w3-hover-green">
@@ -106,11 +101,7 @@
     </main>
     
   <!-- 메인 끝 -->
-
   <!-- 푸터 -->
-
-
-
   <!-- 푸터 끝 -->
 </body>
 </html>

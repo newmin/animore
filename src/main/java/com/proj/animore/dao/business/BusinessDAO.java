@@ -9,7 +9,7 @@ import com.proj.animore.dto.business.HtagBusiListReq;
 public interface BusinessDAO {
 
 	//업체등록
-	public void joinBusi(BusinessDTO businessDTO);
+	public int joinBusi(BusinessDTO businessDTO);
 	
 	//업체찾기 by bnum
 	public BusinessLoadDTO findBusiByBnum(Integer bnum);
@@ -39,4 +39,6 @@ public interface BusinessDAO {
 	
 	//내 업체찾기 by id
 	public BusinessLoadDTO findBusiById(String id);
+	
+	Integer bnumCurrVal();
 }

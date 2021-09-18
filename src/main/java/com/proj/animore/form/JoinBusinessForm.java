@@ -1,8 +1,12 @@
 package com.proj.animore.form;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -28,5 +32,7 @@ public class JoinBusinessForm {
 	private String holidayopen;
 	private String dental;
 	private String openhours;
+	
+	private List<MultipartFile> files;
 }
 

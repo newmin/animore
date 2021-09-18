@@ -8,7 +8,8 @@ import lombok.Data;
 
 @Data
 public class ReviewForm {
-
+	private Integer rnum;		
+	
 	private Integer bnum;		//업체번호
 	private String rcontent;	//리뷰내용
 	private Integer rscore;		//평점

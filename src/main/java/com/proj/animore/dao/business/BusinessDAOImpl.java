@@ -22,7 +22,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 	private final JdbcTemplate jdbcTemplate;
 	//업체가입
 	@Override
-	public void joinBusi(BusinessDTO businessDTO) {
+	public int joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("insert into business(bnum, bbnum, id, bname, baddress, btel, openhours) values(business_bnum_seq.nextval,?,?,?,?,?,?) ");
@@ -34,6 +34,8 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
 												businessDTO.getOpenhours());
+		
+		return bnumCurrVal();
 	}
 	//업체조회
 	@Override
@@ -213,4 +215,12 @@ public class BusinessDAOImpl implements BusinessDAO {
 		
 		return businessLoadDTO;
 	}
+	
+	@Override
+	public Integer bnumCurrVal() {
+		String sql = "select business_bnum_seq.currval from dual ";
+		int bnum = jdbcTemplate.queryForObject(sql,Integer.class);
+		return bnum;
+	}
+	
 }

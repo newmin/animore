@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.proj.animore.common.file.FileStore;
+import com.proj.animore.dao.MemberDAO;
 import com.proj.animore.dao.business.ReviewDAO;
 import com.proj.animore.dao.business.ReviewFileDAO;
 import com.proj.animore.dto.business.BusiUploadFileDTO;
@@ -22,13 +24,20 @@ public class ReviewSVCImpl implements ReviewSVC {
 
 	private final ReviewDAO reviewDAO;
 	private final ReviewFileDAO reviewFileDAO;
+	private final MemberDAO memberDAO;
+	private final FileStore fileStore;
 	
 	//리뷰 등록
 	@Override
 	@Transactional
 	public List<ReviewReq> registReview(ReviewDTO reviewDTO) {
 		int rnum = reviewDAO.registReview(reviewDTO);
-		reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));		
+		if(reviewDTO.getFiles() !=null && reviewDTO.getFiles().size() > 0) {		
+			reviewFileDAO.registReviewFile(convert(rnum, reviewDTO.getFiles()));
+			memberDAO.upMileage(reviewDTO.getId(), 150);
+			return allReview(reviewDTO.getBnum());
+		}
+		memberDAO.upMileage(reviewDTO.getId(), 100);
 		return allReview(reviewDTO.getBnum());
 	}
 	
@@ -42,6 +51,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> allReview(Integer bnum) {
 		List<ReviewReq> list = reviewDAO.allReview(bnum);
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 		for(int i=0; i<list.size(); i++) {
 			list.get(i).setFiles(reviewFileDAO.getReviewFiles(list.get(i).getRnum()));
 		}
@@ -69,7 +79,11 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public List<ReviewReq> updateReview(ReviewDTO reviewDTO) {
 		reviewDAO.updateReview(reviewDTO);
-		/* reviewFileDAO.registReviewFile(reviewDTO.getRnum(), reviewDTO.getFiles()); */
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
+		if(reviewDTO.getFiles() !=null && reviewDTO.getFiles().size() > 0) {	
+		 reviewFileDAO.updateReviewFiles(convert(reviewDTO.getRnum(), reviewDTO.getFiles())); 
+		}
+//		 reviewFileDAO.registReviewFile(reviewDTO.getFiles()); 
 		return allReview(reviewDTO.getBnum());
 	}
 
@@ -84,6 +98,7 @@ public class ReviewSVCImpl implements ReviewSVC {
 	@Override
 	public ReviewReq delReviewImg(int rnum,int fnum) {
 		reviewFileDAO.removeEachFile(fnum);
+		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/review/");
 		return findReview(rnum);
 	}
 	

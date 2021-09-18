@@ -68,8 +68,8 @@
     	<!-- <p th:errors="*{pw2}" th:errorclass="field-msg">비밀번호오류</p> -->
     </li>
     <li>
-      <div class="joinform__row"><label for="image">프로필사진</label><span class="joinform__required-mark">*</span></div>
-      <div class="joinform__row"><input type="file" class="joinform__input" th:field="*{image}"></div>
+      <div class="joinform__row"><label for="file">프로필사진</label><span class="joinform__required-mark">*</span></div>
+      <div class="joinform__row"><input type="file" class="joinform__input" th:field="*{file}"></div>
     </li>
     <li>
       <div class="joinform__row"><label for="name">이름</label><span class="joinform__required-mark">*</span></div>
@@ -127,12 +127,13 @@
              
                <h3 class="joinform__title">사업자정보</h3>
                <hr>
-               <ul class="joinform">
+               <ul class="joinform" th:object="${joinBusinessForm}">
                   <li><div class="joinform__row"><label for="bbnum">사업자번호</label></div>                     <input class="joinform__input" type="text" name="bbnum" id="bbnum" /></li>
                   <li><div class="joinform__row"><label for="bname">업체명</label></div>                        <input class="joinform__input" type="text" name="bname" id="bname" /></li>
                   <li><div class="joinform__row"><label for="baddress">업체주소</label></div>                  <input class="joinform__input" type="text" name="baddress" id="baddress" /></li>
                   <li><div class="joinform__row"><label for="btel">업체연락처</label></div>                     <input class="joinform__input" type="text" name="btel" id="btel" /></li>
                   <li><div class="joinform__row"><label for="otime">영업시간</label></div>                     <input class="joinform__input" type="text" name="openhours" id="openhours" /></li>
+                  <li><div class="joinform__row"><label for="files">업체사진</label></div> <input type="file" accept="image/*" multiple="multiple" th:field="*{files}"/></div></li>
                   <li>
                      <p>업체 카테고리 선택</p>
                      

@@ -2,12 +2,17 @@
  * 
  */
  //프로필사진(sm)
- const $profile__sm = document.querySelectorAll('.profile__sm');
+ let $profile__sm = document.querySelectorAll('.profile__sm');
  $profile__sm.forEach(ele=>ele.addEventListener('click',e=>{
 	image_popup(e.target.src);
 }))
+//업체 첨부사진
+ let $busi__img = document.querySelectorAll('.busi__img');
+ $busi__img.forEach(ele=>ele.addEventListener('click',e=>{
+	image_popup(e.target.src);
+}))
 //리뷰 첨부사진
- const $review__img = document.querySelectorAll('.review__img');
+ let $review__img = document.querySelectorAll('.review__img');
  $review__img.forEach(ele=>ele.addEventListener('click',e=>{
 	image_popup(e.target.src);
 }))
