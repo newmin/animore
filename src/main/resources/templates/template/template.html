@@ -52,7 +52,7 @@
     <div class="nav__column" th:if="${#httpServletRequest.requestURI !='/'}">
 		  <!-- 검색 -->
 		  <form class="search" th:action="@{|/search?search=${search}|}">
-		    <input class="search__input search__input--sm" name="search" type="text" >
+		    <input class="search__input search__input--sm" name="search" type="text" minlength="2" required="required">
 		    <button class="search__icon search__icon--sm"><i class="fas fa-search"></i></button>
 		  </form>
     </div>

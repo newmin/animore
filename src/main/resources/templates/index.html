@@ -16,7 +16,7 @@
   <main class="main">
    <!-- 검색창 -->
 	  <form class="search" th:action="@{|/search?search=${search}|}">
-	    <input class="search__input" name="search" type="text" placeholder="검색어를 입력해주세요(업체)" required="required">
+	    <input class="search__input" name="search" type="text" placeholder="검색어를 입력해주세요(업체)" minlength="2" required="required">
 	    <button class="search__icon"><i class="fas fa-search"></i></button>
 	  </form>
 
