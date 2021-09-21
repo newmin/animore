@@ -27,25 +27,26 @@ function review(){
 
 function refreshReview(data){
   let html= '';
-  html += `<h2>내가 쓴 리뷰</h2>`;
+  html += `<h2 class="mypage__title">내가 쓴 리뷰</h2>`;
   html += `<hr>`;
-  html += `<table class="review_table">`;
+  html += `<table class="mypage__table">`;
   html += `<tr>`;
-  html += `  <th class="review__cell">번호</span>`;
-  html += `  <th class="review__cell">업체명</span>`;
-  html += `  <th class="review__cell">내평점</span>`;
-  html += `  <th class="review__cell">리뷰내용</span>`;
-  html += `  <th class="review__cell">작성일</span>`;
+  html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
+  html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
+  html += `  <th class="mypage__cell mypage__th review__score">내평점</span>`;
+  html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
+  html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
   html += `</tr>`;
   data.forEach(review => {
     html += `<tr>`;
-    html += `    <td class="review__cell">번호</span>`;
-    html += `    <td class="review__cell">${review.bname}</span>`;
-    html += `    <td class="review__cell">${review.rscore}</span>`;
-    html += `    <td class="review__cell">${review.rcontent}</span>`;
-    html += `    <td class="review__cell">${review.rvcdate}</span>`;
+    html += `    <td class="mypage__cell mypage__td">${review.rownum}</span>`;
+    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.bname}</a></span>`;
+    html += `    <td class="mypage__cell mypage__td"><i class="fas fa-star busi-list__star"></i>${review.rscore}점</span>`;
+    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.rcontent}</a></span>`;
+    html += `    <td class="mypage__cell mypage__td">${review.rvcdate}</span>`;
     html += `</tr>`;
   });
+	html+=`</table>`;
   
   document.querySelector('.mypage_content_container').innerHTML = html;
 

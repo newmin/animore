@@ -1,43 +1,74 @@
 @charset "utf-8";
-.container{
+.container {
   width: 70%;
   margin: auto;
 }
 
-.mypage_container{
+.mypage_container {
   margin-top: 50px;
-  min-width: 650px; max-width: 800px;
+  min-width: 650px;
+  max-width: 800px;
 }
 
-.mypage_profile_container{
-  display:flex;
-  justify-content : space-around;
+/* 마이페이지 프로필 라인 */
+.mypage_profile_container {
+  display: flex;
+  justify-content: space-around;
   align-items: center;
   margin: auto;
   height: 150px;
-  min-width: 650px; max-width: 800px;
+  min-width: 650px;
+  max-width: 800px;
   background-color: #eee;
 }
-
-.mypage_profile_nickname{
+/* 프로필 */
+.mypage_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.mypage_profile .profile__lg {
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+}
+.mypage_profile li {
+  display: flex;
+  justify-content: center;
+}
+#changeProfileImgBtn {
+  color: var(--primary--text);
+  color: rgba(0, 0, 0, 0.5);
+}
+/* 유저타입 */
+.mypage_profile_usertypeicon {
+  height: 50px;
+  width: 50px;
+  margin-left: 50px;
+}
+.mypage_profile_nickname {
+  font-size: 20px;
+}
+.mypage_profile_usertypeicon img {
+  height: 100%;
+  width: 100%;
+  background-color: #eee;
+}
+/* 마일리지 */
+.mypage_profile_mileage {
+  margin-left: 50px;
   font-size: 20px;
 }
 
-.mypage_profile_usertypeicon{
-  height: 50px; width: 50px;
-  margin-left: 50px;
-}
-.mypage_profile_usertypeicon img{
-  height: 100%; width: 100%;
-  background-color: #eee;
+.mypage_profile_userType {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.mypage_profile_mileage{
-  margin-left: 50px;
-  font-size: 20px;
-}
+/* 마이페이지 프로필 라인 종료*/
 
-.mypage_container2{
+.mypage_container2 {
   display: grid;
   margin: 30px auto 0 auto;
   grid-template-columns: minmax(170px, 200px) minmax(450px, 568px);
@@ -46,14 +77,14 @@
 }
 
 /* 마이페이지 메뉴 */
-.mypage_aside_title{
+.mypage_aside_title {
   margin-left: 15px;
 }
-.mypage_aside_menu{
+.mypage_aside_menu {
   font-size: 16px;
 }
 
-.mypage_aside_menu li{
+.mypage_aside_menu li {
   box-sizing: border-box;
   margin-top: -1px;
   padding: 11px 10px;
@@ -68,64 +99,80 @@
   color: cornflowerblue;
 }
 
-
 /* 마이페이지 본문 제목 */
-.mypage_content_title{
+.mypage_content_title {
   margin-top: 6px;
   margin-left: 6px;
 }
-.mypage_content_container hr{
+.mypage_content_container hr {
   background-color: #ddd;
   border: 1px solid #ddd;
   border-collapse: collapse;
   margin-bottom: 6px;
 }
+/* 마이페이지 테이블 */
+.mypage__table {
+  width: 550px;
+}
+.mypage__cell {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+}
+.mypage__th {
+  font-weight: 600;
+}
 
 /* 즐겨찾는 업체 */
-
-.mypage_content ul{
+.mypage_content ul {
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   font-size: 12px;
 }
-
-.mypage_content ul li input{
+.mypage_content ul li input {
   display: none;
 }
-.mypage_content ul li input[type="checkbox"] + label:hover{
+.mypage_content ul li input[type="checkbox"] + label:hover {
   cursor: pointer;
 }
-.mypage_content ul li input[type="checkbox"]:checked + label{
+.mypage_content ul li input[type="checkbox"]:checked + label {
   font-weight: bold;
   color: cornflowerblue;
 }
 
 /* 내 리뷰 */
- .my-review{
-   display: grid;
-   grid-template-rows: repeat(10, 40px);
-   grid-template-columns: 40px 120px 60px 250px 120px;
-   border-top: 1px solid rgba(0, 0, 0, 0.1);
-   border-left: 1px solid rgba(0, 0, 0, 0.1);
- }
- .my-review__title,
- .my-review__text{
-   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-   border-right: 1px solid rgba(0, 0, 0, 0.1);
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
- .my-review__title{
-   font-weight: 600;
- }
- 
- /* 내가 쓴 글 */
+.mypage__num {
+  width: 40px;
+}
+.review__bname {
+  width: 150px;
+}
+.review__score {
+  width: 70px;
+}
+.mypage__date {
+  width: 100px;
+}
+.review__content {
+  width: 200px;
+}
+/* 내 리뷰 */
+
+.my-favorite {
+  display: grid;
+  grid-template-rows: repeat(10, 40px);
+  grid-template-columns: 40px 120px 60px 250px 120px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 내가 쓴 글 */
 /*내가쓴글*/
 .mypost__cell {
   border: 1px solid rgba(0, 0, 0, 0.5);
-  height:22px;
-  line-height:22px;
+  height: 22px;
+  line-height: 22px;
   text-align: center;
 }
 
@@ -134,40 +181,13 @@
 .mypost__bhit{
   width: 15%;
 }*/
-.mypost__btitle{
+.mypost__btitle {
   width: 60%;
 }
-.mypage__mypostBtn:hover{
-	cursor:pointer;
-}
-
-
-.mypage_profile_userType{
-	display: flex;
-	align-items: center;
-	gap : 5px;
-}
-
-.mypage_profile{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap : 5px;
-}
-.mypage_profile .profile__lg{
-	border : 0.5px solid var(--primary-dark);
-}
-.mypage_profile li{
-		display: flex;
-		justify-content: center;
-}
-#changeProfileImgBtn{
-	color : var(--primary--text);
+.mypage__mypostBtn:hover {
+  cursor: pointer;
 }
 
 /* 모바일(여유되면) */
 @media screen and (max-width: 767px) {
-  
-
 }

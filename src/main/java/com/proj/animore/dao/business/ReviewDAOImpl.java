@@ -74,10 +74,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewReq> myReview(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rv.id,rnum,rcontent,rscore,rvcdate,rvudate,rv.bnum, b.bname ");
-		sql.append("  from review rv, business b ");
-		sql.append(" where rv.bnum = b.bnum ");
-		sql.append("   and rv.id = ? ");
+		sql.append("select rownum, x.* ");
+		sql.append("from (select rv.id,rnum,rcontent,rscore,rvcdate,rvudate,rv.bnum, b.bname ");
+		sql.append("  	  	from review rv, business b ");
+		sql.append(" 	   where rv.bnum = b.bnum ");
+		sql.append("   		 and rv.id = ? ");
+		sql.append("	order by rvcdate desc) x ");
 
 		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
 								new BeanPropertyRowMapper<>(ReviewReq.class), 

@@ -22,50 +22,52 @@
 @import "screen/inquireBusiDetail.css";
 @import "screen/busiList.css";
 @import "screen/favorite.css";
-@import "screen/myreview.css";
 @import "screen/reply.css";
 @import "screen/boardDetailReply.css";
 
 /* 폰트 */
 @import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");
 @font-face {
-  font-family: 'RIDIBatang';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+  font-family: "RIDIBatang";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'BBTreeGB';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff');
+  font-family: "BBTreeGB";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-    font-family: 'ELAND_Choice_M';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "ELAND_Choice_M";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Choice_M.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 /* 글씨체 정해둔거 있음. 사용한 굵기 600 400 */
 body {
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
-    font-family: RIDIBatang;
-    font-family: BBTreeGB;
-    font-family: ELAND_Choice_M;
-    background-color: var(--body-color);
-    
-    /* position sticky 적용 */
-    /* overflow-y:scroll; */
+  font-family: RIDIBatang;
+  font-family: BBTreeGB;
+  font-family: ELAND_Choice_M;
+  background-color: var(--body-color);
+
+  /* position sticky 적용 */
+  /* overflow-y:scroll; */
 }
 
-.main{
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.field-errmsg{
-	color : var(--secondary-dark);
-	font-style: italic;
+.field-errmsg {
+  color: var(--secondary-dark);
+  font-style: italic;
 }
