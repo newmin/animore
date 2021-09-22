@@ -39,74 +39,18 @@ public class MyPageDAOImpl implements MyPageDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	//내 정보 수정
-	
-	//회원탈퇴
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	//내댓글
 	@Override
 	public List<MypageReplyRes> mypageReply(String id) {
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t1.rnum, t1.bnum, t1.rcontent, t1.rcdate, t2.bgood ");
-		sql.append("from rboard t1, board t2 ");
-		sql.append("where t1.id=? ");
-		sql.append("  and t1.bnum=t2.bnum ");
-		
+		sql.append("select rownum, x.* ");
+		sql.append("from (select t1.rnum, t1.bnum, t1.rcontent, t1.rcdate, t2.bgood ");
+		sql.append("	    from rboard t1, board t2 ");
+		sql.append("	   where t1.id=? ");
+		sql.append("  	     and t1.bnum=t2.bnum ");
+		sql.append("	order by t1.rnum desc) x ");
 		
 		List<MypageReplyRes> mypageReplyList = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(MypageReplyRes.class),id);
 		

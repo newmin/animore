@@ -6,9 +6,10 @@ import lombok.Data;
 
 @Data
 public class MypageReplyRes {
-	Integer rnum;
-	Integer bnum;
-	String rcontent;
-	Date rcdate;
-	Integer bgood;
+	private Integer rnum;
+	private Integer bnum;
+	private String rcontent;
+	private Date rcdate;
+	private Integer bgood;
+	private int rownum;
 }

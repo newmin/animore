@@ -113,37 +113,8 @@ public class APIMypgeController {
 		
 		List<MypageReplyRes> list = mypageSVC.mypageReply(loginMember.getId());
 		
-		StringBuffer html = new StringBuffer();
-			
-			html.append("<h3 class='mypage_content_title'>내가 쓴 댓글</h3>");
-			html.append("<hr>");
-			html.append("<div class='mypage_content'>");
-			html.append("  <table class='reply__table'> ");
-			html.append("    <tr>");
-			html.append("      <th class='reply__cell'>번호</th>");
-			html.append("      <th class='reply__cell'>댓글내용</th>");
-			html.append("      <th class='reply__cell'>작성일</th>");
-			html.append("      <th class='reply__cell'>좋아요</th>");
-			html.append("       <!-- <th class='mypagereply__title5'></th> -->");
-			html.append("    </tr>");
-		list.forEach(rec->{
-			html.append("    <tr>");
-			html.append("      <td class='reply__cell'>"+rec.getRnum()+"</td>");
-			html.append("      <td class='reply__cell'><a href='/board/post/"+rec.getBnum()+"'>"+rec.getRcontent()+"</a></td>");
-			html.append("      <td class='reply__cell'>"+rec.getRcdate()+"</td>");
-			html.append("      <td class='reply__cell'>"+rec.getBgood()+"</td>");
-			html.append("      <!-- <td th:text='5번째칸' class='mypagereply__text'></td> -->");
-			html.append("    </tr>");
-		});
-			html.append("  </table>");
-			html.append("</div>");
+		Result result = new Result("00","성공",list);
 		
-		Result result;
-		result = new Result("00","OK",html);
-		
-	//	list.forEach(ele->{
-	//		log.info("ele:{}",ele);
-	//	});
 		return result;
 	}
 	

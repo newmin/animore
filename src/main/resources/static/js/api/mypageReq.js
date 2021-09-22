@@ -3,6 +3,7 @@
  */
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
+myReview.addEventListener('click',review);
 function review(){
   const URL = `/mypage/review`;
 													 	
@@ -13,7 +14,29 @@ function review(){
 							//성공로직처리
 							const data = res.data;
 							//리뷰목록갱신
-							refreshReview(data);
+						  let html= '';
+						  html += `<h2 class="mypage_content_title">내가 쓴 리뷰</h2>`;
+						  html += `<hr>`;
+						  html += `<table class="mypage__table">`;
+						  html += `<tr>`;
+						  html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
+						  html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
+						  html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
+						  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
+						  html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
+						  html += `</tr>`;
+						  data.forEach(review => {
+						    html += `<tr>`;
+						    html += `    <td class="mypage__cell mypage__td">${review.rownum}</span>`;
+						    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.bname}</a></span>`;
+						    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.rcontent}</a></span>`;
+						    html += `    <td class="mypage__cell mypage__td"><i class="fas fa-star busi-list__star"></i>${review.rscore}점</span>`;
+						    html += `    <td class="mypage__cell mypage__td">${review.rvcdate}</span>`;
+						    html += `</tr>`;
+						  });
+							html+=`</table>`;
+  
+  						document.querySelector('.mypage_content_container').innerHTML = html;
 					}else{
 							throw new Error(res.rtmsg);
 					}
@@ -24,37 +47,6 @@ function review(){
 					alert(err.message);
 			});
 }
-
-function refreshReview(data){
-  let html= '';
-  html += `<h2 class="mypage_content_title">내가 쓴 리뷰</h2>`;
-  html += `<hr>`;
-  html += `<table class="mypage__table">`;
-  html += `<tr>`;
-  html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
-  html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
-  html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
-  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
-  html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
-  html += `</tr>`;
-  data.forEach(review => {
-    html += `<tr>`;
-    html += `    <td class="mypage__cell mypage__td">${review.rownum}</span>`;
-    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.bname}</a></span>`;
-    html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.rcontent}</a></span>`;
-    html += `    <td class="mypage__cell mypage__td"><i class="fas fa-star busi-list__star"></i>${review.rscore}점</span>`;
-    html += `    <td class="mypage__cell mypage__td">${review.rvcdate}</span>`;
-    html += `</tr>`;
-  });
-	html+=`</table>`;
-  
-  document.querySelector('.mypage_content_container').innerHTML = html;
-
-}
-
-myReview.addEventListener('click',review);
-
-
 
 //내가 쓴 글
 const $mypostBtn = document.querySelector('.mypage__mypostBtn');
@@ -79,7 +71,7 @@ request.get(URL)
           html += `      <th class="mypage__cell mypage__th mypage__bcategory">카테고리</th> `;
           html += `      <th class="mypage__cell mypage__th mypost__btitle">제목</th> `;
           html += `      <th class="mypage__cell mypage__th mypage__date">작성일</th> `;
-          html += `      <th class="mypage__cell mypage__th mypost__bhit">조회</th> `;
+          html += `      <th class="mypage__cell mypage__th mypage__count">조회수</th> `;
           html += `    </tr> `;
           data.forEach(post =>{
               html += `<tr class="mypost__container"> `;
@@ -111,7 +103,7 @@ for(let i =0; i<$bcategorys.length; i++){
 
 //안될시 타게팅만 새로 해주면 됨
 //내가쓴댓글
-const $mypageReplyMenu = document.querySelector('a[href="/mypage/mypageReply"]');
+const $mypageReplyMenu = document.querySelector('.mypage__myReplyBtn');
 	$mypageReplyMenu.addEventListener('click',e=>{
 	e.preventDefault();
 	
@@ -120,11 +112,32 @@ const $mypageReplyMenu = document.querySelector('a[href="/mypage/mypageReply"]')
 	request.get(URL)
 	.then(res=>res.json())
 	.then(res=>{
-		if(res.rtcd == '00'){
+		if(res.rtcd == "00"){
 			//성공로직처리
 			console.log(res);
 			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
+			let html=``;
+			html+=`<h3 class="mypage_content_title">내가 쓴 댓글</h3>`;
+			html+=`<hr>`;
+			html+=`<div class="mypage_content">`;
+			html+=`  <table class="reply__table"> `;
+			html+=`    <tr>`;
+			html+=`      <th class="mypage__cell mypage__th mypage__num">번호</th>`;
+			html+=`      <th class="mypage__cell mypage__th myreply__content">댓글내용</th>`;
+			html+=`      <th class="mypage__cell mypage__th mypage__date">작성일</th>`;
+			html+=`      <th class="mypage__cell mypage__th mypage__count">좋아요</th>`;
+			html+=`    </tr>`;
+			data.forEach(rec=>{
+				html+=`    <tr>`
+				html+=`      <td class="mypage__cell mypage__td ">${rec.rownum}</td>`
+				html+=`      <td class="mypage__cell mypage__td "><a href="/board/post/${rec.bnum}">${rec.rcontent}</a></td>`
+				html+=`      <td class="mypage__cell mypage__td ">${rec.rcdate}</td>`
+				html+=`      <td class="mypage__cell mypage__td ">${rec.bgood}</td>`
+				html+=`    </tr>`
+			});
+			html+=`  </table>`
+			html+=`</div>`
+			document.querySelector('.mypage_content_container').innerHTML = html;
 		}else{
 			throw new Error(res.rtmsg);
 		}

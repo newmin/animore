@@ -11,7 +11,6 @@
   <script src="/js/api/ajaxCall.js"></script>
   <script src="/js/api/mypageReq.js" defer></script>
   <script src="/js/profileEdit.js" defer></script>
-
   <!-- <script src="/js/mypage.js" defer></script> -->
 
   <title>내정보</title>
@@ -71,24 +70,14 @@
             <p class="mypage__myReviewBtn">내 업체 리뷰</p>
           </li>
 
-          <li class="mypage_aside_menu">
-            <p class="mypage__myReviewBtn">내가 쓴 리뷰</p>
-          </li>
-          <li class="mypage_aside_menu">
-            <p class="mypage__mypostBtn">내가 쓴 글</p>
-          </li>
-
-          <li class="mypage_aside_menu"><a href="/mypage/mypageReply" class="mypage__myReplyBtn">내가 쓴 댓글</a></li>
-
-          <li class="mypage_aside_menu"><a href="/mypage/mypageGood" class="mypage__myGoodBtn">좋아요</a></li>
-
-          <li class="mypage_aside_menu"><a href="#" class="mypage__myCouponBtn">내 쿠폰</a></li>
-
-          <li class="mypage_aside_menu"><a href="/mypage/mypageModify" class="mypage__myInfoBtn">개인 정보 수정</a></li>
-
-          <li class="mypage_aside_menu"><a href="/mypage/mypagePwModify" class="mypage__mypwBtn">비밀번호 수정</a></li>
-
-          <li class="mypage_aside_menu"><a href="/mypage/mypageDel" class="mypage__outBtn">회원 탈퇴</a></li>
+          <li class="mypage_aside_menu mypage__myReviewBtn"><p>내가 쓴 리뷰</p></li>
+          <li class="mypage_aside_menu mypage__mypostBtn"><p>내가 쓴 글</p></li>
+          <li class="mypage_aside_menu mypage__myReplyBtn"><a href="/mypage/mypageReply">내가 쓴 댓글</a></li>
+          <li class="mypage_aside_menu mypage__myGoodBtn"><a href="/mypage/mypageGood">좋아요</a></li>
+          <li class="mypage_aside_menu mypage__myCouponBtn"><a href="#">내 쿠폰</a></li>
+          <li class="mypage_aside_menu mypage__myInfoBtn"><a href="/mypage/mypageModify" >개인 정보 수정</a></li>
+          <li class="mypage_aside_menu mypage__mypwBtn"><a href="/mypage/mypagePwModify">비밀번호 수정</a></li>
+          <li class="mypage_aside_menu mypage__outBtn"><a href="/mypage/mypageDel">회원 탈퇴</a></li>
         </ul>
       </div>
       <div class="mypage_content_container">
@@ -100,7 +89,7 @@
             <th class="mypage__cell mypage__th mypage__num">번호</th>
             <th class="mypage__cell mypage__th favorite__bname">업체명</th>
             <th class="mypage__cell mypage__th mypage__score">평점</th>
-            <th class="mypage__cell mypage__th mypage__review-num">리뷰수</th>
+            <th class="mypage__cell mypage__th mypage__count">리뷰수</th>
           </tr>
           <tr th:each="favorite :${Favorite}" class="w3-hover-green">
             <td class="mypage__cell mypage__td"><span th:text="${favorite.rownum}">번호</span></td>

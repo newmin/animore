@@ -150,6 +150,9 @@
 .mypage__bcategory{
 	width : 100px;
 }
+.mypage__count{
+	width : 65px;
+}
 
 /* 내 리뷰 */
 .review__bname {
@@ -166,7 +169,10 @@
 .mypost__bhit{
 	width : 45px;
 }
-
+/* 내댓글 */
+.myreply__content{
+	width : 350px;
+}
 /* 모바일(여유되면) */
 @media screen and (max-width: 767px) {
 }
