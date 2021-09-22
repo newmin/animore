@@ -12,18 +12,17 @@
 @import "components/icon.css";
 /* 스크린 */
 @import "screen/intro.css";
-@import "screen/login.css";
+@import "screen/joinSelectMtype.css";
 @import "screen/joinForm.css";
+@import "screen/login.css";
 @import "screen/findIdPW.css";
 @import "screen/findedIdResult.css";
 @import "screen/mypage.css";
 @import "screen/board.css";
-@import "screen/joinSelectMtype.css";
-@import "screen/inquireBusiDetail.css";
-@import "screen/busiList.css";
-@import "screen/favorite.css";
-@import "screen/reply.css";
 @import "screen/boardDetailReply.css";
+@import "screen/busiList.css";
+@import "screen/inquireBusiDetail.css";
+@import "screen/reply.css";
 
 /* 폰트 */
 @import url("https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.14.0/css/all.min.css");

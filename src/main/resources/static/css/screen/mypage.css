@@ -92,9 +92,6 @@
   cursor: pointer;
 }
 
-/* .mypage_aside_menu:hover{
-  color: cornflowerblue;
-} */
 .mypage_aside_menu_highlight {
   color: cornflowerblue;
 }
@@ -140,6 +137,11 @@
   font-weight: bold;
   color: cornflowerblue;
 }
+.favorite__cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  height: 22px;
+  line-height: 22px;
+}
 
 /* 내 리뷰 */
 .mypage__num {
@@ -148,7 +150,7 @@
 .review__bname {
   width: 150px;
 }
-.review__score {
+.mypage__score {
   width: 70px;
 }
 .mypage__date {

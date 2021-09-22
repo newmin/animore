@@ -13,4 +13,6 @@ public class FavoriteReq {
 	private Integer count;
 	private float bscore;
 	private LocalDate fdate;
+	private int rownum;
+	private int bnum;
 }

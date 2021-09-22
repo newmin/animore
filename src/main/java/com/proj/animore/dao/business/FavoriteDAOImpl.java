@@ -46,14 +46,15 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum, fdate ");
-		sql.append("  from favorite f, business b,(select bnum, round(avg(rscore),2) avg ");
+		sql.append("select rownum, x.* ");
+		sql.append("from (select f.id id,b.bname bname,f.bnum, r.avg bscore, fnum, fdate, r.count ");
+		sql.append("  from favorite f, business b,(select bnum, count(rnum) count, round(avg(rscore),1) avg ");
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r ");
 		sql.append(" where f.bnum=b.bnum ");
 		sql.append("   and f.bnum=r.bnum ");
 		sql.append("   and f.id= ? ");
-		sql.append("order by fdate desc");
+		sql.append("order by fdate desc) x ");
 
 		List<FavoriteReq> favoritelist = jdbcTemplate.query(sql.toString(),
 										new BeanPropertyRowMapper<>(FavoriteReq.class),

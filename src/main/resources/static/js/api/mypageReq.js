@@ -27,13 +27,13 @@ function review(){
 
 function refreshReview(data){
   let html= '';
-  html += `<h2 class="mypage__title">내가 쓴 리뷰</h2>`;
+  html += `<h2 class="mypage_content_title">내가 쓴 리뷰</h2>`;
   html += `<hr>`;
   html += `<table class="mypage__table">`;
   html += `<tr>`;
   html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
   html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
-  html += `  <th class="mypage__cell mypage__th review__score">내평점</span>`;
+  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
   html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
   html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
   html += `</tr>`;
@@ -60,11 +60,8 @@ myReview.addEventListener('click',review);
 const $mypostBtn = document.querySelector('.mypage__mypostBtn');
 let $contents = document.querySelector('.mypage_content_container');
 
-
-
 $mypostBtn.addEventListener('click',e=>{
 e.preventDefault();
-//alert('내글보기버튼 클릭');
 const URL =`/mypage/mypost`;
 	console.log("url:",URL);
 	
