@@ -123,9 +123,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<BoardReqDTO> findBoardById(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
-		sql.append("from board ");
-		sql.append("where id=? ");
+		sql.append("select rownum, x.* ");
+		sql.append("from (select bnum,bcategory,btitle,id,bcdate,bhit,bgood,breply,bcontent ");
+		sql.append("	    from board ");
+		sql.append("	   where id=? ");
+		sql.append("    order by bnum desc) x ");
 		
 		List<BoardReqDTO> list = jt.query(sql.toString(), 
 												new BeanPropertyRowMapper<>(BoardReqDTO.class),

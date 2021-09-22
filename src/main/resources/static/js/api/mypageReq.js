@@ -33,16 +33,16 @@ function refreshReview(data){
   html += `<tr>`;
   html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
   html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
-  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
   html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
+  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
   html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
   html += `</tr>`;
   data.forEach(review => {
     html += `<tr>`;
     html += `    <td class="mypage__cell mypage__td">${review.rownum}</span>`;
     html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.bname}</a></span>`;
-    html += `    <td class="mypage__cell mypage__td"><i class="fas fa-star busi-list__star"></i>${review.rscore}점</span>`;
     html += `    <td class="mypage__cell mypage__td"><a href="/inquire/${review.bnum}">${review.rcontent}</a></span>`;
+    html += `    <td class="mypage__cell mypage__td"><i class="fas fa-star busi-list__star"></i>${review.rscore}점</span>`;
     html += `    <td class="mypage__cell mypage__td">${review.rvcdate}</span>`;
     html += `</tr>`;
   });
@@ -75,17 +75,19 @@ request.get(URL)
           html += `<hr>`;
           html += `<table class="mypage__post"> `;
           html += `    <tr> `;
-          html += `      <th class="mypost__cell mypost__bcategory">카테고리</th> `;
-          html += `      <th class="mypost__cell mypost__btitle">제목</th> `;
-          html += `      <th class="mypost__cell mypost__udate">작성일</th> `;
-          html += `      <th class="mypost__cell mypost__bhit">조회수</th> `;
+          html += `      <th class="mypage__cell mypage__th mypage__num">번호</th> `;
+          html += `      <th class="mypage__cell mypage__th mypage__bcategory">카테고리</th> `;
+          html += `      <th class="mypage__cell mypage__th mypost__btitle">제목</th> `;
+          html += `      <th class="mypage__cell mypage__th mypage__date">작성일</th> `;
+          html += `      <th class="mypage__cell mypage__th mypost__bhit">조회</th> `;
           html += `    </tr> `;
           data.forEach(post =>{
               html += `<tr class="mypost__container"> `;
-              html += `    <td class="mypost__cell mypost__bcategory ">${post.bcategory}</td> `;
-              html += `    <td class="mypost__cell mypost__btitle" ><a href="/board/post/${post.bnum}" >${post.btitle}</a></td> `;
-              html += `    <td class="mypost__cell mypost__udate" >${post.bcdate}</td> `;
-              html += `    <td class="mypost__cell mypost__bhit" >${post.bhit}</td> `;
+              html += `    <td class="mypage__cell mypage__td mypage__num">${post.rownum}</td> `;
+              html += `    <td class="mypage__cell mypage__td mypost__bcategory ">${post.bcategory}</td> `;
+              html += `    <td class="mypage__cell mypage__td mypost__btitle" ><a href="/board/post/${post.bnum}" >${post.btitle}</a></td> `;
+              html += `    <td class="mypage__cell mypage__td mypost__udate" >${post.bcdate}</td> `;
+              html += `    <td class="mypage__cell mypage__td mypost__bhit" >${post.bhit}</td> `;
               html += `</tr> `;
           });
           html += `</table> `;

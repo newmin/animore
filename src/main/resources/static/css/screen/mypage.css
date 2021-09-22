@@ -137,18 +137,9 @@
   font-weight: bold;
   color: cornflowerblue;
 }
-.favorite__cell {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  height: 22px;
-  line-height: 22px;
-}
-
-/* 내 리뷰 */
+/* 마이페이지 테이블 공통 */
 .mypage__num {
   width: 40px;
-}
-.review__bname {
-  width: 150px;
 }
 .mypage__score {
   width: 70px;
@@ -156,38 +147,24 @@
 .mypage__date {
   width: 100px;
 }
+.mypage__bcategory{
+	width : 100px;
+}
+
+/* 내 리뷰 */
+.review__bname {
+  width: 150px;
+}
 .review__content {
   width: 200px;
 }
-/* 내 리뷰 */
-
-.my-favorite {
-  display: grid;
-  grid-template-rows: repeat(10, 40px);
-  grid-template-columns: 40px 120px 60px 250px 120px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-}
 
 /* 내가 쓴 글 */
-/*내가쓴글*/
-.mypost__cell {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-}
-
-/*.mypost__bcategory,
-.mypost__udate,
-.mypost__bhit{
-  width: 15%;
-}*/
 .mypost__btitle {
-  width: 60%;
+  width: 300px;
 }
-.mypage__mypostBtn:hover {
-  cursor: pointer;
+.mypost__bhit{
+	width : 45px;
 }
 
 /* 모바일(여유되면) */

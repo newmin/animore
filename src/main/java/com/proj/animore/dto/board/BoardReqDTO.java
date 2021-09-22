@@ -30,6 +30,7 @@ public class BoardReqDTO {
 	private LocalDate bcdate;
 	private LocalDate budate;
 	private String store_fname;
+	private int rownum;
 	
 	private List<BoardUploadFileDTO> files;
 	}
