@@ -80,18 +80,16 @@
 .mypage_aside_title {
   margin-left: 15px;
 }
+
 .mypage_aside_menu {
   font-size: 16px;
-}
-
-.mypage_aside_menu li {
   box-sizing: border-box;
   margin-top: -1px;
   padding: 11px 10px;
   border: 1px solid #ddd;
   cursor: pointer;
 }
-
+.mypage_aside_menu:hover,
 .mypage_aside_menu_highlight {
   color: cornflowerblue;
 }

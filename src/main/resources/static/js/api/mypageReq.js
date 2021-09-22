@@ -1,6 +1,13 @@
 /**
  * 
  */
+ /*마이페이지 좌측 메뉴, 해당 페이지 색상으로 표시*/
+ const $sideMenu = document.querySelectorAll('.mypage_aside_menu')
+ $sideMenu.forEach(ele=>ele.addEventListener('click',e=>{
+	document.querySelectorAll('.mypage_aside_menu').forEach(elem=>elem.classList.remove('mypage_aside_menu_highlight'))
+	e.target.closest('li').classList.add('mypage_aside_menu_highlight');
+}))
+ 
  //내가 쓴 리뷰
 const myReview =  document.querySelector('.mypage__myReviewBtn')
 myReview.addEventListener('click',review);
