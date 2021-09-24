@@ -12,7 +12,7 @@
 const myReview =  document.querySelector('.mypage__myReviewBtn')
 myReview.addEventListener('click',review);
 function review(){
-  const URL = `/mypage/review`;
+  const URL = `/mypage/myreview`;
 													 	
 	request.get(URL)
 			.then(res=>res.json())
@@ -27,8 +27,8 @@ function review(){
 						  html += `<table class="mypage__table">`;
 						  html += `<tr>`;
 						  html += `  <th class="mypage__cell mypage__th mypage__num">번호</span>`;
-						  html += `  <th class="mypage__cell mypage__th review__bname">업체명</span>`;
-						  html += `  <th class="mypage__cell mypage__th review__content">리뷰내용</span>`;
+						  html += `  <th class="mypage__cell mypage__th myreview__bname">업체명</span>`;
+						  html += `  <th class="mypage__cell mypage__th myreview__content">리뷰내용</span>`;
 						  html += `  <th class="mypage__cell mypage__th mypage__score">내평점</span>`;
 						  html += `  <th class="mypage__cell mypage__th mypage__date">작성일</span>`;
 						  html += `</tr>`;
@@ -76,13 +76,13 @@ request.get(URL)
           html += `    <tr> `;
           html += `      <th class="mypage__cell mypage__th mypage__num">번호</th> `;
           html += `      <th class="mypage__cell mypage__th mypage__bcategory">카테고리</th> `;
-          html += `      <th class="mypage__cell mypage__th mypost__btitle">제목</th> `;
+          html += `      <th class="mypage__cell mypage__th mypage__btitle">제목</th> `;
           html += `      <th class="mypage__cell mypage__th mypage__date">작성일</th> `;
           html += `      <th class="mypage__cell mypage__th mypage__count">조회수</th> `;
           html += `    </tr> `;
           data.forEach(post =>{
               html += `<tr class="mypost__container"> `;
-              html += `    <td class="mypage__cell mypage__td mypage__num">${post.rownum}</td> `;
+              html += `    <td class="mypage__cell mypage__td mypost__num">${post.rownum}</td> `;
               html += `    <td class="mypage__cell mypage__td mypost__bcategory ">${post.bcategory}</td> `;
               html += `    <td class="mypage__cell mypage__td mypost__btitle" ><a href="/board/post/${post.bnum}" >${post.btitle}</a></td> `;
               html += `    <td class="mypage__cell mypage__td mypost__udate" >${post.bcdate}</td> `;
@@ -92,12 +92,12 @@ request.get(URL)
           html += `</table> `;
           $contents.innerHTML = html;
           const $bcategorys = document.querySelectorAll('.mypost__bcategory');
-for(let i =0; i<$bcategorys.length; i++){
-  if($bcategorys[i].textContent == 'Q') $bcategorys[i].textContent = 'Q&A';
-  if($bcategorys[i].textContent == 'P') $bcategorys[i].textContent = '내새끼보세요';
-  if($bcategorys[i].textContent == 'F') $bcategorys[i].textContent = '자유게시판';
-  if($bcategorys[i].textContent == 'M') $bcategorys[i].textContent = '벼룩시장';
-};
+					for(let i =0; i<$bcategorys.length; i++){
+					  if($bcategorys[i].textContent == 'Q') $bcategorys[i].textContent = 'Q&A';
+					  if($bcategorys[i].textContent == 'P') $bcategorys[i].textContent = '내새끼보세요';
+					  if($bcategorys[i].textContent == 'F') $bcategorys[i].textContent = '자유게시판';
+					  if($bcategorys[i].textContent == 'M') $bcategorys[i].textContent = '벼룩시장';
+					};
         }else{
           throw new Error(res.rtmsg);
         }
@@ -157,10 +157,8 @@ const $mypageReplyMenu = document.querySelector('.mypage__myReplyBtn');
 });
 
 
-
-
 //좋아요 조회
-const $goodBoardList = document.querySelector('a[href="/mypage/mypageGood"]');
+const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 	$goodBoardList.addEventListener('click',e=>{
 	e.preventDefault();
 	
@@ -173,7 +171,35 @@ const $goodBoardList = document.querySelector('a[href="/mypage/mypageGood"]');
 			//성공로직처리
 			console.log(res);
 			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
+			let html = ``;
+			html+=`<h3 class='mypage_content_title'>좋아요</h3>`;
+			html+=`<hr>`;
+			html+=`<div class='mypage_content_container'>`;
+			html+=`  <table class='reply__table'> `;
+			html+=`    <tr>`;
+			html+=`      <th class='mypage__cell mypage__th mypage__num'>번호</th>`;
+			html+=`      <th class='mypage__cell mypage__th mypage__bcategory'>카테고리</th>`;
+			html+=`      <th class='mypage__cell mypage__th mypage__btitle'>제목</th>`;
+			html+=`      <th class='mypage__cell mypage__th mypage__count'>좋아요</th>`;
+			html+=`    </tr>`;
+			data.forEach(post=>{
+				html+=`    <tr>`;
+				html+=`      <td class='mypage__cell mypage__td '>${post.rownum}</td>`;
+				html+=`      <td class='mypage__cell mypage__td mypost__bcategory'>${post.bcategory}</td>`;
+				html+=`      <td class='mypage__cell mypage__td '><a href="/board/post/${post.bnum}">${post.btitle}</a></td>`;
+				html+=`      <td class='mypage__cell mypage__td '>${post.bgood}</td>`;
+				html+=`    </tr>`;
+			});
+			html+=`  </table>`;
+			html+=`</div>`;
+			document.querySelector('.mypage_content_container').innerHTML = html;
+      const $bcategorys = document.querySelectorAll('.mypost__bcategory');
+			for(let i =0; i<$bcategorys.length; i++){
+			  if($bcategorys[i].textContent == 'Q') $bcategorys[i].textContent = 'Q&A';
+			  if($bcategorys[i].textContent == 'P') $bcategorys[i].textContent = '내새끼보세요';
+			  if($bcategorys[i].textContent == 'F') $bcategorys[i].textContent = '자유게시판';
+			  if($bcategorys[i].textContent == 'M') $bcategorys[i].textContent = '벼룩시장';
+			};
 		}else{
 			throw new Error(res.rtmsg);
 		}

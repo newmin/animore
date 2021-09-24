@@ -10,4 +10,5 @@ public class GoodBoardDTO {
 		private String bcategory;
 		private String btitle;
 		private int bgood;
+		private int rownum;
 	}

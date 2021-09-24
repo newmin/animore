@@ -57,7 +57,7 @@ public class APIMypgeController {
 	private final FavoriteSVC favoriteSVC;
 	
 	//내 리뷰 조회
-	@GetMapping("/review")
+	@GetMapping("/myreview")
 	public Result myReview(HttpServletRequest request) {
 		Result result;
 		HttpSession session = request.getSession(false);
@@ -118,33 +118,21 @@ public class APIMypgeController {
 		return result;
 	}
 	
-	//회원탈퇴양식
-	@GetMapping("/mypageDel")
-	public Result mypageDel(HttpServletRequest request) {
+	//내 좋아요 조회
+	@GetMapping("/mypageGood")
+	public Result goodBoardList(HttpServletRequest request) {
+	
 		HttpSession session = request.getSession(false);
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+		log.info("loginMember:{}",loginMember);
+		
+		List<GoodBoardDTO> list = goodBoardSVC.goodBoardList(loginMember.getId());
+		
 		Result result;
-		
-		StringBuffer html = new StringBuffer();
-		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content'>");
-		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
-		html.append("    <h1 class='findId__title'></h1>");
-		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
-		html.append("    <div class='findId__form'>");
-		html.append("      <span class='findId__text'>비밀번호 확인</span>");
-		html.append("      <input class='findId__input' type='text' name='pw'>");
-		html.append("    </div>");
-		html.append("    <button class='findId__btn' type='submit'>회원탈퇴</button>");
-		html.append("  </form>");
-		html.append("</div>");
-		
-		result = new Result("00","OK",html);
+		result = new Result("00","OK",list);
 		
 		return result;
 	}
-	
-	
 	
 	//개인정보수정화면
 	@GetMapping("/mypageModify")
@@ -385,44 +373,6 @@ public class APIMypgeController {
 		return result;
 	}
 	
-	//내 좋아요 조회
-	@GetMapping("/mypageGood")
-	public Result goodBoardList(HttpServletRequest request) {
-	
-		HttpSession session = request.getSession(false);
-		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginMember:{}",loginMember);
-		
-		List<GoodBoardDTO> goodBoardList = goodBoardSVC.goodBoardList(loginMember.getId());
-		
-		StringBuffer html = new StringBuffer();
-			
-			html.append("<h3 class='mypage_content_title'>좋아요</h3>");
-			html.append("<hr>");
-			html.append("<div class='mypage_content_container'>");
-			html.append("  <table class='reply__table'> ");
-			html.append("    <tr>");
-			html.append("      <th class='reply__cell'>카테고리</th>");
-			html.append("      <th class='reply__cell'>제목</th>");
-			html.append("      <th class='reply__cell'>좋아요</th>");
-			html.append("       <!-- <th class='mypagereply__title5'></th> -->");
-			html.append("    </tr>");
-			goodBoardList.forEach(rec->{
-			html.append("    <tr>");
-			html.append("      <td class='reply__cell'>"+rec.getBcategory()+"</td>");
-			html.append("      <td class='reply__cell'>"+rec.getBtitle()+"</td>");
-			html.append("      <td class='reply__cell'>"+rec.getBgood()+"</td>");
-			html.append("      <!-- <td th:text='5번째칸' class='mypagereply__text'></td> -->");
-			html.append("    </tr>");
-		});
-			html.append("  </table>");
-			html.append("</div>");
-		
-		Result result;
-		result = new Result("00","OK",html);
-		
-		return result;
-	}
 	//업체수정양식
 //	@GetMapping("/mybusiModify/{bnum}")
 //	public Result mybusiModify (@PathVariable Integer bnum, HttpServletRequest request){
@@ -494,35 +444,6 @@ public class APIMypgeController {
 	
 	String id = loginMember.getId();
 	memberDTO = memberSVC.findMemberById(id);
-
-	
-	
-//	StringBuffer html = new StringBuffer();
-//	
-//	html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
-//	html.append("<hr>");
-//	html.append("<div class='mypage_content_container'>");
-//	
-//	html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-//
-//	html.append("<ul>");
-//	html.append("<li><label for=\"id\">아이디</label></li>");
-//	html.append("<li><input type=\"text\" id ='id' name ='id' value="+loginMember.getId()+" readonly='readonly'/></li>");
-//	
-//	html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
-//	html.append("<li><input type=\"password\" name=\"pw\" id = \"pw\" \"/></li>");
-//	
-//	html.append("<li><label for=\"pwChk\">새로운 비밀번호</label></li>");
-//	html.append("<li><input type=\"password\" name=\"pwChk\" id = \"pwChk\" \"/></li>");
-//	
-//	html.append("<li><label for=\"pwChk2\">새로운 비밀번호 확인</label></li>");
-//	html.append("<li><input type=\"password\" name=\"pwChk2\" id = \"pwChk2\" \"/></li>");
-//	
-//	
-//	html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
-//	html.append("</ul>");
-//	html.append("</form >");
-//	html.append("</div>");
 	
 	Result result;
 	
@@ -601,6 +522,32 @@ public class APIMypgeController {
 //		html.append("</div>");
 		
 		result = new Result("00","OK",memberDTO);
+		
+		return result;
+	}
+	
+	//회원탈퇴양식
+	@GetMapping("/mypageDel")
+	public Result mypageDel(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Result result;
+		
+		StringBuffer html = new StringBuffer();
+		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
+		html.append("<hr>");
+		html.append("<div class='mypage_content'>");
+		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
+		html.append("    <h1 class='findId__title'></h1>");
+		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
+		html.append("    <div class='findId__form'>");
+		html.append("      <span class='findId__text'>비밀번호 확인</span>");
+		html.append("      <input class='findId__input' type='text' name='pw'>");
+		html.append("    </div>");
+		html.append("    <button class='findId__btn' type='submit'>회원탈퇴</button>");
+		html.append("  </form>");
+		html.append("</div>");
+		
+		result = new Result("00","OK",html);
 		
 		return result;
 	}

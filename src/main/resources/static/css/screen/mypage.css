@@ -106,9 +106,6 @@
   margin-bottom: 6px;
 }
 /* 마이페이지 테이블 */
-.mypage__table {
-  width: 550px;
-}
 .mypage__cell {
   border: 1px solid rgba(0, 0, 0, 0.3);
   height: 22px;
@@ -117,6 +114,9 @@
 }
 .mypage__th {
   font-weight: 600;
+}
+.mypage_content_container a:hover{
+	color : var(--secondary);
 }
 
 /* 즐겨찾는 업체 */
@@ -140,36 +140,39 @@
   width: 40px;
 }
 .mypage__score {
-  width: 70px;
+  width: 80px;
 }
 .mypage__date {
   width: 100px;
 }
-.mypage__bcategory{
-	width : 100px;
+.mypage__bcategory {
+  width: 120px;
 }
-.mypage__count{
-	width : 65px;
+.mypage__count {
+  width: 65px;
 }
-
+.mypage__btitle {
+  width: 300px;
+}
+/* 즐겨찾기 */
+.favorite__bname{
+	width : 350px;
+}
 /* 내 리뷰 */
-.review__bname {
+.myreview__bname {
   width: 150px;
 }
-.review__content {
+.myreview__content {
   width: 200px;
 }
 
 /* 내가 쓴 글 */
-.mypost__btitle {
-  width: 300px;
-}
-.mypost__bhit{
-	width : 45px;
+.mypost__bhit {
+  width: 45px;
 }
 /* 내댓글 */
-.myreply__content{
-	width : 350px;
+.myreply__content {
+  width: 350px;
 }
 /* 모바일(여유되면) */
 @media screen and (max-width: 767px) {

@@ -55,10 +55,12 @@ public class GoodBoardDAOImpl implements GoodBoardDAO {
 	@Override
 	public List<GoodBoardDTO>goodBoardList(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t1.id,t2.gnum,t1.bcategory,t1.btitle,t1.bgood ");
-		sql.append("from board t1, goodboard t2 ");
-		sql.append("where t1.bnum = t2.bnum ");
-		sql.append("and t2.id =? ");
+		sql.append("select rownum, x.* ");
+		sql.append("from (select t2.gnum,t1.bcategory,t1.btitle,t1.bgood, t2.bnum ");
+		sql.append("		from board t1, goodboard t2 ");
+		sql.append("	   where t1.bnum = t2.bnum ");
+		sql.append("		 and t2.id =? ");
+		sql.append("	order by gnum desc) x ");
 		
 		List<GoodBoardDTO> goodBoardList = jt.query(sql.toString(), 
 										new BeanPropertyRowMapper<>(GoodBoardDTO.class),
