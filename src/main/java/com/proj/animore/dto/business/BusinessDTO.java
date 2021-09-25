@@ -12,6 +12,8 @@ public class BusinessDTO {
 	private String bname;
 	private String baddress;
 	private String btel;
+	private String btel2;
+	private String btel3;
 	private String openhours;
 	private String nightcare;
 	private String rareani;

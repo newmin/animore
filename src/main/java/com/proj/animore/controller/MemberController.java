@@ -57,7 +57,7 @@ public class MemberController {
 		HttpSession session = request.getSession(false);
 
 		// 로그인한 상태(세션있음)로 회원가입유형선택 페이지 요청시 메인페이지로 보냄
-		if (session != null)	return "redirect:/";
+		if (session != null && session.getAttribute("loginMember") != null)	return "redirect:/";
 		// 로그인 안한 상태(세션없음)로 회원가입유형선택 페이지 요청해야 페이지로 이동
 		return "member/joinSelectMtype";
 	}
@@ -77,7 +77,7 @@ public class MemberController {
 		HttpSession session = request.getSession(false);
 
 		// 로그인한 상태(세션있음)로 회원가입양식 페이지 요청시 메인페이지로 보냄
-		if (session != null)	return "redirect:/";
+		if (session != null && session.getAttribute("loginMember") != null)	return "redirect:/";
 
 		// 회원유형 선택화면에서 회원유형값{mtype} 받아서 조인폼으로 넘겨주게 됨.
 		// joinForm에서 th:if문을 사용하여
@@ -89,12 +89,6 @@ public class MemberController {
 		model.addAttribute("mtype", mtype);
 		return "member/joinForm";
 	}
-
-//   @PostMapping("/join/N")
-//   public String join1(MemberDTO memberDTO) {
-//	      memberSVC.joinMember(memberDTO);
-//	      return "redirect:/";
-//	   }
 
 	@PostMapping("/join/N")
 	public String join(@Valid @ModelAttribute JoinMemberForm joinMemberForm,

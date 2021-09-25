@@ -23,6 +23,8 @@ public class MemberDTO {
   private LocalDate birth;
   private String gender;
   private String tel;
+  private String tel2;
+  private String tel3;
   private String email;
   private String address;
   private String mtype;

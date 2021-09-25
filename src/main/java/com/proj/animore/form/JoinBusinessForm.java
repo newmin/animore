@@ -26,6 +26,10 @@ public class JoinBusinessForm {
 	private String baddress;
 	@NotBlank
 	private String btel;
+	@NotBlank
+	private String btel2;
+	@NotBlank
+	private String btel3;
 	private String nitghtcare;
 	private String rareani;
 	private String visitcare;

@@ -15,7 +15,9 @@ drop table member;
 create table member(
   id varchar2(40),
   pw varchar2 (16) not null,
-  tel varchar2(13) not null,
+  tel NUMBER(3) not null,
+  tel2 NUMBER(4) not null,
+  tel3 NUMBER(4) not null,
   email varchar2(30) not null,
   name varchar2(15) not null,
   nickname varchar2(30) not null,
@@ -120,7 +122,9 @@ create table business(
   id varchar2(40) default 'admin@animore.com',
   bname varchar2(150) not null,
   baddress varchar2 (150) not null,
-  btel varchar2(13),
+  btel NUMBER(3) not null,
+  btel2 NUMBER(4) not null,
+  btel3 NUMBER(4) not null,
   openhours clob,
   nightcare char(1),
   rareani char(1),
@@ -256,30 +260,30 @@ create sequence review_fnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000-0000-0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy2.png','image/png','16345');
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222-2222-2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy2.png','image/png','16345');
+insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('normal@zxc.com','zxc12345','000','0000','0000','zxc@zxc.com','일반인','휴먼','M','힘내면 잘되리','21/01/01','N','logo.png','puppy2.png','image/png','16345');
+insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE,upload_fname,store_fname,ftype,fsize) values('user@test.com','zxc12345','222','2222','2222','user@zxc.com','이사람','저사람','F','겨울이가면 돌아오리','20/01/01','N','logo.png','puppy2.png','image/png','16345');
 -- 특수회원
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111-1111-1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444-4444-4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');
+insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('special@zxc.com','zxc12345','111','1111','1111','cxz@cxz.com','특별한','여신','F','잘하구 재밌동','21/01/01','S');
+insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444','4444','4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');
 -- 업체
-insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'456-78-90123','special@zxc.com','울산롯데마트','울산광역시 남구 삼산로 74','333-3333-3333','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,BTEL2,BTEL3,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'456-78-90123','special@zxc.com','울산롯데마트','울산광역시 남구 삼산로 74','333','3333','3333','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
-insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'456-78-90124','special@zxc.com','우리강아지씻자','울산광역시 중구 병영로 4','333-3333-3333','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,BTEL2,BTEL3,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'456-78-90124','special@zxc.com','우리강아지씻자','울산광역시 중구 병영로 4','333','3333','3333','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','N','Y','Y','N','Y','Y','Y','N');
 
-insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'456-78-90125','special@zxc.com','맘마먹자','울산광역시 북구 화봉로 84','333-3333-3333','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,BTEL2,BTEL3,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'456-78-90125','special@zxc.com','맘마먹자','울산광역시 북구 화봉로 84','333','3333','3333','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','N','Y','Y','Y','Y','Y','Y','N','Y');
 
-insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','이마트','울산광역시 남구 삼산동 1646','555-5555-5555','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,BTEL2,BTEL3,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','이마트','울산광역시 남구 삼산동 1646','555','5555','5555','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','N','Y','N','Y','Y','Y','Y','Y');
 
-insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','이마트양산점','경상남도 양산시 양산역6길 12 신세계이마트양산점','555-5555-5555','Y','Y','Y','Y','Y');
+insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,BTEL2,BTEL3,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','이마트양산점','경상남도 양산시 양산역6길 12 신세계이마트양산점','555','5555','5555','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 -- 업체별 리뷰
