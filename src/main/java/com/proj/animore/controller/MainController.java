@@ -97,7 +97,7 @@ public class MainController {
 		return "map/inquireBusiDetail";
 	}
 
-	// 즐겨찾기 등록
+	// 즐겨찾기 등록ㆍ삭제
 	@GetMapping("/favor/{bnum}")
 	@ResponseBody
 	public Result addFavorite(HttpServletRequest request, @PathVariable Integer bnum) {
@@ -107,7 +107,7 @@ public class MainController {
 			result = new Result("01", "로그인 후 사용할 수 있어요!", null);
 			return result;
 		}
-		LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
+		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		String id = loginMember.getId();
 
 		log.info(id);
@@ -123,44 +123,5 @@ public class MainController {
 
 		return result;
 	}
-	// //즐겨찾기 등록
-	// @GetMapping("/favor/{bnum}")
-	//// @ResponseBody
-	// public Result addFavorite(HttpServletRequest request,
-	// @PathVariable Integer bnum) {
-	// Result result;
-	// HttpSession session = request.getSession(false);
-	// if(session==null) {
-	// result = new Result("01","로그인 후 사용할 수 있어요!",null);
-	// return result;
-	// }
-	// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-	// String id = loginMember.getId();
-	//
-	// favoriteSVC.addFavorite(bnum, id);
-	// result = new Result("00","성공",null);
-	//
-	// return result;
-	// }
-
-	// 즐겨찾기 삭제
-	// @DeleteMapping("/favor/{bnum}")
-	// @ResponseBody
-	// public Result<String> delFavorite(HttpServletRequest request,
-	// @PathVariable Integer bnum) {
-	// Result<String> result;
-	// HttpSession session = request.getSession(false);
-	// if(session==null) {
-	// result = new Result<String>("01","로그인 후 사용할 수 있어요!","삭제");
-	// return result;
-	// }
-	// LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-	// String id = loginMember.getId();
-	//
-	// favoriteSVC.deleteFavorite(bnum, id);
-	// result = new Result<String>("00","성공","삭제");
-	//
-	// return result;
-	// }
-
+	
 }
