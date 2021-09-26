@@ -140,196 +140,42 @@ public class APIMypgeController {
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
 		log.info("loginMember:{}",loginMember);
-		
-		MemberDTO memberDTO = new MemberDTO();
-		
 		String id = loginMember.getId();
-		memberDTO = memberSVC.findMemberById(id);
+		MemberDTO memberDTO = memberSVC.findMemberById(id);
 	
-		StringBuffer html = new StringBuffer();
-		
-		html.append("<h2 class='mypage_content_title'>즐겨 찾는 업체</h2>");
-		html.append("<div class='mypage_content_container'>");
-		html.append("<hr>");
-		
-		html.append("<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-
-		html.append("<ul>");
-		
-		html.append("<li><label for=\"id\">아이디</label></li>");
-		html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>");
-		
-		html.append("<li><label for=\"pw\">비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-		
-		
-		html.append("<li>");
-		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='name' id='name' value="+memberDTO.getName()+" required></div>");
-		html.append("</li>");
-
-		
-		html.append("    <li>");
-		html.append("      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>");
-		html.append("    </li>");
-		
-		
-		
-		html.append("    <li><label for=\"nickname\">별칭</label></li>");
-		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"></li>");
-
-		
-		html.append("<li><label for=\"birth\">생년월일</label></li>");
-		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>	");
-		
-	
-		html.append("<li><label for=\"tel\">전화번호</label></li>");
-		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+" \"/></li>");
-		
-		
-		html.append("<li>");
-		html.append("<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.getAddress()+" required></div>");
-
-		html.append("</li>");
-		html.append("<li><input type=\"button\" value=\"회원수정\" id=\"modifyBtn\"></li>");
-		
-		html.append("</ul>");
-		html.append("</form >");
-		html.append("</div>");
-		
-		
-		return new Result("00","OK",html);
+		return new Result("00","OK",memberDTO);
 
 	}
 	
-	//내정보 개안정보수정 처리
+	//내정보 개인정보수정 처리
 	@PatchMapping("/mypageModify")
 	public Result mypageModify(HttpServletRequest request,
-			@RequestBody ModifyForm modidyfyForm,
+			@RequestBody @Valid ModifyForm modidyfyForm,
 			BindingResult bindingResult) { 
+		
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginMember:{}",loginMember);
-		
-		MemberDTO memberDTO2 = new MemberDTO();
-		BeanUtils.copyProperties(modidyfyForm, memberDTO2);
-		
 		String id = loginMember.getId();
-		memberSVC.modifyMember(id, memberDTO2);
-		MemberDTO memberDTO = memberSVC.findMemberById(id);
 		
+		log.info(modidyfyForm.toString());
 		
-		if(!memberDTO.getPw().equals(modidyfyForm.getPw())) {
+		MemberDTO oldMemberDTO = memberSVC.findMemberById(id);
+		if(!oldMemberDTO.getPw().equals(modidyfyForm.getPwChk())) {
 			bindingResult.reject("pw","현재 비밀번호가 일치하지 않습니다.");
-			return new Result("01","비밀번호가 일치하지 않아 수정할 수 없습니다.",null);
+			return new Result("01","비밀번호가 일치하지 않습니다.",null);
 		}
+
+		MemberDTO memberDTO = new MemberDTO();
+		BeanUtils.copyProperties(modidyfyForm, memberDTO);
 		
-		
+		memberSVC.modifyMember(id, memberDTO);
+
 		Result result;
 		
-		StringBuffer html = new StringBuffer();
-		
-		
-		html.append("<h2 class=\"mypage_content_title\">즐겨 찾는 업체</h2>");
-		html.append("<div class=\"mypage_content_container\">");
-		
-		html.append("<hr>");
-		
-		html.append("<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-
-		
-		
-		html.append("<li><label for=\"id\">아이디</label></li>");
-		html.append("<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.getId()+" readonly=\"readonly\"/></li>");
-		
-		html.append("<li><label for=\"pw\">비밀번호</label></li>");
-		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-		
-		
-		html.append("<li>");
-		html.append("<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='name' id='name' value="+memberDTO.getName()+" required></div>");
-		html.append("</li>");
-
-		
-		html.append("  <li>");
-		html.append("      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.getEmail()+" \" required></div>");
-		html.append("    </li>");
-		
-		
-		
-		html.append("    <li><label for=\"nickname\">별칭</label></li>");
-		html.append("  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.getNickname()+"></li>");
-
-		
-		html.append("<li><label for=\"birth\">생년월일</label></li>");
-		html.append("<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.getBirth()+" \"/></li>");
-		
-
-		
-		
-		html.append("<li><label for=\"tel\">전화번호</label></li>");
-		html.append("<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.getTel()+"\"/></li>");
-		
-		
-		html.append("<li>");
-		html.append("<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>");
-		html.append("<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.getAddress()+" required></div>");
-
-		html.append("</li>");
-		html.append("<li><input type=\"button\" value=\"회원수정\" id=\"modifyBtn\"></li>");
-		
-		html.append("</ul>");
-		html.append("</form >");
-		html.append("</div>");
-		
-		
-		result = new Result("00","OK",html);
+		result = new Result("00","OK",memberDTO);
 		
 		return result;
 	}
-
-//	//즐겨찾기
-//	@GetMapping("/mypageFavorites")
-//	public Result favoritelist (HttpServletRequest request){
-//		
-//		HttpSession session = request.getSession(false);
-//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//		log.info("loginMember:{}",loginMember);
-//		
-//		
-//		List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(loginMember.getId());
-//		
-//		
-//		StringBuffer html = new StringBuffer();
-//		html.append("<h3 class='mypage_content_title'즐겨찾기</h3>");
-//		html.append("<hr>");
-//		html.append("<div class='mypage_content_container'>");
-//		html.append("<table class='reply__table'> ");
-//		html.append("<tr class=\"w3-hover-green\">");
-//		html.append("<th class=\"favorite__cell favorite__fnum\">업체명</th>");
-//		html.append("<th class=\"favorite__cell favorite_bname\">주소</th>");
-//		html.append("<th class=\"favorite__cell favorite_score\">전화번호</th>");
-//		html.append("</tr>");
-//		favoritelist.forEach(rec->{
-//		html.append("<tr class=\"w3-hover-green\">");
-//		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getId()+"</td>");
-//		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
-//		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBscore()+"</td>");
-//		html.append("</tr>");
-//		});
-//		html.append("</table>");
-//		html.append("</div>");
-//		
-//		
-//		Result result;
-//		result = new Result("00","OK",html);
-//		
-//		return result;
-//	}
 	
 	//내업체목록
 	@GetMapping("/mybusilist")
@@ -337,11 +183,8 @@ public class APIMypgeController {
 		
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-		log.info("loginMember:{}",loginMember);
-		
 		
 		List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(loginMember.getId());
-		
 		
 		StringBuffer html = new StringBuffer();
 		html.append("<h3 class='mypage_content_title'>내업체목록</h3>");
@@ -372,65 +215,6 @@ public class APIMypgeController {
 		
 		return result;
 	}
-	
-	//업체수정양식
-//	@GetMapping("/mybusiModify/{bnum}")
-//	public Result mybusiModify (@PathVariable Integer bnum, HttpServletRequest request){
-//		
-//		HttpSession session = request.getSession(false);
-//		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//		loginMember.getId();
-//		
-//		BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
-//		businessLoadDTO = businessSVC.findBusiByBnum(bnum);
-//		StringBuffer html = new StringBuffer();
-//		
-//		html.append("<div class='mypage_content_container'>");
-//		
-//		html.append("<h3 class='mypage_content_title'>업체정보수정</h3>");
-//		
-//		html.append("<hr>");
-//		
-//		html.append("<form class='main' method='post'><input type='hidden' name ='_method' value='patch'>");
-//		html.append("<ul>");
-//		html.append("<li><label for='bname'>업체명</label></li>");
-//		html.append("<li><input type='text' id ='bname' name ='bname' value="+businessLoadDTO.getBname()+"/></li>");
-//		
-//		html.append("<li><label for='baddress'>업체주소</label></li>");
-//		html.append("<li><input type='text' id ='baddress' name ='baddress' value="+businessLoadDTO.getBaddress()+"/></li>");
-//		
-//		html.append("<li><label for='btel'>전화번호</label></li>");
-//		html.append("<li><input type='tel' id ='btel' name ='btel' value="+businessLoadDTO.getBtel()+"/></li>");
-//		
-//		html.append("<li><input class='mypage_busimodify' type='button' value='업체수정' id='busimodifyBtn'></li>");
-//		
-//		html.append("</ul>");
-//		html.append("</form>");
-//		html.append("</div>");
-//		
-//		Result result;
-//		result = new Result("00","OK",html);
-//		
-//		return result;
-	//}
-//		//내업체수정양식
-//		@GetMapping("/mybusiModify/{bnum}")
-//		public Result mybusiModify (HttpServletRequest request) {
-//			Result result;
-//			HttpSession session = request.getSession(false);
-//			if(session == null) {
-//				result = new Result("01","로그인후 내정보 페이지를 이용하실 수 있습니다.",null);
-//				return result;
-//			}
-//			
-//			LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-//			String id = loginMember.getId();
-//			
-//			BusinessLoadDTO businessLoadDTO = new BusinessLoadDTO();
-//			businessLoadDTO = businessSVC.findBusiByBnum(businessLoadDTO.getBnum());
-//			result = new Result("00","성공",businessLoadDTO);
-//			return result;
-//		}
 	
 	//비밀번호 변경
 	@GetMapping("/mypagePwModify")
@@ -490,36 +274,6 @@ public class APIMypgeController {
 		
 		log.info(changePwForm.toString());
 		log.info(changPwReq.toString());
-		
-		
-		StringBuffer html = new StringBuffer();
-		
-//		html.append("<h3 class='mypage_content_title'>비밀번호 수정</h3>");
-//		html.append("<hr>");
-//		html.append("<div class='mypage_content_container'>");
-//		
-//		html.append("<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">");
-//
-//		html.append("<ul>");
-//		html.append("<li><label for=\"id\">아이디</label></li>");
-//		html.append("<li><input type=\"text\" id ='id' name ='pwChk' value="+loginMember.getId()+" readonly='readonly'/></li>");
-//		
-//		html.append("<li><label for=\"pw\">현재 비밀번호</label></li>");
-//		html.append("<li><input type=\"password\" name='pw' id = 'pw' \"/></li>");
-//		
-//		html.append("<li><label for=\"pwChk\">현재 비밀번호</label></li>");
-//		html.append("<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>");
-//		
-//		html.append("<li><label for=\"pwChk2\">현재 비밀번호</label></li>");
-//		html.append("<li><input type=\"password\" name='pwChk2' id = 'pwChk2' \"/></li>");
-//		
-//		
-//		html.append("<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>");
-//		
-//		html.append("</ul>");
-//		html.append("</form >");
-//		
-//		html.append("</div>");
 		
 		result = new Result("00","OK",memberDTO);
 		

@@ -22,9 +22,9 @@ public class MemberDTO {
   @DateTimeFormat(pattern ="yyyy-MM-dd")
   private LocalDate birth;
   private String gender;
-  private String tel;
-  private String tel2;
-  private String tel3;
+  private Integer tel;
+  private Integer tel2;
+  private Integer tel3;
   private String email;
   private String address;
   private String mtype;

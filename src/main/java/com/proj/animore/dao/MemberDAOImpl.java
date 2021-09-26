@@ -26,7 +26,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into member(id,pw,name,birth,gender,tel,email,address,nickname,mtype,upload_fname,store_fname,ftype,fsize) ");
+		sql.append("insert into member(id,pw,name,birth,gender,tel,tel2,tel3,email,address,nickname,mtype,upload_fname,store_fname,ftype,fsize) ");
 		sql.append(" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		
 		jdbcTemplate.update(sql.toString(),
@@ -36,6 +36,8 @@ public class MemberDAOImpl implements MemberDAO {
 							memberDTO.getBirth(),
 							memberDTO.getGender(),
 							memberDTO.getTel(),
+							memberDTO.getTel2(),
+							memberDTO.getTel3(),
 							memberDTO.getEmail(),
 							memberDTO.getAddress(),
 							memberDTO.getNickname(),
@@ -73,7 +75,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO findMemberById(String id) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("select id,pw,name,birth,gender,tel,email,address,nickname,upload_fname,store_fname,ftype,fsize,mileage ");
+		sql.append("select id,pw,name,birth,gender,tel,tel2,tel3,email,address,nickname,upload_fname,store_fname,ftype,fsize,mileage ");
 		sql.append("from member ");
 		sql.append("where id= ? ");
 
@@ -87,34 +89,25 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberDTO modifyMember(String id, MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
-		//이름이 name이 사용중하는 변수라서 사용불가~!
 		sql.append("update member ");
 		sql.append("   set name = ?, ");
 		sql.append("       tel = ?, ");
+		sql.append("       tel2 = ?, ");
+		sql.append("       tel3 = ?, ");
 		sql.append("       email = ?, ");
 		sql.append("       address = ?, ");
 		sql.append("       nickname = ?, ");
-		sql.append("       upload_fname = ?, ");
-		sql.append("       store_fname = ?, ");
-		sql.append("       ftype = ?, ");
-		sql.append("       fsize = ?, ");
 		sql.append("       udate = systimestamp ");
 		sql.append(" where id = ? ");
-		sql.append("   and pw = ? "); 
-		//수정폼의 pw작성란은 그럼 수정전 비번재확인용? 해당 부분 뷰에서 pw 마지막에 두고 본인확인용 재입력란임을 알림표시 바람
-		//
 		jdbcTemplate.update(sql.toString(),
 							memberDTO.getName(),
 							memberDTO.getTel(),
+							memberDTO.getTel2(),
+							memberDTO.getTel3(),
 							memberDTO.getEmail(),
 							memberDTO.getAddress(),
 							memberDTO.getNickname(),
-							memberDTO.getUpload_fname(),
-							memberDTO.getStore_fname(),
-							memberDTO.getFtype(),
-							memberDTO.getFsize(),
-							id,
-							memberDTO.getPw());
+							id);
 		return findMemberById(id);
 
 	}
@@ -217,21 +210,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return findMemberById(id);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//로그인확인
 	@Override
 	public boolean isLogin(String id, String pw) {

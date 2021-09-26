@@ -212,7 +212,7 @@ const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 });
 
 //개인정보수정 화면
-	const $mypageModify = document.querySelector('a[href="/mypage/mypageModify"]');
+	const $mypageModify = document.querySelector('.mypage__myInfoBtn');
 	$mypageModify.addEventListener('click',e=>{
 		e.preventDefault();
 		
@@ -226,11 +226,7 @@ const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 				//성공로직처리
 				console.log(res);
 				const data = res.data;
-				document.querySelector('.mypage_content_container').innerHTML = data;
-				
-				const $modifyBtn = document.querySelector('#modifyBtn');
-				$modifyBtn.addEventListener("click", modifyBtn); 
-				
+				refreshModi(data);				//개인정보수정 리프레쉬
 			}else{
 				throw new Error(res.rtmsg);
 			}
@@ -243,31 +239,33 @@ const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 
 //개인정보 수정처리
 
-const modifyBtn = e =>{
+const modifyBtn_f = e =>{
 	e.preventDefault();
 	
 	const $id = id.value;
-	const $pw = pw.value;
+	const $pwChk = pwChk.value;
 	// const $name = name.value;
 	const $name = document.querySelector('input[name="name"]').value;
 	const $tel = tel.value;
+	const $tel2 = document.querySelector('input[name="tel2"]').value;
+	const $tel3 = document.querySelector('input[name="tel3"]').value;
 	const $nickname = nickname.value;
 	const $address = address.value;
 	const $birth = birth.value;
 	const $email = email.value;
 	
-	
-	
 	const URL = `/mypage/mypageModify`;
 	const data = {
 								 "id":$id,
-								 "pw":$pw,
 								 "name":$name,
 								 "tel":$tel,
+								 "tel2":$tel2,
+								 "tel3":$tel3,
 								 "email":$email,
 								 "nickname":$nickname,
 								 "address": $address,
-								 "birth" : $birth
+								 "birth" : $birth,
+								 "pwChk":$pwChk
 							 };
 	
 	request.patch(URL,data)
@@ -276,9 +274,8 @@ const modifyBtn = e =>{
 			if(res.rtcd == '00'){
 				//성공로직처리
 				const data = res.data;
-				
 				refreshModi(data);				//개인정보수정 리프레쉬
-				
+				alert('회원정보가 수정되었습니다.');
 			}else{
 				throw new Error(res.rtmsg);
 			}
@@ -287,9 +284,7 @@ const modifyBtn = e =>{
 			//오류로직 처리
 			alert(err.message);
 		});
-		
-		const $modifyBtn = document.querySelector('#modifyBtn');
-		$modifyBtn.addEventListener("click", modifyBtn); 
+
 };
 
 
@@ -419,86 +414,66 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 
 function refreshPwchange(memberDTO){
 
-let html ='';
-
-html+="<h2 class=\"mypage_content_title\">개인정보수정</h2>";
-
-html+="<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">";
-
-html+="<hr>";
-
-html+="<ul>";
-html+="<li><label for=\"id\">아이디</label></li>";
-html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.id+" readonly='readonly'/></li>";
-html+="<li><label for=\"pw\">현재 비밀번호</label></li>";
-html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
-html+="<li><label for=\"pw2\">새로운 비밀번호</label></li>";
-html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
-html+="<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>";
-html+="<li><input type=\"password\" name='pwChk2' id = 'pwChk2' \"/></li>";
-
-html+="<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>";
-html+="</ul>";
-html+="</form>";
-
-
-document.querySelector('.mypage_content_container').innerHTML = html;
+	let html ='';
+	
+	html+="<h2 class=\"mypage_content_title\">비밀번호 수정</h2>";
+	
+	html+="<form class=\"main\" action=\"/mypage/mypagePwModify\"/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">";
+	
+	html+="<hr>";
+	
+	html+="<ul>";
+	html+="<li><label for=\"id\">아이디</label></li>";
+	html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.id+" readonly='readonly'/></li>";
+	html+="<li><label for=\"pw\">현재 비밀번호</label></li>";
+	html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
+	html+="<li><label for=\"pw2\">새로운 비밀번호</label></li>";
+	html+="<li><input type=\"password\" name='pwChk' id = 'pwChk' \"/></li>";
+	html+="<li><label for=\"pw3\">새로운 비밀번호 확인</label></li>";
+	html+="<li><input type=\"password\" name='pwChk2' id = 'pwChk2' \"/></li>";
+	html+="<li><input class=\"pwModi_btn\" type=\"button\" value='비밀번호수정' id=\"changPw\"></li>";
+	html+="</ul>";
+	html+="</form>";
+	
+	document.querySelector('.mypage_content_container').innerHTML = html;
 };
 
 function refreshModi(memberDTO){
-	let html ='';
-		//html+="<div class=\"mypage_content_container\">";
+		let html = ``;
+		html+=`<h2 class='mypage_content_title'>개인 정보 수정</h2>`;
+		html+=`	<hr>`;
+		html+=`	<form class="main" action="/mypage/mypageModify" method="post" ><input type="hidden" name ="_method" value="patch">`;
+		html+=`		<ul class="joinform">`;
+		html+=`			<li><div class="joinform__row"><label for="id">아이디</label></div>`;
+		html+=`				  <div class="joinform__row"><input type="text"  class="joinform__input" id ='id' name ='id' value=${memberDTO.id} readonly="readonly"/></li></div>`;
+		html+=`			<li>`;
+		html+=`				<div class="joinform__row"><label for="name">이름</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='name' id='name' value=${memberDTO.name} required></div>`;
+		html+=`			</li>`;
+		html+=`	    <li>`;
+		html+=`	      <div class="joinform__row"><label for="email">연락가능 이메일</label></div>`;
+		html+=`	      <div class="joinform__row"><input type="email" class="joinform__input" name='email' id='email' value=${memberDTO.email} required></div>`;
+		html+=`	    </li>`;
+		html+=`	    <li><div class="joinform__row"><label for="nickname">별명</label></div>`;
+		html+=`		  	  <div class="joinform__row"><input type="text" class="joinform__input" name='nickname' id='nickname' value=${memberDTO.nickname}></li></div>`;
+		html+=`			<li><div class="joinform__row"><label for="birth">생년월일</label></div>`;
+		html+=`					<div class="joinform__row"><input type="date" class="joinform__input" id='birth' name='birth' value=${memberDTO.birth}></li></div>`;
+		html+=`			<li><div class="joinform__row"><label for="tel">연락처</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input joinform__input--sm" name="tel" id='tel' value=${memberDTO.tel}>`;
+		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel2" id='tel2' value=${memberDTO.tel2} required>`;
+		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel3" id='tel3' value=${memberDTO.tel3} required></div>`;
+		html+=`			</li>`;
+		html+=`			<li>`;
+		html+=`				<div class="joinform__row"><label for="address">주소</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='address' id='address' value=${memberDTO.address} required></div>`;
+		html+=`			</li>`;
+		html+=`			<li><div class="joinform__row"><label for="pwChk">비밀번호 확인</label></div>`;
+		html+=`					<div class="joinform__row"><input type="password" class="joinform__input" name="pwChk" id ='pwChk'/></li></div>`;
+		html+=`			<li><input type="button" value="회원수정" class="modifyBtn" id="modifyBtn"></li>`;
+		html+=`		</ul>`;
+		html+=`	</form >`;
+		document.querySelector('.mypage_content_container').innerHTML = html;
 		
-		html+="<h2 class=\"mypage_content_title\">개인정보수정</h2>";
-		
-		html+="<hr>";
-		
-		html+="<form class=\"main\" action='/mypage/mypageModify'/ method=\"post\" \"><input type=\"hidden\" name = \"_method\" value=\"patch\">";
-
-		
-		
-		html+="<li><label for=\"id\">아이디</label></li>";
-		html+="<li><input type=\"text\" id ='id' name ='id' value="+memberDTO.id+" readonly=\"readonly\"/></li>";
-		
-		html+="<li><label for=\"pw\">비밀번호</label></li>";
-		html+="<li><input type=\"password\" name='pw' id = 'pw' \"/></li>";
-		
-		html+="<li>";
-		//html+="<div class=\"modify__row\"><label for=\"name\">이름</label><span class=\"joinform__required-mark\">*</span></div>";
-		//html+="<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name=\"name\" id=\"name\" value= \""+memberDTO.getName()+"\"required></div>";
-		html+="</li>";
-		
-		
-		
-		html+="    <li>";
-		html+="      <div class=\"modify__row\"><label for=\"email\">연락가능 이메일</label><span class=\"joinform__required-mark\">*</span></div>";
-		html+="      <div class=\"modify__row\"><input type=\"email\" class=\"modify_input\" name='email' id='email' value= "+memberDTO.email+" \" required></div>";
-		html+="    </li>";
-		
-		
-		
-		html+="    <li><label for=\"nickname\">별칭</label></li>";
-		html+="  <li><input type=\"text\" name='nickname' id='nickname' value = "+memberDTO.nickname+"/></li>";
-
-		
-		html+="<li><label for=\"birth\">생년월일</label></li>";
-		html+="<li><input type=\"date\" id='birth' name='birth' value = "+memberDTO.birth+" \"/></li>	";
-		
-		
-		html+="<li><label for=\"tel\">전화번호</label></li>";
-		html+="<li><input type=\"tel\" name=\"tel\" id='tel' value="+memberDTO.tel+" \"/></li>";
-		
-		
-		html+="<li>";
-		html+="<div class=\"modify__row\"><label for=\"address\">주소</label><span class=\"joinform__required-mark\">*</span></div>";
-		html+="<div class=\"modify__row\"><input type=\"text\" class=\"modify_input\" name='address' id='address'  value="+memberDTO.address+" required></div>";
-
-
-		html+="</li>";
-		html+="<li><input type=\"button\" id=\"modifyBtn\"></li>";
-		
-		
-		html+="</ul>";
-		html+="</form >";
-		//html+="</div>";
+		const $modifyBtn = document.querySelector('#modifyBtn');
+		$modifyBtn.addEventListener("click", modifyBtn_f); 
 }; 	

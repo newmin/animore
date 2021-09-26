@@ -42,12 +42,13 @@ public class JoinMemberForm {
   @NotBlank
   private String nickname;
    @NotBlank
-  private String tel;
+  private Integer tel;
    @NotBlank
-  private String tel2;
+  private Integer tel2;
    @NotBlank
-  private String tel3;
+  private Integer tel3;
    @NotBlank
+   @Email
   private String email;
    @NotBlank
   private String address;

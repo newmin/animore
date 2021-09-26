@@ -25,11 +25,12 @@ public class JoinBusinessForm {
 	@NotBlank
 	private String baddress;
 	@NotBlank
-	private String btel;
-	@NotBlank
-	private String btel2;
-	@NotBlank
-	private String btel3;
+	private Integer btel;
+	/*
+	 * @NotBlank private Integer btel2;
+	 * 
+	 * @NotBlank private Integer btel3;
+	 */
 	private String nitghtcare;
 	private String rareani;
 	private String visitcare;
