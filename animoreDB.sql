@@ -39,7 +39,7 @@ create table member(
   constraint MEMBER_mtype_ck check(mtype in('A','N','S')),
   constraint MEMBER_ftype_ck check(ftype like 'image/%')  
 );
-insert into member(ID,PW,TEL,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000-0000-0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
+insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000','0000','0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
 
 --게시글
 create table board(
