@@ -15,9 +15,9 @@ drop table member;
 create table member(
   id varchar2(40),
   pw varchar2 (16) not null,
-  tel NUMBER(3) not null,
-  tel2 NUMBER(4) not null,
-  tel3 NUMBER(4) not null,
+  tel varchar2(4) not null,
+  tel2 varchar2(4) not null,
+  tel3 varchar2(4) not null,
   email varchar2(30) not null,
   name varchar2(15) not null,
   nickname varchar2(30) not null,

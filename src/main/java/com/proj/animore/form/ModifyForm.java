@@ -23,9 +23,9 @@ public class ModifyForm {
   	@Past
   	@DateTimeFormat(pattern ="yyyy-MM-dd")
 	private LocalDate birth;
-	private Integer tel;
-	private Integer tel2;
-	private Integer tel3;
+	private String tel;
+	private String tel2;
+	private String tel3;
 	@NotBlank
 	@Email
 	private String email;

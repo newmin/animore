@@ -41,12 +41,9 @@ public class JoinMemberForm {
   private String gender;
   @NotBlank
   private String nickname;
-
-  private Integer tel;
-
-  private Integer tel2;
-
-  private Integer tel3;
+  private String tel;
+  private String tel2;
+  private String tel3;
    @NotBlank
    @Email
   private String email;

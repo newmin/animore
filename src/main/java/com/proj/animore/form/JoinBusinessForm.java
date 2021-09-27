@@ -25,7 +25,7 @@ public class JoinBusinessForm {
 	@NotBlank
 	private String baddress;
 	@NotBlank
-	private Integer btel;
+	private String btel;
 	/*
 	 * @NotBlank private Integer btel2;
 	 * 

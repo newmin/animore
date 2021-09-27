@@ -19,6 +19,8 @@ public class MyEditForm {
 	  private String gender;
 	  //TODO
 	  private String tel;
+	  private String tel2;
+	  private String tel3;
 	  private String email;
 	  private String address;
 	  private String mtype;
