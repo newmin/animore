@@ -243,7 +243,7 @@ DROP SEQUENCE review_rnum_seq;
 DROP SEQUENCE reviewfile_fnum_seq;
 DROP SEQUENCE favorite_fnum_seq;
 drop sequence boardfile_fnum_seq;
-drop sequence business_fnum_seq;
+drop sequence businessfile_fnum_seq;
 drop sequence review_fnum_seq;
 
 --시퀀스 생성
