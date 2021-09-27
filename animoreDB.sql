@@ -122,7 +122,7 @@ create table business(
   id varchar2(40) default 'admin@animore.com',
   bname varchar2(150) not null,
   baddress varchar2 (150) not null,
-  btel varchar2(14) not null,
+  btel varchar2(14),
 --  btel2 NUMBER(4) not null,
 --  btel3 NUMBER(4) not null,
   openhours clob,
