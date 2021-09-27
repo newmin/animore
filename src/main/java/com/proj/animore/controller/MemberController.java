@@ -217,8 +217,10 @@ public class MemberController {
 		
 		//정보가 없으면
 		if(changePwForm == null) {
-			return "member/findPWForm";
+			return "redirect:/member/findPW";
 		}
+		MemberDTO memberDTO = memberSVC.findMemberById(findPwForm.getId());
+		
 		
     //1)임의의 비밀번호 생성
     String tmpPw = PasswordGeneratorCreator.generator(7);
@@ -257,14 +259,14 @@ public class MemberController {
     
     model.addAttribute("info", "가입된 이메일로 임시비밀번호가 발송되었습니다.");
     
-    return "redirect:/member/changePWSuccess";
+    return "member/changePWSuccess";
     
 //		//정보가 DB와 일치할 경우
 //		redirectAttributes.addAttribute("id", changePwForm.getId());
 //		log.info(changePwForm.getId());
 //		return "redirect:/member/findPW/{id}";	//비밀번호변경양식
 	}
-	
+		
 	/**
 	 * 비밀번호변경양식
 	 * @param changePWForm
