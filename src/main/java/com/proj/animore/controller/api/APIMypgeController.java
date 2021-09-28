@@ -32,6 +32,7 @@ import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
+import com.proj.animore.form.OutMemberForm;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.MypageSVC;
@@ -295,16 +296,18 @@ public class APIMypgeController {
 		return result;
 	}
 	
-  //회원탈퇴처리
-  @DeleteMapping("/mypageDel")
+  //회원탈퇴처리(회원상태타입 수정(Active→Without))
+  @PatchMapping("/mypageDel")
   public Result mypageDel(
-        @RequestParam String pwChk,
+		  @Valid @RequestBody OutMemberForm outMemberForm,
         HttpServletRequest request) {
      
      HttpSession session = request.getSession(false);
      if(session == null && session.getAttribute("loginMember")==null) {
     	 return new Result("01","로그인이 만료되었습니다. 재로그인 후 시도해주세요.",null);
      }
+     
+     String pwChk = outMemberForm.getPwChk();
 
      if(pwChk == null || pwChk.trim().length() == 0) {
         return new Result("02","비밀번호를 입력해주세요",null) ;
