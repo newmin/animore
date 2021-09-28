@@ -287,10 +287,8 @@ const modifyBtn_f = e =>{
 
 };
 
-
-
-//회원탈퇴
-const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
+//회원탈퇴 양식
+const $mypageDelMenu = document.querySelector('.mypage__outBtn');
 	$mypageDelMenu.addEventListener('click',e=>{
 	e.preventDefault();
 	
@@ -302,8 +300,22 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 		if(res.rtcd == '00'){
 			//성공로직처리
 			console.log(res);
-			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
+			let html = ``;
+			html+=`<h3 class='mypage_content_title'>회원탈퇴</h3>`;
+			html+=`<hr>`;
+			html+=`<div class='mypage_content'>`;
+			html+=`  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>`;
+			html+=`    <h1 class='findId__title'></h1>`;
+			html+=`    <p class='login__errormsg' th:errors='*{global}'></p>`;
+			html+=`    <div class='findId__form'>`;
+			html+=`      <span class='findId__text'>비밀번호 확인</span>`;
+			html+=`      <input class='findId__input' type='password' name='pwChk'>`;
+			html+=`    </div>`;
+			html+=`    <button class='findId__btn' type='submit'>회원탈퇴</button>`;
+			html+=`  </form>`;
+			html+=`</div>`;
+			document.querySelector('.mypage_content_container').innerHTML = html;
+			document.querySelector('.findId__btn').addEventListener('click',outMember);
 		}else{
 			throw new Error(res.rtmsg);
 		}
@@ -313,6 +325,43 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 		console.log (err.message);
 	});
 });
+
+//회원탈퇴 처리
+const outMember = e => {
+	e.preventDefault();
+	
+	if(!confirm('회원탈퇴 후에는 기록을 되돌릴 수 없습니다. 정말로 떠나시겠어요?')){
+		return;
+	}
+	
+	const pwChk = document.querySelector('.findId__input').value;
+	
+	const URL = `/mypage/mypageDel?pwChk=${pwChk}`;
+	
+	request.delete(URL)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == "00"){
+							//성공로직처리
+							const data = res.data;
+							alert(res.rtmsg);
+							//홈으로 이동
+							location.href="/";
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+			});
+};
+
+const outMemberPage = e =>{
+
+}
+
 //비밀번호 변경양식
 	const $myPwModi = document.querySelector('a[href="/mypage/mypagePwModify"]');
 	$myPwModi.addEventListener('click',e=>{
