@@ -134,8 +134,8 @@ public class MemberSVCImpl implements MemberSVC {
 	
 //id로 회원 탈퇴
 	@Override
-	public void outMember(String id, String pw) {
-		memberDAO.outMember(id, pw);
+	public void outMember(String id) {
+		memberDAO.outMember(id);
 		
 	}
 

@@ -53,7 +53,7 @@ public interface MemberDAO {
 	boolean isLogin(String id, String pw);
 	
 	//탈퇴
-	void outMember(String id, String pw);
+	void outMember(String id);
 
 	//비밀번호찾기시 실행되는 비밀번호변경
 	void changePw(String id, String pw, String tmpPw);
