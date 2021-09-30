@@ -375,7 +375,7 @@ public class BoardController {
 		
 		BoardReqDTO boardReqDTO = boardSVC.findBoardByBnum(bnum);
 		
-		if(loginMemberId.equals(boardReqDTO.getId())) {
+		if(loginMemberId.equals(boardReqDTO.getId()) || loginMemberId.equals("admin@animore.com")) {
 		
 		model.addAttribute("boardForm",boardReqDTO);
 		log.info("boardForm:{}",boardSVC.findBoardByBnum(bnum));
@@ -423,7 +423,7 @@ public class BoardController {
 		String loginMemberId = loginMember.getId();
 		
 		BoardReqDTO delBoard = boardSVC.findBoardByBnum(bnum);
-		if(loginMemberId.equals(delBoard.getId())) {
+		if(loginMemberId.equals(delBoard.getId()) || loginMemberId.equals("admin@animore.com")) {
 		
 		boardSVC.deleteBoard(bnum);
 		

@@ -141,10 +141,14 @@ public class APIRboardController {
 		String loginMemberId = loginMember.getId();
 		
 		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
-		
+
+		//요청자 id, 댓글작성자 id 같을때, 관리자가 요청했을 때
+		if(loginMember.getId().equals(rboardReqDTO.getId()) || loginMember.getId().equals("admin@animore.com")) {
+			
+		}
 		//요청자 id, 댓글작성자 id 같지 않으면
-		if(!loginMember.getId().equals(rboardReqDTO.getId())) {
-			return new Result("01","댓글작성자가 수정할 수 있습니다.","댓글작성자가 수정할 수 있습니다.");
+		else {
+			return new Result("01","댓글작성자가 수정할 수 있습니다.","댓글작성자가 수정할 수 있습니다.");			
 		}
 		
 		RboardDTO rboardDTO = new RboardDTO();
@@ -178,9 +182,13 @@ public class APIRboardController {
 		
 		RboardListReqDTO rboardReqDTO = rboardSVC.findByRnum(bnum, rnum);
 		
+		//요청자 id, 댓글작성자 id 같을때, 관리자가 요청했을 때
+		if(loginMember.getId().equals(rboardReqDTO.getId()) || loginMember.getId().equals("admin@animore.com")) {
+			
+		}
 		//요청자 id, 댓글작성자 id 같지 않으면
-		if(!loginMember.getId().equals(rboardReqDTO.getId())) {
-			return new Result("01","댓글작성자가 삭제할 수 있습니다.","댓글작성자가 삭제할 수 있습니다.");
+		else {
+			return new Result("01","댓글작성자가 삭제할 수 있습니다.","댓글작성자가 삭제할 수 있습니다.");			
 		}
 		
 		List<RboardListReqDTO> list = rboardSVC.del(bnum, rnum, id);

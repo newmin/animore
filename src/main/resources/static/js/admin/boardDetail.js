@@ -89,9 +89,36 @@ $heart.addEventListener('click',e=>{
             location.href =`/board/modify/${bnum}`;
         });
     }
+    
 
 
+//공지버튼클릭시
+const $noticeToggle = document.querySelector('.autologincheck');
+if($noticeBtn){
 
+    $noticeBtn.addEventListener('click',e=>{
+            const URL = `/board/notice/${e.target.dataset.bnum}`;
+            console.log(URL);
+            request.get(URL)
+            .then(res=>res.json())
+            .then(res=>{
+                if(res.rtcd=='01'){
+                        $noticeToggle.setAttribute("checked","checked");
+                    }else if(res.rtcd=='00'){
+                        $noticeToggle.removeAttribute("checked");
+                        }else{
+                            throw new Error(res.rtmsg);
+                        }
+                    })
+                    .catch(err=>{
+                        //오류로직 처리
+                        console.log (err.message);
+                        });
+                    });
+}
+                
+            
+            
 
         //답글버튼
         $replyBtn.addEventListener('click',e=>{

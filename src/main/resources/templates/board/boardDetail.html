@@ -7,8 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="/js/boardDetail.js" defer></script>
-  <script src="/js/api/rboardReq.js" defer></script>
+  <script src="/js/admin/boardDetail.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
+ 	<script src="/js/admin/rboardReq.js" th:if="${session?.loginMember?.mtype=='A'}" defer></script>
+	<!-- 회원용 -->
+  <script src="/js/boardDetail.js" th:if="${session?.loginMember?.mtype!='A'}" defer></script>
+  <script src="/js/api/rboardReq.js" th:if="${session?.loginMember?.mtype!='A'}" defer></script>
   <script src="/js/reply.js" defer></script>
   <script src="/js/api/ajaxCall.js"></script>
 <title>게시글</title>
@@ -129,11 +132,15 @@
         <div class="boardForm__btns bottom_btns">
             <button class="boardForm__listBtn" th:data-bcategory="*{bcategory}">목록</button>
             <button class="boardForm__modifyBtn" 
-            		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id)}"
+            		th:if="${session.loginMember != null && session.loginMember.id.equals(post.id) ||
+            										session.loginMember != null && 
+            										session.loginMember.id.equals('admin@animore.com')}"
             		th:data-bnum="*{bnum}">수정</button>
             <!-- 글쓴이 이거나 관리자계정일경우 삭제버튼 보임 -->
             <button class="boardForm__delBtn" th:if="${session.loginMember != null && 
-            										session.loginMember.id.equals(post.id)}"
+            										session.loginMember.id.equals(post.id) ||
+            										session.loginMember != null && 
+            										session.loginMember.id.equals('admin@animore.com')}"
             							th:data-bnum="*{bnum}"
             							th:data-bcategory="*{bcategory}">삭제</button>
         </div>

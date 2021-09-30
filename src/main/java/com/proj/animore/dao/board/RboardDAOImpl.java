@@ -154,11 +154,11 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("    rudate=systimestamp ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
-		sql.append("and id=? ");
+//		sql.append("and id=? ");
 		sql.append("and status='A' ");
 		
 		jt.update(sql.toString(),
-										rboardDTO.getRcontent(), bnum, rnum, id);
+										rboardDTO.getRcontent(), bnum, rnum /*, id*/);
 		
 		//수정후 댓글목록 갱신
 		List<RboardListReqDTO> list = all(bnum);
@@ -176,12 +176,12 @@ public class RboardDAOImpl implements RboardDAO{
 		sql.append("set status = 'D' ");
 		sql.append("where bnum=? ");
 		sql.append("and rnum=? ");
-		sql.append("and id=? ");
+//		sql.append("and id=? ");
 		sql.append("and status='A' ");
 		
 		
 		int result = 
-				jt.update(sql.toString(), bnum, rnum, id);
+				jt.update(sql.toString(), bnum, rnum /*, id*/);
 		
 		List<RboardListReqDTO> list = all(bnum);
 		return list;
