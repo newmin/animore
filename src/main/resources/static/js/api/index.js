@@ -1,3 +1,6 @@
+
+
+
 /* 베스트 게시글 조회 */
 const bestQna = e =>{
 	console.log('best Q&A');

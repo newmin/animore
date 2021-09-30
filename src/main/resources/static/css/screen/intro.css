@@ -124,6 +124,14 @@
 	width:220px;
 
 }
+/*메인 게시판 사이드메뉴바*/
+.board-sidenav {position:absolute;width:90px;margin-top:100px; top:300px;right:100px;background:#fff;}
+.board-sidenav ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;border:1px solid #ddd;}
+.board-sidenav ul li {float:left;width:100%;border-bottom:1px solid #ddd;text-align:center;display:inline-block;*display:inline;}
+.board-sidenav ul li a {position:relative;float:left;width:100%;height:30px;line-height:30px;text-align:center;color:#999;font-size:9.5pt;}
+.board-sidenav ul li a:hover {color:#000;}
+.board-sidenav ul li:last-child {border-bottom:0;}
+
 
 /* 반응형 웹 처리 */
 @media screen and (max-width: 1200px) {

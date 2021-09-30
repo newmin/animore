@@ -3,6 +3,19 @@
  */
  'use strict'
  
+/*사이드메뉴*/
+
+ //follow quick menu
+$(window).scroll(function(){
+var scrollTop = $(document).scrollTop();
+if (scrollTop <= 300) {
+ scrollTop = 300; //css 에서 준 상한높이 만큼 조절
+}
+$(".board-sidenav").stop();
+$(".board-sidenav").animate( { "top" : scrollTop });
+});
+
+
 
  
  
