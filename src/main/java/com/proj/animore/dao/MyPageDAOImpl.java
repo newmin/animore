@@ -50,6 +50,7 @@ public class MyPageDAOImpl implements MyPageDAO{
 		sql.append("	    from rboard t1, board t2 ");
 		sql.append("	   where t1.id=? ");
 		sql.append("  	     and t1.bnum=t2.bnum ");
+		sql.append("  	     and status= 'A' ");
 		sql.append("	order by t1.rnum desc) x ");
 		
 		List<MypageReplyRes> mypageReplyList = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(MypageReplyRes.class),id);
