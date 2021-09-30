@@ -231,15 +231,14 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	//회원탈퇴
 	@Override
-	public void outMember(String id, String pw) {
+	public void outMember(String id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("update member ");
 		sql.append("   set status = 'W', ");		
 		sql.append("   		 udate = systimestamp ");		
 		sql.append(" where id = ? ");
-		sql.append("   and pw = ?");
 		
-		jdbcTemplate.update(sql.toString(), id, pw);
+		jdbcTemplate.update(sql.toString(), id);
 		
 	}
 	

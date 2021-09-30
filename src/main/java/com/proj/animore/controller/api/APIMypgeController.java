@@ -1,6 +1,8 @@
 package com.proj.animore.controller.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,12 +11,14 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proj.animore.dto.ChangPwReq;
@@ -28,6 +32,7 @@ import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.ChangePwForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
+import com.proj.animore.form.OutMemberForm;
 import com.proj.animore.form.Result;
 import com.proj.animore.svc.MemberSVC;
 import com.proj.animore.svc.MypageSVC;
@@ -286,23 +291,43 @@ public class APIMypgeController {
 		HttpSession session = request.getSession(false);
 		Result result;
 		
-		StringBuffer html = new StringBuffer();
-		html.append("<h3 class='mypage_content_title'>회원탈퇴</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content'>");
-		html.append("  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>");
-		html.append("    <h1 class='findId__title'></h1>");
-		html.append("    <!-- <p class='login__errormsg' th:errors='*{global}'></p> -->");
-		html.append("    <div class='findId__form'>");
-		html.append("      <span class='findId__text'>비밀번호 확인</span>");
-		html.append("      <input class='findId__input' type='text' name='pw'>");
-		html.append("    </div>");
-		html.append("    <button class='findId__btn' type='submit'>회원탈퇴</button>");
-		html.append("  </form>");
-		html.append("</div>");
-		
-		result = new Result("00","OK",html);
+		result = new Result("00","OK",null);
 		
 		return result;
 	}
+	
+  //회원탈퇴처리(회원상태타입 수정(Active→Without))
+  @PatchMapping("/mypageDel")
+  public Result mypageDel(
+		  @Valid @RequestBody OutMemberForm outMemberForm,
+        HttpServletRequest request) {
+     
+     HttpSession session = request.getSession(false);
+     if(session == null && session.getAttribute("loginMember")==null) {
+    	 return new Result("01","로그인이 만료되었습니다. 재로그인 후 시도해주세요.",null);
+     }
+     
+     String pwChk = outMemberForm.getPwChk();
+
+     if(pwChk == null || pwChk.trim().length() == 0) {
+        return new Result("02","비밀번호를 입력해주세요",null) ;
+     }
+     
+     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+     String id = loginMember.getId();
+     
+     //비밀번호 확인
+     if(!memberSVC.findMemberById(id).getPw().equals(pwChk)) {
+    	 return new Result("03","비밀번호가 일치하지 않습니다. 다시 한번 확인해주세요",null);
+     }
+
+     log.info("회원탈퇴:{}",id);
+     memberSVC.outMember(id);
+     
+     session.invalidate();
+     
+     return new Result("00","회원탈퇴 정상적으로 처리되었습니다. 그동안 이용해주셔서 진심으로 감사드립니다.",null);
+  }
+	
+	
 }

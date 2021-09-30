@@ -88,7 +88,7 @@ public class MyPageController {
       //회원존재유무 확인
       if(memberSVC.isMemember(loginMember.getId(), pw)) {
          //탈퇴
-         memberSVC.outMember(loginMember.getId(), pw);
+         memberSVC.outMember(loginMember.getId());
       }else {
          errors.put("global", "비밀번호가 잘못되었습니다.");
          model.addAttribute("errors", errors);
@@ -177,44 +177,44 @@ public class MyPageController {
 		return uploadFileDTO;
 	}
 
-   //회원탈퇴처리
-   @DeleteMapping("/mypageDel")
-   public String mypageDel(
-         @RequestParam String pw,
-         HttpServletRequest request,
-         Model model) {
-      log.info("회원탈퇴");
-      
-      Map<String, String> errors = new HashMap<>();
-      
-      if(pw == null || pw.trim().length() == 0) {
-         errors.put("pw", "비밀번호를 입력하세요");
-         model.addAttribute("errors", errors);
-//         return "mypage/memberOutForm";
-         return null;
-      }
-      
-      HttpSession session = request.getSession(false);
-      if(session == null) return "redirect:/login";
-      
-      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-      //회원존재유무 확인
-      if(memberSVC.isMemember(loginMember.getId(), pw)) {
-         //탈퇴
-         memberSVC.outMember(loginMember.getId(), pw);
-      }else {
-         errors.put("global", "비밀번호가 잘못되었습니다.");
-         model.addAttribute("errors", errors);
-      }
-      
-      if(!errors.isEmpty()) {
-//         return "mypage/memberOutForm";
-         return null;
-      }
-      session.invalidate();
-      
-      return "redirect:/";
-   }
+//   //회원탈퇴처리-APIMypageController로 옮김. 추후 마이페이지 html로 변경시 해당 컨트롤러 사용 예정 -km
+//   @DeleteMapping("/mypageDel")
+//   public String mypageDel(
+//         @RequestParam String pw,
+//         HttpServletRequest request,
+//         Model model) {
+//      log.info("회원탈퇴");
+//      
+//      Map<String, String> errors = new HashMap<>();
+//      
+//      if(pw == null || pw.trim().length() == 0) {
+//         errors.put("pw", "비밀번호를 입력하세요");
+//         model.addAttribute("errors", errors);
+////         return "mypage/memberOutForm";
+//         return null;
+//      }
+//      
+//      HttpSession session = request.getSession(false);
+//      if(session == null) return "redirect:/login";
+//      
+//      LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+//      //회원존재유무 확인
+//      if(memberSVC.isMemember(loginMember.getId(), pw)) {
+//         //탈퇴
+//         memberSVC.outMember(loginMember.getId(), pw);
+//      }else {
+//         errors.put("global", "비밀번호가 잘못되었습니다.");
+//         model.addAttribute("errors", errors);
+//      }
+//      
+//      if(!errors.isEmpty()) {
+////         return "mypage/memberOutForm";
+//         return null;
+//      }
+//      session.invalidate();
+//      
+//      return "redirect:/";
+//   }
    //개인정보 수정양식
 //   @GetMapping("/mypageModify")
 public String modifyMember(HttpServletRequest request,

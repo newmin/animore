@@ -284,13 +284,50 @@ const modifyBtn_f = e =>{
 			//오류로직 처리
 			alert(err.message);
 		});
-
 };
 
+function refreshModi(memberDTO){
+		let html = ``;
+		html+=`<h2 class='mypage_content_title'>개인 정보 수정</h2>`;
+		html+=`	<hr>`;
+		html+=`	<form class="main" action="/mypage/mypageModify" method="post" ><input type="hidden" name ="_method" value="patch">`;
+		html+=`		<ul class="joinform">`;
+		html+=`			<li><div class="joinform__row"><label for="id">아이디</label></div>`;
+		html+=`				  <div class="joinform__row"><input type="text"  class="joinform__input" id ='id' name ='id' value=${memberDTO.id} readonly="readonly"/></li></div>`;
+		html+=`			<li>`;
+		html+=`				<div class="joinform__row"><label for="name">이름</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='name' id='name' value=${memberDTO.name} required></div>`;
+		html+=`			</li>`;
+		html+=`	    <li>`;
+		html+=`	      <div class="joinform__row"><label for="email">연락가능 이메일</label></div>`;
+		html+=`	      <div class="joinform__row"><input type="email" class="joinform__input" name='email' id='email' value=${memberDTO.email} required></div>`;
+		html+=`	    </li>`;
+		html+=`	    <li><div class="joinform__row"><label for="nickname">별명</label></div>`;
+		html+=`		  	  <div class="joinform__row"><input type="text" class="joinform__input" name='nickname' id='nickname' value=${memberDTO.nickname}></li></div>`;
+		html+=`			<li><div class="joinform__row"><label for="birth">생년월일</label></div>`;
+		html+=`					<div class="joinform__row"><input type="date" class="joinform__input" id='birth' name='birth' value=${memberDTO.birth}></li></div>`;
+		html+=`			<li><div class="joinform__row"><label for="tel">연락처</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input joinform__input--sm" name="tel" id='tel' value=${memberDTO.tel}>`;
+		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel2" id='tel2' value=${memberDTO.tel2} required>`;
+		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel3" id='tel3' value=${memberDTO.tel3} required></div>`;
+		html+=`			</li>`;
+		html+=`			<li>`;
+		html+=`				<div class="joinform__row"><label for="address">주소</label></div>`;
+		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='address' id='address' value=${memberDTO.address} required></div>`;
+		html+=`			</li>`;
+		html+=`			<li><div class="joinform__row"><label for="pwChk">비밀번호 확인</label></div>`;
+		html+=`					<div class="joinform__row"><input type="password" class="joinform__input" name="pwChk" id ='pwChk'/></li></div>`;
+		html+=`			<li><input type="button" value="회원수정" class="modifyBtn" id="modifyBtn"></li>`;
+		html+=`		</ul>`;
+		html+=`	</form >`;
+		document.querySelector('.mypage_content_container').innerHTML = html;
+		
+		const $modifyBtn = document.querySelector('#modifyBtn');
+		$modifyBtn.addEventListener("click", modifyBtn_f); 
+}; 	
 
-
-//회원탈퇴
-const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
+//회원탈퇴 양식
+const $mypageDelMenu = document.querySelector('.mypage__outBtn');
 	$mypageDelMenu.addEventListener('click',e=>{
 	e.preventDefault();
 	
@@ -302,8 +339,22 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 		if(res.rtcd == '00'){
 			//성공로직처리
 			console.log(res);
-			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
+			let html = ``;
+			html+=`<h3 class='mypage_content_title'>회원탈퇴</h3>`;
+			html+=`<hr>`;
+			html+=`<div class='mypage_content'>`;
+			html+=`  <form action='/mypage/mypageDel' method='post' class='findId'><input type='hidden' name='_method' value='delete\'>`;
+			html+=`    <h1 class='findId__title'></h1>`;
+			html+=`    <p class='login__errormsg' th:errors='*{global}'></p>`;
+			html+=`    <div class='findId__form'>`;
+			html+=`      <span class='findId__text'>비밀번호 확인</span>`;
+			html+=`      <input class='findId__input' type='password' name='pwChk'>`;
+			html+=`    </div>`;
+			html+=`    <button class='findId__btn' type='submit'>회원탈퇴</button>`;
+			html+=`  </form>`;
+			html+=`</div>`;
+			document.querySelector('.mypage_content_container').innerHTML = html;
+			document.querySelector('.findId__btn').addEventListener('click',outMember);
 		}else{
 			throw new Error(res.rtmsg);
 		}
@@ -313,6 +364,46 @@ const $mypageDelMenu = document.querySelector('a[href="/mypage/mypageDel"]');
 		console.log (err.message);
 	});
 });
+
+//회원탈퇴 처리
+const outMember = e => {
+	e.preventDefault();
+	
+	if(!confirm('회원탈퇴 후에는 기록을 되돌릴 수 없습니다. 정말로 떠나시겠어요?')){
+		return;
+	}
+	
+	const pwChk = document.querySelector('.findId__input').value;
+	
+	const URL = `/mypage/mypageDel`;
+	const data = {
+							 "pwChk":pwChk
+						 };
+	
+	request.patch(URL,data)
+			.then(res=>res.json())
+			.then(res=>{
+					if(res.rtcd == "00"){
+							//성공로직처리
+							const data = res.data;
+							alert(res.rtmsg);
+							//홈으로 이동
+							location.href="/";
+					}else{
+						alert(res.rtmsg);
+						throw new Error(res.rtmsg);
+					}
+			})
+			.catch(err=>{
+					//오류로직 처리
+					console.log(err.message);
+			});
+};
+
+const outMemberPage = e =>{
+
+}
+
 //비밀번호 변경양식
 	const $myPwModi = document.querySelector('a[href="/mypage/mypagePwModify"]');
 	$myPwModi.addEventListener('click',e=>{
@@ -437,43 +528,3 @@ function refreshPwchange(memberDTO){
 	
 	document.querySelector('.mypage_content_container').innerHTML = html;
 };
-
-function refreshModi(memberDTO){
-		let html = ``;
-		html+=`<h2 class='mypage_content_title'>개인 정보 수정</h2>`;
-		html+=`	<hr>`;
-		html+=`	<form class="main" action="/mypage/mypageModify" method="post" ><input type="hidden" name ="_method" value="patch">`;
-		html+=`		<ul class="joinform">`;
-		html+=`			<li><div class="joinform__row"><label for="id">아이디</label></div>`;
-		html+=`				  <div class="joinform__row"><input type="text"  class="joinform__input" id ='id' name ='id' value=${memberDTO.id} readonly="readonly"/></li></div>`;
-		html+=`			<li>`;
-		html+=`				<div class="joinform__row"><label for="name">이름</label></div>`;
-		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='name' id='name' value=${memberDTO.name} required></div>`;
-		html+=`			</li>`;
-		html+=`	    <li>`;
-		html+=`	      <div class="joinform__row"><label for="email">연락가능 이메일</label></div>`;
-		html+=`	      <div class="joinform__row"><input type="email" class="joinform__input" name='email' id='email' value=${memberDTO.email} required></div>`;
-		html+=`	    </li>`;
-		html+=`	    <li><div class="joinform__row"><label for="nickname">별명</label></div>`;
-		html+=`		  	  <div class="joinform__row"><input type="text" class="joinform__input" name='nickname' id='nickname' value=${memberDTO.nickname}></li></div>`;
-		html+=`			<li><div class="joinform__row"><label for="birth">생년월일</label></div>`;
-		html+=`					<div class="joinform__row"><input type="date" class="joinform__input" id='birth' name='birth' value=${memberDTO.birth}></li></div>`;
-		html+=`			<li><div class="joinform__row"><label for="tel">연락처</label></div>`;
-		html+=`				<div class="joinform__row"><input type="text" class="joinform__input joinform__input--sm" name="tel" id='tel' value=${memberDTO.tel}>`;
-		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel2" id='tel2' value=${memberDTO.tel2} required>`;
-		html+=`				<input type="text" class="joinform__input joinform__input--sm" name="tel3" id='tel3' value=${memberDTO.tel3} required></div>`;
-		html+=`			</li>`;
-		html+=`			<li>`;
-		html+=`				<div class="joinform__row"><label for="address">주소</label></div>`;
-		html+=`				<div class="joinform__row"><input type="text" class="joinform__input" name='address' id='address' value=${memberDTO.address} required></div>`;
-		html+=`			</li>`;
-		html+=`			<li><div class="joinform__row"><label for="pwChk">비밀번호 확인</label></div>`;
-		html+=`					<div class="joinform__row"><input type="password" class="joinform__input" name="pwChk" id ='pwChk'/></li></div>`;
-		html+=`			<li><input type="button" value="회원수정" class="modifyBtn" id="modifyBtn"></li>`;
-		html+=`		</ul>`;
-		html+=`	</form >`;
-		document.querySelector('.mypage_content_container').innerHTML = html;
-		
-		const $modifyBtn = document.querySelector('#modifyBtn');
-		$modifyBtn.addEventListener("click", modifyBtn_f); 
-}; 	
