@@ -60,7 +60,6 @@ create table board(
   bstatus char(1) default 'N',    --공지여부
   bndate timestamp ,              --공지업로드시간
   constraint BOARD_BNUM_PK primary key(bnum),
-  constraint board_id_FK foreign key(id) references member(id) ON DELETE CASCADE,
   constraint board_bcategory_ck check (bcategory in('Q','F','M','P'))
 );
 --게시판 이미지업로드
@@ -93,9 +92,6 @@ create table rboard(
   constraint RBOARD_RNUM_PK primary key(rnum),
   constraint rboard_bnum_FK foreign key(bnum) 
                                 references board(bnum)
-                                ON DELETE CASCADE,
-  constraint rboard_id_FK foreign key(id) 
-                                references member(id)
                                 ON DELETE CASCADE
 );
 
@@ -198,9 +194,6 @@ create table review(
   constraint REVIEW_RNUM_PK primary key(rnum),
   constraint review_bnum_FK foreign key(bnum) 
                                 references business(bnum)
-                                ON DELETE CASCADE,
-  constraint review_id_FK foreign key(id) 
-                                references member(id)
                                 ON DELETE CASCADE
 );
 --리뷰 이미지업로드
