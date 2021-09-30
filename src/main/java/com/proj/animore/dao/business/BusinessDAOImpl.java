@@ -189,9 +189,10 @@ public class BusinessDAOImpl implements BusinessDAO {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append(" select b.bname, b.baddress ,b.btel ,b.bnum");
+		sql.append(" select rownum, x.* ");
+		sql.append(" from (select b.bname, b.baddress ,b.btel ,b.bnum");
 		sql.append(" from business b ");
-		sql.append("  where id = ?  ");
+		sql.append("  where id = ?) x  ");
 		
 		List<BusinessLoadDTO> mybusiList = jdbcTemplate.query(sql.toString(),
 					   new BeanPropertyRowMapper<>(BusinessLoadDTO.class),id

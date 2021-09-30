@@ -477,7 +477,7 @@ const changPw = e =>{
 
 
 //내업체목록
-const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
+const $mybusilist = document.querySelector('.mypage__mybusilist');
 
 	$mybusilist.addEventListener('click',e=>{
 	e.preventDefault();
@@ -491,7 +491,31 @@ const $mybusilist = document.querySelector('a[href="/mypage/mybusilist"]');
 			//성공로직처리
 			console.log(res);
 			const data = res.data;
-			document.querySelector('.mypage_content_container').innerHTML = data;
+			let html =``;
+			html+=`<h3 class='mypage_content_title'>내업체 목록</h3>`;
+			html+=`<hr>`;
+			html+=`<div class='mypage_content_container'>`;
+			html+=`<table class='reply__table'> `;
+			html+=`<tr class="w3-hover-green">`;
+			html+=`<th class="mypage__cell mypage__th mypage__num">번호</th>`;
+			html+=`<th class="mypage__cell mypage__th mybusilist___bname">업체명</th>`;
+			html+=`<th class="mypage__cell mypage__th mybusilist__baddress">주소</th>`;
+			html+=`<th class="mypage__cell mypage__th mybusilist__btel">전화번호</th>`;
+			html+=`<th class="mypage__cell mypage__th mybusilist__btn">수정</th>`;
+			html+=` <th></th>`;
+			html+=` </tr>`;
+			data.forEach(busi=>{
+			html+=`<tr class="w3-hover-green">`;
+			html+=`<td class='mypage__cell mypage__td'><span>${busi.rownum}</span></td>`;
+			html+=`<td class='mypage__cell mypage__td mybusilist___bname'><a href="/inquire/${busi.bnum}">${busi.bname}</a></td>`;
+			html+=`<td class='mypage__cell mypage__td mybusilist__baddress'>${busi.baddress}</td>`;
+			html+=`<td class='mypage__cell mypage__td mybusilist__btel'>${busi.btel}</td>`;
+			html+=`<td class='mypage__cell mypage__td mybusilist__btn' type='button' class='busimodifyBtn'><a href='/mypage/mybusiModify/${busi.bnum}'>수정</a></td>`;
+			html+=`</tr>`;
+			});
+			html+=`</table>`;
+			html+=`</div>`;
+			document.querySelector('.mypage_content_container').innerHTML = html;
 		}else{
 			throw new Error(res.rtmsg);
 		}

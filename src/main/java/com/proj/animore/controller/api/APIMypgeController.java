@@ -191,32 +191,10 @@ public class APIMypgeController {
 		
 		List<BusinessLoadDTO> mybusiList = businessSVC.mybusiList(loginMember.getId());
 		
-		StringBuffer html = new StringBuffer();
-		html.append("<h3 class='mypage_content_title'>내업체목록</h3>");
-		html.append("<hr>");
-		html.append("<div class='mypage_content_container'>");
-		html.append("<table class='reply__table'> ");
-		html.append("<tr class=\"w3-hover-green\">");
-		html.append("<th class=\"favorite__cell favorite__fnum\">업체명</th>");
-		html.append("<th class=\"favorite__cell favorite_bname\">주소</th>");
-		html.append("<th class=\"favorite__cell favorite_score\">전화번호</th>");
-		html.append(" <th></th>");
-		html.append(" </tr>");
-		mybusiList.forEach(rec->{
-		html.append("<tr class=\"w3-hover-green\">");
-		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBname()+"</td>");
-		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBaddress()+"</td>");
-		html.append("<td class='favorite__cell favorite__fnum'>"+rec.getBtel()+"</td>");
-		html.append("<td class='reply__cell' type='button' class='busimodifyBtn'><a href='/mypage/mybusiModify/"+rec.getBnum()+"'>수정</a></td>");
-		html.append("</tr>");
-		});
-		html.append("</table>");
-		html.append("</div>");
-		
 		log.info(mybusiList.toString());
 		
 		Result result;
-		result = new Result("00","OK",html);
+		result = new Result("00","OK",mybusiList);
 		
 		return result;
 	}

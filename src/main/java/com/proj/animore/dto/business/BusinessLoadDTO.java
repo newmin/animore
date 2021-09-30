@@ -26,6 +26,7 @@ public class BusinessLoadDTO {
 	private String bplayground;
 	private String bhairshop;
 	private String betc;
+	private int rownum;
 
 	private String nightcare;
 	private String rareani;

@@ -185,6 +185,13 @@
   color: white;
 	margin-top : 20px;
 }
+/* 내업체목록 */
+.mybusilist__btn{
+	width : 50px;
+}
+.mypage__td.mybusilist__btn{
+	line-height: 20px;
+}
 /* 모바일(여유되면) */
 @media screen and (max-width: 767px) {
 }
