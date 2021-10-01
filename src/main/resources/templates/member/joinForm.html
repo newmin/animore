@@ -119,7 +119,7 @@
     <!-- 일반회원전용정보 끝 -->
     </div>
             
-    <!-- 특수회원전용정보 -->
+    <!-- 사업자회원전용정보 -->
         <div th:if="${mtype} == 'S'">
           
             <h3 class="joinform__title">사업자정보</h3>
@@ -181,11 +181,11 @@
               </li>
             </ul>
           </div>
-          <!-- 특수회원전용정보 끝 -->
+          <!-- 사업자회원전용정보 끝 -->
         
         <!-- 버튼 -->
         <div class="joinform__btns">
-            <input class="joinform__btn joinform__btn--big joinform__submitBtn" id='joinBtn' type='submit' value="회원가입"></input>
+            <input class="joinform__btn joinform__btn--big joinform__submitBtn" id='joinBtn' type='submit' value="회원가입">
             <input class="joinform__btn joinform__btn--big" id='homeBtn' type='button' value="홈으로"></input>
         </div>
         <div><p id="errmsg_DupCheck" class="field-msg"></p></div>

@@ -25,7 +25,7 @@ public class BusinessDAOImpl implements BusinessDAO {
 	public int joinBusi(BusinessDTO businessDTO) {
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("insert into business(bnum, bbnum, id, bname, baddress, btel, openhours) values(business_bnum_seq.nextval,?,?,?,?,?,?) ");
+		sql.append("insert into business(bnum, bbnum, id, bname, baddress, btel, openhours,nightcare,rareani,visitcare,holidayopen,dental) values(business_bnum_seq.nextval,?,?,?,?,?,?,?,?,?,?,?) ");
 		
 		jdbcTemplate.update(sql.toString(),
 												businessDTO.getBbnum(),
@@ -33,7 +33,12 @@ public class BusinessDAOImpl implements BusinessDAO {
 												businessDTO.getBname(),
 												businessDTO.getBaddress(),
 												businessDTO.getBtel(),
-												businessDTO.getOpenhours());
+												businessDTO.getOpenhours(),
+												businessDTO.getNightcare(),
+												businessDTO.getRareani(),
+												businessDTO.getVisitcare(),
+												businessDTO.getHolidayopen(),
+												businessDTO.getDental());
 		
 		return bnumCurrVal();
 	}
