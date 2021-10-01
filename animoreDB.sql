@@ -81,7 +81,7 @@ create table rboard(
   bnum number(8) not null,
   id varchar2(40) not null,
   rcdate timestamp DEFAULT systimestamp not null,
-  rudate timestamp DEFAULT systimestamp,
+  rudate timestamp,
   rcontent varchar2(600) not null,
   rgood number(5) DEFAULT 0 not null,
   rgroup number(5) default 0 not null,
@@ -215,7 +215,7 @@ create table favorite(
   fnum number(10),
   bnum number(8),
   id varchar2(40),
-  fdate timestamp,
+  fdate timestamp default systimestamp,
   constraint favorite_fnum_PK primary key(fnum),
   constraint favorite_id_FK foreign key(id) 
                                  references member(id)
