@@ -260,7 +260,7 @@ insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,
 insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('busi@test.com','zxc12345','444','4444','4444','busi@cxz.com','굉장한','남신','M','지역구 금은동','20/01/01','S');
 -- 업체
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'456-78-90123','special@zxc.com','울산롯데마트','울산광역시 남구 삼산로 74','333-3333-3333','Y','Y','Y','Y','Y');
+values(BUSINESS_BNUM_SEQ.nextval,'456-78-90123','special@zxc.com','동물사랑','울산광역시 남구 삼산로 74','333-3333-3333','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
@@ -272,11 +272,11 @@ values(BUSINESS_BNUM_SEQ.nextval,'456-78-90125','special@zxc.com','맘마먹자'
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','N','Y','Y','Y','Y','Y','Y','N','Y');
 
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','이마트','울산광역시 남구 삼산동 1646','555-5555-5555','Y','Y','Y','Y','Y');
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67890','busi@test.com','너랑나랑','울산광역시 남구 삼산동 1646','555-5555-5555','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','N','Y','N','Y','Y','Y','Y','Y');
 
 insert into BUSINESS(BNUM,BBNUM,ID,BNAME,BADDRESS,BTEL,NIGHTCARE,RAREANI,VISITCARE,HOLIDAYOPEN,DENTAL)
-values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','이마트양산점','경상남도 양산시 양산역6길 12 신세계이마트양산점','555-5555-5555','Y','Y','Y','Y','Y');
+values(BUSINESS_BNUM_SEQ.nextval,'123-45-67823','busi@test.com','with','경상남도 양산시 양산역6길 12 신세계이마트양산점','555-5555-5555','Y','Y','Y','Y','Y');
 insert into BCATEGORY values(BUSINESS_BNUM_SEQ.currval,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 -- 업체별 리뷰
