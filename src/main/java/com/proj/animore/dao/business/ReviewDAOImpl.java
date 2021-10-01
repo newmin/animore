@@ -96,7 +96,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public ReviewReq findReview(int rnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rscore, rcontent,rvcdate,rnum, m.nickname, rvReply ");
+		sql.append("select r.id,rscore, rcontent,rvcdate,rnum, m.nickname, rvReply ");
 		sql.append("  from review r, member m ");
 		sql.append(" where rnum = ?	 ");
 		sql.append("   and r.id = m.id ");
@@ -145,7 +145,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public ReviewReq findRvReply(int rnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select rvReply ");
+		sql.append("select rvReply,bnum ");
 		sql.append("  from review ");
 		sql.append(" where rnum = ?	");
 		ReviewReq reviewReq = jdbcTemplate.queryForObject(sql.toString(),new BeanPropertyRowMapper<>(ReviewReq.class),rnum);

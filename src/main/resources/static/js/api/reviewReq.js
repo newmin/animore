@@ -480,9 +480,8 @@ const delBtn_f = e => {
 	}
 	
 	const rnum = e.target.dataset.rnum;
-	// const rid = e.target.dataset.id;
 	
-	const URL = `/review/?bnum=${bnum}&rnum=${rnum}`;
+	const URL = `/review/?rnum=${rnum}`;
 	
 	request.delete(URL)
 			.then(res=>res.json())
@@ -656,7 +655,6 @@ const addBtn_f = e=> {
 	const content = document.querySelector('.rvReply__content');
 	const rnum = e.target.closest('.review__reply').dataset.rnum;
 	const bnum = $busi.bnum;
-	const bid = $busi.id;//사장아이디
 
 		//리뷰입력체크
 		if(!content.value) {
@@ -664,7 +662,7 @@ const addBtn_f = e=> {
 			return;
 	}	
 	//TODO 댓글 등록하는 폼만들고 해당값 입력
-	const URL = `/review/reply?bid=${bid}`;
+	const URL = `/review/reply`;
 	const data = {
 			"rnum" : rnum,
 			"bnum" : bnum,
@@ -707,9 +705,8 @@ const replyBtns_f = e =>{
 		e.target.closest('.review__reply').append(replyForm);
 
 	const rnum = e.target.closest('.review__reply').dataset.rnum;
-	const bid = $busi.id;
 
-	const URL = `/review/reply?rnum=${rnum}&bid=${bid}`;
+	const URL = `/review/reply?rnum=${rnum}`;
 
 	request.get(URL)
 			.then(res=>res.json())
