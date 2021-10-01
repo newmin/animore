@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/inquire")
+@RequestMapping("/review")
 @Transactional
 public class APIReviewController {
 	
@@ -200,7 +200,7 @@ public Result deleteReviewAttach(@RequestParam int fnum,
 }
 	
 	//사장님 리뷰리댓 등록/수정폼
-	@GetMapping("/rvreply")
+	@GetMapping("/reply")
 	public Result rvReplyForm(@RequestParam int rnum, 
 													 @RequestParam String bid,
 													 HttpServletRequest request) {
@@ -223,7 +223,7 @@ public Result deleteReviewAttach(@RequestParam int fnum,
 	}
 	
 	//사장님 리뷰리댓 등록
-	@PatchMapping("/rvreply")
+	@PatchMapping("/reply")
 	public Result addRvReply(@RequestParam String bid,
 							 @RequestBody ReviewReq reviewReq,
 							 HttpServletRequest request) {
@@ -250,7 +250,7 @@ public Result deleteReviewAttach(@RequestParam int fnum,
 	}
 	
 	//사장님 리뷰리댓 삭제
-	@PatchMapping("/rvreply/del")
+	@PatchMapping("/reply/del")
 	public Result delRvReply(@RequestParam String bid,
 							 @RequestBody ReviewReq reviewReq,
 							 HttpServletRequest request) {

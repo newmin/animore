@@ -130,7 +130,7 @@ const regiBtn_f = e =>{
 			return;
 	}	
 	
-	const URL = `/inquire/`;
+	const URL = `/review/`;
 /*	const data = {
 			"bnum" : bnum,
 			"rcontent": rcontent.value,
@@ -198,7 +198,7 @@ const modiFrmBtns_f = e=> {
 	const rnum = e.target.dataset.rnum;
 	const rid = e.target.dataset.id;
 
-	const URL = `/inquire/?rnum=${rnum}`;
+	const URL = `/review/?rnum=${rnum}`;
 	// &id=${rid}`;
 
 	request.get(URL)
@@ -331,7 +331,7 @@ const review_img_delBtn_f = e=>{
 	const $fnum = e.target.dataset.fnum;
 	const $rnum = e.target.dataset.rnum;
 	
-	const URL = `/inquire/del?fnum=${$fnum}&rnum=${$rnum}`;
+	const URL = `/review/del?fnum=${$fnum}&rnum=${$rnum}`;
 	
 	request.delete(URL)
 			.then(res=>res.json())
@@ -435,7 +435,7 @@ const modiBtn_f = e =>{
 			return;
 	}	
 	
-	const URL = `/inquire/`;
+	const URL = `/review/`;
 /*	const data = {
 			"bnum": bnum,
 			"rnum": rnum,
@@ -482,7 +482,7 @@ const delBtn_f = e => {
 	const rnum = e.target.dataset.rnum;
 	// const rid = e.target.dataset.id;
 	
-	const URL = `/inquire/?bnum=${bnum}&rnum=${rnum}`;
+	const URL = `/review/?bnum=${bnum}&rnum=${rnum}`;
 	
 	request.delete(URL)
 			.then(res=>res.json())
@@ -664,7 +664,7 @@ const addBtn_f = e=> {
 			return;
 	}	
 	//TODO 댓글 등록하는 폼만들고 해당값 입력
-	const URL = `/inquire/rvreply?bid=${bid}`;
+	const URL = `/review/reply?bid=${bid}`;
 	const data = {
 			"rnum" : rnum,
 			"bnum" : bnum,
@@ -709,7 +709,7 @@ const replyBtns_f = e =>{
 	const rnum = e.target.closest('.review__reply').dataset.rnum;
 	const bid = $busi.id;
 
-	const URL = `/inquire/rvreply?rnum=${rnum}&bid=${bid}`;
+	const URL = `/review/reply?rnum=${rnum}&bid=${bid}`;
 
 	request.get(URL)
 			.then(res=>res.json())
@@ -769,7 +769,7 @@ const replyDelBtns_f = e=> {
 	const bid = $busi.id;//사장아이디
 
 	//TODO 댓글 등록하는 폼만들고 해당값 입력
-	const URL = `/inquire/rvreply/del?bid=${bid}`;
+	const URL = `/review/reply/del?bid=${bid}`;
 	const data = {
 			"rnum" : rnum,
 			"bnum" : bnum,
