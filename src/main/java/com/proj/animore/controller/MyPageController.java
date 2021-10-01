@@ -119,7 +119,7 @@ public class MyPageController {
 //		return "mypage/profileEditForm";
 //	}
    
-   //즐겨찾기 목록
+   //프로필 수정
    @PatchMapping("/mypageFavorites")
    public String mypageProfile(@Valid @ModelAttribute ProfileForm profileForm,
 		    HttpServletRequest request,
@@ -141,6 +141,7 @@ public class MyPageController {
 	   return "mypage/mypageFavorites";
    }
    
+   //즐겨찾기목록
    @GetMapping("/mypageFavorites")
    public String mypage( @ModelAttribute  ProfileForm profileForm, HttpServletRequest request,
          Model model) throws IllegalStateException, IOException { 
@@ -156,7 +157,7 @@ public class MyPageController {
        
        
        memberDTO = memberSVC.findMemberById(id);
-       fileStore.setFilePath("/Users/minchul/Desktop/AniMore2");
+       fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");
        List<FavoriteReq> favoritelist = favoriteSVC.favoriteList(id);
        model.addAttribute("profileForm", profileForm);
        model.addAttribute("mtype",loginMember.getMtype());

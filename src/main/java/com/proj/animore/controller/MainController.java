@@ -74,10 +74,9 @@ public class MainController {
 	
 
 	// 업체조회(상세보기) + 리뷰조회
-	// @GetMapping("/{bcategory}/{bnum}")
-	@GetMapping("/inquire/{bnum}")
+	@GetMapping("/{bcategory}/store/{bnum}")
 	public String inquire(
-			// @PathVariable String bcategory,
+			@PathVariable String bcategory,
 			@PathVariable int bnum, HttpServletRequest request, Model model) {
 		fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/business/");
 		BusinessLoadDTO businessLoadDTO = businessSVC.findBusiByBnum(bnum);

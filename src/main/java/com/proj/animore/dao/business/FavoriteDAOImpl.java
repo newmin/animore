@@ -52,7 +52,7 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		sql.append("                                from review ");
 		sql.append("                                group by bnum) r ");
 		sql.append(" where f.bnum=b.bnum ");
-		sql.append("   and f.bnum=r.bnum ");
+		sql.append("   and b.bnum=r.bnum ");
 		sql.append("   and f.id= ? ");
 		sql.append("order by fdate desc) x ");
 
