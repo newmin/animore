@@ -9,6 +9,7 @@ drop table BUSINESS;
 drop table GOODBOARD;
 drop table RBOARD;
 drop table BOARD;
+drop table myani;
 drop table member;
 
 --회원
@@ -40,6 +41,17 @@ create table member(
   constraint MEMBER_ftype_ck check(ftype like 'image/%')  
 );
 insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,MTYPE) values('admin@animore.com','zxc12345','000','0000','0000','zxc@zxc.com','관리자','관리자','M','힘내면 잘되리','21/01/01','A');
+
+--키우는 동물
+create table myani(
+  MNUM number(10),
+  ID varchar2(40),
+  ANIMAL varchar(30),
+  constraint myani_MNUM_PK primary key(MNUM),
+  constraint myani_id_FK foreign key(ID) 
+                                 references member(id)
+                                 ON DELETE CASCADE
+);
 
 --게시글
 create table board(
@@ -235,6 +247,7 @@ DROP SEQUENCE business_bnum_seq;
 DROP SEQUENCE review_rnum_seq;
 DROP SEQUENCE reviewfile_fnum_seq;
 DROP SEQUENCE favorite_fnum_seq;
+DROP SEQUENCE myani_mnum_seq;
 drop sequence boardfile_fnum_seq;
 drop sequence businessfile_fnum_seq;
 drop sequence review_fnum_seq;
@@ -247,6 +260,7 @@ CREATE SEQUENCE business_bnum_seq;
 CREATE SEQUENCE review_rnum_seq;
 CREATE SEQUENCE reviewfile_fnum_seq;
 CREATE SEQUENCE favorite_fnum_seq;
+CREATE SEQUENCE myani_mnum_seq;
 create sequence boardfile_fnum_seq;
 create sequence businessfile_fnum_seq;
 create sequence review_fnum_seq;
