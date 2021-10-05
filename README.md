@@ -1,10 +1,11 @@
-# animore
+Ani-more
+========
 
-테스트용 계정 및 업체, 게시글 존재합니다.
-
-<p>일반회원</p>
-<p>normal@zxc.com / zxc12345</p>
-<p>user@test.com / zxc12345</p>
-<p>특수회원</p>
-<p>special@zxc.com / zxc12345</p>
-<p>busi@test.com   / zxc12345</p>
+<pre>
+  Ani-more는 반려인들을 위한 정보제공 커뮤니티입니다.
+  반려동물 시장은 나날이 커져가지만 동물출입가능 시설이나 동물제품에 대한 고객경험은 여전히 찾기 어려운 상황입니다.
+  Ani-more에서 동물시설 정보를 한번에 찾아보고, 반려인들 간의 고객경험을 공유해보세요!
+</pre>
+<hr>
+<p>관련 자료 : </p> 
+<p>시연 영상 : https://youtu.be/MsyzeF6NDVY</p> 
