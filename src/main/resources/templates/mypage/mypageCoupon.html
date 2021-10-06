@@ -48,7 +48,7 @@
         </div>
 
         <div class="mypage_profile_mileage">
-          <span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
+           <span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
         </div>
       </div>
     </form>
@@ -81,9 +81,24 @@
       </div>
       <div class="mypage_content_container">
         <h2 class="mypage_content_title">내 쿠폰</h2>
+        <hr>
         
         <!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+        <table class="mypage__table">
+          <tr class="w3-hover-green">
+            <th class="mypage__cell mypage__th mypage__num">번호</th>
+            <th class="mypage__cell mypage__th mypage__num">가격</th>
+            <th class="mypage__cell mypage__th favorite__bname">쿠폰이름</th>
+          </tr>
+          <tr th:each="couponlist :${couponlist}" class="w3-hover-green">
+            <td class="mypage__cell mypage__td"><span th:text="${couponlist.cnum}">번호</span></td>
+            <td class="mypage__cell mypage__td"><span th:text="${couponlist.price}">가격</span></td>
+            <td class="mypage__cell mypage__td">쿠폰이름</td>
+          </tr>
+        </table>
+        
+				<button type="button" class="btn btn-primary mypage__couponChangeBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				  쿠폰교환
 				</button>
 				
@@ -92,11 +107,13 @@
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				        <h5 class="modal-title" id="exampleModalLabel">쿠폰교환</h5>
 				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				      </div>
 				      <div class="modal-body">
-				        ...
+				      	<p>쿠폰은 3000마일리지 이상일시 1000포인트 단위로 교환 가능합니다.</p>
+				      	<br>
+				        <span>쿠폰가격 </span> <input type="text" maxlength="4"/>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -105,18 +122,6 @@
 				    </div>
 				  </div>
 				</div>
-
-        <hr>
-        <table class="mypage__table">
-          <tr class="w3-hover-green">
-            <th class="mypage__cell mypage__th mypage__num">번호</th>
-            <th class="mypage__cell mypage__th favorite__bname">쿠폰</th>
-          </tr>
-          <tr th:each="favorite :${Favorite}" class="w3-hover-green">
-            <td class="mypage__cell mypage__td"><span th:text="${favorite.rownum}">번호</span></td>
-            <td class="mypage__cell mypage__td"><a th:href="@{|/inquire/${favorite.bnum}|}" th:text="${favorite.bname}">쿠폰</a></td>
-          </tr>
-        </table>
       </div>
     </div>
   </main>

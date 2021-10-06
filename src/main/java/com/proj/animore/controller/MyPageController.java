@@ -1,7 +1,6 @@
 package com.proj.animore.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,28 +18,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proj.animore.common.file.FileStore;
 import com.proj.animore.common.file.MetaOfUploadFile;
 import com.proj.animore.dao.UpLoadFileDAO;
+import com.proj.animore.dto.CouponDTO;
 import com.proj.animore.dto.MemberDTO;
 import com.proj.animore.dto.UpLoadFileDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
 import com.proj.animore.form.BusiModifyForm;
-import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.ProfileForm;
 import com.proj.animore.svc.MemberSVC;
+import com.proj.animore.svc.MypageSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.business.BusinessSVC;
 import com.proj.animore.svc.business.FavoriteSVC;
@@ -62,6 +57,7 @@ public class MyPageController {
    private final GoodBoardSVC goodBoardSVC;
    private final UpLoadFileDAO upLoadFileDAO;
    private final FileStore fileStore;
+   private final MypageSVC mypageSVC;
 	//메타정보 → 업로드 정보
 
    //회원탈퇴처리
@@ -384,4 +380,125 @@ public String modifyMember(HttpServletRequest request,
 		
          return "redirect:/mypage/mybusiModify/{bnum}";
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //내쿠폰 페이지
+  @GetMapping("/mypageCoupon")
+  public String mypageCoupon(
+  		@ModelAttribute ProfileForm profileForm,
+  		HttpServletRequest request,
+  		Model model) throws IllegalStateException, IOException {
+    HttpSession session = request.getSession(false);
+    LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+    
+    String id = loginMember.getId();
+    
+    MemberDTO memberDTO = new MemberDTO();
+    memberDTO = memberSVC.findMemberById(id);
+    fileStore.setFilePath("D:/animore/src/main/resources/static/img/upload/member/");
+    model.addAttribute("profileForm", profileForm);
+    model.addAttribute("mtype",loginMember.getMtype());
+    model.addAttribute("profileForm", memberDTO);
+    
+    List<CouponDTO> list = mypageSVC.findCouponById(id);
+    model.addAttribute("couponlist", list);
+    
+    return "/mypage/mypageCoupon";
+  }
 }
+
+
+
+
+

@@ -1,13 +1,13 @@
 package com.proj.animore.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.CouponDTO;
-import com.proj.animore.dto.board.BoardDTO;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,16 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CouponDAOImpl implements CouponDAO{
 	
-	JdbcTemplate jt;
+	private final JdbcTemplate jt;
 	
 	//쿠폰등록
 	@Override
 	public void addCoupon(CouponDTO couponDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" insert into Coupon(cnum,cid,price,cflag) ");
+		sql.append(" insert into Coupon(cnum,id,price,cflag) ");
 		sql.append("   values(coupon_cnum_seq.nextval,?,?,?) ");
 		jt.update(sql.toString(),
-				couponDTO.getCid(),
+				couponDTO.getId(),
 				couponDTO.getPrice(),
 				couponDTO.getCflag()
 				);
@@ -35,24 +35,24 @@ public class CouponDAOImpl implements CouponDAO{
 	}
 	//쿠폰조회
 	@Override
-	public CouponDTO findCouponByCid(int cnum) {
+	public List<CouponDTO> findCouponById(String id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select cnum,cid,price ");
+		sql.append("select cnum,id,price,cflag ");
 		sql.append("from coupon ");
-		sql.append("where cnum=?");
+		sql.append("where id=? ");
+		sql.append("and cflag='Y' ");
 		
-		CouponDTO couponDTO = jt.queryForObject(sql.toString(),
+		List<CouponDTO> list = jt.query(sql.toString(),
 				new BeanPropertyRowMapper<>(CouponDTO.class),
-				cnum);
-		
+				id);
 
-		return couponDTO;
+		return list;
 	}
 	//쿠폰삭제(만료)
 	//쿠폰사용
 	@Override
 	public void deleteCoupon(int cnum) {
-		String sql ="delete coupon where bnum=?";
+		String sql ="update coupon set cflag='N' where cnum=?";
 		jt.update(sql.toString(),cnum);
 		
 	}

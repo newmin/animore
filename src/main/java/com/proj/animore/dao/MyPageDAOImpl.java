@@ -30,7 +30,6 @@ public class MyPageDAOImpl implements MyPageDAO{
 								new BeanPropertyRowMapper<>(ReviewForm.class), 
 								id);
 	
-	
 		return list;
 	}
 	//내가 쓴 게시글 보기
