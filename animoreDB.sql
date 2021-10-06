@@ -10,6 +10,7 @@ drop table GOODBOARD;
 drop table RBOARD;
 drop table BOARD;
 drop table myani;
+drop table coupon;
 drop table member;
 
 --회원
@@ -237,7 +238,17 @@ create table favorite(
                                  ON DELETE CASCADE
 );
 
-
+--내쿠폰
+create table coupon(
+  cnum number(10),
+  id varchar2(40),
+  price number(5),
+  cflag char(1) default 'Y',
+  constraint coupon_cnum_PK primary key(cnum),
+  constraint coupon_id_FK foreign key(id)
+                          references member(id)
+                          ON DELETE CASCADE
+);
 
 --시퀀스 삭제
 DROP SEQUENCE BOARD_BNUM_SEQ;
@@ -251,6 +262,7 @@ DROP SEQUENCE myani_mnum_seq;
 drop sequence boardfile_fnum_seq;
 drop sequence businessfile_fnum_seq;
 drop sequence review_fnum_seq;
+drop sequence coupon_cnum_seq;
 
 --시퀀스 생성
 CREATE SEQUENCE BOARD_BNUM_SEQ;
@@ -264,6 +276,7 @@ CREATE SEQUENCE myani_mnum_seq;
 create sequence boardfile_fnum_seq;
 create sequence businessfile_fnum_seq;
 create sequence review_fnum_seq;
+create sequence coupon_cnum_seq;
 
 -- 임시데이터 등록(각 데이터별 2개 이상)
 -- 일반회원
