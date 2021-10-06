@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/template/template::main(~{::title},~{::main},~{::script},_)}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer></script>
+    <title>회원탈퇴</title>
+</head>
+
+<body>
+
+    <!-- 메인 시작 -->
+    <main class="main">
+        <!-- 프로필정보 -->
+        <div class="mypage_profile_container">
+            <div class="mypage_profile_profileimg">
+                <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
+            </div>
+            <div class="mypage_profile_nickname">
+                Tester1
+            </div>
+            <div class="mypage_profile_usertypeicon">
+                <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
+            </div>
+            <div class="mypage_profile_mileage">
+                마일리지: 1000p
+            </div>
+        </div>
+        <!-- 프로필정보 끝 -->
+        <div class="mypage_container2">
+            <div class="mypage_aside_container">
+                <h2 class="mypage_aside_title">마이페이지</h2>
+                <ul class="mypage_aside_menu">
+                    <!-- TODO th:href 등록 파일명'임의'표기-->
+                    
+                    <li class="mypage_aside_menu"><a class="mypage__myInfoBtn">내업체 목록</a></li>
+                    <li class="mypage_aside_menu"><p class="mypage__myReviewBtn">내 업체 리뷰</p></li>
+                    <li><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+                    <li><a href="/mypage/mypageReview">내가 쓴 리뷰</a></li>
+                    <li><a href="/mypage/mypagePost">내가 쓴 글</a></li>
+                    <li><a href="/mypage/mypageReply">내가 쓴 댓글</a></li>
+                    <li><a href="/mypage/mypageGood">좋아요</a></li>
+                    <li><a href="/mypage/mypageCoupon">내 쿠폰</a></li>
+                    <li><a href="/mypage/mypageModify">회원 정보 수정</a></li>
+                    <li><a href="/mypage/mypageDel.html">회원 탈퇴</a></li>
+                </ul>
+            </div>
+            <div class="mypage_content_container">
+                <h3 class="mypage_content_title">업체 정보 수정</h3>
+                <hr>
+                <form class="main" th:action="@{|/mypage/mybusiModify/${mybusiModify.bnum}|}" th:method="patch" th:object="${mybusiModify}">
+                    <ul>
+                        <li><label for="id">업체명</label></li>
+                        <li><input type="text" th:field="*{bname}"/></li>
+
+                        <li><label for="nickname">업체주소</label></li>
+                        <li><input type="text" th:field="*{baddress}" /></li>
+
+                        <li><label for="tel">전화번호</label></li>
+                        <li><input type="tel" name="btel" th:field="*{btel}" /></li>
+                        
+
+                        <li><input type="submit" onclick="location.href='joinUs.jsp' " th:data-bnum="*{bnum}" id="busimodifyBtn" value="회원정보 수정"></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </main>
+    <!-- 메인 끝 -->
+
+
+
+
+
+</body>
+
+</html>

@@ -23,12 +23,11 @@ public class CouponDAOImpl implements CouponDAO{
 	public void addCoupon(CouponDTO couponDTO) {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" insert into Coupon(cnum,cid,price,cflag) ");
-		sql.append("   values(coupon_cnum_seq.nextval,?,?,?,?) ");
+		sql.append("   values(coupon_cnum_seq.nextval,?,?,?) ");
 		jt.update(sql.toString(),
-				couponDTO.getCnum(),
 				couponDTO.getCid(),
 				couponDTO.getPrice(),
-				couponDTO.getCflage()
+				couponDTO.getCflag()
 				);
 	
 	log.info("boardDTO:{}",couponDTO.toString());
@@ -38,7 +37,7 @@ public class CouponDAOImpl implements CouponDAO{
 	@Override
 	public CouponDTO findCouponByCid(int cnum) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select cnm,cid,price ");
+		sql.append(" select cnum,cid,price ");
 		sql.append("from coupon ");
 		sql.append("where cnum=?");
 		
@@ -49,7 +48,7 @@ public class CouponDAOImpl implements CouponDAO{
 
 		return couponDTO;
 	}
-	//쿠폰석제(만료)
+	//쿠폰삭제(만료)
 	//쿠폰사용
 	@Override
 	public void deleteCoupon(int cnum) {

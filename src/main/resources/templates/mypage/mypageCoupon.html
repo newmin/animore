@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{/template/template::main(~{::title},~{::main},~{::script},~{::link})}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  <script src="/js/api/ajaxCall.js"></script>
+  <script src="/js/api/mypageReq.js" defer></script>
+  <script src="/js/profileEdit.js" defer></script>
+  <!-- <script src="/js/mypage.js" defer></script> -->
+
+  <title>내정보</title>
+
+</head>
+
+<body>
+  <!-- 메인 시작 -->
+  <main class="main">
+    <!-- 프로필정보 -->
+    <form th:object="${profileForm}" enctype="multipart/form-data" action="/mypage/mypageFavorites"
+      th:method="${patch}">
+      <div class="mypage_profile_container" id="profileInfo">
+        <ul class="mypage_profile">
+          <li>
+            <input type="file" name="file" id="imgFile" style="display:none; ">
+            <div id="dropbox">
+              <img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지"
+                id="profileImg" draggable="false" />
+            </div>
+          </li>
+          <li>
+            <span class="btn btn-outline-secondary btn-sm" id="changeProfileImgBtn">변경</span>
+          </li>
+        </ul>
+        <div class="mypage_profile_userType">
+          <div class="mypage_profile_usertypeicon">
+            <img th:if="${session.loginMember.mtype=='N'}" src="/img/ntype.png" alt="일반회원유형">
+            <img th:if="${session.loginMember.mtype=='S'}" src="/img/btype.png" alt="사업자회원유형">
+          </div>
+          <div class="mypage_profile_nickname" th:text="${session.loginMember.nickname}">
+          </div>
+        </div>
+
+        <div class="mypage_profile_mileage">
+          <span th:text="|마일리지 : ${profileForm.mileage}|">마일리지</span>
+        </div>
+      </div>
+    </form>
+    <!-- 프로필정보 끝 -->
+    <div class="mypage_container2">
+      <div class="mypage_aside_container">
+        <ul class="mypage_aside_menus">
+
+
+
+
+          <!-- TODO th:href 등록 파일명'임의'표기-->
+          <li class="mypage_aside_menu"><a class="mypage__myFavolitBtn"
+              th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
+
+          <li th:if="${mtype.equals('S')}" class="mypage_aside_menu mypage__mybusilist"><a href="/mypage/mybusilist">내업체 목록</a></li>
+
+          <li th:if=" ${mtype.equals('S')}" class="mypage_aside_menu mypage__myReviewBtn"><p>내 업체 리뷰</p>
+          </li>
+
+          <li class="mypage_aside_menu mypage__myReviewBtn"><p>내가 쓴 리뷰</p></li>
+          <li class="mypage_aside_menu mypage__mypostBtn"><p>내가 쓴 글</p></li>
+          <li class="mypage_aside_menu mypage__myReplyBtn"><a href="/mypage/mypageReply">내가 쓴 댓글</a></li>
+          <li class="mypage_aside_menu mypage__myGoodBtn"><a href="/mypage/mypageGood">좋아요</a></li>
+          <li class="mypage_aside_menu mypage__myCouponBtn mypage_aside_menu_highlight"><a href="/mypage/mypageCoupon">내 쿠폰</a></li>
+          <li class="mypage_aside_menu mypage__myInfoBtn"><a href="/mypage/mypageModify" >개인 정보 수정</a></li>
+          <li class="mypage_aside_menu mypage__mypwBtn"><a href="/mypage/mypagePwModify">비밀번호 수정</a></li>
+          <li class="mypage_aside_menu mypage__outBtn"><a href="/mypage/mypageDel">회원 탈퇴</a></li>
+        </ul>
+      </div>
+      <div class="mypage_content_container">
+        <h2 class="mypage_content_title">내 쿠폰</h2>
+        
+        <!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  쿠폰교환
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        ...
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+        <hr>
+        <table class="mypage__table">
+          <tr class="w3-hover-green">
+            <th class="mypage__cell mypage__th mypage__num">번호</th>
+            <th class="mypage__cell mypage__th favorite__bname">쿠폰</th>
+          </tr>
+          <tr th:each="favorite :${Favorite}" class="w3-hover-green">
+            <td class="mypage__cell mypage__td"><span th:text="${favorite.rownum}">번호</span></td>
+            <td class="mypage__cell mypage__td"><a th:href="@{|/inquire/${favorite.bnum}|}" th:text="${favorite.bname}">쿠폰</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>

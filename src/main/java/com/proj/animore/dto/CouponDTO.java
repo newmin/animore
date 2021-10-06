@@ -7,5 +7,5 @@ public class CouponDTO {
 	private int cnum;
 	private String cid;
 	private int price;
-	private String cflage;
+	private String cflag;
 }
