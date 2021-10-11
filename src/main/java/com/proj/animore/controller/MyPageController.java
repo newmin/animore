@@ -37,12 +37,14 @@ import com.proj.animore.dto.UpLoadFileDTO;
 import com.proj.animore.dto.board.GoodBoardDTO;
 import com.proj.animore.dto.business.BusinessLoadDTO;
 import com.proj.animore.dto.business.FavoriteReq;
+import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.BusiModifyForm;
 import com.proj.animore.form.JoinMemberForm;
 import com.proj.animore.form.LoginMember;
 import com.proj.animore.form.ModifyForm;
 import com.proj.animore.form.ProfileForm;
 import com.proj.animore.svc.MemberSVC;
+import com.proj.animore.svc.MypageSVC;
 import com.proj.animore.svc.board.GoodBoardSVC;
 import com.proj.animore.svc.business.BusinessSVC;
 import com.proj.animore.svc.business.FavoriteSVC;
@@ -62,6 +64,7 @@ public class MyPageController {
    private final GoodBoardSVC goodBoardSVC;
    private final UpLoadFileDAO upLoadFileDAO;
    private final FileStore fileStore;
+   private final MypageSVC mypageSVC;
 	//메타정보 → 업로드 정보
 
    //회원탈퇴처리
@@ -217,7 +220,7 @@ public class MyPageController {
 //      return "redirect:/";
 //   }
    //개인정보 수정양식
-//   @GetMapping("/mypageModify")
+   @GetMapping("/mypageModify")
 public String modifyMember(HttpServletRequest request,
       Model model) {
       log.info("회원양식 호출");
@@ -244,7 +247,7 @@ public String modifyMember(HttpServletRequest request,
 
    
    //개인정보 수정처리
-//   @PatchMapping("/mypageModify")
+	@PatchMapping("/mypageModify")
    public String modifyMember(@Valid @ModelAttribute ModifyForm modifyForm,
          BindingResult bindingResult,
          HttpServletRequest request) {
@@ -279,7 +282,7 @@ public String modifyMember(HttpServletRequest request,
    }
    
    //내업체 목록
-   //@GetMapping("/mybusilist")
+   @GetMapping("/mybusilist")
    public String modifyBusi(HttpServletRequest request,
 		      Model model) {
 	   
@@ -301,8 +304,32 @@ public String modifyMember(HttpServletRequest request,
 	      return "mypage/mybusilist";
 		}
    
+
+   //내업체 리뷰
+   @GetMapping("/mybusiReview")
+   public String mybusiReview(HttpServletRequest request,
+		      Model model) {
+	   
+	      HttpSession session = request.getSession(false);
+	      if(session == null || session.getAttribute("loginMember") == null){
+	        return "redirect:/login";
+	      }
+	       LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+	       
+	       String id = loginMember.getId();
+	       
+	       log.info(id);
+
+	       List<ReviewReq> mybusiReview = mypageSVC.mybusiReview(id);
+	       
+	 
+	       model.addAttribute("mybusiReview",mybusiReview);
+
+	      return "mypage/mybusiReview";
+		}
+   
    //좋아요
-  // @GetMapping("/mypageGood")
+   @GetMapping("/mypageGood")
    public String mypageGood(HttpServletRequest request,
 		      Model model){
 	   HttpSession session = request.getSession(false);

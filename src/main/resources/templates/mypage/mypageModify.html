@@ -1,104 +1,126 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{/template/template::main(~{::title},~{::main},~{::script},_)}">
+	th:replace="~{/template/template::main(~{::title},~{::main},~{::script},_)}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <script defer></script>
-    <title>회원탈퇴</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/style.css">
+<script defer></script>
+<title>회원정보수정</title>
 </head>
 
 <body>
 
-    <!-- 메인 시작 -->
-    <main class="main">
-        <!-- 프로필정보 -->
-        <div class="mypage_profile_container">
-            <div class="mypage_profile_profileimg">
-                <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="프로필이미지">
-            </div>
-            <div class="mypage_profile_nickname">
-                Tester1
-            </div>
-            <div class="mypage_profile_usertypeicon">
-                <img src="https://cdn.pixabay.com/photo/2016/10/10/14/13/dog-1728494_960_720.png" alt="회원유형">
-            </div>
-            <div class="mypage_profile_mileage">
-                마일리지: 1000p
-            </div>
-        </div>
-        <!-- 프로필정보 끝 -->
-        <div class="mypage_container2">
-            <div class="mypage_aside_container">
-                <h2 class="mypage_aside_title">마이페이지</h2>
-                <ul class="mypage_aside_menu">
-                    <!-- TODO th:href 등록 파일명'임의'표기-->
-                    <li><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
-                    <li><a href="/mypage/mypageReview">내가 쓴 리뷰</a></li>
-                    <li><a href="/mypage/mypagePost.html">내가 쓴 글</a></li>
-                    <li><a href="/mypage/mypageReply.html">내가 쓴 댓글</a></li>
-                    <li><a href="/mypage/mypageGood.html">좋아요</a></li>
-                    <li><a href="/mypage/mypageCoupon.html">내 쿠폰</a></li>
-                    <li><a href="/mypage/mypageModify">회원 정보 수정</a></li>
-                    <li><a href="/mypage/mypageDel.html">회원 탈퇴</a></li>
-                </ul>
-            </div>
-            <div class="mypage_content_container">
-                <h3 class="mypage_content_title">개인 정보 수정</h3>
-                <hr>
-                <form class="main" action="" th:method="patch" th:object="${modifyForm}">
-                    <ul>
-                        <li><label for="id">아이디</label></li>
-                        <li><input type="text" th:field="*{id}" readonly="readonly" /></li>
-
-                        <li><label for="pw">비밀번호</label></li>
-                        <li><input type="password" th:field="*{pw}" /></li>
-                        <li>
-                            <div class="modify__row"><label for="name">이름</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="text" class="modify_input" th:field="*{name}"
-                                    required></div>
-                        </li>
-
-                        <li><label for="nickname">별칭</label></li>
-                        <li><input type="text" th:field="*{nickname}" /></li>
-
-                        <li><label for="birth">생년월일</label></li>
-                        <li><input type="date" th:field="*{birth}" value="*{birth}" /></li>
-
-
-                        <li><label for="tel">전화번호</label></li>
-                        <li><input type="tel" name="tel" th:field="*{tel}" /></li>
-
-                        <li>
-                            <div class="modify__row"><label for="email">연락가능 이메일</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="email" class="modify_input" th:field="*{email}"
-                                    required></div>
-                        </li>
-
-                        <li>
-                            <div class="modify__row"><label for="address">주소</label><span
-                                    class="joinform__required-mark">*</span></div>
-                            <div class="modify__row"><input type="text" class="modify_input" th:field="*{address}"
-                                    required></div>
-                        </li>
-
-                        <li><input type="submit" id="modifyBtn" value="회원정보 수정"></li>
-                    </ul>
-                </form>
-            </div>
-        </div>
-    </main>
-    <!-- 메인 끝 -->
-
-
-
-
-
+	<!-- 메인 시작 -->
+	<main class="main">
+		<!-- 프로필정보 -->
+		<div class="mypage_profile_container">
+			<div class="mypage_profile_profileimg">
+				<img src="#" alt="프로필이미지">
+			</div>
+			<div class="mypage_profile_nickname">Tester1</div>
+			<div class="mypage_profile_usertypeicon">
+				<img src="#" alt="회원유형">
+			</div>
+			<div class="mypage_profile_mileage">마일리지: 1000p</div>
+		</div>
+		<!-- 프로필정보 끝 -->
+		<div class="mypage_container2">
+			<div class="mypage_aside_container">
+				<h2 class="mypage_aside_title">마이페이지</h2>
+				<ul class="mypage_aside_menu">
+					<!-- TODO th:href 등록 파일명'임의'표기-->
+					<li><a href="/mypage/mypageFavorites">즐겨 찾는 업체</a></li>
+					<li><a href="/mypage/mypageReview">내가 쓴 리뷰</a></li>
+					<li><a href="/mypage/mypagePost.html">내가 쓴 글</a></li>
+					<li><a href="/mypage/mypageReply.html">내가 쓴 댓글</a></li>
+					<li><a href="/mypage/mypageGood.html">좋아요</a></li>
+					<li><a href="/mypage/mypageCoupon.html">내 쿠폰</a></li>
+					<li><a href="/mypage/mypageModify">회원 정보 수정</a></li>
+					<li><a href="/mypage/mypageDel.html">회원 탈퇴</a></li>
+				</ul>
+			</div>
+			<div class="mypage_content_container">
+				<h3 class="mypage_content_title">개인 정보 수정</h3>
+				<hr>
+				<form class="main" action="/mypage/mypageModify" method="post">
+					<input type="hidden" name="_method" value="patch">
+					<ul class="joinform">
+						<li><div class="joinform__row">
+								<label for="id">아이디</label>
+							</div>
+							<div class="joinform__row">
+								<input type="text" class="joinform__input" id='id' name='id'
+									value=${memberDTO.id} readonly="readonly" /></li>
+			</div>
+			<li>
+				<div class="joinform__row">
+					<label for="name">이름</label>
+				</div>
+				<div class="joinform__row">
+					<input type="text" class="joinform__input" name='name' id='name'
+						value=${memberDTO.name} required>
+				</div>
+			</li>
+			<li>
+				<div class="joinform__row">
+					<label for="email">연락가능 이메일</label>
+				</div>
+				<div class="joinform__row">
+					<input type="email" class="joinform__input" name='email' id='email'
+						value=${memberDTO.email} required>
+				</div>
+			</li>
+			<li><div class="joinform__row">
+					<label for="nickname">별명</label>
+				</div>
+				<div class="joinform__row">
+					<input type="text" class="joinform__input" name='nickname'
+						id='nickname' value=${memberDTO.nickname}></li>
+		</div>
+		<li><div class="joinform__row">
+				<label for="birth">생년월일</label>
+			</div>
+			<div class="joinform__row">
+				<input type="date" class="joinform__input" id='birth' name='birth'
+					value=${memberDTO.birth}></li>
+		</div>
+		<li><div class="joinform__row">
+				<label for="tel">연락처</label>
+			</div>
+			<div class="joinform__row">
+				<input type="text" class="joinform__input joinform__input--sm"
+					name="tel" id='tel' value=${memberDTO.tel}> <input
+					type="text" class="joinform__input joinform__input--sm" name="tel2"
+					id='tel2' value=${memberDTO.tel2} required> <input
+					type="text" class="joinform__input joinform__input--sm" name="tel3"
+					id='tel3' value=${memberDTO.tel3} required>
+			</div></li>
+		<li>
+			<div class="joinform__row">
+				<label for="address">주소</label>
+			</div>
+			<div class="joinform__row">
+				<input type="text" class="joinform__input" name='address'
+					id='address' value=${memberDTO.address} required>
+			</div>
+		</li>
+		<li><div class="joinform__row">
+				<label for="pwChk">비밀번호 확인</label>
+			</div>
+			<div class="joinform__row">
+				<input type="password" class="joinform__input" name="pwChk"
+					id='pwChk' /></li>
+		</div>
+		<li><input type="button" value="회원수정" class="modifyBtn"
+			id="modifyBtn"></li>
+		</ul>
+		</form>
+		</div>
+	</main>
+	<!-- 메인 끝 -->
 </body>
 
 </html>

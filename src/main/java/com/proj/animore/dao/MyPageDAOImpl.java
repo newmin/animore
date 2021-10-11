@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.proj.animore.dto.MypageReplyRes;
+import com.proj.animore.dto.business.ReviewReq;
 import com.proj.animore.form.ReviewForm;
 import com.proj.animore.form.board.BoardForm;
 
@@ -39,6 +40,7 @@ public class MyPageDAOImpl implements MyPageDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	//내댓글
 	@Override
@@ -56,6 +58,22 @@ public class MyPageDAOImpl implements MyPageDAO{
 		List<MypageReplyRes> mypageReplyList = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(MypageReplyRes.class),id);
 		
 		return mypageReplyList;
+	}
+	//내업체리뷰
+	@Override
+	public List<ReviewReq> mybusiReview(String id) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select b.bnum,b.bname,rcontent,b.bnum,rscore");
+		sql.append("  	  	from review rv, business b, member m");
+		sql.append(" 	    where rv.bnum = b.bnum ");
+		sql.append(" 	    and m.id = b.id");
+		sql.append("   		 and b.id = ? ");
+
+		List<ReviewReq> list = jdbcTemplate.query(sql.toString(), 
+								new BeanPropertyRowMapper<>(ReviewReq.class), 
+								id);
+		return list;
 	}
 	
 }

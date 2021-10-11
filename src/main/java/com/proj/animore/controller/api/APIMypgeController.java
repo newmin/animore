@@ -124,7 +124,7 @@ public class APIMypgeController {
 	}
 	
 	//내 좋아요 조회
-	@GetMapping("/mypageGood")
+	//@GetMapping("/mypageGood")
 	public Result goodBoardList(HttpServletRequest request) {
 	
 		HttpSession session = request.getSession(false);
@@ -140,7 +140,7 @@ public class APIMypgeController {
 	}
 	
 	//개인정보수정화면
-	@GetMapping("/mypageModify")
+	//@GetMapping("/mypageModify")
 	public Result mypageModi (HttpServletRequest request){
 		HttpSession session = request.getSession(false);
 		LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
@@ -153,7 +153,7 @@ public class APIMypgeController {
 	}
 	
 	//내정보 개인정보수정 처리
-	@PatchMapping("/mypageModify")
+	//@PatchMapping("/mypageModify")
 	public Result mypageModify(HttpServletRequest request,
 			@RequestBody @Valid ModifyForm modidyfyForm,
 			BindingResult bindingResult) { 
@@ -183,7 +183,7 @@ public class APIMypgeController {
 	}
 	
 	//내업체목록
-	@GetMapping("/mybusilist")
+	//@GetMapping("/mybusilist")
 	public Result mypagebusilist (HttpServletRequest request){
 		
 		HttpSession session = request.getSession(false);

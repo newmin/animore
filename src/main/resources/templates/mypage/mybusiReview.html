@@ -13,7 +13,7 @@
   <script src="/js/profileEdit.js" defer></script>
   <!-- <script src="/js/mypage.js" defer></script> -->
 
-  <title>내정보</title>
+  <title>내업체 리뷰</title>
 
 </head>
 
@@ -27,9 +27,9 @@
         <ul class="mypage_profile">
           <li>
             <input type="file" name="file" id="imgFile" style="display:none; ">
-<!--             <div id="dropbox">
-              <img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지"
-                id="profileImg" draggable="false" />
+            <!-- <div id="dropbox">
+               <img class="profile__lg" th:src="@{|/img/upload/member/${profileForm.store_fname}|}" alt="이미지"
+                id="profileImg" draggable="false" /> 
             </div> -->
           </li>
           <li>
@@ -62,9 +62,9 @@
           <li class="mypage_aside_menu mypage_aside_menu_highlight"><a class="mypage__myFavolitBtn"
               th:href="@{/mypage/mypageFavorites}">즐겨 찾는 업체</a></li>
 
-<!--           <li th:if="${mtype.equals('S')}" class="mypage_aside_menu mypage__mybusilist"><a href="/mypage/mybusilist">내업체 목록</a></li>
+<!-- 	       <li th:if="${mtype.equals('S')}" class="mypage_aside_menu mypage__mybusilist"><a href="/mypage/mybusilist">내업체 목록</a></li>
 
-          <li th:if=" ${mtype.equals('S')}" class="mypage_aside_menu mypage__myReviewBtn"><p>내 업체 리뷰</p>
+          <li th:if=" ${mtype.equals('S')}" class="mypage_aside_menu mypage__myReviewBtn"><a href="/mypage/mybusiReview">내 업체 리뷰</a>
           </li> -->
 
           <li class="mypage_aside_menu mypage__myReviewBtn"><p>내가 쓴 리뷰</p></li>
@@ -79,26 +79,22 @@
       </div>
       <div class="mypage_content_container">
 
-        <h2 class="mypage_content_title">내업체목록</h2>
+        <h2 class="mypage_content_title">내업체 리뷰</h2>
         <hr>
-       <table class='reply__table'>
-	   <tr class="w3-hover-green">
-	   <th class="mypage__cell mypage__th mypage__num">번호</th>
-	   <th class="mypage__cell mypage__th mybusilist___bname">업체명</th>
-	   <th class="mypage__cell mypage__th mybusilist__baddress">주소</th>
-	   <th class="mypage__cell mypage__th mybusilist__btel">전화번호</th>
-	   <th class="mypage__cell mypage__th mybusilist__btn">수정</th>
-	   <th></th>
-		
-		</tr>
-		<tr th:each="mybusiList :${mybusiList}" class="w3-hover-green">
-		<td class='mypage__cell mypage__td'><span th:text="${mybusiList.bnum}"></span></td>
-		<td class='mypage__cell mypage__td mybusilist___bname'><a href="/inquire/${busi.bnum}"th:text="${mybusiList.bname}"></a></td>
-		<td class='mypage__cell mypage__td mybusilist__baddress' th:text="${mybusiList.baddress}"></td>
-		<td class='mypage__cell mypage__td mybusilist__btel' th:text="${mybusiList.btel}"></td>
-		<td class="mypage__cell mypage__td mybusilist__btn" class='busimodifyBtn'><a href='/mypage/mybusiModify/${busi.bnum}'>수정</a></td>
-		</tr>
-		</table>
+        <table class="mypage__table">
+          <tr class="w3-hover-green">
+            <th class="mypage__cell mypage__th mypage__num">번호</th>
+            <th class="mypage__cell mypage__th favorite__bname">업체명</th>
+            <th class="mypage__cell mypage__th mypage__score">리뷰내용</th>
+            <th class="mypage__cell mypage__th mypage__count">평점</th>
+          </tr>
+          <tr th:each="mybusiReview :${mybusiReview}" class="w3-hover-green">
+            <td class="mypage__cell mypage__td"><span th:text="${mybusiReview.bnum}">번호</span></td>
+            <td class="mypage__cell mypage__td"><a th:href="@{|/inquire/${mybusiReview.bnum}|}" th:text="${mybusiReview.bname}">업체명</a></td>
+            <td class="mypage__cell mypage__td"><span th:text="${mybusiReview.rcontent}">리뷰내용</span></td>
+            <td class="mypage__cell mypage__td"><span th:text="${mybusiReview.rscore}">평점</span></td>
+          </tr>
+        </table>
       </div>
     </div>
   </main>

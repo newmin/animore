@@ -160,7 +160,7 @@ const $mypageReplyMenu = document.querySelector('.mypage__myReplyBtn');
 //좋아요 조회
 const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 	$goodBoardList.addEventListener('click',e=>{
-	e.preventDefault();
+	//e.preventDefault();
 	
 	const URL = `/mypage/mypageGood`;
 	
@@ -214,7 +214,7 @@ const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 //개인정보수정 화면
 	const $mypageModify = document.querySelector('.mypage__myInfoBtn');
 	$mypageModify.addEventListener('click',e=>{
-		e.preventDefault();
+		//e.preventDefault();
 		
 		const URL = `/mypage/mypageModify`;
 		
@@ -240,7 +240,7 @@ const $goodBoardList = document.querySelector('.mypage__myGoodBtn');
 //개인정보 수정처리
 
 const modifyBtn_f = e =>{
-	e.preventDefault();
+	//e.preventDefault();
 	
 	const $id = id.value;
 	const $pwChk = pwChk.value;
@@ -480,7 +480,7 @@ const changPw = e =>{
 const $mybusilist = document.querySelector('.mypage__mybusilist');
 
 	$mybusilist.addEventListener('click',e=>{
-	e.preventDefault();
+	//e.preventDefault();
 	
 	const URL = `/mypage/mybusilist`;
 	

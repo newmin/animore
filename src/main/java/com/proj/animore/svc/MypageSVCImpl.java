@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.proj.animore.dao.MyPageDAO;
 import com.proj.animore.dto.MypageReplyRes;
+import com.proj.animore.dto.business.ReviewReq;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,5 +18,10 @@ public class MypageSVCImpl implements MypageSVC {
 	@Override
 	public List<MypageReplyRes> mypageReply(String id) {
 		return mypageDAO.mypageReply(id);
+	}
+
+	@Override
+	public List<ReviewReq> mybusiReview(String id) {
+		return mypageDAO.mybusiReview(id);
 	}
 }
