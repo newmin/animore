@@ -164,10 +164,29 @@
 	}
 	.board-best__btn{
 		width : 180px;
+	  font-size: 18px;
+	  border: 2px solid var(--primary);
 	}
 	.board-best__row{
 		width : 750px;
 	}
+		.board-best__img{
+		width : 180px;
+		height: 180px;
+	}
+	.board-best .fa-paw{
+		width: 180px;
+		height:180px;
+		line-height: 180px;
+}
+	.board-best__title{
+		font-size: 20px;	
+	}
+	.board-best__text,
+	.good{
+		font-size: 18px;	
+	}
+	
 }
 
 @media screen and (max-width: 768px) {
@@ -192,9 +211,27 @@
 	.board-best__btn{
 		width : 110px;
 		font-size: 15px;
+		border: 1px solid var(--primary);
 	}
 	.board-best__row{
 		width : 500px;
+		height: 200px;
+	}
+	.board-best__img{
+		width : 150px;
+		height: 150px;
+	}
+	.board-best .fa-paw{
+		width: 150px;
+		height:150px;
+		line-height: 150px;
+}
+	.board-best__title{
+		font-size: 20px;	
+	}
+	.board-best__text,
+	.good{
+		font-size: 15px;	
 	}
 }
 @media screen and (max-width: 600px) {

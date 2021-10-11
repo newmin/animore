@@ -207,8 +207,11 @@ footer{
 	}
 	.nav__btn {
 	margin : 0;
-	
 }
+	.logo__img{
+		width : 400px;
+		height: 165px;
+	}
 
 }
 @media screen and (max-width: 600px) {
@@ -217,10 +220,6 @@ footer{
 	}
 	.search__input--sm{
 		width: 150px;
-	}
-	.logo__img{
-		width : 400px;
-		height: 180px;
 	}
 }
 
