@@ -1,7 +1,10 @@
 package com.proj.animore.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,21 +17,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyAniDAOImpl implements MyAniDAO {
 
-	private final JdbcTemplate JdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 	
 	//키우는 동물 등록
 	@Override
 	public void registerMyAni(MyAniDTO myAniDTO) {
-		String sql = "insert into MYANI(id,animal,mnum) values(?,?,myani_mnum_seq) ";
-		List<String> myani = myAniDTO.getMyAni(); 
-		
-		for(int i=0; i<myani.size();i++) {
-//		  JdbcTemplate.queryForObject(sql,String.class,myAniDTO.getId(),myani[i]);
-//		  JdbcTemplate.query(sql,new BeanPropertyRowMapper<>(String.class),myAniDTO.getId(),myani[i]);
-//		  JdbcTemplate.queryForList(sql,String.class,myAniDTO.getId(),myani[i]);
-//		  JdbcTemplate.queryForList(sql,new BeanPropertyRowMapper<>(String.class),myAniDTO.getId(),myani[i]);
-		
-		}
+		StringBuffer sql = new StringBuffer();
+		sql.append("insert into myani(mnum,id,animal) values(myani_mnum_seq,?,?) ");
+
+		jdbcTemplate.batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setString(1, myAniDTO.getId());
+				ps.setString(2, myAniDTO.getMyAni().get(i));
+			}
+
+			@Override
+			public int getBatchSize() {
+				return myAniDTO.getMyAni().size();
+			}
+		});//batchUpdate
 
 	}
 

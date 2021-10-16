@@ -27,6 +27,7 @@ create table member(
   address varchar2(150) not null,
   birth date not null,
   mtype char(1) not null,
+  myani varchar2(30),
   status char(1) DEFAULT 'A' not null, --회원상태  활성:Active, 휴면:Dormancy, 탈퇴:Withdraw, 정지:Suspended
   cdate timestamp DEFAULT systimestamp not null,
   udate timestamp,
@@ -47,7 +48,7 @@ insert into member(ID,PW,TEL,TEL2,TEL3,EMAIL,NAME,NICKNAME,GENDER,ADDRESS,BIRTH,
 create table myani(
   MNUM number(10),
   ID varchar2(40),
-  ANIMAL varchar(30),
+  ANIMAL varchar2(30),
   constraint myani_MNUM_PK primary key(MNUM),
   constraint myani_id_FK foreign key(ID) 
                                  references member(id)

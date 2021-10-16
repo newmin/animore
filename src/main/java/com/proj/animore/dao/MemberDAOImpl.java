@@ -26,8 +26,8 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void joinMember(MemberDTO memberDTO) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("insert into member(id,pw,name,birth,gender,tel,tel2,tel3,email,address,nickname,mtype,upload_fname,store_fname,ftype,fsize) ");
-		sql.append(" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+		sql.append("insert into member(id,pw,name,birth,gender,tel,tel2,tel3,email,address,nickname,mtype,myani,upload_fname,store_fname,ftype,fsize) ");
+		sql.append(" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		
 		jdbcTemplate.update(sql.toString(),
 							memberDTO.getId(),
@@ -42,6 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
 							memberDTO.getAddress(),
 							memberDTO.getNickname(),
 							memberDTO.getMtype(),
+							memberDTO.getMyAni(),
 							memberDTO.getUpload_fname(),
 							memberDTO.getStore_fname(),
 							memberDTO.getFtype(),

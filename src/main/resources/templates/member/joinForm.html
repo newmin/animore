@@ -12,24 +12,13 @@
 <script src="/js/api/joinFormReq.js" defer></script>
 <title>회원가입</title>
 </head>
-<style>
-  	.field-msg{
-  		color:#f00;
-  		font-weight:bold;
-  		font-size:0.8em;
-  	}
-  	.field-error{
-			border:1px solid red;
-			outline:1px solid red;
-  	}
-  	
-</style>
 <body>
 
   <main class="main">
 
     <form action="/index.html" th:action="@{|/member/join/${mtype}|}" th:method="post" th:object="${joinMemberForm}"  enctype="multipart/form-data">
- 
+ 		
+ 		  <input type="hidden" name="mtype" th:value="${mtype}"/>
       <h1 th:if="${mtype} == 'N'">일반회원가입양식</h1>
       <h1 th:if="${mtype} == 'S'">사업자회원가입양식</h1>
       
@@ -82,7 +71,7 @@
         <li>
           <div class="joinform__row"><label for="tel">연락처</label><span class="joinform__required-mark">*</span></div>
           <div class="joinform__row">
-            <input type="text" class="joinform__input joinform__input--sm" maxlength="3" pattern="[0-9]+" th:field="*{tel}" required>
+            <input type="text" class="joinform__input joinform__input--sm" maxlength="4" pattern="[0-9]+" th:field="*{tel}" required>
             <input type="text" class="joinform__input joinform__input--sm" maxlength="4" pattern="[0-9]+" th:field="*{tel2}" required>
             <input type="text" class="joinform__input joinform__input--sm" maxlength="4" pattern="[0-9]+" th:field="*{tel3}" required>
           </div>
@@ -111,8 +100,8 @@
       <hr>
       <ul class="joinform">
           <li>
-	          <div class="joinform__row"><label for="animal">키우는동물</label></div>
-	          <input class="joinform__input" type="text" name="animal" id="animal" />
+	          <div class="joinform__row"><label for="myAni">키우는동물</label><!-- <button type="button" class="joinform__aniAddBtn">+</button> --></div>
+	          <input class="joinform__input" type="text" name="myAni" id="myAni" />	
           </li>
           <li><input type="hidden" name="mtype" value="N"/></li>   			
       </ul>
@@ -168,7 +157,7 @@
                   <li><input type="checkbox" name="betc" id="betc" value="Y"><label for="betc">기타</label></li>
                 </ul>
                   
-                <!-- 병원 업체카테고리 체크시에만 나타나는 병원태그 선택란 -->
+                <!-- 병원 카테고리 체크시, 병원태그 선택란 출력 -->
                 <div id="h_tags">
                   <p>병원태그 선택</p>
                   <input type="checkbox" name="nightcare" id="nightcare" value="Y" disabled><label for="nightcare">야간진료</label>

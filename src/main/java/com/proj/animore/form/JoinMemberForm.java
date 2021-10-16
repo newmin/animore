@@ -50,6 +50,7 @@ public class JoinMemberForm {
    @NotBlank
   private String address;
  
-  private List<String> myAni;
+//  private List<String> myAni;
+  private String myAni;
   
 }
