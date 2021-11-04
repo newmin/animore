@@ -7,5 +7,4 @@ Ani-more
   Ani-more에서 동물시설 정보를 한번에 찾아보고, 반려인들 간의 고객경험을 공유해보세요!
 </pre>
 <hr>
-<p>관련 자료 : </p> 
 <p>시연 영상 : https://youtu.be/MsyzeF6NDVY</p> 
